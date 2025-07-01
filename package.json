@@ -1,0 +1,25 @@
+{
+  "name": "electro",
+  "version": "1.0.0",
+  "description": "Dự án 1 _ Poly",
+  "main": "index.js",
+  "scripts": {
+    "sass:build": "sass sass:public/css --no-source-map",
+    "sass:watch": "sass --watch sass:public/css --no-source-map"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElectroDev6/electro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ElectroDev6/electro/issues"
+  },
+  "homepage": "https://github.com/ElectroDev6/electro#readme",
+  "devDependencies": {
+    "sass": "^1.89.2"
+  }
+}
