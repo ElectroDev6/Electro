@@ -2,3 +2,4 @@
 /public/css/*
 !/public/css/.gitkeep
 node_modules/
+.env
