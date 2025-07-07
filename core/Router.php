@@ -41,7 +41,15 @@ class Router
             exit;
         }
 
-        $instance = new $controllerClass();
+        // Lấy kết nói PDO từ Container
+        $pdo = \Container::get('pdo');
+
+        if ($pdo === null) {
+            echo "Database connection not initialized";
+            exit;
+        }
+
+        $instance = new $controllerClass($pdo);
 
         if (!method_exists($instance, $action)) {
             echo "Method $action not found in $controllerClass";

@@ -6,14 +6,18 @@ use App\Models\Web\AuthModel;
 
 class AuthController
 {
+
+    private $authModel;
+
+    public function __construct(\PDO $pdo)
+    {
+        $this->authModel = new AuthModel($pdo);
+    }
+
     public function login()
     {
         echo "Đây là trang đăng nhập";
-
-        require_once BASE_PATH . './config/db.php';
-        require_once BASE_PATH . './app/models/web/AuthModel.php';
-        $authModel = new AuthModel($pdo);
-        $users = $authModel->getAllUsers();
+        $users = $this->authModel->getAllUsers();
         echo "<pre>";
         print_r($users);
         echo "</pre>";

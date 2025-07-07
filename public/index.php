@@ -4,9 +4,9 @@ use Core\Router;
 
 define('BASE_PATH', dirname(__DIR__));
 
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../routes/web.php';
-require_once __DIR__ . '/../routes/admin.php';
+require_once BASE_PATH . '/vendor/autoload.php';
+require_once BASE_PATH . '/bootstrap.php';
+require_once BASE_PATH . '/routes/web.php';
+require_once BASE_PATH . '/routes/admin.php';
 
-$router = new Router();
-$router->dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);

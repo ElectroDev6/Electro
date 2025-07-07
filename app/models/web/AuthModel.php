@@ -15,7 +15,7 @@ class AuthModel
 
     public function getAllUsers()
     {
-        $stmt = $this->pdo->query("SELECT * FROM users"); // hoặc `user` nếu table tên khác
+        $stmt = $this->pdo->query("SELECT * FROM users");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
