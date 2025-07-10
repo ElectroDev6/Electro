@@ -1,6 +1,6 @@
 <?php
 
-require_once BASE_PATH . './config/db.php';
+require_once BASE_PATH . '/config/db.php';
 
 // Container để quản lý phụ thuộc
 class Container
