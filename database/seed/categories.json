@@ -1,4 +1,32 @@
 [
-  { "id": 1, "name": "SmartPhone" },
-  { "id": 2, "name": "Tablet" }
+   {
+      "category_id": 1,
+      "type": "smartphone",
+      "product_total": 10,
+      "created_at": "2024-01-01T00:00:00Z"
+   },
+   {
+      "category_id": 2,
+      "type": "tablet",
+      "product_total": 8,
+      "created_at": "2024-01-15T00:00:00Z"
+   },
+   {
+      "category_id": 3,
+      "type": "laptop",
+      "product_total": 6,
+      "created_at": "2024-02-01T00:00:00Z"
+   },
+   {
+      "category_id": 4,
+      "type": "smartwatch",
+      "product_total": 5,
+      "created_at": "2024-02-20T00:00:00Z"
+   },
+   {
+      "category_id": 5,
+      "type": "accessories",
+      "product_total": 15,
+      "created_at": "2024-03-05T00:00:00Z"
+   }
 ]

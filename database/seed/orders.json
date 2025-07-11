@@ -1,0 +1,72 @@
+[
+   {
+      "order_id": 1,
+      "user_id": 1,
+      "order_number": "ORD-2024-000001",
+      "status": "pending",
+      "subtotal": 65651000,
+      "discount_amount": 0,
+      "shipping_fee": 30000,
+      "total_amount": 65681000,
+      "address_id": 1,
+      "payment_method": "COD",
+      "order_date": "2024-07-05T14:32:00Z",
+      "updated_at": "2024-07-05T14:32:00Z"
+   },
+   {
+      "order_id": 2,
+      "user_id": 2,
+      "order_number": "ORD-2024-000002",
+      "status": "processing",
+      "subtotal": 37980000,
+      "discount_amount": 500000,
+      "shipping_fee": 0,
+      "total_amount": 37480000,
+      "address_id": 3,
+      "payment_method": "Chuyển khoản",
+      "order_date": "2024-07-04T12:15:00Z",
+      "updated_at": "2024-07-04T15:30:00Z"
+   },
+   {
+      "order_id": 3,
+      "user_id": 3,
+      "order_number": "ORD-2024-000003",
+      "status": "shipped",
+      "subtotal": 27590000,
+      "discount_amount": 0,
+      "shipping_fee": 25000,
+      "total_amount": 27615000,
+      "address_id": 5,
+      "payment_method": "Trả góp",
+      "order_date": "2024-07-03T17:00:00Z",
+      "updated_at": "2024-07-04T09:20:00Z"
+   },
+   {
+      "order_id": 4,
+      "user_id": 4,
+      "order_number": "ORD-2024-000004",
+      "status": "delivered",
+      "subtotal": 21990000,
+      "discount_amount": 100000,
+      "shipping_fee": 0,
+      "total_amount": 21890000,
+      "address_id": 4,
+      "payment_method": "COD",
+      "order_date": "2024-07-02T16:00:00Z",
+      "updated_at": "2024-07-03T14:45:00Z"
+   },
+   {
+      "order_id": 5,
+      "user_id": 5,
+      "order_number": "ORD-2024-000005",
+      "status": "cancelled",
+      "subtotal": 34290000,
+      "discount_amount": 0,
+      "shipping_fee": 30000,
+      "total_amount": 34320000,
+      "address_id": 2,
+      "payment_method": "Trả góp",
+      "order_date": "2024-07-01T15:30:00Z",
+      "updated_at": "2024-07-02T10:15:00Z"
+   }
+]

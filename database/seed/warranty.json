@@ -1,0 +1,52 @@
+[
+   {
+      "warranty_id": 1,
+      "product_id": 1,
+      "name": "Bảo hành mở rộng trọn đời",
+      "description": "Bảo hành toàn diện cho thiết bị",
+      "original_price": 2000000,
+      "current_price": 1500000,
+      "duration_months": 120,
+      "coverage": "Toàn bộ linh kiện"
+   },
+   {
+      "warranty_id": 2,
+      "product_id": 1,
+      "name": "Bảo hành thêm 1 năm iPhone",
+      "description": "Gia hạn bảo hành chính hãng",
+      "original_price": 2000000,
+      "current_price": 990000,
+      "duration_months": 12,
+      "coverage": "Lỗi kỹ thuật"
+   },
+   {
+      "warranty_id": 3,
+      "product_id": 1,
+      "name": "F.Studio Premium Care iPhone",
+      "description": "Dịch vụ chăm sóc cao cấp",
+      "original_price": 1600000,
+      "current_price": 0,
+      "duration_months": 12,
+      "coverage": "Vệ sinh và bảo dưỡng"
+   },
+   {
+      "warranty_id": 4,
+      "product_id": 2,
+      "name": "Bảo hành Samsung Care+",
+      "description": "Bảo hành mở rộng Samsung",
+      "original_price": 1800000,
+      "current_price": 1200000,
+      "duration_months": 24,
+      "coverage": "Hư hỏng do va đập"
+   },
+   {
+      "warranty_id": 5,
+      "product_id": 3,
+      "name": "Bảo hành Xiaomi VIP",
+      "description": "Bảo hành ưu tiên Xiaomi",
+      "original_price": 1000000,
+      "current_price": 800000,
+      "duration_months": 12,
+      "coverage": "Toàn bộ linh kiện"
+   }
+]

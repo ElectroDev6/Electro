@@ -1,0 +1,62 @@
+[
+   {
+      "review_id": 1,
+      "product_id": 1,
+      "user_id": 1,
+      "rating": 5,
+      "title": "Sản phẩm tuyệt vời",
+      "review_content": "iPhone 15 Pro Max thực sự ấn tượng với thiết kế titanium và hiệu năng mạnh mẽ. Chất lượng camera cũng rất tốt, đặc biệt là chụp ảnh ban đêm.",
+      "status": "pending",
+      "is_verified_purchase": true,
+      "helpful_count": 15,
+      "created_at": "2024-05-07T14:30:00Z"
+   },
+   {
+      "review_id": 2,
+      "product_id": 1,
+      "user_id": 2,
+      "rating": 4,
+      "title": "Tốt nhưng giá hơi cao",
+      "review_content": "Máy đẹp, chạy mượt nhưng giá thành khá đắt so với túi tiền. Tuy nhiên chất lượng xứng đáng với giá tiền.",
+      "is_verified_purchase": true,
+      "status": "pending",
+      "helpful_count": 8,
+      "created_at": "2024-05-06T09:15:00Z"
+   },
+   {
+      "review_id": 3,
+      "product_id": 2,
+      "user_id": 3,
+      "rating": 5,
+      "title": "Camera xuất sắc",
+      "review_content": "Camera 200MP quá đỉnh, chụp ảnh siêu nét. Pin trâu, dùng cả ngày không hết.",
+      "is_verified_purchase": true,
+      "status": "pending",
+      "helpful_count": 20,
+      "created_at": "2024-04-20T11:45:00Z"
+   },
+   {
+      "review_id": 4,
+      "product_id": 3,
+      "user_id": 4,
+      "rating": 4,
+      "title": "Giá tốt chất lượng tốt",
+      "review_content": "Xiaomi 14 Pro có cấu hình mạnh mà giá rẻ hơn nhiều so với các hãng khác. Mình rất hài lòng.",
+      "is_verified_purchase": true,
+      "status": "pending",
+      "helpful_count": 12,
+      "created_at": "2024-03-25T16:20:00Z"
+   },
+   {
+      "review_id": 5,
+      "product_id": 4,
+      "user_id": 5,
+      "rating": 3,
+      "title": "Tạm ổn",
+      "status": "pending",
+      "review_content": "Máy chụp ảnh đẹp nhưng pin không được tốt lắm. Thiết kế đẹp, mỏng nhẹ.",
+      "is_verified_purchase": true,
+      "helpful_count": 5,
+      "created_at": "2024-02-28T14:10:00Z"
+   }
+]
