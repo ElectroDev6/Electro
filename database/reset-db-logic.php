@@ -1,5 +1,4 @@
 <?php
-$pdo = Container::get('pdo');
 
 try {
     // Tắt ràng buộc khóa ngoại
@@ -16,8 +15,8 @@ try {
     $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
 
     // Chạy lại schema và import
-    // require_once BASE_PATH . '/database/run-schema-logic.php';
-    // require_once BASE_PATH . '/database/run-import-logic.php';
+    require_once BASE_PATH . '/database/run-schema-logic.php';
+    require_once BASE_PATH . '/database/run-import-logic.php';
 
     echo "✅ Reset toàn bộ DB thành công!";
 } catch (PDOException $e) {

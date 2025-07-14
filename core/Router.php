@@ -21,42 +21,46 @@ class Router
         $path = parse_url($uri, PHP_URL_PATH);
         $method = strtoupper($method);
 
-        if (!isset(self::$routes[$method][$path])) {
-            http_response_code(404);
-            echo "404 - Not Found";
-            exit;
+        foreach (self::$routes[$method] as $route => $handler) {
+            // Chuyển $route thành biểu thức chính quy
+            $pattern = '#^' . $route . '$#';
+
+            if (preg_match($pattern, $path, $matches)) {
+                array_shift($matches); // Bỏ phần match đầy đủ
+
+                [$controller, $action] = explode('@', $handler);
+
+                $namespace = str_starts_with($path, '/admin')
+                    ? 'App\Controllers\Admin\\'
+                    : 'App\Controllers\Web\\';
+
+                $controllerClass = $namespace . $controller;
+
+                if (!class_exists($controllerClass)) {
+                    echo "Controller $controllerClass not found";
+                    exit;
+                }
+
+                $pdo = \Container::get('pdo');
+                if ($pdo === null) {
+                    echo "Database connection not initialized";
+                    exit;
+                }
+
+                $instance = new $controllerClass($pdo);
+
+                if (!method_exists($instance, $action)) {
+                    echo "Method $action not found in $controllerClass";
+                    exit;
+                }
+
+                // Truyền thêm tham số động vào controller method
+                call_user_func_array([$instance, $action], $matches);
+                return;
+            }
         }
 
-        [$controller, $action] = explode('@', self::$routes[$method][$path]);
-
-        // Tự xác định không gian tên theo URI
-        $namespace = str_starts_with($path, '/admin')
-            ? 'App\Controllers\Admin\\'
-            : 'App\Controllers\Web\\';
-
-        $controllerClass = $namespace . $controller;
-
-        if (!class_exists($controllerClass)) {
-            echo "Controller $controllerClass not found";
-            exit;
-        }
-
-        // Lấy kết nói PDO từ Container
-        $pdo = \Container::get('pdo');
-
-        if ($pdo === null) {
-            echo "Database connection not initialized";
-            exit;
-        }
-
-        $instance = new $controllerClass($pdo);
-
-        if (!method_exists($instance, $action)) {
-            echo "Method $action not found in $controllerClass";
-            exit;
-        }
-
-        // Gọi action
-        call_user_func([$instance, $action]);
+        http_response_code(404);
+        echo "404 - Not Found";
     }
 }

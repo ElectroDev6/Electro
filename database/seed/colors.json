@@ -1,32 +1,32 @@
 [
-   {
-      "color_id": 1,
-      "name": "Natural Titanium",
-      "hex_code": "#F5F5DC",
-      "is_active": true
-   },
-   {
-      "color_id": 2,
-      "name": "Blue Titanium",
-      "hex_code": "#4682B4",
-      "is_active": true
-   },
-   {
-      "color_id": 3,
-      "name": "White Titanium",
-      "hex_code": "#FFFFFF",
-      "is_active": false
-   },
-   {
-      "color_id": 4,
-      "name": "Black Titanium",
-      "hex_code": "#2C2C2C",
-      "is_active": true
-   },
-   {
-      "color_id": 5,
-      "name": "Green Titanium",
-      "hex_code": "#556B2F",
-      "is_active": true
-   }
+  {
+    "color_id": 1,
+    "name": "Natural Titanium",
+    "hex_code": "#F5F5DC",
+    "is_active": 1
+  },
+  {
+    "color_id": 2,
+    "name": "Blue Titanium",
+    "hex_code": "#4682B4",
+    "is_active": 1
+  },
+  {
+    "color_id": 3,
+    "name": "White Titanium",
+    "hex_code": "#FFFFFF",
+    "is_active": 0
+  },
+  {
+    "color_id": 4,
+    "name": "Black Titanium",
+    "hex_code": "#2C2C2C",
+    "is_active": 1
+  },
+  {
+    "color_id": 5,
+    "name": "Green Titanium",
+    "hex_code": "#556B2F",
+    "is_active": 1
+  }
 ]

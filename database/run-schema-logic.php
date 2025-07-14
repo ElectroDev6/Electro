@@ -1,5 +1,4 @@
 <?php
-$pdo = Container::get('pdo');
 $sql = file_get_contents(BASE_PATH . '/database/schema.sql');
 
 try {

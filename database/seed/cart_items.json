@@ -1,37 +1,32 @@
 [
-   {
-      "cart_item_id": 1,
-      "cart_id": 1,
-      "quantity": 1,
-      "unit_price": 30290000,
-      "added_at": "2024-07-05T10:00:00Z"
-   },
-   {
-      "cart_item_id": 2,
-      "cart_id": 1,
-      "quantity": 1,
-      "unit_price": 35361000,
-      "added_at": "2024-07-05T14:30:00Z"
-   },
-   {
-      "cart_item_id": 3,
-      "cart_id": 2,
-      "quantity": 2,
-      "unit_price": 18990000,
-      "added_at": "2024-07-04T09:15:00Z"
-   },
-   {
-      "cart_item_id": 4,
-      "cart_id": 3,
-      "quantity": 1,
-      "unit_price": 27590000,
-      "added_at": "2024-07-03T14:20:00Z"
-   },
-   {
-      "cart_item_id": 5,
-      "cart_id": 4,
-      "quantity": 1,
-      "unit_price": 21990000,
-      "added_at": "2024-07-02T13:10:00Z"
-   }
+  {
+    "cart_item_id": 1,
+    "cart_id": 1,
+    "quantity": 1,
+    "unit_price": 30290000
+  },
+  {
+    "cart_item_id": 2,
+    "cart_id": 1,
+    "quantity": 1,
+    "unit_price": 35361000
+  },
+  {
+    "cart_item_id": 3,
+    "cart_id": 2,
+    "quantity": 2,
+    "unit_price": 18990000
+  },
+  {
+    "cart_item_id": 4,
+    "cart_id": 3,
+    "quantity": 1,
+    "unit_price": 27590000
+  },
+  {
+    "cart_item_id": 5,
+    "cart_id": 4,
+    "quantity": 1,
+    "unit_price": 21990000
+  }
 ]

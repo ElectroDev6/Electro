@@ -8,4 +8,4 @@ Router::get('/about', 'AboutController@about');
 Router::get('/contact', 'ContactController@contact');
 Router::get('/login', 'AuthController@login');
 Router::get('/register', 'AuthController@register');
-Router::get('/detail', 'DetailController@detail');
+Router::get('/detail/(\d+)', 'DetailController@detail');

@@ -18,8 +18,5 @@ class AuthController
     {
         echo "Đây là trang đăng nhập";
         $users = $this->authModel->getAllUsers();
-        echo "<pre>";
-        print_r($users);
-        echo "</pre>";
     }
 }

@@ -1,6 +1,8 @@
 <?php
 define('BASE_PATH', dirname(__DIR__));
-require_once BASE_PATH . '/bootstrap.php';
+require_once BASE_PATH . '/Core/Container.php';
+
+$pdo = \Container::get('pdo');
 
 echo "\n📦 DATABASE TOOL\n";
 echo "-------------------\n";

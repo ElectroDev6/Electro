@@ -1,42 +1,37 @@
 [
-   {
-      "comment_id": 1,
-      "product_id": 1,
-      "user_id": 1,
-      "comment_content": "Cho hỏi máy này có hỗ trợ sạc nhanh không ạ?",
-      "like_count": 3,
-      "created_at": "2024-05-07T16:20:00Z"
-   },
-   {
-      "comment_id": 2,
-      "product_id": 1,
-      "user_id": 2,
-      "comment_content": "Màu Natural Titanium đẹp quá, mình đặt hàng rồi",
-      "like_count": 12,
-      "created_at": "2024-05-07T11:30:00Z"
-   },
-   {
-      "comment_id": 3,
-      "product_id": 2,
-      "user_id": 3,
-      "comment_content": "Máy này có hỗ trợ bút S Pen không shop?",
-      "like_count": 5,
-      "created_at": "2024-04-18T14:45:00Z"
-   },
-   {
-      "comment_id": 4,
-      "product_id": 3,
-      "user_id": 4,
-      "comment_content": "Xiaomi 14 Pro có chống nước không?",
-      "like_count": 2,
-      "created_at": "2024-03-12T10:20:00Z"
-   },
-   {
-      "comment_id": 5,
-      "product_id": 4,
-      "user_id": 5,
-      "comment_content": "Oppo Find X7 có phiên bản màu xanh không shop?",
-      "like_count": 7,
-      "created_at": "2024-02-25T15:30:00Z"
-   }
+  {
+    "comment_id": 1,
+    "product_id": 1,
+    "user_id": 1,
+    "comment_content": "Cho hỏi máy này có hỗ trợ sạc nhanh không ạ?",
+    "like_count": 3
+  },
+  {
+    "comment_id": 2,
+    "product_id": 1,
+    "user_id": 2,
+    "comment_content": "Màu Natural Titanium đẹp quá, mình đặt hàng rồi",
+    "like_count": 12
+  },
+  {
+    "comment_id": 3,
+    "product_id": 2,
+    "user_id": 3,
+    "comment_content": "Máy này có hỗ trợ bút S Pen không shop?",
+    "like_count": 5
+  },
+  {
+    "comment_id": 4,
+    "product_id": 3,
+    "user_id": 4,
+    "comment_content": "Xiaomi 14 Pro có chống nước không?",
+    "like_count": 2
+  },
+  {
+    "comment_id": 5,
+    "product_id": 4,
+    "user_id": 5,
+    "comment_content": "Oppo Find X7 có phiên bản màu xanh không shop?",
+    "like_count": 7
+  }
 ]
