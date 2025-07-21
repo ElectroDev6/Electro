@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Web;
 
-use App\Models\Web\AuthModel;
+use App\Models\AuthModel;
 
 class AuthController
 {

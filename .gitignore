@@ -3,3 +3,4 @@
 !/public/css/.gitkeep
 node_modules/
 .env
+docker-compose.yml
