@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Web;
 
-use App\Models\Web\AuthModel;
+use App\Models\AuthModel;
 
 class AuthController
 {
@@ -16,7 +16,7 @@ class AuthController
 
     public function login()
     {
-        echo "Đây là trang đăng nhập";
         $users = $this->authModel->getAllUsers();
+        render('login');
     }
 }

@@ -1,7 +1,9 @@
 <?php require __DIR__ . '/../partials/_header.php'; ?>
 
-<main>
-    <?php require $view; ?>
-</main>
+<div class="container-main">
+    <main>
+        <?php require $view; ?>
+    </main>
+</div>
 
 <?php require __DIR__ . '/../partials/_footer.php'; ?>

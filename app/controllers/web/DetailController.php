@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Web;
 
-use App\Models\Web\DetailModel;
+use App\Models\DetailModel;
 
 class DetailController
 {
