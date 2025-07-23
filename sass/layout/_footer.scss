@@ -1,0 +1,407 @@
+// Electro Footer Styles
+// File: assets/scss/components/_footer.scss
+
+// Variables
+$primary-color: #6c5ce7;
+$dark-bg: #2d3436;
+$darker-bg: #1a1a1a;
+$text-light: #b2bec3;
+$text-white: #ffffff;
+$border-color: #404040;
+$hover-color: #74b9ff;
+$social-facebook: #3b5998;
+$social-twitter: #1da1f2;
+$social-instagram: #e4405f;
+$social-tiktok: #000000;
+
+// Mixins
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin hover-effect {
+  @include transition(color);
+
+  &:hover {
+    color: $hover-color;
+    text-decoration: none;
+  }
+}
+
+// Main Footer Styles
+.electro-footer {
+  background: $darker-bg;
+  color: $text-light;
+  font-family: "Arial", sans-serif;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  // Footer Top Section
+  .footer-top {
+    background: $dark-bg;
+    padding: 30px 0;
+    text-align: center;
+    border-bottom: 1px solid $border-color;
+
+    .footer-header {
+      h2 {
+        color: $text-white;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        letter-spacing: -0.5px;
+      }
+
+      p {
+        color: $text-light;
+        font-size: 14px;
+        line-height: 1.5;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  // Footer Main Content
+  .footer-main {
+    padding: 40px 0;
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 40px;
+
+      // Responsive Grid
+      @media (max-width: 992px) {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      @media (max-width: 576px) {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    .footer-col {
+      h4 {
+        color: $text-white;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        letter-spacing: 0.5px;
+      }
+
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-bottom: 12px;
+
+          a {
+            color: $text-light;
+            text-decoration: none;
+            font-size: 13px;
+            line-height: 1.4;
+            display: block;
+            @include hover-effect;
+          }
+        }
+      }
+    }
+
+    // Brand Column
+    .footer-brand {
+      .brand-logo {
+        margin-bottom: 30px;
+
+        h3 {
+          color: $text-white;
+          font-size: 28px;
+          font-weight: 700;
+          margin-bottom: 10px;
+          letter-spacing: -1px;
+        }
+
+        p {
+          font-size: 13px;
+          line-height: 1.5;
+          color: $text-light;
+        }
+      }
+
+      .social-section {
+        margin-bottom: 30px;
+
+        h4 {
+          margin-bottom: 15px;
+        }
+
+        .social-links {
+          display: flex;
+          gap: 10px;
+
+          .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            @include flex-center;
+            color: $text-white;
+            text-decoration: none;
+            font-size: 16px;
+            @include transition(transform);
+
+            &:hover {
+              transform: translateY(-2px);
+            }
+
+            &.facebook {
+              background: $social-facebook;
+            }
+
+            &.twitter {
+              background: $social-twitter;
+            }
+
+            &.instagram {
+              background: $social-instagram;
+            }
+
+            &.tiktok {
+              background: $social-tiktok;
+            }
+          }
+        }
+      }
+
+      .contact-section {
+        .hotline-list {
+          .hotline-item {
+            margin-bottom: 15px;
+
+            span {
+              display: block;
+              font-size: 12px;
+              color: $text-light;
+              margin-bottom: 2px;
+            }
+
+            strong {
+              color: $text-white;
+              font-size: 16px;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    // Payment Methods
+    .payment-methods {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 25px;
+
+      .payment-item {
+        img {
+          width: 100%;
+          height: 32px;
+          object-fit: contain;
+          background: $text-white;
+          border-radius: 4px;
+          padding: 6px;
+          @include transition(transform);
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+    }
+
+    // Certifications
+    .certifications {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .cert-item {
+        img {
+          width: 80px;
+          height: 32px;
+          object-fit: contain;
+          background: $text-white;
+          border-radius: 4px;
+          padding: 6px;
+          @include transition(transform);
+
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+    }
+  }
+
+  // Footer Bottom
+  .footer-bottom {
+    background: $dark-bg;
+    padding: 25px 0;
+    border-top: 1px solid $border-color;
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+    }
+
+    .company-info {
+      flex: 1;
+
+      p {
+        font-size: 12px;
+        line-height: 1.5;
+        color: $text-light;
+        margin-bottom: 5px;
+
+        &:first-child {
+          font-weight: 600;
+          color: $text-white;
+          margin-bottom: 10px;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .footer-certification {
+      flex-shrink: 0;
+
+      .certification-logo {
+        img {
+          width: 120px;
+          height: auto;
+          filter: brightness(0.8);
+          @include transition(filter);
+
+          &:hover {
+            filter: brightness(1);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animation Classes
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Loading Animation
+.loading-skeleton {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  background-size: 200px 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+// Print Styles
+@media print {
+  .electro-footer {
+    background: white !important;
+    color: black !important;
+
+    .social-links,
+    .payment-methods,
+    .certifications {
+      display: none !important;
+    }
+
+    .footer-bottom {
+      border: none !important;
+
+      .company-info p {
+        color: black !important;
+      }
+    }
+  }
+}
+
+// Dark Mode Support
+@media (prefers-color-scheme: dark) {
+  .electro-footer {
+    // Already dark by default
+  }
+}
+
+// High Contrast Mode
+@media (prefers-contrast: high) {
+  .electro-footer {
+    .footer-links a:hover {
+      color: $text-white;
+      background: $hover-color;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+  }
+}
+
+// Reduced Motion
+@media (prefers-reduced-motion: reduce) {
+  .electro-footer {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
