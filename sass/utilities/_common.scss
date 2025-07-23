@@ -1,6 +1,8 @@
-@use "../base/reset";
-@use "../base/typography";
-@use "../layout/header";
-@use "../layout/footer";
+@forward "../base/reset";
+@forward "../base/main";
+@forward "../base/typography";
+@forward "../layout/header";
+@forward "../layout/footer";
+
 // @use "components/button";
 // @use "base/typography";

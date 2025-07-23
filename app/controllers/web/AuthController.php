@@ -16,7 +16,7 @@ class AuthController
 
     public function login()
     {
-        echo "Đây là trang đăng nhập";
         $users = $this->authModel->getAllUsers();
+        render('login');
     }
 }

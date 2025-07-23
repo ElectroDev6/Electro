@@ -6,6 +6,6 @@ class AboutController
 {
     public function about()
     {
-        echo "Đây là trang giới thiệu";
+        render('about');
     }
 }
