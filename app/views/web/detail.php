@@ -1,3 +1,5 @@
+   <?php extend('layout.main'); ?>
+   <?php section('content'); ?>
    <div class="container">
        <?php if ($product): ?>
            <div class="product-header">
@@ -283,3 +285,5 @@
            });
        });
    </script>
+
+   <?php endSection(); ?>
