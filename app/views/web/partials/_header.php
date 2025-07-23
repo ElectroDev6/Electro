@@ -19,7 +19,5 @@
         <nav>
             <a href="/">Home</a>
             <a href="/about">About</a>
-            <a href="/product">Product</a>
-            <a href="/cart">Cart</a>
         </nav>
     </header>

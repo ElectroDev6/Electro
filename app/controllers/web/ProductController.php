@@ -6,6 +6,6 @@ class ProductController
 {
     public function product()
     {
-        render('product'); // Gọi view product.php
+        echo "Đây là trang sản phẩm!";
     }
 }

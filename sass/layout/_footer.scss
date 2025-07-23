@@ -1,0 +1,252 @@
+@use "../base/colors";
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin reset-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin link-hover {
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: colors.$footer-link-hover;
+    text-decoration: none;
+  }
+}
+
+// Footer Block
+.footer {
+  background-color: colors.$footer-bg-color;
+  color: colors.$footer-text-color;
+  padding: colors.$footer-spacing-xl 0;
+
+  // Container
+  &__container {
+    padding: 0 colors.$footer-spacing-md;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: colors.$footer-spacing-xl;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: colors.$footer-spacing-lg;
+    }
+  }
+
+  // Brand Section
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: colors.$footer-spacing-lg;
+  }
+
+  &__logo {
+    margin-bottom: colors.$footer-spacing-md;
+  }
+
+  &__brand-name {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin: 0 0 colors.$footer-spacing-sm 0;
+    color: colors.$footer-text-color;
+  }
+
+  &__brand-description {
+    color: colors.$footer-text-muted;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  // Social Section
+  &__social {
+    &-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 0 0 colors.$footer-spacing-md 0;
+      text-transform: uppercase;
+    }
+
+    &-links {
+      @include flex-center;
+      gap: colors.$footer-spacing-sm;
+    }
+
+    &-link {
+      @include flex-center;
+      width: 3.6rem;
+      height: 3.6rem;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 1.6rem;
+      @include link-hover;
+    }
+  }
+
+  // Contact Section
+  &__contact {
+    &-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 0 0 colors.$footer-spacing-md 0;
+      text-transform: uppercase;
+    }
+
+    &-item {
+      margin-bottom: colors.$footer-spacing-md;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &-label {
+      display: block;
+      color: colors.$footer-text-muted;
+      font-size: 1.2rem;
+      margin-bottom: 2px;
+    }
+
+    &-number {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: colors.$footer-text-color;
+    }
+
+    &-time {
+      display: block;
+      color: colors.$footer-text-muted;
+      font-size: 1.2rem;
+    }
+  }
+
+  // General Section
+  &__section {
+    &-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 0 0 colors.$footer-spacing-md 0;
+      text-transform: uppercase;
+    }
+
+    &-list {
+      @include reset-list;
+    }
+
+    &-item {
+      margin-bottom: colors.$footer-spacing-sm;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &-link {
+      color: colors.$footer-text-muted;
+      text-decoration: none;
+      font-size: 1.4rem;
+      line-height: 1.4;
+      display: block;
+      @include link-hover;
+    }
+  }
+
+  // Payment Section
+  &__payment {
+    margin-bottom: colors.$footer-spacing-lg;
+
+    &-methods {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: colors.$footer-spacing-sm;
+      margin-bottom: colors.$footer-spacing-md;
+    }
+
+    &-icon {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  // Certifications
+  &__certifications {
+    display: flex;
+    gap: colors.$footer-spacing-sm;
+  }
+
+  &__certification-icon {
+    width: 6rem;
+    height: 4rem;
+    object-fit: contain;
+  }
+
+  // Bottom Section
+  &__bottom {
+    border-top: 1px solid colors.$footer-border-color;
+    margin-top: colors.$footer-spacing-xl;
+    padding-top: colors.$footer-spacing-lg;
+
+    &-container {
+      padding: 0 colors.$footer-spacing-md;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: colors.$footer-spacing-lg;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+  }
+
+  &__company-info {
+    flex: 1;
+
+    p {
+      margin: 0 0 colors.$footer-spacing-sm 0;
+      font-size: 1.2rem;
+      line-height: 1.4;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__copyright {
+    font-weight: bold;
+    color: colors.$footer-text-color !important;
+  }
+
+  &__company-name {
+    color: colors.$footer-text-color !important;
+    font-weight: 500;
+  }
+
+  &__license,
+  &__email,
+  &__hotline,
+  &__address {
+    color: colors.$footer-text-muted !important;
+  }
+
+  &__certification-badge {
+    flex-shrink: 0;
+  }
+
+  &__badge-icon {
+    width: 12rem;
+    height: 8rem;
+    object-fit: contain;
+  }
+}

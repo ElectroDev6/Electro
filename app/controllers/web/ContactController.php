@@ -6,6 +6,6 @@ class ContactController
 {
     public function contact()
     {
-        echo "Đây là trang liên hệ";
+        render('contact');
     }
 }
