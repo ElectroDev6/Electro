@@ -9,3 +9,4 @@ Router::get('/contact', 'ContactController@contact');
 Router::get('/login', 'AuthController@login');
 Router::get('/register', 'AuthController@register');
 Router::get('/detail/(\d+)', 'DetailController@detail');
+router::get('/login', 'LoginController@index');
