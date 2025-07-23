@@ -31,7 +31,7 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     height: auto;
     max-height: 800px; // Giới hạn chiều cao tối đa của menu
-
+    overflow-y: auto; // ✅ Thêm dòng này để cuộn dọc khi quá dài
 
 
     h3 {
@@ -117,30 +117,30 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
 
     img {
         max-width: 100%;
         height: 150px;
         object-fit: contain;
         margin-bottom: 10px;
-        margin-right: 50px;
+        margin-right: 120px;
     }
 
     h4 {
         font-size: 14px;
         color: #333;
         margin-bottom: 5px;
-        margin-right: 115px;
+        margin-right: 78px;
     }
 
-    .price {
-        color: #e53935;
-        font-weight: bold;
-        margin-bottom: 8px;
-        font-size: 18px;
-        margin-right: 115px;
-    }
+    // .price {
+    //     color: #e53935;
+    //     font-weight: bold;
+    //     margin-bottom: 8px;
+    //     font-size: 18px;
+    //     margin-right: 78px;
+    // }
 
     button {
         background: #ffcc00;
@@ -152,17 +152,52 @@ body {
         transition: 0.3s;
 
         &:hover {
-            background: #ffb300;
+            background: #333e48;
         }
     }
 
     p {
+        // Của chử "Trả góp 0%"
         font-size: 12px;
         border-radius: 5px;
         color: #fff;
         background-color: #333;
-      margin-right: 200px;
+        margin-right: 168px;
+    }
+}
 
+// Phần giá sản phẩm
+.price-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 5px;
+    margin-right: 90px;
+
+    .old-price {
+        text-decoration: line-through;
+        color: #888;
+        font-size: 14px;
+        margin-right: 5px;
+    }
+
+    .discount {
+        color: #e53935; // Màu đỏ
+        font-size: 14px;
+        font-weight: bold;
+        margin-left: 5px;
+    }
+
+    .new-price {
+        font-size: 20px;
+        font-weight: bold;
+        color: #cb1c22; // Màu đỏ đậm
+        margin: 3px 0;
+    }
+
+    .save-price {
+        font-size: 13px;
+        color: #008000; // Màu xanh lá
     }
 }
 
@@ -187,5 +222,64 @@ body {
 
     p {
         text-decoration: none;
+    }
+}
+
+// phần thương hiệu Hz
+.brand-Hz {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.brand-logo-Hz {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer; // Thêm cursor pointer trực tiếp vào thẻ div này
+
+    p {
+        text-decoration: none;
+    }
+}
+
+//Phần dung lượng Điện Thoại
+/* Phần dung lượng sản phẩm */
+.filter-Dungluong {
+    display: flex;
+    gap: 10px;
+    /* Khoảng cách giữa các ô */
+    margin: 10px 0;
+}
+
+.brand-logo-Dungluong {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 27px;
+   
+    p {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    &:hover {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    &.selected {
+        border-color: #007bff;
+        background-color: #e6f2ff;
     }
 }

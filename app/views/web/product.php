@@ -120,82 +120,311 @@
                         </div>
                     </a>
                 </div>
-                <!-- </div>
-                <label><input type="checkbox" value="4GB"> 4GB</label>
-                <label><input type="checkbox" value="8GB"> 8GB</label>
-                <label><input type="checkbox" value="12GB"> 12GB</label>
-                <label><input type="checkbox" value="16GB"> 16GB</label>
-                <label><input type="checkbox" value="32GB"> 32GB</label>
-                <label><input type="checkbox" value="48GB"> 48GB</label>
-                <label><input type="checkbox" value="64GB"> 64GB</label>
-            </div> -->
-        </aside>
+                <div class="filter-group">
+                    <h4>Card đồ họa</h4>
+                    <label><input type="checkbox" value="NVIDIA GeForce Series"> NVIDIA GeForce Series</label>
+                    <label><input type="checkbox" value="NVIDIA GeForce MX Series"> NVIDIA GeForce MX Series</label>
+                    <label><input type="checkbox" value="NVIDIA GeForce RTX Series"> NVIDIA GeForce RTX Series</label>
+                </div>
+                <div class="filter-group">
+                    <h4>Ổ cứng</h4>
+                    <label><input type="checkbox" value="SSD 1TB"> SSD 1TB</label>
+                    <label><input type="checkbox" value="SSD 2TB"> SSD 2TB</label>
+                    <label><input type="checkbox" value="SSD 512GB"> SSD 512GB</label>
+                    <label><input type="checkbox" value="SSD 256GB"> SSD 256GB</label>
+                    <label><input type="checkbox" value="SSD 128GB"> SSD 128GB</label>
+                </div>
+                <div class="filter-group">
+                    <h4>Kích thước màn hình</h4>
+                    <label><input type="checkbox" value="13 inch"> Dưới 14 inch</label>
+                    <label><input type="checkbox" value="14 inch"> 14 - 15 inch</label>
+                    <label><input type="checkbox" value="15 inch"> 15 - 17 inch</label>
+                </div>
+                <div class="filter-Hz">
+                    <h4>Tần số quét</h4>
+                    <div class="brand-Hz">
+                        <a href="">
+                            <div class="brand-logo-Hz">
+                                <p>60Hz</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="brand-logo-Hz" data-brand="Apple">
+                                <p>75Hz</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="brand-logo-Hz" data-brand="Dell">
+                                <p>120Hz</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="brand-logo-Hz" data-brand="HP">
+                                <p>144Hz</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="brand-logo-Hz" data-brand="Lenovo">
+                                <p>360Hz</p>
+                            </div>
+                        </a>
+                    </div>
 
+        </aside>
+        <!-- Phần Sản Phẩm -->
         <main class="products" id="product-list">
             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-             <div class="product-card">
-                <img src="/img/iphone223.jpg" alt="Sản phẩm 1">
+              <div class="product-card">
+                <img src="/img/iphone223.png" alt="Sản phẩm 1">
                 <p>Trả góp 0%</p>
                 <h4>Tên sản phẩm Laptop A</h4>
-                <h3 class="price">25.000.000 VNĐ</h3> 
+                <div class="price-box">
+                    <span class="old-price">34.290.000 ₫</span>
+                    <div class="new-price">30.090.000 ₫</div>
+                    <div class="save-price">Giảm 4.200.000 ₫</div>
+                </div>
+                <div class="filter-Dungluong">
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>256GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>512GB</span>
+                        </div>
+                    </a>
+                    <a href="">
+                        <div class="brand-logo-Dungluong">
+                            <span>1TB</span>
+                        </div>
+                    </a>
+                </div>
                 <button>Xem chi tiết</button>
             </div>
-            
 
         </main>
     </div>
