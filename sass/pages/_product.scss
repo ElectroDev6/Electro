@@ -1,3 +1,191 @@
-h1{
-    color: red;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Inter, sans-serif;
+}
+
+body {
+    background: #f7f7f7;
+}
+
+.banner img {
+    width: 100%;
+    display: block;
+}
+
+.container {
+    display: flex;
+    max-width: 2000px;
+    margin: 20px auto;
+    gap: 30px;
+    padding: 0px 50px 0px 0px;
+
+}
+
+.filter {
+    background: #fff;
+    padding: 15px;
+    width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: auto;
+    max-height: 800px; // Giới hạn chiều cao tối đa của menu
+
+
+
+    h3 {
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .filter-group {
+        margin-bottom: 20px;
+
+        h4 {
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    }
+}
+
+.brand-logos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.brand-logo-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer; // Thêm cursor pointer trực tiếp vào thẻ div này
+}
+
+.brand-logo-card img {
+    // Quy tắc img nằm ngoài brand-logo-card
+    max-width: 80%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+// Hiệu ứng khi di chuột vào (HOVER)
+.brand-logo-card:hover {
+    // Áp dụng hover trực tiếp lên brand-logo-card
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+// Hiệu ứng khi được chọn (sẽ cần JavaScript để thêm/bóc class này)
+.brand-logo-card.selected {
+    border-color: #007bff;
+    background-color: #e6f2ff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+
+// phần sản phẩm !!
+.products {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+    img {
+        max-width: 100%;
+        height: 150px;
+        object-fit: contain;
+        margin-bottom: 10px;
+        margin-right: 50px;
+    }
+
+    h4 {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 5px;
+        margin-right: 115px;
+    }
+
+    .price {
+        color: #e53935;
+        font-weight: bold;
+        margin-bottom: 8px;
+        font-size: 18px;
+        margin-right: 115px;
+    }
+
+    button {
+        background: #ffcc00;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+
+        &:hover {
+            background: #ffb300;
+        }
+    }
+
+    p {
+        font-size: 12px;
+        border-radius: 5px;
+        color: #fff;
+        background-color: #333;
+      margin-right: 200px;
+
+    }
+}
+
+// phần thương hiệu RAM
+.brand-ram {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.brand-logo-ram {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer; // Thêm cursor pointer trực tiếp vào thẻ div này
+
+    p {
+        text-decoration: none;
+    }
 }
