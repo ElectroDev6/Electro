@@ -18,39 +18,46 @@ function render($viewName, $data = [])
 {
     global $__sections, $__currentSection;
 
-    // Extract data so it's available as variables in the view
     extract($data);
     $pageName = basename($viewName);
 
-    // Path to the actual view file
-    $viewPath = BASE_PATH . '/app/views/web/' . str_replace('.', '/', $viewName) . '.php';
+    $uri = $_SERVER['REQUEST_URI'];
+    // Debug nếu cần:
+    // print_r($uri);
+
+    // Xác định đường dẫn view & layout theo route
+    if (str_starts_with(trim($uri, '/'), 'admin')) {
+        $viewPath = BASE_PATH . '/app/views/admin/' . str_replace('.', '/', $viewName) . '.php';
+        $layoutPath = BASE_PATH . '/app/views/admin/layout/main.php';
+    } else {
+        $viewPath = BASE_PATH . '/app/views/web/' . str_replace('.', '/', $viewName) . '.php';
+    }
 
     if (!file_exists($viewPath)) {
         die("View file not found: " . $viewPath);
     }
 
-    // Start output buffering to capture the view content
+    // Bắt đầu capture nội dung view
     ob_start();
     require $viewPath;
     $viewContent = ob_get_clean();
 
-    // Check if the view extended a layout
+    // Nếu có dùng extend layout từ view
     if (isset($__sections['__layout'])) {
         $layoutPath = BASE_PATH . '/app/views/web/' . str_replace('.', '/', $__sections['__layout']) . '.php';
         if (!file_exists($layoutPath)) {
             die("Layout file not found: " . $layoutPath);
         }
-        // Render the layout
         require $layoutPath;
     } else {
-        // If no layout, just output the view content
         echo $viewContent;
     }
 
-    // Reset sections for the next render call
+    // Reset
     $__sections = [];
     $__currentSection = null;
 }
+
 
 /**+
  * Declares that the current view extends a given layout.
@@ -118,11 +125,10 @@ function yieldSection($sectionName, $defaultContent = '')
 function partial($partialName, $data = [])
 {
     extract($data);
+
     $partialPath = BASE_PATH . '/app/views/web/' . str_replace('.', '/', $partialName) . '.php';
     if (!file_exists($partialPath)) {
         die("Partial file not found: " . $partialPath);
     }
     require $partialPath;
 }
-
-// Ensure the functions are available everywhere by including this file early in your application's bootstrap.
