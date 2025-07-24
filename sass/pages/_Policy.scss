@@ -1,3 +1,107 @@
-h1 {
-  color: #ba0909;
+$bg-sidebar: #e11d1d;
+$active-bg: #eb0000;
+$border-color: #781c1c;
+$text-color: #000;
+$font-size-base: 14px;
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: $font-size-base;
+  color: $text-color;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: $bg-sidebar;
+  border-right: 1px solid $border-color;
+  padding: 20px;
+
+  .font-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    .font-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+      background: #fff;
+      border: 1px solid #aaa;
+      cursor: pointer;
+
+      &.active {
+        background-color: $active-bg;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .menu {
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        padding: 6px 8px;
+        margin-bottom: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #ddd;
+        }
+
+        &.active {
+          background-color: #ccc;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.content {
+  flex-grow: 1;
+  padding: 30px 40px;
+
+  h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 16px;
+    margin-top: 25px;
+    font-weight: bold;
+  }
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  ul,
+  ol {
+    padding-left: 20px;
+  }
+
+  strong {
+    font-weight: bold;
+  }
 }
