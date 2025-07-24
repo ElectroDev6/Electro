@@ -10,3 +10,4 @@ Router::get('/login', 'AuthController@login');
 Router::get('/register', 'AuthController@register');
 Router::get('/detail/(\d+)', 'DetailController@detail');
 Router::get('/cart', 'CartController@index');
+Router::get('/Policy', 'PolicyController@Policy');
