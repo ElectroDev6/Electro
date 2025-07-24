@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\Web\informationController;
 use Core\Router;
 
 Router::get('/', 'HomeController@index');
@@ -11,3 +12,4 @@ Router::get('/register', 'AuthController@register');
 Router::get('/detail/(\d+)', 'DetailController@detail');
 Router::get('/cart', 'CartController@index');
 Router::get('/Policy', 'PolicyController@Policy');
+Router::get('/information', 'informationController@information');

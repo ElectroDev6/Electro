@@ -1,0 +1,161 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 280px;
+  background: white;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.sidebar-header {
+  background: #333;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px 8px 0 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.sidebar-content {
+  padding: 15px 0;
+}
+
+.sidebar-item {
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  color: #333;
+}
+
+.sidebar-item:hover {
+  background-color: #f8f8f8;
+}
+
+.sidebar-item.active {
+  background-color: #333;
+  color: white;
+}
+
+.sidebar-item:last-child {
+  border-bottom: none;
+}
+
+.main-content {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.breadcrumb {
+  background: #f8f8f8;
+  padding: 12px 20px;
+  border-radius: 6px;
+  margin-bottom: 25px;
+  font-size: 14px;
+  color: #666;
+}
+
+.breadcrumb span {
+  color: #333;
+}
+
+h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.intro-text {
+  color: #555;
+  margin-bottom: 30px;
+  text-align: justify;
+  font-size: 15px;
+}
+
+.policy-section {
+  margin-bottom: 25px;
+}
+
+.policy-section h2 {
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.policy-section p {
+  color: #555;
+  margin-bottom: 12px;
+  text-align: justify;
+  font-size: 14px;
+}
+
+.policy-section ul {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+.policy-section li {
+  color: #555;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.highlight-box {
+  background-color: #f8f9fa;
+  border-left: 4px solid #333;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 4px;
+}
+
+.section-divider {
+  border-top: 1px solid #e9ecef;
+  margin: 25px 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}
