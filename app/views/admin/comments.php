@@ -134,8 +134,9 @@
                         </td>
                         <td class="comment-table__cell">
                             <div class="comment-actions">
-                                <button class="comment-actions__btn comment-actions__btn--view">
-                                   <img src="/icons/view_icon.svg" alt=""></button>
+                                <a href="/admin/commentDetail" class="comment-actions__btn comment-actions__btn--view">
+                                   <img src="/icons/view_icon.svg" alt="">
+                                </a>
                                 </button>
                                 <button class="comment-actions__btn comment-actions__btn--like">
                                      <img src="/icons/edit_icon.svg" alt="">

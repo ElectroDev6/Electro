@@ -133,7 +133,7 @@
                         </td>
                         <td class="order-table__cell">40.000 đ</td>
                         <td class="order-table__cell order-table__cell--actions">
-                            <button class="order-table__action-btn order-table__action-btn--view">Chi tiết</button>
+                             <a href="/admin/orderDetail" class="order-table__action-btn order-table__action-btn--view">Chi tiết</a>
                         </td>
                     </tr>
                     
@@ -152,7 +152,7 @@
                         </td>
                         <td class="order-table__cell">40.000 đ</td>
                         <td class="order-table__cell order-table__cell--actions">
-                            <button class="order-table__action-btn order-table__action-btn--view">Chi tiết</button>
+                            <a href="/admin/orderDetail" class="order-table__action-btn order-table__action-btn--view">Chi tiết</a>
                         </td>
                     </tr>
                     

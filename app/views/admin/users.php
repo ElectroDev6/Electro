@@ -79,7 +79,7 @@
                         </td>
                         <td class="user-table__cell">Hôm nay, 9:30 tối</td>
                         <td class="user-table__cell user-table__cell--actions">
-                            <button class="user-table__action-btn">👁</button>
+                            <a href="/admin/userDetail" class="user-table__action-btn">👁</a>
                             <button class="user-table__action-btn">✏️</button>
                             <button class="user-table__action-btn">🗑</button>
                         </td>

@@ -1,6 +1,8 @@
 .header {
    background-color: #ffffff;
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+   position: relative;
+   z-index: 2;
 
    &__container {
       display: flex;
