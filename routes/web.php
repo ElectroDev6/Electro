@@ -11,3 +11,5 @@ Router::get('/contact', 'ContactController@contact');
 Router::get('/login', 'LoginController@login');
 Router::get('/register', 'AuthController@register');
 Router::get('/detail/(\d+)', 'DetailController@detail');
+Router::get('/infor', 'InforController@infor'); // Thêm route cho trang thông tin
+Router::get('/history', 'HistoryController@history'); // Thêm route cho lich su don hang
