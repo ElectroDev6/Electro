@@ -51,7 +51,7 @@
                             </div>
                             
                             <div class="comment-detail__comment-content">
-                                <p>Sản phẩm rất tuyệt vời, chất lượng tốt, giao hàng nhanh. Tôi rất hài lòng về sản phẩm này. Mình mua đi để chơi thử xem thế nào chứ thật ra cũng không tin lắm, nhưng mà về thật trải nghiệm thì nó rất ok thế. Sẽ tiếp tục ủng hộ thêm về sản phẩm mình đi sau này để mua 2 shop này. Mình hẹn các bạn lần tới cho bản thêm 2 shop này. Mình hẹn các đây, camera chụp hình rất tốt. Sẽ giới thiệu cho bạn bè mua 2 shop này.</p>
+                                <p>Sản phẩm rất tuyệt vời, chất lượng tốt, giao hàng nhanh. Tôi rất hài lòng về sản phẩm này. Mình mua đi để chơi thử xem thế nào chứ thật ra cũng không tin lắm, nhưng mà về thật trải nghiệm thì nó rất ok thế. Sẽ tiếp tục ủng hộ thêm về sản phẩm mình đi sau này để mua 2 shop này.</p>
                             </div>
 
                             <div class="comment-detail__actions">
