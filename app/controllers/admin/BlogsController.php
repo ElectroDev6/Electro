@@ -1,9 +1,11 @@
 <?php 
-    namespace App\Controllers\Admin;
-    class BlogsController 
+namespace App\Controllers\Admin;
+
+use Core\View;
+    class BlogsController
     {
         public function index() 
         {
-            render('blogs');
+            View::render('blogs'); // nếu View là class có hàm static render()
         }
     }

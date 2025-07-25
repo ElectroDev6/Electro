@@ -1,10 +1,11 @@
 <?php 
-
 namespace App\Controllers\Admin;
+
+use Core\View;
 class UsersController
 {
     public function index()
     {
-        render('users');
+        View::render('users');
     }
 }

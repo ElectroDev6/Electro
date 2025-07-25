@@ -1,7 +1,9 @@
 <?php
-    namespace App\Controllers\Admin;
+namespace App\Controllers\Admin;
+
+use Core\View;
     class ProfileController {
         public function index() {
-            render('profile');
+            View::render('profile');
         }
     }

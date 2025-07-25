@@ -1,9 +1,11 @@
 <?php
-    namespace App\Controllers\Admin;
+namespace App\Controllers\Admin;
+
+use Core\View;
     class OrderDetailController
     {
         public function index()
         {
-            render('orderDetail');
+            View::render('orderDetail');
         }
     }

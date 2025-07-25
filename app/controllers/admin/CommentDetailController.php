@@ -1,7 +1,9 @@
 <?php 
-    namespace App\Controllers\Admin;
+namespace App\Controllers\Admin;
+
+use Core\View;
     class CommentDetailController {
         public function index() {
-            render('commentDetail');
+             View::render('commentDetail');
         }
     }

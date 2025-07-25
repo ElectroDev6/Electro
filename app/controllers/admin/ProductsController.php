@@ -2,10 +2,11 @@
 
 namespace App\Controllers\Admin;
 
+use Core\View;
 class ProductsController
 {
     public function index()
     {
-        render('products');
+        View::render('products');
     }
 }

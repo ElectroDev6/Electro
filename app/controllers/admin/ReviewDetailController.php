@@ -1,9 +1,11 @@
 <?php
-    namespace App\Controllers\Admin;
+namespace App\Controllers\Admin;
+
+use Core\View;
     class ReviewDetailController
     {
         public function index()
         {
-            render('reviewDetail');
+            View::render('reviewDetail');
         }
     }

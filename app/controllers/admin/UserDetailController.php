@@ -1,7 +1,9 @@
 <?php 
-    namespace App\Controllers\Admin;
+namespace App\Controllers\Admin;
+
+use Core\View;
     class UserDetailController {
         public function index() {
-            render('userDetail');
+            View::render('userDetail');
         }
     }
