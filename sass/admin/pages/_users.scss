@@ -1,0 +1,245 @@
+.user-page {
+   padding: 30px;
+
+   &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+   }
+
+   &__title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #212529;
+   }
+
+   &__add-btn {
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover {
+         background-color: #3367d6;
+      }
+   }
+}
+
+// User Filter Block
+.user-filter {
+   background-color: white;
+   border-radius: 8px;
+   padding: 24px;
+   margin-bottom: 24px;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr auto;
+   gap: 16px;
+   align-items: end;
+
+   &__group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+   }
+
+   &__label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #495057;
+   }
+
+   &__input {
+      padding: 8px 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      font-size: 14px;
+      background-color: white;
+
+      &::placeholder {
+         color: #6c757d;
+      }
+
+      &:focus {
+         outline: none;
+         border-color: #4285f4;
+         box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+      }
+   }
+
+   &__select {
+      padding: 8px 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      font-size: 14px;
+      background-color: white;
+      cursor: pointer;
+
+      &:focus {
+         outline: none;
+         border-color: #4285f4;
+         box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+      }
+   }
+
+   &__actions {
+      display: flex;
+      gap: 8px;
+   }
+
+   &__btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &--primary {
+         background-color: #4285f4;
+         color: white;
+         border: none;
+
+         &:hover {
+            background-color: #3367d6;
+         }
+      }
+
+      &--secondary {
+         background-color: transparent;
+         color: #6c757d;
+         border: 1px solid #dee2e6;
+
+         &:hover {
+            background-color: #f8f9fa;
+            border-color: #adb5bd;
+         }
+      }
+   }
+}
+
+// User List Block
+.user-list {
+   background-color: white;
+   border-radius: 8px;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+   overflow: hidden;
+}
+
+// User Table Block
+.user-table {
+   width: 100%;
+   border-collapse: collapse;
+   font-size: 14px;
+
+   &__head {
+      background-color: #f8f9fa;
+   }
+
+   &__header-row {
+      border-bottom: 1px solid #dee2e6;
+   }
+
+   &__header {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: #495057;
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+   }
+
+   &__body {
+      background-color: white;
+   }
+
+   &__row {
+      border-bottom: 1px solid #dee2e6;
+
+      &:last-child {
+         border-bottom: none;
+      }
+
+      &:hover {
+         background-color: #f8f9fa;
+      }
+   }
+
+   &__cell {
+      padding: 16px 20px;
+      vertical-align: middle;
+
+      &--name {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+      }
+
+      &--actions {
+         display: flex;
+         gap: 8px;
+         align-items: center;
+      }
+   }
+
+   &__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 16px;
+      color: white;
+      flex-shrink: 0;
+
+      &--purple {
+         background-color: #7c3aed;
+      }
+   }
+
+   &__username {
+      color: #212529;
+      font-weight: 500;
+   }
+
+   &__status {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+
+      &--active {
+         background-color: #d1fae5;
+         color: #065f46;
+      }
+
+      &--inactive {
+         background-color: #fee2e2;
+         color: #991b1b;
+      }
+   }
+
+   &__action-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background-color: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: background-color 0.2s;
+
+      &:hover {
+         background-color: #e9ecef;
+      }
+   }
+}
