@@ -4,25 +4,22 @@
     padding: 0;
     font-family: Inter, sans-serif;
 }
-
 body {
     background: #f7f7f7;
-   
+    
 }
-
 .banner {
     img {
         width: 1390px;
         display: block;
     }
 }
-
 .container {
     display: flex;
     max-width: 2000px;
     margin: 20px auto;
     gap: 30px;
-    padding: 0px 50px 0px 0px;
+    padding: 0px 20px 0px 0px;
 }
 
 .filter {
@@ -124,12 +121,59 @@ body {
     }
 }
 
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}   
+// Phan danh mục 
+.category-tabs {
+    display: flex;
+    gap: 15px;
+    border-radius: 8px;
+    padding: 0; // Xóa padding thừa
+    
+
+    &__button {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 5px;
+        height: 80px;
+        width: 106px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        &--active {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        &:hover {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        img {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 5px;
+        }
+    }
+}
+
+
 // phần sản phẩm !!
 .products {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
+    padding: 0; // Xóa padding thừa
 }
 
 .product-card {
@@ -141,8 +185,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    
 
     &__image {
         // Lồng .product-card__image vào trong .product-card (trước đây là img)
@@ -302,71 +344,6 @@ body {
         }
     }
 }
-
-// Phần dung lượng Điện Thoại (filter)
-.filter-Dungluong {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    display: flex;
-    gap: 10px;
-    margin: 10px 0;
-    margin-right: 15px;
-}
-
-.brand-logo-Dungluong {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    border: 1px solid;
-    border-radius: 10px;
-    padding: 5px 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 27px;
-
-    p {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    &:hover {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-
-    &.selected {
-        border-color: #007bff;
-        background-color: #e6f2ff;
-    }
-}
-
-// Phần màu sắc sản phẩm (filter)
-.filter-Mausac {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    display: flex;
-    gap: 8px;
-    margin: 8px 0;
-    margin-right: 140px;
-}
-
-.brand-logo-Mausac {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    width: 15px;
-    height: 15px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-
-    &.selected {
-        border: 2px solid #007bff;
-    }
-}
-
 // phần RAM trong filter
 .filter-group--ram {
 

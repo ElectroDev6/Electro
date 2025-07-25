@@ -11,3 +11,6 @@ Router::get('/login', 'AuthController@login');
 Router::get('/register', 'AuthController@register');
 Router::get('/detail/(\d+)', 'DetailController@detail');
 Router::get('/cart', 'CartController@index'); // Thêm route cho giỏ hàng
+Router::get('/productlaptop', 'ProductLaptopController@productLaptop'); // Thêm
+Router::get('/searchproduct', 'SearchProductController@SearchProduct'); // Thêm
+Router::get('/searchpdlaptop', 'SearchpdlaptopController@searchPdlaptop'); // Thêm route tìm kiếm sản phẩm laptop

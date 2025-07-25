@@ -4,25 +4,22 @@
     padding: 0;
     font-family: Inter, sans-serif;
 }
-
 body {
     background: #f7f7f7;
-   
+    
 }
-
 .banner {
     img {
         width: 1390px;
         display: block;
     }
 }
-
 .container {
     display: flex;
     max-width: 2000px;
     margin: 20px auto;
     gap: 30px;
-    padding: 0px 50px 0px 0px;
+    padding: 0px 20px 0px 0px;
 }
 
 .filter {
@@ -123,13 +120,13 @@ body {
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
 }
-
 // phần sản phẩm !!
 .products {
     flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
+    padding: 0; // Xóa padding thừa
 }
 
 .product-card {
@@ -142,15 +139,13 @@ body {
     align-items: center;
     justify-content: center;
 
-    
-
     &__image {
         // Lồng .product-card__image vào trong .product-card (trước đây là img)
         max-width: 100%;
         height: 150px;
         object-fit: contain;
         margin-bottom: 10px;
-        margin-right: 120px;
+        margin-right: 100px;
     }
 
     &__promo {
@@ -180,6 +175,7 @@ body {
         font-weight: bold;
         transition: 0.3s;
         align-self: center;
+        margin-top: 5px;
 
         &:hover {
             background: #333e48;
@@ -224,22 +220,12 @@ body {
             // Giữ nguyên tên class con
             font-size: 13px;
             color: #008000;
+            padding: 5px;
         }
     }
 
     // Phần dung lượng Điện Thoại trong product-card
-    &__storage-options {
-        // Lồng .product-card__storage-options vào trong .product-card
-        display: flex;
-        gap: 10px;
-        margin: 10px 0;
-        margin-right: 15px;
-
-        &__link {
-            text-decoration: none;
-            color: inherit;
-        }
-    }
+   
 
     &__storage-card {
         // Lồng .product-card__storage-card vào trong .product-card
@@ -258,8 +244,7 @@ body {
             margin: 0;
             font-size: 14px;
             font-weight: 500;
-            text-decoration: un;
-            
+            text-decoration: underline;
         }
 
         &:hover {
@@ -270,103 +255,10 @@ body {
         &.selected {
             border-color: #007bff;
             background-color: #e6f2ff;
-        }
-       
+        }  
     }
-
     // Phần màu sắc sản phẩm trong product-card
-    &__color-options {
-        // Lồng .product-card__color-options vào trong .product-card
-        display: flex;
-        gap: 8px;
-        margin: 8px 0;
-        margin-right: 140px;
-    }
-
-    &__color-swatch {
-        // Lồng .product-card__color-swatch vào trong .product-card
-        width: 15px;
-        height: 15px;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-
-        &:hover {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-        }
-
-        &.selected {
-            border: 2px solid #007bff;
-        }
-    }
 }
-
-// Phần dung lượng Điện Thoại (filter)
-.filter-Dungluong {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    display: flex;
-    gap: 10px;
-    margin: 10px 0;
-    margin-right: 15px;
-}
-
-.brand-logo-Dungluong {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    border: 1px solid;
-    border-radius: 10px;
-    padding: 5px 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 27px;
-
-    p {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    &:hover {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-
-    &.selected {
-        border-color: #007bff;
-        background-color: #e6f2ff;
-    }
-}
-
-// Phần màu sắc sản phẩm (filter)
-.filter-Mausac {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    display: flex;
-    gap: 8px;
-    margin: 8px 0;
-    margin-right: 140px;
-}
-
-.brand-logo-Mausac {
-    // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-    width: 15px;
-    height: 15px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-
-    &.selected {
-        border: 2px solid #007bff;
-    }
-}
-
 // phần RAM trong filter
 .filter-group--ram {
 
