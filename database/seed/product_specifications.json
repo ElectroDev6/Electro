@@ -1,0 +1,42 @@
+[
+   {
+      "spec_id": 1,
+      "product_id": 1,
+      "spec_group": "Thiết kế",
+      "spec_name": "Kích thước",
+      "spec_value": "163 x 77.6 x 8.25 mm",
+      "display_order": 1
+   },
+   {
+      "spec_id": 2,
+      "product_id": 1,
+      "spec_group": "Thiết kế",
+      "spec_name": "Trọng lượng",
+      "spec_value": "227 g",
+      "display_order": 2
+   },
+   {
+      "spec_id": 3,
+      "product_id": 1,
+      "spec_group": "Thiết kế",
+      "spec_name": "Chống nước",
+      "spec_value": "IP68",
+      "display_order": 3
+   },
+   {
+      "spec_id": 4,
+      "product_id": 1,
+      "spec_group": "Hiệu năng",
+      "spec_name": "Chip",
+      "spec_value": "Apple A18 Pro",
+      "display_order": 1
+   },
+   {
+      "spec_id": 5,
+      "product_id": 2,
+      "spec_group": "Hiệu năng",
+      "spec_name": "Chip",
+      "spec_value": "Snapdragon 8 Gen 3",
+      "display_order": 1
+   }
+]

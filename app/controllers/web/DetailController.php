@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Web;
 
+use Core\View;
 use App\Models\DetailModel;
 
 class DetailController
@@ -32,6 +33,6 @@ class DetailController
         }
 
         // require_once BASE_PATH . '/app/views/web/detail.php';
-        render('detail', ['product' => $product]);
+        View::render('detail', ['product' => $product]);
     }
 }

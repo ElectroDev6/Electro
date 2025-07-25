@@ -1,0 +1,37 @@
+[
+   {
+      "description_images_id": 1,
+      "product_description_id": 1,
+      "image_url": "https://example.com/design-front.jpg",
+      "alt_text": "Mặt trước smartphone",
+      "image_order": 1
+   },
+   {
+      "description_images_id": 2,
+      "product_description_id": 1,
+      "image_url": "https://example.com/design-back.jpg",
+      "alt_text": "Mặt sau smartphone",
+      "image_order": 2
+   },
+   {
+      "description_images_id": 3,
+      "product_description_id": 2,
+      "image_url": "https://example.com/performance-chip.jpg",
+      "alt_text": "Chip xử lý",
+      "image_order": 1
+   },
+   {
+      "description_images_id": 4,
+      "product_description_id": 2,
+      "image_url": "https://example.com/camera-system.jpg",
+      "alt_text": "Hệ thống camera",
+      "image_order": 2
+   },
+   {
+      "description_images_id": 5,
+      "product_description_id": 3,
+      "image_url": "https://example.com/samsung-design.jpg",
+      "alt_text": "Thiết kế Samsung",
+      "image_order": 1
+   }
+]

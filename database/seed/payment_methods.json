@@ -1,0 +1,47 @@
+[
+  {
+    "payment_id": 1,
+    "method_name": "Trả góp",
+    "provider": "Home Credit",
+    "is_active": 1,
+    "installment_options": "[6, 12, 24]",
+    "interest_rate": 0,
+    "minimum_amount": 5000000
+  },
+  {
+    "payment_id": 2,
+    "method_name": "Trả góp",
+    "provider": "OCB Bank",
+    "is_active": 1,
+    "installment_options": "[3, 6, 12]",
+    "interest_rate": 0,
+    "minimum_amount": 3000000
+  },
+  {
+    "payment_id": 3,
+    "method_name": "Thanh toán điện tử",
+    "provider": "Samsung Pay",
+    "is_active": 0,
+    "installment_options": "[]",
+    "interest_rate": 0,
+    "minimum_amount": 0
+  },
+  {
+    "payment_id": 4,
+    "method_name": "Tiền mặt",
+    "provider": "COD",
+    "is_active": 1,
+    "installment_options": "[]",
+    "interest_rate": 0,
+    "minimum_amount": 0
+  },
+  {
+    "payment_id": 5,
+    "method_name": "Chuyển khoản",
+    "provider": "Vietcombank",
+    "is_active": 1,
+    "installment_options": "[]",
+    "interest_rate": 0,
+    "minimum_amount": 0
+  }
+]

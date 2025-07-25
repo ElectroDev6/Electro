@@ -1,5 +1,3 @@
 <?php
-
-// use App\Core\Router;
-
-// Router::get('/admin', 'admin\\DashboardController@index');
+use Core\Router;
+Router::get('/admin/dashboard', 'DashboardController@index');

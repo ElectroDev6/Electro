@@ -1,0 +1,37 @@
+[
+   {
+      "category_description_image_id": 1,
+      "category_description_id": 1,
+      "image_url": "https://cdn2.fptshop.com.vn/Uploads/images/2015/Tin-Tuc/hongtt34/1(1).png",
+      "alt_text": "Điện thoại FPT Shop",
+      "image_order": 1
+   },
+   {
+      "category_description_image_id": 2,
+      "category_description_id": 1,
+      "image_url": "https://example.com/category-image2.jpg",
+      "alt_text": "Sản phẩm đa dạng",
+      "image_order": 2
+   },
+   {
+      "category_description_image_id": 3,
+      "category_description_id": 2,
+      "image_url": "https://example.com/tech-image.jpg",
+      "alt_text": "Công nghệ tiên tiến",
+      "image_order": 1
+   },
+   {
+      "category_description_image_id": 4,
+      "category_description_id": 3,
+      "image_url": "https://example.com/design-image.jpg",
+      "alt_text": "Thiết kế đẹp",
+      "image_order": 1
+   },
+   {
+      "category_description_image_id": 5,
+      "category_description_id": 4,
+      "image_url": "https://example.com/performance-image.jpg",
+      "alt_text": "Hiệu năng mạnh",
+      "image_order": 1
+   }
+]

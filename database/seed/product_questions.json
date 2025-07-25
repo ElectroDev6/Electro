@@ -1,0 +1,52 @@
+[
+  {
+    "question_id": 1,
+    "product_id": 1,
+    "user_id": 1,
+    "question_title": "Thời gian bảo hành",
+    "question_content": "Cho hỏi thời gian bảo hành của máy là bao lâu ạ?",
+    "answer_content": "Máy được bảo hành chính hãng 12 tháng tại các trung tâm bảo hành Apple ủy quyền",
+    "question_date": "2024-05-05 10:00:00",
+    "answer_date": "2024-05-05 14:30:00"
+  },
+  {
+    "question_id": 2,
+    "product_id": 1,
+    "user_id": 2,
+    "question_title": "Phụ kiện đi kèm",
+    "question_content": "Máy có kèm cáp sạc không ạ?",
+    "answer_content": "Dạ máy chỉ kèm cáp USB-C to Lightning, không có củ sạc ạ",
+    "question_date": "2024-05-06 11:20:00",
+    "answer_date": "2024-05-06 15:45:00"
+  },
+  {
+    "question_id": 3,
+    "product_id": 2,
+    "user_id": 3,
+    "question_title": "Bảo hành màn hình",
+    "question_content": "Màn hình có bảo hành rơi vỡ không?",
+    "answer_content": "Dạ bảo hành chỉ áp dụng cho lỗi kỹ thuật, không bao gồm rơi vỡ ạ",
+    "question_date": "2024-04-16 09:30:00",
+    "answer_date": "2024-04-16 14:00:00"
+  },
+  {
+    "question_id": 4,
+    "product_id": 3,
+    "user_id": 4,
+    "question_title": "Hỗ trợ 5G",
+    "question_content": "Máy có hỗ trợ 5G tại Việt Nam không?",
+    "answer_content": "Dạ có hỗ trợ đầy đủ các băng tần 5G tại Việt Nam ạ",
+    "question_date": "2024-03-08 14:15:00",
+    "answer_date": "2024-03-08 16:30:00"
+  },
+  {
+    "question_id": 5,
+    "product_id": 4,
+    "user_id": 5,
+    "question_title": "Thời gian giao hàng",
+    "question_content": "Đặt hàng bao lâu thì nhận được ạ?",
+    "answer_content": "Dạ trong nội thành TP.HCM giao trong 2 giờ, các tỉnh khác từ 1-3 ngày ạ",
+    "question_date": "2024-02-22 10:45:00",
+    "answer_date": "2024-02-22 13:20:00"
+  }
+]

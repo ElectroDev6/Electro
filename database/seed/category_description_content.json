@@ -1,0 +1,32 @@
+[
+   {
+      "category_description_content_id": 1,
+      "category_description_id": 1,
+      "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae similique veritatis enim totam incidunt voluptates odit iusto pariatur voluptatem illum.",
+      "content_order": 1
+   },
+   {
+      "category_description_content_id": 2,
+      "category_description_id": 1,
+      "text": "Các sản phẩm của chúng tôi đều được kiểm tra chất lượng nghiêm ngặt trước khi bán ra thị trường.",
+      "content_order": 2
+   },
+   {
+      "category_description_content_id": 3,
+      "category_description_id": 2,
+      "text": "Công nghệ mới nhất được tích hợp trong từng sản phẩm.",
+      "content_order": 1
+   },
+   {
+      "category_description_content_id": 4,
+      "category_description_id": 3,
+      "text": "Thiết kế sang trọng, phù hợp với mọi đối tượng người dùng.",
+      "content_order": 1
+   },
+   {
+      "category_description_content_id": 5,
+      "category_description_id": 4,
+      "text": "Hiệu năng vượt trội đáp ứng mọi nhu cầu sử dụng.",
+      "content_order": 1
+   }
+]

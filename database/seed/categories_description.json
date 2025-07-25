@@ -1,0 +1,27 @@
+[
+   {
+      "category_description_id": 1,
+      "title": "Sản phẩm tuyệt vời",
+      "display_order": 1
+   },
+   {
+      "category_description_id": 2,
+      "title": "Công nghệ tiên tiến",
+      "display_order": 2
+   },
+   {
+      "category_description_id": 3,
+      "title": "Thiết kế đẹp mắt",
+      "display_order": 3
+   },
+   {
+      "category_description_id": 4,
+      "title": "Hiệu năng mạnh mẽ",
+      "display_order": 4
+   },
+   {
+      "category_description_id": 5,
+      "title": "Giá cả hợp lý",
+      "display_order": 5
+   }
+]
