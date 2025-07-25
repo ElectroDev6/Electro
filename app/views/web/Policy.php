@@ -1,200 +1,24 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chính sách đổi trả và bảo hành tiêu chuẩn</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            gap: 20px;
-        }
-
-        .sidebar {
-            width: 280px;
-            background: white;
-            border-radius: 8px;
-            padding: 0;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-        }
-
-        .sidebar-header {
-            background: #333;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 8px 8px 0 0;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .sidebar-content {
-            padding: 15px 0;
-        }
-
-        .sidebar-item {
-            padding: 12px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .sidebar-item:hover {
-            background-color: #f8f8f8;
-        }
-
-        .sidebar-item:last-child {
-            border-bottom: none;
-        }
-
-        .main-content {
-            flex: 1;
-            background: white;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .breadcrumb {
-            background: #f8f8f8;
-            padding: 12px 20px;
-            border-radius: 6px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .breadcrumb span {
-            color: #333;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        .policy-section {
-            margin-bottom: 30px;
-        }
-
-        .policy-section h2 {
-            color: #333;
-            font-size: 18px;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .policy-section h3 {
-            color: #444;
-            font-size: 16px;
-            margin-bottom: 10px;
-            margin-top: 20px;
-            font-weight: 600;
-        }
-
-        .policy-section p {
-            color: #555;
-            margin-bottom: 12px;
-            text-align: justify;
-        }
-
-        .policy-section ul {
-            margin-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .policy-section li {
-            color: #555;
-            margin-bottom: 8px;
-        }
-
-        .highlight {
-            background-color: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-
-        .policy-box {
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-            padding: 20px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
-
-        .warranty-terms {
-            background-color: #e8f4fd;
-            border-left: 4px solid #007bff;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-
-        .return-conditions {
-            background-color: #f0f8ff;
-            padding: 20px;
-            border-radius: 6px;
-            margin: 15px 0;
-            border: 1px solid #b8daff;
-        }
-
-        .numbered-list {
-            counter-reset: item;
-            padding-left: 0;
-        }
-
-        .numbered-list li {
-            display: block;
-            margin-bottom: 10px;
-            padding-left: 30px;
-            position: relative;
-            list-style: none;
-        }
-
-        .numbered-list li:before {
-            content: counter(item) ".";
-            counter-increment: item;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-            color: #007bff;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <div class="h2">
+        <title>Chính sách mạng di động</title>
+    </div>
+    <link rel="stylesheet" href="css/information.css" />
 </head>
 
 <body>
     <div class="container">
         <div class="sidebar">
-            <div class="sidebar-header">
-                Danh mục chính sách
-            </div>
+            <div class="sidebar-header">Danh mục chính sách</div>
             <div class="sidebar-content">
                 <div class="sidebar-item">Câu hỏi thường gặp</div>
                 <div class="sidebar-item">Giới thiệu về Shop</div>
-                <div class="sidebar-item">Đại lý ủy quyền và TTBH uy quyền của Apple</div>
-                <div class="sidebar-item">Chính sách mạng di động</div>
+                <div class="sidebar-item">Đại lý ủy quyền và TTBH ủy quyền của Apple</div>
+                <div class="sidebar-item active">Chính sách mạng di động</div>
                 <div class="sidebar-item">Chính sách gói cước di động</div>
                 <div class="sidebar-item">Danh sách điểm cung cấp dịch vụ viễn thông</div>
                 <div class="sidebar-item">Chính sách giao hàng & lắp đặt</div>
@@ -203,7 +27,7 @@
                 <div class="sidebar-item">Chính sách khách hàng thân thiết tại Shop</div>
                 <div class="sidebar-item">Chính sách khui hộp sản phẩm</div>
                 <div class="sidebar-item">Giới thiệu máy đổi trả</div>
-                <div class="sidebar-item">Quy định hộ trợ kỹ thuật và sao lưu dữ liệu</div>
+                <div class="sidebar-item">Quy định hỗ trợ kỹ thuật và sao lưu dữ liệu</div>
                 <div class="sidebar-item">Chính sách bảo mật</div>
                 <div class="sidebar-item">Chính sách bảo hành</div>
                 <div class="sidebar-item">Chính sách bảo mật dữ liệu cá nhân khách hàng</div>
@@ -213,137 +37,99 @@
         </div>
 
         <div class="main-content">
-            <div class="breadcrumb">
-                Có chủ nhà > <span>Có chủ lớn</span>
-            </div>
+            <div class="breadcrumb">Trang chủ> <span>Chính sách mạng di động</span></div>
+            <h1>Chính sách mạng di động</h1>
+            <div class="intro-text">
 
-            <h1>Chính sách đổi trả và bảo hành tiêu chuẩn</h1>
-
-            <div class="policy-section">
-                <h2>• Khung chính sách đổi trả:</h2>
-                <p>WooCommerce cung cấp các hướng dẫn thiết yếu cho việc tạo chính sách hoàn tiền và đổi trả hiệu quả, bao gồm các chi tiết như tần suất quan tâm đến việc có chính sách rõ ràng, ghi chú về các sản phẩm có thể hoặc không thể hoàn tiền, quyết định về vấn chuyển đổi trả, và thiết lập lý do của khách hàng về thời gian hoàn tiền.</p>
-
-                <p>Tính năng quan trọng nhất: Khung AuthorizeNet</p>
-
-                <p>Việc thêm chính sách bảo hành và đổi trả vào đơn giãn vừa phức tạp. Đơn giản vì để dễng thêm bảo hành cho một sản phẩm - có thể mất chưa đến một phút, nhưng phức tạp vì extension này có khả năng tùy chỉnh cực kỳ đa dạng.</p>
-
-                <p>Hệ thống không chỉ quý trình RMA, thêm bảo hành cho sản phẩm, và cho phép khách hàng yêu cầu và quản lý đơn hàng/hoàn tiền từ tài khoản của họ.</p>
             </div>
 
             <div class="policy-section">
-                <h3>Các thành phần chính của chính sách đổi trả</h3>
-
-                <div class="return-conditions">
-                    <h3>1. Thời gian đổi trả</h3>
-                    <p>Thiết lập số ngày tối đa cho phép đổi trả và Chọn trang thái đơn hàng mà chính sách RMA được áp dụng</p>
-
-                    <h3>2. Quy trình đổi trả</h3>
-                    <p>Quản lý quy trình hoàn tiền trong cửa hàng một cách dễ dàng. Kích hoạt biểu mẫu hoàn tiền, cho phép đổi trả tự động, tất biểu mẫu hoàn tiền sau một thời gian cụ thể, và quản lý hoàn tiền trực tiếp từ đơn hàng WooCommerce.</p>
-
-                    <h3>3. Yêu cầu đổi trả không cần đăng nhập</h3>
-                    <p>Tính năng mọi yêu cầu hoàn tiền mà không cần đăng nhập!</p>
-                    <p>Chính sách bảo hành:</p>
-                </div>
-            </div>
-
-            <div class="warranty-terms">
-                <h3>Bảo hành sản phẩm điện tử</h3>
-                <p>Đa số sản phẩm có thời hạn bảo hành của nhà sản xuất 1 năm. Bảo hành mở rộng có sẵn cho hầu hết các sản phẩm với mức phí nhỏ</p>
-
-                <h3>• Điều kiện bảo hành:</h3>
-                <p>Chúng tôi sẽ chấp nhận đổi trả bất kỳ sản phẩm mới chưa qua sử dụng của đại lý nếu sản phẩm không hoạt động do lỗi vật liệu hoặc lỗi sản xuất trong thời gian một năm kể từ ngày mua</p>
-                <p>Khuyến nghị cho chính sách đổi trả website điện tử</p>
-
-                <h3>• Thời gian đổi trả phổ biến:</h3>
-                <p>7-14 ngày: Đổi trả có không hài lòng</p>
-                <p>30 ngày: Đổi trả do lỗi sản phẩm</p>
-                <p>1 năm: Bảo hành chính hãng</p>
-
-                <h3>• Điều kiện đổi trả:</h3>
-                <p>Sản phẩm còn nguyên vẹn, chưa qua sử dụng</p>
-                <p>Có đầy đủ phụ kiện, hộp, sách hướng dẫn</p>
-                <p>Tem bảo hành còn nguyên vẹn</p>
-                <p>Có hóa đơn mua hàng</p>
+                <h2>A. MỤC ĐÍCH VÀ PHẠM VI ÁP DỤNG</h2>
+                <h2>I. Mục đích</h2>
+                <p> Quy định chính sách giá cước dịch vụ viễn thông di động mạng di động FPT.
+                <h2>II. Phạm vi áp dụng</h2>
+                Chuỗi cửa hàng FPT Shop và các chuỗi Branded Store (F.Studio, S.Studio,…) theo danh sách thông báo từ Ngành hàng.</p>
             </div>
 
             <div class="policy-section">
-                <h3>• Quy trình đổi trả:</h3>
-                <ol class="numbered-list">
-                    <li>Khách hàng tạo yêu cầu đổi trả</li>
-                    <li>Cung cấp lý do đổi trả</li>
-                    <li>Đóng gói và gửi sản phẩm</li>
-                    <li>Kiểm tra sản phẩm</li>
-                    <li>Xử lý đổi trả/hoàn tiền</li>
-                </ol>
-
-                <h3>• Phí đổi trả:</h3>
-                <p>Lỗi do nhà sản xuất: Miễn phí.</p>
-                <p>Khách hàng đổi ý: Khách hàng chịu phí vận chuyển.</p>
-                <p>Đổi size/màu: Tùy chính sách cụ thể.</p>
+                <h2>B. QUY ĐỊNH CHÍNH SÁCH GIÁ CƯỚC DỊCH VỤ</h2>
+                <h2> I. Loại thuê bao</h2>
+                <p>Áp dụng với thuê bao trả trước.</p>
+                <h2> II. Thời hạn sử dụng</h2>
+                <p>Ngay khi kích hoạt, thuê bao có thời hạn sử dụng là 60 ngày.
+                    Khi thực hiện các giao dịch có phát sinh cước, nạp tiền thì thời hạn sử dụng sẽ tăng lên là 90 ngày tính từ ngày phát sinh giao dịch.
+                    Trong trường hợp kết thúc thời hạn sử dụng 90 ngày, thuê bao không thực hiện một trong các giao dịch có phát sinh cước, nạp tiền, thì sẽ chuyển sang trạng thái khóa 1 chiều (khóa chiều đi: thực hiện cuộc gọi, nhắn tin đi và truy cập Internet).
+                    Thời hạn khóa 1 chiều là 10 ngày. Hết thời hạn này, nếu thuê bao không nạp tiền thì sẽ chuyển sang trạng thái khóa 2 chiều (chiều đi và chiều đến).
+                    Thời hạn khóa 2 chiều (giữ số) là 30 ngày. Hết thời hạn này, nếu thuê bao không nạp tiền thì thuê bao sẽ bị cắt hủy khỏi hệ thống.</p>
+            </div>
+            <div class="policy-section">
+                <h2> III. Giá cước</h2>
+                <p>Giá cước hòa mạng cước hòa mạng thuê bao trả trước: 25.000 đồng/thuê bao (theo quy định tại Thông tư 14/2012/TT-BTTTT ngày 12 tháng 10 năm 2012 của Bộ Thông tin và Truyền thông).</p>
+            </div>
+            <div class="policy-section">
+                <h2> 2. Giá cước thông tin</h2>
+                <p>Giá cước Thoại và SMS
+                    a. Giá cước áp dụng với khu vực InZone, OutZone như dưới đây:
+                     </p>
             </div>
 
-            <div class="highlight">
-                <p><strong>Lưu ý:</strong> Quy trình hoàn tiền và đổi trả WooCommerce được thực hiện đơn giản. Cho phép khách hàng yêu cầu hoàn tiền và đổi trả sản phẩm trực tiếp từ trang Tài khoản của tôi.</p>
+            <div class="policy-section">
+                <h2>2.Nội dung:</h2>
+                <p>Khi thuê bao đang ở trong vùng đăng ký (InZone)
+                    Khi thuê bao ở ngoài vùng đăng ký (OutZone)
+                    Cước nhắn tin SMS nội mạng / liên mạng trong nước
+                    250 đồng/SMS
+                    Tính cước Inzone: Khi thuê bao liên lạc với số thuê bao phát sinh cuộc gọi và thuê bao nhận cuộc gọi trong vùng đăng ký của thuê bao gọi đi.
+                    Tính cước Outzone: Với các trường hợp còn lại.
+                    Ghi chú: Trường hợp thuê bao thực hiện chuyển vùng trong nước với VinaPhone, gọi qua video call, số tắt (taxi, Vietnam Airlines...) áp dụng mức cước OutZone.
+                    b. Phạm vi Zone tính trong phạm vi 1 tỉnh/thành phố với 63/63 tỉnh thành tại Việt Nam theo danh sách chi tiết bên dưới:
+                    - Các tỉnh/thành phố áp dụng chính sách giá cước InZone:
+                    Khu vực: danh sách tỉnh/thành phố, Miền Bắc, Hà Nội, Phú Thọ, Điện Biên, Hà Nam, Hoà Bình, Lai Châu, Lào Cai, Nam Định, Ninh Bình, Sơn La, Vĩnh Phúc, Yên Bái, Hải Dương, Hưng Yên, Quảng Ninh, Bắc Ninh, Bắc Giang, Thái Nguyên, Tuyên Quang, Hà Giang, Lạng Sơn, Bắc Kạn, Cao Bằng, Thái Bình, Miền Trung, Nghệ An, Hà Tĩnh, Thanh Hoá, Quảng Bình, Quảng Trị, Quảng Ngãi, Quảng Nam, Thừa Thiên Huế, Bình Định, Phú Yên, Khánh Hoà, Đắk Lắk, Đắk Nông, Kon Tum, Gia Lai, Miền Nam, Bình Dương, Bình Thuận, Ninh Thuận, Bình Phước, Lâm Đồng, Tây Ninh, Long An, Đồng Nai, Vũng Tàu, Cần Thơ, Tiền Giang, Bến Tre, Bạc Liêu, Cà Mau, Kiên Giang, Trà Vinh, An Giang, Sóc Trăng, Hậu Giang, Đồng Tháp, Vĩnh Long.
+                      - Các tỉnh/ thành phố ngoài tỉnh/ thành phố áp dụng chính sách giá cước InZone nêu trên sẽ áp dụng chính sách giá cước OutZone.
+                    Khi kích hoạt thuê bao tại tỉnh/thành phố nào thì hệ thống sẽ tự động đăng ký vùng Zone đó trong vòng 24 giờ kể từ thời điểm thuê bao kích hoạt. Trong trường hợp muốn thay đổi vùng Zone, khách hàng có thể đến các Điểm cung cấp dịch vụ viễn thông FPTShop để được hỗ trợ.
+                    Cú pháp đăng ký, kiểm tra, thay đổi vùng Zone:</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>2.1.Giá cước Data</h2>
+                <p>Giá cước đối với thuê bao không có gói cước hoặc gói cước hết thời gian sử dụng: 75 đồng/50KB. Trong trường hợp thuê bao đăng ký gói cước, áp dụng theo quy định cụ thể của từng gói cước.</p>
+            </div>
+            <div class="policy-section">
+                <h2> 3. Nguyên tắc tính cước</h2>
+                <p>3.1. Nguyên tắc tính cước Thoại
+                    Tính cước cuộc gọi theo block 6 giây + block 1 giây, bắt đầu từ giây đầu tiên.
+                    Cuộc gọi nội mạng: khi thuê bao di động FPT gọi đến thuê bao khác cũng thuộc mạng FPT và mạng MobiFone.
+                    Cuộc gọi liên mạng: khi thuê bao di động FPT gọi đến: thuê bao di động, cố định, vô tuyến cố định thuộc các mạng viễn thông không thuộc mạng FPT và MobiFone.
+                    - Nguyên tắc làm tròn:
+                    Khai báo mức cước của từng đơn vị cước có phần thập phân tới hai chữ số sau dấu thập phân (phần trăm của 1 đồng). Phần lẻ (nếu có) được làm tròn: <5 làm tròn  xuống 0;>=5 làm tròn lên 1.
+                        Cước sử dụng dịch vụ (cước phát sinh) được làm tròn theo tổng số tiền cước phát sinh của từng cuộc gọi, tin nhắn, giao dịch...: phần lẻ >= 0,5 đồng làm tròn thành 1 đồng, phần lẻ < 0,5 đồng làm tròn xuống 0 đồng.</p>
+            </div>
+            <div class="policy-section">
+                <h2> 3.2. Nguyên tắc tính cước SMS</h2>
+                <p>Nguyên tắc trừ cước: Khi tin nhắn gửi thành công đến trung tâm tin nhắn của nhà mạng (SMSC), thuê bao trừ tiền vào tài khoản thưởng trước (nếu có), sau đó trừ tài khoản chính.
+                    SMS nội mạng: áp dụng cho tin nhắn từ thuê bao của mạng FPT đến thuê bao khác cũng thuộc mạng FPT, mạng MobiFone, Saymee và các mạng MVNO khác đang hợp tác với MobiFone.
+                    SMS liên mạng: áp dụng cho tin nhắn từ thuê bao của mạng FPT đến thuê bao các mạng điện thoại không thuộc mạng FPT, mạng MobiFone, Saymee và các mạng MVNO khác đang hợp tác với MobiFone.</p>
+            </div>
+            <div class="policy-section">
+                <h2> 3.3. Nguyên tắc tính cước Data</h2>
+                <p>Giá cước đối với thuê bao không có gói cước hoặc gói cước hết thời gian sử dụng: 75 đồng/50KB. Trong trường hợp thuê bao đăng ký gói cước, áp dụng theo quy định cụ thể của từng gói cước.</p>
+            </div>
+            <div class="policy-section">
+                <h2>2.1.Giá cước Data</h2>
+                <p>Thuê bao truy nhập Internet trừ tiền vào tài khoản chính theo dung lượng sử dụng và theo quy định của từng gói cước.
+                    Dung lượng sử dụng được tính trên tổng dung lượng download và upload</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Thêm hiệu ứng hover cho sidebar items
         document.querySelectorAll('.sidebar-item').forEach(item => {
             item.addEventListener('click', function() {
-                // Remove active class from all items
                 document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-                // Add active class to clicked item
                 this.classList.add('active');
             });
         });
-
-        // Smooth scroll effect for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
     </script>
-
-    <style>
-        .sidebar-item.active {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .sidebar-item.active:hover {
-            background-color: #0056b3;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                padding: 10px;
-            }
-
-            .sidebar {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-        }
-    </style>
 </body>
 
 </html>

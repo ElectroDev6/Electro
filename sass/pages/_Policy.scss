@@ -1,107 +1,56 @@
-$bg-sidebar: #e11d1d;
-$active-bg: #eb0000;
-$border-color: #781c1c;
-$text-color: #000;
-$font-size-base: 14px;
-
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  font-size: $font-size-base;
-  color: $text-color;
-}
-
-.wrapper {
-  display: flex;
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: #333;
 }
 
 .sidebar {
-  width: 260px;
-  background-color: $bg-sidebar;
-  border-right: 1px solid $border-color;
+  width: 280px;
+  background: #f4f4f4;
   padding: 20px;
+  border-right: 1px solid #ccc;
+}
 
-  .font-controls {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+.sidebar h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
 
-    .font-btn {
-      padding: 6px 12px;
-      font-size: 13px;
-      background: #fff;
-      border: 1px solid #aaa;
-      cursor: pointer;
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+}
 
-      &.active {
-        background-color: $active-bg;
-        font-weight: bold;
-      }
-    }
-  }
+.sidebar li {
+  margin: 10px 0;
+  cursor: pointer;
+}
 
-  .menu {
-    h3 {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      li {
-        padding: 6px 8px;
-        margin-bottom: 5px;
-        border-radius: 4px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #ddd;
-        }
-
-        &.active {
-          background-color: #ccc;
-          font-weight: bold;
-        }
-      }
-    }
-  }
+.font-btn {
+  background: #eee;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .content {
   flex-grow: 1;
-  padding: 30px 40px;
+  padding: 30px;
+}
 
-  h1 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-  }
+.content h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
 
-  h2 {
-    font-size: 16px;
-    margin-top: 25px;
-    font-weight: bold;
-  }
+.content ol,
+.content ul {
+  margin-left: 20px;
+}
 
-  p,
-  ul,
-  ol {
-    margin-bottom: 15px;
-    line-height: 1.6;
-  }
-
-  ul,
-  ol {
-    padding-left: 20px;
-  }
-
-  strong {
-    font-weight: bold;
-  }
+.content li {
+  margin: 5px 0;
 }
