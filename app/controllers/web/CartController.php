@@ -2,10 +2,12 @@
 
 namespace App\Controllers\Web;
 
+use Core\View;
+
 class CartController
 {
     public function index()
     {
-        render('cart');
+        View::render('cart');
     }
 }

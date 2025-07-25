@@ -2,10 +2,13 @@
 
 namespace App\Controllers\Web;
 
+
+use Core\View;
+
 class ProductController
 {
     public function product()
     {
-        echo "Đây là trang sản phẩm!";
+        View::render('product');
     }
 }

@@ -61,6 +61,7 @@
                             <td class="condition-col">24 - 48 tiếng tính từ lúc khách đặt hàng (hoặc theo thoả thuận với khách hàng).</td>
                         </tr>
                         <td class="installation-type-col">Chi phí giao hàng</td>
+
                 </div>
                 </table>
             </div>

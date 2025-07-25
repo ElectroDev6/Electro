@@ -1,3 +1,3 @@
 <div>
-    <h1> trang Cart </h1>
+    <h2>Đây là trang Cart</h2>
 </div>
