@@ -1,19 +1,23 @@
-<?php extend('layout.main'); ?>
+<?php
 
-<?php section('hero_section'); ?>
-<div class="hero-section">
-    <?php partial('partials.slider');
-    ?>
+use Core\View; ?>
+<?php View::extend('layouts.main'); ?>
+
+<?php View::section('page_title'); ?>
+Trang chủ
+<?php View::endSection(); ?>
+
+<?php View::section('content'); ?>
+
+<?php View::partial('partials.slider'); ?>
+
+<h3>Sản phẩm nổi bật</h3>
+<div class="product">
+    <div class="product__list">
+        <?php foreach ($products as $product): ?>
+            <?php View::partial('components.product-card', ['product' => $product]); ?>
+        <?php endforeach; ?>
+    </div>
 </div>
-<?php endSection(); ?>
 
-<?php section('content'); ?>
-<section>
-    <h3>Sản phẩm nổi bật</h3>
-    <p>Đây là danh sách các sản phẩm bán chạy nhất của chúng tôi.</p>
-    <ul>
-        <li><a href="/products/1">Sản phẩm A</a></li>
-        <li><a href="/products/2">Sản phẩm B</a></li>
-    </ul>
-</section>
-<?php endSection(); ?>
+<?php View::endSection(); ?>

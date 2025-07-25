@@ -7,8 +7,8 @@ define('BASE_URL', 'http://electro.test');
 
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once BASE_PATH . '/core/Container.php';
-require_once BASE_PATH . '/app/helpers/web/view.php';
-require_once BASE_PATH . '/app/helpers/web/asset.php';
+require_once BASE_PATH . '/core/View.php';
+require_once BASE_PATH . '/app/helpers/asset.php';
 require_once BASE_PATH . '/routes/web.php';
 require_once BASE_PATH . '/routes/admin.php';
 
