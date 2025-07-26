@@ -2,10 +2,12 @@
 
 namespace App\Controllers\Web;
 
-class informationController
+use Core\View;
+
+class InformationController
 {
     public function information()
     {
-        render('information');
+        View::render('information');
     }
 }

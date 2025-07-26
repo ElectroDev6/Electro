@@ -2,10 +2,12 @@
 
 namespace App\Controllers\Web;
 
+use Core\View;
+
 class ClientController
 {
     public function Client()
     {
-        render('Client');
+        View::render('Client');
     }
 }

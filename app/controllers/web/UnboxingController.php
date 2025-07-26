@@ -2,10 +2,12 @@
 
 namespace App\Controllers\Web;
 
+use Core\View;
+
 class UnboxingController
 {
     public function Unboxing()
     {
-        render('Unboxing');
+        View::render('Unboxing');
     }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Controllers\Web;
 
+use Core\View;
+
 class RepairController
 {
     public function Repair()
     {
-        render('Repair');
+        View::render('Repair');
     }
 }

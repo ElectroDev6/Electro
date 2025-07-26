@@ -2,10 +2,12 @@
 
 namespace App\Controllers\Web;
 
+use Core\View;
+
 class RefundController
 {
     public function Refund()
     {
-        render('Refund');
+        View::render('Refund');
     }
 }

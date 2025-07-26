@@ -2,10 +2,12 @@
 
 namespace App\Controllers\Web;
 
+use Core\View;
+
 class PolicyController
 {
     public function Policy()
     {
-        render('Policy');
+        View::render('Policy');
     }
 }
