@@ -12,4 +12,11 @@ Router::get('/admin/reviews', 'ReviewsController@index');
 Router::get('/admin/reviewDetail', 'ReviewDetailController@index');
 Router::get('/admin/blogs', 'BlogsController@index');
 Router::get('/admin/profile', 'ProfileController@index');
+Router::get('/admin/product', 'ProductDetailController@index');
+
+
+
+
+
+
 // ReviewsController tên file và function index() không thay đổi còn ReviewsController chỉ là tên class
