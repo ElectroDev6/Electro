@@ -4,15 +4,15 @@ use Core\View; ?>
 <?php View::extend('layouts.main'); ?>
 
 <?php View::section('page_title'); ?>
-Sản phẩm
+Tiềm kiếm sản phẩm
 <?php View::endSection(); ?>
 
 <?php View::section('content'); ?>
-
 <body>
     <div class="banner">
-        <img src="/img/Slide2Laptop.jpg" alt="Banner">
+        <img src="/img/Slide1Laptop.webp" alt="Banner">
     </div>
+
     <div class="container">
         <aside class="filter">
             <h3 class="filter__heading">Bộ lọc tìm kiếm</h3>
@@ -51,31 +51,27 @@ Sản phẩm
                     </a>
                 </div>
             </div>
+
             <div class="filter-group">
                 <h4 class="filter-group__heading">Mức giá</h4>
-                <label class="filter-group__label"><input type="radio" name="price" value="all" checked
-                        class="filter-group__radio"> Tất cả</label>
-                <label class="filter-group__label"><input type="radio" name="price" value="25-30"
-                        class="filter-group__radio"> Từ 25 đến 30 triệu</label>
-                <label class="filter-group__label"><input type="radio" name="price" value="20-25"
-                        class="filter-group__radio"> Từ 20 đến 25 triệu</label>
-                <label class="filter-group__label"><input type="radio" name="price" value="15-20"
-                        class="filter-group__radio"> Từ 15 đến 20 triệu</label>
-                <label class="filter-group__label"><input type="radio" name="price" value="10-15"
-                        class="filter-group__radio"> Từ 10 đến 15 triệu</label>
-                <label class="filter-group__label"><input type="radio" name="price" value="duoi10"
-                        class="filter-group__radio"> Dưới 10 triệu</label>
+                <label class="filter-group__label"><input type="radio" name="price" value="all" checked class="filter-group__radio"> Tất cả</label>
+                <label class="filter-group__label"><input type="radio" name="price" value="25-30" class="filter-group__radio"> Từ 25 đến 30 triệu</label>
+                <label class="filter-group__label"><input type="radio" name="price" value="20-25" class="filter-group__radio"> Từ 20 đến 25 triệu</label>
+                <label class="filter-group__label"><input type="radio" name="price" value="15-20" class="filter-group__radio"> Từ 15 đến 20 triệu</label>
+                <label class="filter-group__label"><input type="radio" name="price" value="10-15" class="filter-group__radio"> Từ 10 đến 15 triệu</label>
+                <label class="filter-group__label"><input type="radio" name="price" value="duoi10" class="filter-group__radio"> Dưới 10 triệu</label>
+
                 <p class="filter-group__price-prompt">Nhập khoảng giá phù hợp với bạn:</p>
                 <input type="number" id="min-price" placeholder="Từ" class="filter-group__price-input"> ~
                 <input type="number" id="max-price" placeholder="Đến" class="filter-group__price-input">
             </div>
+
             <div class="filter-group">
                 <h4 class="filter-group__heading">Hệ điều hành</h4>
-                <label class="filter-group__label"><input type="checkbox" value="Apple M4 series"
-                        class="filter-group__checkbox"> IOS</label>
-                <label class="filter-group__label"><input type="checkbox" value="Apple M3 series"
-                        class="filter-group__checkbox"> Android</label>
+                <label class="filter-group__label"><input type="checkbox" value="Apple M4 series" class="filter-group__checkbox"> IOS</label>
+                <label class="filter-group__label"><input type="checkbox" value="Apple M3 series" class="filter-group__checkbox"> Android</label>
             </div>
+
             <div class="filter-group filter-group--ram">
                 <h4 class="filter-group__heading">Dung lượng ROM</h4>
                 <div class="ram-options">
@@ -101,16 +97,13 @@ Sản phẩm
                     </a>
                 </div>
             </div>
+            
             <div class="filter-group">
                 <h4 class="filter-group__heading">Hiệu năng và Pin</h4>
-                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce Series"
-                        class="filter-group__checkbox"> Dưới 3000 mah</label>
-                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce MX Series"
-                        class="filter-group__checkbox"> Từ 3000 - 4000 mah</label>
-                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce RTX Series"
-                        class="filter-group__checkbox"> Từ 4000 - 5000 mah </label>
-                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce RTX Series"
-                        class="filter-group__checkbox"> Trên 5000 mah </label>
+                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce Series" class="filter-group__checkbox"> Dưới 3000 mah</label>
+                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce MX Series" class="filter-group__checkbox"> Từ 3000 - 4000 mah</label>
+                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce RTX Series" class="filter-group__checkbox"> Từ 4000 - 5000 mah </label>
+                <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce RTX Series" class="filter-group__checkbox"> Trên 5000 mah </label>
             </div>
             <div class="filter-group filter-group--ram">
                 <h4 class="filter-group__heading">Dung lượng RAM</h4>
@@ -139,12 +132,9 @@ Sản phẩm
             </div>
             <div class="filter-group">
                 <h4 class="filter-group__heading">Kích thước màn hình</h4>
-                <label class="filter-group__label"><input type="checkbox" value="13 inch"
-                        class="filter-group__checkbox"> Từ 5 - 6.5 inch</label>
-                <label class="filter-group__label"><input type="checkbox" value="14 inch"
-                        class="filter-group__checkbox"> Từ 6.5 - 6.8 inch</label>
-                <label class="filter-group__label"><input type="checkbox" value="15 inch"
-                        class="filter-group__checkbox"> Trên 6.8 inch</label>
+                <label class="filter-group__label"><input type="checkbox" value="13 inch" class="filter-group__checkbox"> Từ 5 - 6.5 inch</label>
+                <label class="filter-group__label"><input type="checkbox" value="14 inch" class="filter-group__checkbox"> Từ 6.5 - 6.8 inch</label>
+                <label class="filter-group__label"><input type="checkbox" value="15 inch" class="filter-group__checkbox"> Trên 6.8 inch</label>
             </div>
             <div class="filter-group filter-group--refresh-rate">
                 <h4 class="filter-group__heading">Tần số quét</h4>
@@ -171,10 +161,31 @@ Sản phẩm
                     </a>
                 </div>
             </div>
+
         </aside>
-        <!-- Phần sản phẩm -->
-        <main class="products" id="product-list">
-            <div class="product-card">
+        <!-- Phần danh mục -->
+        <div class="content-wrapper">
+            <div class="category-tabs">
+                <button class="category-tabs__button category-tabs__button--active">
+                    <img src="/img/DM_All.svg" alt="Tất cả">
+                    <span>Tất cả</span>
+                </button>
+                <button class="category-tabs__button">
+                    <img src="/img/SP_DT_iphone.png" alt="Điện thoại">
+                    <span>Điện thoại</span>
+                </button>
+                <button class="category-tabs__button">
+                    <img src="/img/DM_laptop.png" alt="Laptop">
+                    <span>Laptop</span>
+                </button>
+                <button class="category-tabs__button">
+                    <img src="/img/DM_tainghe.png" alt="Phụ kiện">
+                    <span>Phụ kiện</span>
+                </button>
+            </div>
+            <!-- Phần sản phẩm -->
+            <main class="products" id="product-list">
+               <div class="product-card">
                 <!-- Icon bên phải sản phẩm -->
                 <div class="product-card__feature">
                     <div class="product-card__feature-icon">
@@ -182,12 +193,376 @@ Sản phẩm
                     </div>
                     <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
                     <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
+                        <img src="/img/DT_nutcamera.svg" alt="">
                     </div>
                     <div class="product-card__feature-text">Camera siêu nét
                     </div>
                     <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">
+                        Viền màn hình <br> siêu mỏng
+                    </div>
+                </div>
+                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
+                <p class="product-card__promo">Trả góp 0%</p>
+                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                <div class="product-card__price-box">
+                    <span class="product-card__old-price">34.290.000 ₫</span>
+                    <div class="product-card__new-price">30.090.000 ₫</div>
+                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                </div>
+
+                <div class="product-card__storage-options">
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">256GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">512GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">1TB</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="product-card__color-options">
+                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
+                </div>
+                <button class="product-card__button">Xem chi tiết</button>
+            </div>  <div class="product-card">
+                <!-- Icon bên phải sản phẩm -->
+                <div class="product-card__feature">
+                    <div class="product-card__feature-icon">
+                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
+                    </div>
+                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_nutcamera.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">Camera siêu nét
+                    </div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">
+                        Viền màn hình <br> siêu mỏng
+                    </div>
+                </div>
+                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
+                <p class="product-card__promo">Trả góp 0%</p>
+                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                <div class="product-card__price-box">
+                    <span class="product-card__old-price">34.290.000 ₫</span>
+                    <div class="product-card__new-price">30.090.000 ₫</div>
+                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                </div>
+
+                <div class="product-card__storage-options">
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">256GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">512GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">1TB</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="product-card__color-options">
+                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
+                </div>
+                <button class="product-card__button">Xem chi tiết</button>
+            </div>  <div class="product-card">
+                <!-- Icon bên phải sản phẩm -->
+                <div class="product-card__feature">
+                    <div class="product-card__feature-icon">
+                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
+                    </div>
+                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_nutcamera.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">Camera siêu nét
+                    </div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">
+                        Viền màn hình <br> siêu mỏng
+                    </div>
+                </div>
+                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
+                <p class="product-card__promo">Trả góp 0%</p>
+                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                <div class="product-card__price-box">
+                    <span class="product-card__old-price">34.290.000 ₫</span>
+                    <div class="product-card__new-price">30.090.000 ₫</div>
+                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                </div>
+
+                <div class="product-card__storage-options">
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">256GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">512GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">1TB</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="product-card__color-options">
+                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
+                </div>
+                <button class="product-card__button">Xem chi tiết</button>
+            </div>  <div class="product-card">
+                <!-- Icon bên phải sản phẩm -->
+                <div class="product-card__feature">
+                    <div class="product-card__feature-icon">
+                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
+                    </div>
+                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_nutcamera.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">Camera siêu nét
+                    </div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">
+                        Viền màn hình <br> siêu mỏng
+                    </div>
+                </div>
+                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
+                <p class="product-card__promo">Trả góp 0%</p>
+                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                <div class="product-card__price-box">
+                    <span class="product-card__old-price">34.290.000 ₫</span>
+                    <div class="product-card__new-price">30.090.000 ₫</div>
+                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                </div>
+
+                <div class="product-card__storage-options">
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">256GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">512GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">1TB</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="product-card__color-options">
+                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
+                </div>
+                <button class="product-card__button">Xem chi tiết</button>
+            </div>  <div class="product-card">
+                <!-- Icon bên phải sản phẩm -->
+                <div class="product-card__feature">
+                    <div class="product-card__feature-icon">
+                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
+                    </div>
+                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_nutcamera.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">Camera siêu nét
+                    </div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">
+                        Viền màn hình <br> siêu mỏng
+                    </div>
+                </div>
+                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
+                <p class="product-card__promo">Trả góp 0%</p>
+                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                <div class="product-card__price-box">
+                    <span class="product-card__old-price">34.290.000 ₫</span>
+                    <div class="product-card__new-price">30.090.000 ₫</div>
+                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                </div>
+
+                <div class="product-card__storage-options">
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">256GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">512GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">1TB</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="product-card__color-options">
+                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
+                </div>
+                <button class="product-card__button">Xem chi tiết</button>
+            </div>  <div class="product-card">
+                <!-- Icon bên phải sản phẩm -->
+                <div class="product-card__feature">
+                    <div class="product-card__feature-icon">
+                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
+                    </div>
+                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_nutcamera.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">Camera siêu nét
+                    </div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">
+                        Viền màn hình <br> siêu mỏng
+                    </div>
+                </div>
+                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
+                <p class="product-card__promo">Trả góp 0%</p>
+                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                <div class="product-card__price-box">
+                    <span class="product-card__old-price">34.290.000 ₫</span>
+                    <div class="product-card__new-price">30.090.000 ₫</div>
+                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                </div>
+
+                <div class="product-card__storage-options">
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">256GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">512GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">1TB</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="product-card__color-options">
+                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
+                </div>
+                <button class="product-card__button">Xem chi tiết</button>
+            </div>  <div class="product-card">
+                <!-- Icon bên phải sản phẩm -->
+                <div class="product-card__feature">
+                    <div class="product-card__feature-icon">
+                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
+                    </div>
+                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_nutcamera.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">Camera siêu nét
+                    </div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">
+                        Viền màn hình <br> siêu mỏng
+                    </div>
+                </div>
+                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
+                <p class="product-card__promo">Trả góp 0%</p>
+                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                <div class="product-card__price-box">
+                    <span class="product-card__old-price">34.290.000 ₫</span>
+                    <div class="product-card__new-price">30.090.000 ₫</div>
+                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                </div>
+
+                <div class="product-card__storage-options">
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">256GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">512GB</span>
+                        </div>
+                    </a>
+                    <a href="" class="product-card__storage-link">
+                        <div class="product-card__storage-card">
+                            <span class="product-card__storage-text">1TB</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="product-card__color-options">
+                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
+                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
+                </div>
+                <button class="product-card__button">Xem chi tiết</button>
+            </div>  <div class="product-card">
+                <!-- Icon bên phải sản phẩm -->
+                <div class="product-card__feature">
+                    <div class="product-card__feature-icon">
+                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
+                    </div>
+                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_nutcamera.svg" alt="">
+                    </div>
+                    <div class="product-card__feature-text">Camera siêu nét
+                    </div>
+                    <div class="product-card__feature-icon">
+                        <img src="/img/DT_vienmanhinh.svg" alt="">
                     </div>
                     <div class="product-card__feature-text">
                         Viền màn hình <br> siêu mỏng
@@ -227,378 +602,10 @@ Sản phẩm
                 </div>
                 <button class="product-card__button">Xem chi tiết</button>
             </div>
-            <div class="product-card">
-                <!-- Icon bên phải sản phẩm -->
-                <div class="product-card__feature">
-                    <div class="product-card__feature-icon">
-                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                    </div>
-                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">Camera siêu nét
-                    </div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">
-                        Viền màn hình <br> siêu mỏng
-                    </div>
-                </div>
-                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
-                <p class="product-card__promo">Trả góp 0%</p>
-                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                <div class="product-card__price-box">
-                    <span class="product-card__old-price">34.290.000 ₫</span>
-                    <div class="product-card__new-price">30.090.000 ₫</div>
-                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                </div>
 
-                <div class="product-card__storage-options">
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">256GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">512GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">1TB</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="product-card__color-options">
-                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                </div>
-                <button class="product-card__button">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <!-- Icon bên phải sản phẩm -->
-                <div class="product-card__feature">
-                    <div class="product-card__feature-icon">
-                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                    </div>
-                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">Camera siêu nét
-                    </div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">
-                        Viền màn hình <br> siêu mỏng
-                    </div>
-                </div>
-                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
-                <p class="product-card__promo">Trả góp 0%</p>
-                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                <div class="product-card__price-box">
-                    <span class="product-card__old-price">34.290.000 ₫</span>
-                    <div class="product-card__new-price">30.090.000 ₫</div>
-                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                </div>
-
-                <div class="product-card__storage-options">
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">256GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">512GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">1TB</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="product-card__color-options">
-                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                </div>
-                <button class="product-card__button">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <!-- Icon bên phải sản phẩm -->
-                <div class="product-card__feature">
-                    <div class="product-card__feature-icon">
-                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                    </div>
-                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">Camera siêu nét
-                    </div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">
-                        Viền màn hình <br> siêu mỏng
-                    </div>
-                </div>
-                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
-                <p class="product-card__promo">Trả góp 0%</p>
-                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                <div class="product-card__price-box">
-                    <span class="product-card__old-price">34.290.000 ₫</span>
-                    <div class="product-card__new-price">30.090.000 ₫</div>
-                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                </div>
-
-                <div class="product-card__storage-options">
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">256GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">512GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">1TB</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="product-card__color-options">
-                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                </div>
-                <button class="product-card__button">Xem chi tiết</button>
-            </div>
-            <div class="product-card">
-                <!-- Icon bên phải sản phẩm -->
-                <div class="product-card__feature">
-                    <div class="product-card__feature-icon">
-                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                    </div>
-                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">Camera siêu nét
-                    </div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">
-                        Viền màn hình <br> siêu mỏng
-                    </div>
-                </div>
-                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
-                <p class="product-card__promo">Trả góp 0%</p>
-                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                <div class="product-card__price-box">
-                    <span class="product-card__old-price">34.290.000 ₫</span>
-                    <div class="product-card__new-price">30.090.000 ₫</div>
-                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                </div>
-
-                <div class="product-card__storage-options">
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">256GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">512GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">1TB</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="product-card__color-options">
-                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                </div>
-                <button class="product-card__button">Xem chi tiết</button>
-            </div><div class="product-card">
-                <!-- Icon bên phải sản phẩm -->
-                <div class="product-card__feature">
-                    <div class="product-card__feature-icon">
-                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                    </div>
-                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">Camera siêu nét
-                    </div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">
-                        Viền màn hình <br> siêu mỏng
-                    </div>
-                </div>
-                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
-                <p class="product-card__promo">Trả góp 0%</p>
-                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                <div class="product-card__price-box">
-                    <span class="product-card__old-price">34.290.000 ₫</span>
-                    <div class="product-card__new-price">30.090.000 ₫</div>
-                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                </div>
-
-                <div class="product-card__storage-options">
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">256GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">512GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">1TB</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="product-card__color-options">
-                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                </div>
-                <button class="product-card__button">Xem chi tiết</button>
-            </div><div class="product-card">
-                <!-- Icon bên phải sản phẩm -->
-                <div class="product-card__feature">
-                    <div class="product-card__feature-icon">
-                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                    </div>
-                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">Camera siêu nét
-                    </div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">
-                        Viền màn hình <br> siêu mỏng
-                    </div>
-                </div>
-                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
-                <p class="product-card__promo">Trả góp 0%</p>
-                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                <div class="product-card__price-box">
-                    <span class="product-card__old-price">34.290.000 ₫</span>
-                    <div class="product-card__new-price">30.090.000 ₫</div>
-                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                </div>
-
-                <div class="product-card__storage-options">
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">256GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">512GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">1TB</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="product-card__color-options">
-                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                </div>
-                <button class="product-card__button">Xem chi tiết</button>
-            </div><div class="product-card">
-                <!-- Icon bên phải sản phẩm -->
-                <div class="product-card__feature">
-                    <div class="product-card__feature-icon">
-                        <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                    </div>
-                    <div class="product-card__feature-text">Màn hình cực lớn <br> 6.9 inch</div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/nutcamera.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">Camera siêu nét
-                    </div>
-                    <div class="product-card__feature-icon">
-                        <img src="/img/vienmanhinh.svg" alt="">
-                    </div>
-                    <div class="product-card__feature-text">
-                        Viền màn hình <br> siêu mỏng
-                    </div>
-                </div>
-                <img src="/img/SP_DT_iphone.png" alt="Sản phẩm 1" class="product-card__image">
-                <p class="product-card__promo">Trả góp 0%</p>
-                <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                <div class="product-card__price-box">
-                    <span class="product-card__old-price">34.290.000 ₫</span>
-                    <div class="product-card__new-price">30.090.000 ₫</div>
-                    <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                </div>
-
-                <div class="product-card__storage-options">
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">256GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">512GB</span>
-                        </div>
-                    </a>
-                    <a href="" class="product-card__storage-link">
-                        <div class="product-card__storage-card">
-                            <span class="product-card__storage-text">1TB</span>
-                        </div>
-                    </a>
-                </div>
-                <div class="product-card__color-options">
-                    <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                    <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                </div>
-                <button class="product-card__button">Xem chi tiết</button>
-            </div>
-        </main>
-    </div>
-    <script src="script.js"></script>
+            </main>
+        </div>
+        <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 
 <?php View::endSection(); ?>

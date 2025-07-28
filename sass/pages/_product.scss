@@ -1,6 +1,9 @@
-.banner img {
-  width: 100%;
-  display: block;
+.banner {
+  img {
+    width: 1400px;
+    display: block;
+    margin: auto;
+  }
 }
 
 .container {
@@ -8,7 +11,7 @@
   max-width: 2000px;
   margin: 20px auto;
   gap: 30px;
-  padding: 0px 50px 0px 0px;
+  padding: 0px 80px 0px 80px;
 }
 
 .filter {
@@ -18,10 +21,11 @@
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: auto;
-  max-height: 800px; // Giới hạn chiều cao tối đa của menu
-  overflow-y: auto; // ✅ Thêm dòng này để cuộn dọc khi quá dài
+  max-height: 800px;
+  overflow-y: auto;
 
-  h3 {
+  &__heading {
+    // Lồng .filter__heading vào trong .filter (trước đây là h3)
     margin-bottom: 15px;
     font-weight: bold;
   }
@@ -29,18 +33,39 @@
   .filter-group {
     margin-bottom: 20px;
 
-    h4 {
+    &__heading {
+      // Lồng .filter-group__heading vào trong .filter-group (trước đây là h4)
       margin-bottom: 8px;
       font-size: 15px;
       color: #333;
       font-weight: bold;
     }
 
-    label {
+    &__label {
+      // Lồng .filter-group__label vào trong .filter-group (trước đây là label)
       display: block;
       margin-bottom: 5px;
       font-size: 14px;
       cursor: pointer;
+    }
+
+    &__radio,
+    &__checkbox {
+      margin-right: 5px;
+      text-decoration: none;
+    }
+
+    &__price-prompt {
+      margin-top: 8px;
+      font-size: 13px;
+    }
+
+    &__price-input {
+      width: 90px;
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
     }
   }
 }
@@ -49,6 +74,12 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
+
+  &__link {
+    // Lồng .brand-logos__link vào trong .brand-logos
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .brand-logo-card {
@@ -61,28 +92,25 @@
   height: 42px;
   overflow: hidden;
   transition: all 0.2s ease-in-out;
-  cursor: pointer; // Thêm cursor pointer trực tiếp vào thẻ div này
-}
+  cursor: pointer;
 
-.brand-logo-card img {
-  // Quy tắc img nằm ngoài brand-logo-card
-  max-width: 80%;
-  max-height: 100%;
-  object-fit: contain;
-}
+  &__image {
+    // Lồng .brand-logo-card__image vào trong .brand-logo-card (trước đây là img)
+    max-width: 80%;
+    max-height: 100%;
+    object-fit: contain;
+  }
 
-// Hiệu ứng khi di chuột vào (HOVER)
-.brand-logo-card:hover {
-  // Áp dụng hover trực tiếp lên brand-logo-card
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-}
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
 
-// Hiệu ứng khi được chọn (sẽ cần JavaScript để thêm/bóc class này)
-.brand-logo-card.selected {
-  border-color: #007bff;
-  background-color: #e6f2ff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  &.selected {
+    border-color: #007bff;
+    background-color: #e6f2ff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
 }
 
 // phần sản phẩm !!
@@ -102,8 +130,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  max-height: 400px;
+  position: relative;
 
-  img {
+  &__image {
+    // Lồng .product-card__image vào trong .product-card (trước đây là img)
     max-width: 100%;
     height: 150px;
     object-fit: contain;
@@ -111,22 +142,25 @@
     margin-right: 120px;
   }
 
-  h4 {
+  &__promo {
+    // Lồng .product-card__promo vào trong .product-card (trước đây là p)
+    font-size: 12px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #333;
+    margin-right: 163px;
+  }
+
+  &__name {
+    // Lồng .product-card__name vào trong .product-card (trước đây là h4)
     font-size: 14px;
     color: #333;
-    margin-bottom: 5px;
+    padding: 5px;
     margin-right: 78px;
   }
 
-  // .price {
-  //     color: #e53935;
-  //     font-weight: bold;
-  //     margin-bottom: 8px;
-  //     font-size: 18px;
-  //     margin-right: 78px;
-  // }
-
-  button {
+  &__button {
+    // Lồng .product-card__button vào trong .product-card (trước đây là button)
     background: #ffcc00;
     border: none;
     padding: 8px 12px;
@@ -134,115 +168,164 @@
     cursor: pointer;
     font-weight: bold;
     transition: 0.3s;
+    align-self: center;
 
     &:hover {
       background: #333e48;
+      color: #fff;
     }
   }
 
-  p {
-    // Của chử "Trả góp 0%"
-    font-size: 12px;
-    border-radius: 5px;
-    color: #fff;
-    background-color: #333;
-    margin-right: 168px;
+  // Phần giá sản phẩm
+  &__price-box {
+    // Lồng .product-card__price-box vào trong .product-card (trước đây là .price-box)
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 5px;
+    margin-right: 106px;
+
+    .product-card__old-price {
+      // Giữ nguyên tên class con
+      text-decoration: line-through;
+      color: #888;
+      font-size: 14px;
+      margin-right: 5px;
+    }
+
+    .product-card__new-price {
+      // Giữ nguyên tên class con
+      font-size: 20px;
+      font-weight: bold;
+      color: #cb1c22;
+      margin: 3px 0;
+    }
+
+    .product-card__save-price {
+      // Giữ nguyên tên class con
+      font-size: 13px;
+      color: #008000;
+    }
+  }
+
+  // Phần dung lượng Điện Thoại trong product-card
+  &__storage-options {
+    // Lồng .product-card__storage-options vào trong .product-card
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    margin-right: 26px;
+
+    &__link {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  &__storage-card {
+    // Lồng .product-card__storage-card vào trong .product-card
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 27px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    .product-card__storage-text {
+      // Lồng .product-card__storage-text vào trong .product-card__storage-card (trước đây là p)
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: un;
+    }
+
+    &:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    &.selected {
+      border-color: #007bff;
+      background-color: #e6f2ff;
+    }
+  }
+
+  // Phần màu sắc sản phẩm trong product-card
+  &__color-options {
+    // Lồng .product-card__color-options vào trong .product-card
+    display: flex;
+    gap: 8px;
+    margin: 8px 0;
+    margin-right: 140px;
+  }
+
+  &__color-swatch {
+    // Lồng .product-card__color-swatch vào trong .product-card
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    &.selected {
+      border: 2px solid #007bff;
+    }
+  }
+  //Phần Icons bên phải sản phẩm
+  &__feature {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 5;
+  }
+
+  &__feature-icon {
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__feature-text {
+    font-size: 11px;
+    color: #333;
+    text-align: center;
+    line-height: 1.2;
   }
 }
 
-// Phần giá sản phẩm
-.price-box {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 5px;
-  margin-right: 90px;
-
-  .old-price {
-    text-decoration: line-through;
-    color: #888;
-    font-size: 14px;
-    margin-right: 5px;
-  }
-
-  .discount {
-    color: #e53935; // Màu đỏ
-    font-size: 14px;
-    font-weight: bold;
-    margin-left: 5px;
-  }
-
-  .new-price {
-    font-size: 20px;
-    font-weight: bold;
-    color: #cb1c22; // Màu đỏ đậm
-    margin: 3px 0;
-  }
-
-  .save-price {
-    font-size: 13px;
-    color: #008000; // Màu xanh lá
-  }
-}
-
-// phần thương hiệu RAM
-.brand-ram {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.brand-logo-ram {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 42px;
-  overflow: hidden;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer; // Thêm cursor pointer trực tiếp vào thẻ div này
-
-  p {
-    text-decoration: none;
-  }
-}
-
-// phần thương hiệu Hz
-.brand-Hz {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.brand-logo-Hz {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 42px;
-  overflow: hidden;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer; // Thêm cursor pointer trực tiếp vào thẻ div này
-
-  p {
-    text-decoration: none;
-  }
-}
-
-//Phần dung lượng Điện Thoại
-/* Phần dung lượng sản phẩm */
+// Phần dung lượng Điện Thoại (filter)
 .filter-Dungluong {
+  // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
   display: flex;
   gap: 10px;
-  /* Khoảng cách giữa các ô */
   margin: 10px 0;
+  margin-right: 15px;
 }
 
 .brand-logo-Dungluong {
+  // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
   border: 1px solid;
   border-radius: 10px;
   padding: 5px 10px;
@@ -265,5 +348,123 @@
   &.selected {
     border-color: #007bff;
     background-color: #e6f2ff;
+  }
+}
+
+// Phần màu sắc sản phẩm (filter)
+.filter-Mausac {
+  // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
+  display: flex;
+  gap: 8px;
+  margin: 8px 0;
+  margin-right: 140px;
+}
+
+.brand-logo-Mausac {
+  // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  }
+
+  &.selected {
+    border: 2px solid #007bff;
+  }
+}
+
+// phần RAM trong filter
+.filter-group--ram {
+  // Sử dụng class của filter-group
+  .ram-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    &__link {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .ram-option-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    &__text {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    &:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    &.selected {
+      border-color: #007bff;
+      background-color: #e6f2ff;
+    }
+  }
+}
+
+// phần Tần số quét (Hz) trong filter
+.filter-group--refresh-rate {
+  // Sử dụng class của filter-group
+  .refresh-rate-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    &__link {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .refresh-rate-option-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 42px;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    &__text {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    &:hover {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    &.selected {
+      border-color: #007bff;
+      background-color: #e6f2ff;
+    }
   }
 }

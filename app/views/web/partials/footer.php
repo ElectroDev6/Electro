@@ -15,16 +15,16 @@
            <h3 class="footer__social-title">KẾT NỐI VỀ ELECTRO</h3>
            <div class="footer__social-links">
              <a href="#" class="footer__social-link footer__social-link--facebook">
-               <img src="/icons/facebook_icon.svg" alt="Facebook">
+               <img src="http://localhost/Electro/public/icons/facebook_icon.svg" alt="Facebook">
              </a>
              <a href="#" class="footer__social-link footer__social-link--zalo">
-               <img src="/icons/zalo_icon.svg" alt="Zalo">
+               <img src="http://localhost/Electro/public/icons/zalo_icon.svg" alt="Zalo">
              </a>
              <a href="#" class="footer__social-link footer__social-link--youtube">
-               <img src="/icons/youtube_icon.svg" alt="Youtube">
+               <img src="http://localhost/Electro/public/icons/youtube_icon.svg" alt="Youtube">
              </a>
              <a href="#" class="footer__social-link footer__social-link--tiktok">
-               <img src="/icons/tiktok_icon.svg" alt="Tiktok">
+               <img src="http://localhost/Electro/public/icons/tiktok_icon.svg" alt="Tiktok">
              </a>
            </div>
          </div>
@@ -129,29 +129,28 @@
          <h3 class="footer__section-title">HỖ TRỢ THANH TOÁN</h3>
          <div class="footer__payment">
            <div class="footer__payment-methods">
-             <img src="/icons/visa_icon.svg" alt="Visa" class="footer__payment-icon">
-             <img src="/icons/mastercard_icon.svg" alt="Mastercard" class="footer__payment-icon">
-             <img src="/icons/jcb_icon.svg" alt="JCB" class="footer__payment-icon">
-             <img src="/icons/amex_icon.svg" alt="American Express" class="footer__payment-icon">
-             <img src="/icons/vnpay_icon.svg" alt="VNPay" class="footer__payment-icon">
-             <img src="/icons/zalopay_icon.svg" alt="ZaloPay" class="footer__payment-icon">
-             <img src="/icons/napas_icon.svg" alt="Napas" class="footer__payment-icon">
-             <img src="/icons/momo_icon.svg" alt="MoMo" class="footer__payment-icon">
-             <img src="/icons/foxpay_icon.svg" alt="FoxPay" class="footer__payment-icon">
-             <img src="/icons/applepay_icon.svg" alt="Apple Pay" class="footer__payment-icon">
-             <img src="/icons/muadee_icon.svg" alt="muadee" class="footer__payment-icon">
-             <img src="/icons/homepaylater_icon.svg" alt="HomePayLater" class="footer__payment-icon">
-             <img src="/icons/applepay_icon.svg" alt="Apple Pay" class="footer__payment-icon">
-             <img src="/icons/samsungpay_icon.svg" alt="Samsung Pay" class="footer__payment-icon">
-             <img src="/icons/googlepay_icon.svg" alt="Google Pay" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/mastercard_icon.svg" alt="Mastercard" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/jcb_icon.svg" alt="JCB" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/amex_icon.svg" alt="American Express" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/vnpay_icon.svg" alt="VNPay" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/zalopay_icon.svg" alt="ZaloPay" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/napas_icon.svg" alt="Napas" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/momo_icon.svg" alt="MoMo" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/foxpay_icon.svg" alt="FoxPay" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/applepay_icon.svg" alt="Apple Pay" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/muadee_icon.svg" alt="muadee" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/homepaylater_icon.svg" alt="HomePayLater" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/applepay_icon.svg" alt="Apple Pay" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/samsungpay_icon.svg" alt="Samsung Pay" class="footer__payment-icon">
+             <img src="http://localhost/Electro/public/icons/googlepay_icon.svg" alt="Google Pay" class="footer__payment-icon">
            </div>
          </div>
 
          <h3 class="footer__section-title">CHỨNG NHẬN</h3>
          <div class="footer__certifications">
-           <img src="/icons/dmca_icon.svg" alt="Certification 1" class="footer__certification-icon">
-           <img src="/icons/thuong_hieu_manh_2013_icon.svg" alt="Certification 2" class="footer__certification-icon">
-           <img src="/icons/san_pham_dich_vu_hang_dau_viet_nam_icon.svg" alt="Certification 3" class="footer__certification-icon">
+           <img src="http://localhost/Electro/public/icons/dmca_icon.svg" alt="Certification 1" class="footer__certification-icon">
+           <img src="http://localhost/Electro/public/icons/thuong_hieu_manh_2013_icon.svg" alt="Certification 2" class="footer__certification-icon">
+           <img src="http://localhost/Electro/public/icons/san_pham_dich_vu_hang_dau_viet_nam_icon.svg" alt="Certification 3" class="footer__certification-icon">
          </div>
        </div>
      </div>
@@ -169,7 +168,7 @@
          </div>
 
          <div class="footer__certification-badge">
-           <img src="/icons/da_thong_bao_bo_cong_thuong_icon.svg" alt="Bộ Công Thương Certification" class="footer__badge-icon">
+           <img src="http://localhost/Electro/public/icons/da_thong_bao_bo_cong_thuong_icon.svg" alt="Bộ Công Thương Certification" class="footer__badge-icon">
          </div>
        </div>
      </div>
