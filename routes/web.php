@@ -18,3 +18,9 @@ Router::get('/history', 'HistoryController@history');
 Router::get('/productlaptop', 'ProductLaptopController@productLaptop'); // Thêm
 Router::get('/searchproduct', 'SearchProductController@SearchProduct'); // Thêm
 Router::get('/searchpdlaptop', 'SearchpdlaptopController@searchPdlaptop'); // Thêm route tìm kiếm sản phẩm laptop
+Router::get('/policy', 'PolicyController@Policy');
+Router::get('/information', 'InformationController@information');
+Router::get('/refund', 'RefundController@refund');
+Router::get('/client', 'ClientController@client');
+Router::get('/unboxing', 'UnboxingController@Unboxing');
+Router::get('/repair', 'RepairController@repair');
