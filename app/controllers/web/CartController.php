@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Controllers\Web;
+
+use Core\View;
+
 class CartController
 {
     public function index()
     {
-        render('cart'); // Gọi view cart.php
+        View::render('cart');
     }
 }
-
-?>
