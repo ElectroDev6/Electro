@@ -21,7 +21,7 @@ Trang chủ
             <div class="sidebar-item">Chính sách giao hàng & lắp đặt</div>
             <div class="sidebar-item">Chính sách giao hàng & lắp đặt Điện máy</div>
             <div class="sidebar-item">Chính sách giao hàng & lắp đặt Điện máy chi bán</div>
-            <div class="sidebar-item active">Chính sách khách hàng thân thiết tại Shop</div>
+            <div class="sidebar-item ">Chính sách khách hàng thân thiết tại Shop</div>
             <div class="sidebar-item">Chính sách khui hộp sản phẩm</div>
             <div class="sidebar-item">Giới thiệu máy đổi trả</div>
             <div class="sidebar-item">Quy định hỗ trợ kỹ thuật và sao lưu dữ liệu</div>

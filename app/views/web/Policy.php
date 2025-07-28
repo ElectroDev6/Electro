@@ -25,7 +25,7 @@ Trang chính sách
             <div class="sidebar-item">Chính sách khui hộp sản phẩm</div>
             <div class="sidebar-item">Giới thiệu máy đổi trả</div>
             <div class="sidebar-item">Quy định hỗ trợ kỹ thuật và sao lưu dữ liệu</div>
-            <a href="information" class="sidebar-item active">Chính sách bảo mật</a>
+            <a href="information" class="sidebar-item ">Chính sách bảo mật</a>
             <div class="sidebar-item">Chính sách đổi trả</div>
             <div class="sidebar-item">Chính sách bảo mật dữ liệu cá nhân khách hàng</div>
             <div class="sidebar-item">Hướng dẫn mua hàng và thanh toán online</div>
