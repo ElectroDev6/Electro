@@ -3,8 +3,7 @@
 <?php section('content'); ?>
 <section class="cart-page">
   <div class="cart-page__header">
-    <div class="cart-page__breadcrumb">Trang chủ / Gicd /Applications/XAMPP/xamppfiles/htdocs/Electro
-ỏ hàng</div>
+    <div class="cart-page__breadcrumb">Trang chủ / Giỏ hàng</div>
     <h1 class="cart-page__title">Đây là trang giỏ hàng</h1>
   </div>
 
