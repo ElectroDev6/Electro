@@ -10,6 +10,9 @@ class View
 
     public static function render($viewPath, $data = [])
     {
+        $startTime = microtime(true);
+        $startMemory = memory_get_usage();
+
         extract($data);
 
         $pageName = basename($viewPath);
@@ -23,7 +26,29 @@ class View
         } else {
             echo $content;
         }
+
+        $endTime = microtime(true);
+        $endMemory = memory_get_usage();
+        $peakMemory = memory_get_peak_usage();
+
+        // Format
+        $renderTime = number_format(($endTime - $startTime) * 1000, 2); // ms
+        $usedMemory = number_format(($endMemory - $startMemory) / 1024, 2); // KB
+        $peakMemoryFormatted = number_format($peakMemory / 1024, 2); // KB
+
+        // Log to file (logs/view.log)
+        $logMessage = sprintf(
+            "[%s] Rendered view: %s | Time: %sms | Used: %sKB | Peak: %sKB\n",
+            date('Y-m-d H:i:s'),
+            $viewPath,
+            $renderTime,
+            $usedMemory,
+            $peakMemoryFormatted
+        );
+
+        error_log($logMessage, 3, BASE_PATH . '/storage/logs/view.log');
     }
+
 
     protected static function viewFile($view)
     {
@@ -70,6 +95,11 @@ class View
     public static function partial($viewPath, $data = [])
     {
         extract($data);
+        require self::viewFile($viewPath);
+    }
+
+    public static function component($viewPath)
+    {
         require self::viewFile($viewPath);
     }
 
