@@ -1,6 +1,14 @@
-<?php extend('layout.main'); ?>
+<?php
 
-<?php section('content'); ?>
+use Core\View; ?>
+
+<?php View::extend('layouts.main'); ?>
+
+<?php View::section('page_title'); ?>
+Thanh toán
+<?php View::endSection(); ?>
+
+<?php View::section('content'); ?>
 <section class="cart-page">
   <div class="cart-page__header">
     <div class="cart-page__breadcrumb">
@@ -32,7 +40,7 @@
             <div class="order-product__price">
               <span class="order-product__quantity">x1</span>
               <div class="order-product__current-price">41.990.000 ₫</div>
-              
+
             </div>
           </div>
         </div>
@@ -52,7 +60,7 @@
             <div class="order-product__price">
               <span class="order-product__quantity">x1</span>
               <div class="order-product__current-price">41.990.000 ₫</div>
-              
+
             </div>
           </div>
         </div>
@@ -178,4 +186,4 @@
     </div>
   </div>
 </section>
-<?php endSection(); ?>
+<?php View::endSection(); ?>
