@@ -107,3 +107,33 @@ h1 {
     margin-bottom: 15px;
   }
 }
+.sidebar {
+  width: 250px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+
+  &-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &-item {
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+}

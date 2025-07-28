@@ -12,24 +12,24 @@ Chính
     <div class="sidebar">
         <div class="sidebar-header">Danh mục chính sách</div>
         <div class="sidebar-content">
-            <div class="sidebar-item">Câu hỏi thường gặp</div> <a></a>
+            <div class="sidebar-item">Câu hỏi thường gặp</div>
             <div class="sidebar-item">Giới thiệu về Shop</div>
             <div class="sidebar-item">Đại lý ủy quyền và TTBH ủy quyền của Apple</div>
-            <a href="policy" class="sidebar-item">Chính sách mạng di động</a>
+            <div class="sidebar-item"><a href="policy">Chính sách mạng di động</a></div>
             <div class="sidebar-item">Chính sách gói cước di động</div>
             <div class="sidebar-item">Danh sách điểm cung cấp dịch vụ viễn thông</div>
             <div class="sidebar-item">Chính sách giao hàng & lắp đặt</div>
             <div class="sidebar-item">Chính sách giao hàng & lắp đặt Điện máy</div>
             <div class="sidebar-item">Chính sách giao hàng & lắp đặt Điện máy chi bán</div>
-            <a href="client" class="sidebar-item">Chính sách khách hàng thân thiết</a>
+            <div class="sidebar-item "><a href="client">Chính sách khách hàng thân thiết tại Shop</a></div>
             <div class="sidebar-item">Chính sách khui hộp sản phẩm</div>
-            <div class="sidebar-item">Giới thiệu máy đổi trả</div>
-            <div class="sidebar-item">Quy định hỗ trợ kỹ thuật và sao lưu dữ liệu</div>
-            <a href="information" class="sidebar-item active">Chính sách bảo mật</a>
-            <div class="sidebar-item">Chính sách đổi trả</div>
+            <div class="sidebar-item"><a href="refund">Chính sách đổi trả và bảo hành tiêu chuẩn</a></div>
+            <div class="sidebar-item"><a href="repair">Chính sách khui hộp sản phẩm</a></div>
+            <div class="sidebar-item"><a href="information">Chính sách bảo mật</a></div>
+            <div class="sidebar-item">Chính sách bảo hành</div>
             <div class="sidebar-item">Chính sách bảo mật dữ liệu cá nhân khách hàng</div>
             <div class="sidebar-item">Hướng dẫn mua hàng và thanh toán online</div>
-            <a href="refund" class="sidebar-item">Chính sách đổi trả bảo hành </a>
+            <div class="sidebar-item">Chính sách đổi trả</div>
         </div>
     </div>
 
