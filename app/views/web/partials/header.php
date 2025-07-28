@@ -42,19 +42,21 @@
                         </span>
                         <a href="#">Cửa hàng</a>
                     </li>
-                    <li class="header__top-item">
-                        <span class="header__top-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <circle cx="12" cy="6" r="4" stroke="#333e48" stroke-width="1.5"></circle>
-                                    <path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="#333e48" stroke-width="1.5"></path>
-                                </g>
-                            </svg>
-                        </span>
-                        <a href="#">Tài khoản của tôi</a>
-                    </li>
+                    <a href="/login">
+                        <li class="header__top-item">
+                            <span class="header__top-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <circle cx="12" cy="6" r="4" stroke="#333e48" stroke-width="1.5"></circle>
+                                        <path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="#333e48" stroke-width="1.5"></path>
+                                    </g>
+                                </svg>
+                            </span>
+                            <p>Tài khoản của tôi</p>
+                        </li>
+                    </a>
                 </ul>
             </div>
         </div>
@@ -69,7 +71,8 @@
                     </svg>
                 </a>
                 <button class="header__menu-btn">
-                    <span class="header__menu-icon">
+                    <!-- menu icon -->
+                    <span class="header__menu-icon menu-toggle" id="menu-toggle">
                         <svg width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -105,9 +108,28 @@
                 </button>
             </form>
 
+            <div class="header__search-dropdown">
+                <form class="header__search-dropdown-form">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+                    <button type="submit" class="header__search-btn">
+                        <span class="header__search-icon">
+                            <svg width="16" height="16" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#333e48">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <g id="layer1">
+                                        <path d="M 7.5 0 C 3.3637867 0 0 3.3637867 0 7.5 C 0 11.636213 3.3637867 15 7.5 15 C 9.3884719 15 11.109883 14.292492 12.429688 13.136719 L 19.146484 19.853516 A 0.50083746 0.50083746 0 1 0 19.853516 19.146484 L 13.136719 12.429688 C 14.292492 11.109883 15 9.3884719 15 7.5 C 15 3.3637867 11.636213 0 7.5 0 z M 7.5 1 C 11.095773 1 14 3.9042268 14 7.5 C 14 11.095773 11.095773 14 7.5 14 C 3.9042268 14 1 11.095773 1 7.5 C 1 3.9042268 3.9042268 1 7.5 1 z " style="fill:#333e48; fill-opacity:1; stroke:none; stroke-width:0px;"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                    </button>
+                </form>
+            </div>
+
             <div class="header__actions">
                 <!-- compare -->
-                <div class="header__icon">
+                <!-- <div class="header__icon">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -118,6 +140,20 @@
                         </g>
                     </svg>
                     <span class="header__count">0</span>
+                </div> -->
+                <!-- search -->
+                <div class="header__search-mobile-toggle">
+                    <span class="header__search-icon">
+                        <svg width="16" height="16" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#333e48">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g id="layer1">
+                                    <path d="M 7.5 0 C 3.3637867 0 0 3.3637867 0 7.5 C 0 11.636213 3.3637867 15 7.5 15 C 9.3884719 15 11.109883 14.292492 12.429688 13.136719 L 19.146484 19.853516 A 0.50083746 0.50083746 0 1 0 19.853516 19.146484 L 13.136719 12.429688 C 14.292492 11.109883 15 9.3884719 15 7.5 C 15 3.3637867 11.636213 0 7.5 0 z M 7.5 1 C 11.095773 1 14 3.9042268 14 7.5 C 14 11.095773 11.095773 14 7.5 14 C 3.9042268 14 1 11.095773 1 7.5 C 1 3.9042268 3.9042268 1 7.5 1 z " style="fill:#333e48; fill-opacity:1; stroke:none; stroke-width:0px;"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </span>
                 </div>
                 <!-- wishlist -->
                 <div class="header__icon">
@@ -160,3 +196,5 @@
         </div>
     </div>
 </header>
+
+<script src="/js/menu-mb.js"></script>

@@ -8,290 +8,383 @@ Chi tiết sản phẩm
 <?php View::endSection(); ?>
 
 <?php View::section('content'); ?>
-<div class="container">
-    <?php if ($product): ?>
-        <div class="product-header">
-            <!-- Phần hình ảnh sản phẩm -->
-            <div class="product-gallery">
-                <?php if (!empty($product['images'])): ?>
-                    <img
-                        src="<?= htmlspecialchars(asset($product['images'][0]['url'])) ?>"
-                        alt="<?= htmlspecialchars($product['images'][0]['alt_text'] ?? $product['name']) ?>"
-                        class="main-image"
-                        id="mainImage">
+<div class="container-main">
+    <div class="product-detail">
+        <!-- Breadcrumb -->
+        <div class="product-detail__breadcrumb">
+            <span class="product-detail__breadcrumb-item">Trang chủ</span>
+            <span class="product-detail__breadcrumb-separator">></span>
+            <span class="product-detail__breadcrumb-item">Tivi OLED</span>
+        </div>
 
-                    <?php if (count($product['images']) > 1): ?>
-                        <div class="thumbnail-list">
-                            <?php foreach ($product['images'] as $index => $image): ?>
-                                <img
-                                    src="<?= htmlspecialchars(asset($image['url'])) ?>"
-                                    alt="<?= htmlspecialchars($image['alt_text'] ?? $product['name']) ?>"
-                                    class="thumbnail <?= $index === 0 ? 'active' : '' ?>"
-                                    onclick="changeMainImage(this, <?= $index ?>)">
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <p>Không có hình ảnh cho sản phẩm này.</p>
-                <?php endif; ?>
-            </div>
-            <!-- Phần thông tin sản phẩm -->
-            <div class="product-info">
-                <h1><?php echo htmlspecialchars($product['name']); ?></h1>
-
-                <!-- Thông tin thương hiệu -->
-                <div class="brand-info">
-                    <?php if (!empty($product['brand_logo'])): ?>
-                        <img src="<?php echo htmlspecialchars($product['brand_logo']); ?>"
-                            alt="<?php echo htmlspecialchars($product['brand_name']); ?>"
-                            class="brand-logo">
-                    <?php endif; ?>
-                    <span><strong>Thương hiệu:</strong> <?php echo htmlspecialchars($product['brand_name'] ?? 'N/A'); ?></span>
+        <!-- Product Main Section -->
+        <div class="product-detail__main">
+            <div class="product-detail__images">
+                <!-- Main Image -->
+                <div class="product-detail__main-image">
+                    <img src="/images/tv-main.jpg" alt="Tivi OLED 65 inch" />
+                    <div class="product-detail__promotion-badge">
+                        <span class="product-detail__promo-text">TẤM NỀN QD-OLED THẾ HỆ MỚI</span>
+                        <p>Nâng tầm trải nghiệm Quantum Dot với tấm nền QD-OLED mới nhất từ Samsung Display, mang đến hình ảnh sắc nét và màu sắc sống động như thật.</p>
+                    </div>
                 </div>
 
-                <p><strong>Danh mục:</strong> <?php echo htmlspecialchars($product['category_name'] ?? 'N/A'); ?></p>
+                <!-- Thumbnail Images -->
+                <div class="product-detail__thumbnail-images">
+                    <div class="product-detail__thumbnail product-detail__thumbnail--active">
+                        <img src="/images/tv-thumb1.jpg" alt="Thumbnail 1" />
+                    </div>
+                    <div class="product-detail__thumbnail">
+                        <img src="/images/tv-thumb2.jpg" alt="Thumbnail 2" />
+                    </div>
+                    <div class="product-detail__thumbnail">
+                        <img src="/images/tv-thumb3.jpg" alt="Thumbnail 3" />
+                    </div>
+                    <div class="product-detail__thumbnail">
+                        <img src="/images/tv-thumb4.jpg" alt="Thumbnail 4" />
+                    </div>
+                    <div class="product-detail__thumbnail">
+                        <img src="/images/tv-thumb5.jpg" alt="Thumbnail 5" />
+                    </div>
+                    <div class="product-detail__thumbnail">
+                        <img src="/images/tv-thumb6.jpg" alt="Thumbnail 6" />
+                    </div>
+                </div>
+            </div>
 
-                <!-- Phần giá -->
-                <div class="price-section">
-                    <?php if (!empty($product['variants'])): ?>
-                        <?php $defaultVariant = $product['variants'][0]; ?>
-                        <div class="current-price">
-                            <?php echo number_format($defaultVariant['final_price'], 0, ',', '.'); ?>₫
-                        </div>
-                        <?php if ($defaultVariant['discount_percentage'] > 0): ?>
-                            <span class="original-price">
-                                <?php echo number_format($defaultVariant['original_price'], 0, ',', '.'); ?>₫
-                            </span>
-                            <span class="discount-badge">
-                                -<?php echo $defaultVariant['discount_percentage']; ?>%
-                            </span>
-                        <?php endif; ?>
-                    <?php endif; ?>
+            <div class="product-detail__info">
+                <h1 class="product-detail__title">Tivi OLED Samsung QE65S95D 65 inch 4K Smart TV Quantum Dot mới 2024</h1>
+
+                <div class="product-detail__rating">
+                    <div class="product-detail__stars">
+                        <span>★★★★★</span>
+                    </div>
+                    <span class="product-detail__rating-text">(234 đánh giá)</span>
                 </div>
 
-                <!-- Phần variants -->
-                <?php if (!empty($product['variants'])): ?>
-                    <div class="variants-section">
-                        <!-- Màu sắc -->
-                        <?php
-                        $colors = [];
-                        $storages = [];
-                        foreach ($product['variants'] as $variant) {
-                            if (!isset($colors[$variant['color_name']])) {
-                                $colors[$variant['color_name']] = $variant['color_hex'];
-                            }
-                            if (!in_array($variant['storage_capacity'], $storages)) {
-                                $storages[] = $variant['storage_capacity'];
-                            }
-                        }
-                        ?>
+                <div class="product-detail__price">
+                    <div class="product-detail__current-price">23.990.000₫</div>
+                    <div class="product-detail__original-price">29.990.000₫</div>
+                    <div class="product-detail__discount-badge">-20%</div>
+                </div>
 
-                        <?php if (!empty($colors)): ?>
-                            <div class="variant-group">
-                                <h4>Màu sắc:</h4>
-                                <div class="variant-options">
-                                    <?php foreach ($colors as $colorName => $hexCode): ?>
-                                        <div class="color-option"
-                                            style="background-color: <?php echo $hexCode; ?>"
-                                            title="<?php echo htmlspecialchars($colorName); ?>">
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if (!empty($storages)): ?>
-                            <div class="variant-group">
-                                <h4>Dung lượng:</h4>
-                                <div class="variant-options">
-                                    <?php foreach ($storages as $storage): ?>
-                                        <div class="variant-option">
-                                            <?php echo htmlspecialchars($storage); ?>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-
-                <!-- Thông tin tồn kho -->
-                <?php if (!empty($product['stock_quantity'])): ?>
-                    <div class="stock-info <?php echo $product['stock_quantity'] < 10 ? 'low-stock' : ''; ?>">
-                        <strong>Tồn kho:</strong> <?php echo $product['stock_quantity']; ?> sản phẩm
-                        <?php if ($product['stock_quantity'] < 10): ?>
-                            <br><small>⚠️ Chỉ còn ít sản phẩm!</small>
-                        <?php endif; ?>
-                    </div>
-                <?php endif; ?>
-
-                <!-- Khuyến mãi -->
-                <?php if (!empty($product['promotions'])): ?>
-                    <div class="promotions">
-                        <h4>🎉 Khuyến mãi đặc biệt:</h4>
-                        <?php foreach ($product['promotions'] as $promotion): ?>
-                            <div class="promotion-item">
-                                <strong><?php echo htmlspecialchars($promotion['name']); ?></strong>
-                                <?php if (!empty($promotion['description'])): ?>
-                                    <p><?php echo htmlspecialchars($promotion['description']); ?></p>
-                                <?php endif; ?>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <!-- Phần tabs -->
-        <div class="tabs">
-            <div class="tab-buttons">
-                <button class="tab-button active" onclick="showTab('description')">Mô tả</button>
-                <button class="tab-button" onclick="showTab('specifications')">Thông số kỹ thuật</button>
-                <button class="tab-button" onclick="showTab('warranty')">Bảo hành</button>
-                <button class="tab-button" onclick="showTab('reviews')">Đánh giá</button>
-            </div>
-
-            <!-- Tab Mô tả -->
-            <div id="description" class="tab-content active">
-                <?php if (!empty($product['descriptions'])): ?>
-                    <?php foreach ($product['descriptions'] as $desc): ?>
-                        <h3><?php echo htmlspecialchars($desc['title']); ?></h3>
-                        <p><?php echo nl2br(htmlspecialchars($desc['content_text'])); ?></p>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>Chưa có mô tả cho sản phẩm này.</p>
-                <?php endif; ?>
-            </div>
-
-            <!-- Tab Thông số kỹ thuật -->
-            <div id="specifications" class="tab-content">
-                <?php if (!empty($product['specifications'])): ?>
-                    <table class="specs-table">
-                        <?php
-                        $currentGroup = '';
-                        foreach ($product['specifications'] as $spec):
-                            if ($currentGroup !== $spec['spec_group']):
-                                if ($currentGroup !== '') echo '</table><h3>' . htmlspecialchars($spec['spec_group']) . '</h3><table class="specs-table">';
-                                else echo '<h3>' . htmlspecialchars($spec['spec_group']) . '</h3>';
-                                $currentGroup = $spec['spec_group'];
-                            endif;
-                        ?>
-                            <tr>
-                                <th><?php echo htmlspecialchars($spec['spec_name']); ?></th>
-                                <td><?php echo htmlspecialchars($spec['spec_value']); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
-                <?php else: ?>
-                    <p>Chưa có thông số kỹ thuật cho sản phẩm này.</p>
-                <?php endif; ?>
-            </div>
-
-            <!-- Tab Bảo hành -->
-            <div id="warranty" class="tab-content">
-                <?php if (!empty($product['warranty'])): ?>
-                    <?php foreach ($product['warranty'] as $warranty): ?>
-                        <div class="warranty-item">
-                            <h4><?php echo htmlspecialchars($warranty['name']); ?></h4>
-                            <p><strong>Thời gian:</strong> <?php echo $warranty['duration_months']; ?> tháng</p>
-                            <p><strong>Giá:</strong> <?php echo number_format($warranty['current_price'], 0, ',', '.'); ?>₫</p>
-                            <?php if (!empty($warranty['description'])): ?>
-                                <p><strong>Mô tả:</strong> <?php echo htmlspecialchars($warranty['description']); ?></p>
-                            <?php endif; ?>
-                            <?php if (!empty($warranty['coverage'])): ?>
-                                <p><strong>Bảo hành:</strong> <?php echo htmlspecialchars($warranty['coverage']); ?></p>
-                            <?php endif; ?>
+                <div class="product-detail__options">
+                    <div class="product-detail__size-options">
+                        <label class="product-detail__size-label">Kích thước:</label>
+                        <div class="product-detail__size-buttons">
+                            <button class="product-detail__size-btn">55 inch</button>
+                            <button class="product-detail__size-btn product-detail__size-btn--active">65 inch</button>
+                            <button class="product-detail__size-btn">75 inch</button>
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>Chưa có thông tin bảo hành cho sản phẩm này.</p>
-                <?php endif; ?>
+                    </div>
+
+                    <div class="product-detail__color-options">
+                        <label class="product-detail__color-label">Màu sắc:</label>
+                        <div class="product-detail__color-buttons">
+                            <button class="product-detail__color-btn product-detail__color-btn--active" style="background: #000"></button>
+                            <button class="product-detail__color-btn" style="background: #666"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-detail__quantity-section">
+                    <label class="product-detail__quantity-label">Số lượng:</label>
+                    <div class="product-detail__quantity-controls">
+                        <button class="product-detail__qty-btn product-detail__qty-btn--minus">-</button>
+                        <input type="number" value="1" min="1" class="product-detail__qty-input" />
+                        <button class="product-detail__qty-btn product-detail__qty-btn--plus">+</button>
+                    </div>
+                </div>
+
+                <div class="product-detail__action-buttons">
+                    <button class="product-detail__btn-add-cart">Thêm vào giỏ hàng</button>
+                    <button class="product-detail__btn-buy-now">Mua ngay</button>
+                </div>
+
+                <div class="product-detail__shipping-info">
+                    <p><strong>Miễn phí vận chuyển</strong> cho đơn hàng từ 500.000₫</p>
+                </div>
+
+                <div class="product-detail__highlights">
+                    <h3 class="product-detail__highlight-title">Điểm nổi bật sản phẩm:</h3>
+                    <ul class="product-detail__highlight-list">
+                        <li>✓ Tấm nền QD-OLED thế hệ mới</li>
+                        <li>✓ Độ phân giải 4K Ultra HD</li>
+                        <li>✓ Smart TV với hệ điều hành Tizen</li>
+                        <li>✓ Hỗ trợ HDR10+, Dolby Vision</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Description -->
+        <div class="product-detail__description">
+            <h2 class="product-detail__description-title">Mô tả sản phẩm</h2>
+            <div class="product-detail__description-content">
+                <p>Tivi OLED Samsung QE65S95D 65 inch là sản phẩm tivi cao cấp mới nhất của Samsung, được trang bị công nghệ QD-OLED tiên tiến, mang đến trải nghiệm hình ảnh vượt trội với độ tương phản vô cực và dải màu rộng.</p>
+
+                <div class="product-detail__feature-image">
+                    <img src="/images/tv-feature.jpg" alt="Tính năng sản phẩm" />
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="product-detail__faq-section">
+            <h2 class="product-detail__faq-title">Câu hỏi thường gặp</h2>
+            <div class="product-detail__faq-list">
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có bảo hành bao lâu?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Sản phẩm được bảo hành chính hãng 24 tháng.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ tiếng Việt không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, sản phẩm hỗ trợ đầy đủ tiếng Việt trong menu và các ứng dụng.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Tivi này có kết nối internet không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, sản phẩm hỗ trợ kết nối WiFi và cổng LAN.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có remote điều khiển không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, sản phẩm đi kèm remote điều khiển thông minh.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ lắp đặt không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, chúng tôi hỗ trợ lắp đặt miễn phí tại nhà.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Reviews -->
+        <div class="product-detail__reviews-section">
+            <h2 class="product-detail__reviews-title">Mô tả sản phẩm</h2>
+            <div class="product-detail__review-summary">
+                <div class="product-detail__rating-overview">
+                    <span class="product-detail__rating-score">4 trên 5</span>
+                    <div class="product-detail__rating-bars">
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">5 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 60%"></div>
+                            </div>
+                            <span class="product-detail__rating-count">3 đánh giá</span>
+                        </div>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">4 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 40%"></div>
+                            </div>
+                            <span class="product-detail__rating-count">2 đánh giá</span>
+                        </div>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">3 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 0%"></div>
+                            </div>
+                            <span class="product-detail__rating-count">0 đánh giá</span>
+                        </div>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">2 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 0%"></div>
+                            </div>
+                            <span class="product-detail__rating-count">0 đánh giá</span>
+                        </div>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">1 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 0%"></div>
+                            </div>
+                            <span class="product-detail__rating-count">0 đánh giá</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Tab Đánh giá -->
-            <div id="reviews" class="tab-content">
-                <?php if (!empty($product['reviews'])): ?>
-                    <?php foreach ($product['reviews'] as $review): ?>
-                        <div class="review-item">
-                            <div class="review-header">
-                                <div>
-                                    <strong><?php echo htmlspecialchars($review['username']); ?></strong>
-                                    <?php if ($review['is_verified_purchase']): ?>
-                                        <span style="color: #28a745;">✓ Đã mua hàng</span>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="stars">
-                                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                                        <?php echo $i <= $review['rating'] ? '★' : '☆'; ?>
-                                    <?php endfor; ?>
-                                </div>
-                            </div>
-                            <h4><?php echo htmlspecialchars($review['title']); ?></h4>
-                            <p><?php echo nl2br(htmlspecialchars($review['review_content'])); ?></p>
-                            <small>Ngày đánh giá: <?php echo date('d/m/Y', strtotime($review['created_at'])); ?></small>
+            <div class="product-detail__reviews-list">
+                <div class="product-detail__review-item">
+                    <div class="product-detail__reviewer-info">
+                        <img src="/images/avatar1.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <div class="product-detail__reviewer-details">
+                            <h4 class="product-detail__reviewer-name">Nguyễn Văn A</h4>
+                            <div class="product-detail__review-rating">★★★★★</div>
+                            <span class="product-detail__review-date">2 tháng trước</span>
                         </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>Chưa có đánh giá nào cho sản phẩm này.</p>
-                <?php endif; ?>
+                    </div>
+                    <div class="product-detail__review-content">
+                        <p>Sản phẩm rất tốt, hình ảnh sắc nét, màn hình lớn phù hợp với phòng khách. Giao hàng nhanh, đóng gói cẩn thận. Tôi rất hài lòng với sản phẩm này. Sẽ tiếp tục ủng hộ shop.</p>
+                        <div class="product-detail__review-images">
+                            <img src="/images/review1.jpg" alt="Review image" />
+                            <img src="/images/review2.jpg" alt="Review image" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-detail__review-item">
+                    <div class="product-detail__reviewer-info">
+                        <img src="/images/avatar2.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <div class="product-detail__reviewer-details">
+                            <h4 class="product-detail__reviewer-name">Trần Thị B</h4>
+                            <div class="product-detail__review-rating">★★★★☆</div>
+                            <span class="product-detail__review-date">1 tháng trước</span>
+                        </div>
+                    </div>
+                    <div class="product-detail__review-content">
+                        <p>Tivi đẹp, chất lượng tốt. Nhân viên tư vấn nhiệt tình. Giao hàng đúng hẹn. Giá cả hợp lý. Recommend!</p>
+                        <div class="product-detail__review-images">
+                            <img src="/images/review3.jpg" alt="Review image" />
+                            <img src="/images/review4.jpg" alt="Review image" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-detail__review-item">
+                    <div class="product-detail__reviewer-info">
+                        <img src="/images/avatar3.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <div class="product-detail__reviewer-details">
+                            <h4 class="product-detail__reviewer-name">Lê Văn C</h4>
+                            <div class="product-detail__review-rating">★★★★★</div>
+                            <span class="product-detail__review-date">3 tuần trước</span>
+                        </div>
+                    </div>
+                    <div class="product-detail__review-content">
+                        <p>Màn hình to, hình ảnh đẹp, âm thanh hay. Shop tư vấn nhiệt tình, giao hàng nhanh. Sẽ giới thiệu cho bạn bè.</p>
+                        <div class="product-detail__review-images">
+                            <img src="/images/review5.jpg" alt="Review image" />
+                            <img src="/images/review6.jpg" alt="Review image" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-detail__review-item">
+                    <div class="product-detail__reviewer-info">
+                        <img src="/images/avatar4.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <div class="product-detail__reviewer-details">
+                            <h4 class="product-detail__reviewer-name">Phạm Thị D</h4>
+                            <div class="product-detail__review-rating">★★★★☆</div>
+                            <span class="product-detail__review-date">2 tuần trước</span>
+                        </div>
+                    </div>
+                    <div class="product-detail__review-content">
+                        <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn shop!</p>
+                        <div class="product-detail__review-images">
+                            <img src="/images/review7.jpg" alt="Review image" />
+                            <img src="/images/review8.jpg" alt="Review image" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-detail__load-more">
+                <button class="product-detail__btn-load-more">Xem thêm đánh giá</button>
             </div>
         </div>
-    <?php else: ?>
-        <div style="text-align: center; padding: 50px;">
-            <h2>Không tìm thấy sản phẩm</h2>
-            <p>Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.</p>
+
+        <!-- Related Products -->
+        <div class="product-detail__related-products">
+            <h2 class="product-detail__related-title">Có thể bạn cũng thích</h2>
+            <div class="product-detail__products-grid">
+                <div class="product-detail__product-card">
+                    <div class="product-detail__product-image">
+                        <img src="/images/product1.jpg" alt="Product 1" />
+                    </div>
+                    <div class="product-detail__product-info">
+                        <h3 class="product-detail__product-name">Tivi OLED LG C3 55 inch</h3>
+                        <div class="product-detail__product-price">
+                            <span class="product-detail__current-price">18.990.000₫</span>
+                            <span class="product-detail__original-price">22.990.000₫</span>
+                        </div>
+                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <div class="product-detail__product-card">
+                    <div class="product-detail__product-image">
+                        <img src="/images/product2.jpg" alt="Product 2" />
+                    </div>
+                    <div class="product-detail__product-info">
+                        <h3 class="product-detail__product-name">Tivi QLED Samsung QN65Q80C</h3>
+                        <div class="product-detail__product-price">
+                            <span class="product-detail__current-price">25.990.000₫</span>
+                            <span class="product-detail__original-price">29.990.000₫</span>
+                        </div>
+                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <div class="product-detail__product-card">
+                    <div class="product-detail__product-image">
+                        <img src="/images/product3.jpg" alt="Product 3" />
+                    </div>
+                    <div class="product-detail__product-info">
+                        <h3 class="product-detail__product-name">Tivi Sony X90L 65 inch</h3>
+                        <div class="product-detail__product-price">
+                            <span class="product-detail__current-price">21.990.000₫</span>
+                            <span class="product-detail__original-price">24.990.000₫</span>
+                        </div>
+                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <div class="product-detail__product-card">
+                    <div class="product-detail__product-image">
+                        <img src="/images/product4.jpg" alt="Product 4" />
+                    </div>
+                    <div class="product-detail__product-info">
+                        <h3 class="product-detail__product-name">Tivi TCL C845 65 inch</h3>
+                        <div class="product-detail__product-price">
+                            <span class="product-detail__current-price">19.990.000₫</span>
+                            <span class="product-detail__original-price">23.990.000₫</span>
+                        </div>
+                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+
+                <div class="product-detail__product-card">
+                    <div class="product-detail__product-image">
+                        <img src="/images/product5.jpg" alt="Product 5" />
+                    </div>
+                    <div class="product-detail__product-info">
+                        <h3 class="product-detail__product-name">Tivi Xiaomi A Pro 65 inch</h3>
+                        <div class="product-detail__product-price">
+                            <span class="product-detail__current-price">16.990.000₫</span>
+                            <span class="product-detail__original-price">19.990.000₫</span>
+                        </div>
+                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    <?php endif; ?>
+    </div>
 </div>
-
-<script>
-    function changeMainImage(thumbnail, index) {
-        const mainImage = document.getElementById('mainImage');
-        const thumbnails = document.querySelectorAll('.thumbnail');
-
-        mainImage.src = thumbnail.src;
-        mainImage.alt = thumbnail.alt;
-
-        thumbnails.forEach(thumb => thumb.classList.remove('active'));
-        thumbnail.classList.add('active');
-    }
-
-    function showTab(tabName) {
-        // Ẩn tất cả tab content
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-
-        // Bỏ active cho tất cả tab button
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.classList.remove('active');
-        });
-
-        // Hiển thị tab được chọn
-        document.getElementById(tabName).classList.add('active');
-        event.target.classList.add('active');
-    }
-
-    // Xử lý chọn variant
-    document.querySelectorAll('.variant-option').forEach(option => {
-        option.addEventListener('click', function() {
-            const group = this.parentElement;
-            group.querySelectorAll('.variant-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            this.classList.add('selected');
-        });
-    });
-
-    document.querySelectorAll('.color-option').forEach(option => {
-        option.addEventListener('click', function() {
-            const group = this.parentElement;
-            group.querySelectorAll('.color-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            this.classList.add('selected');
-        });
-    });
-</script>
-
 <?php View::endSection(); ?>
