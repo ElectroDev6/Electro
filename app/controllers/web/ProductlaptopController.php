@@ -1,10 +1,11 @@
 <?php
 namespace App\Controllers\Web;
+use Core\View;
 class ProductLaptopController
 {
     public function productLaptop()
     {
-        render('productlaptop');
+        View::render('productlaptop');
     }
 }
 ?>

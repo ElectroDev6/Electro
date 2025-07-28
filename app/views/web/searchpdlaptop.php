@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html lang="vi">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bán Laptop</title>
+use Core\View; ?>
+<?php View::extend('layouts.main'); ?>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<?php View::section('page_title'); ?>
+Tiềm kiếm sản phẩm Laptop
+<?php View::endSection(); ?>
 
-    <link rel="stylesheet" href="style.css">
-</head>
+<?php View::section('content'); ?>  
 
 <body>
 
     <div class="banner">
-        <img src="/img/anh1.jpg" alt="Banner">
+        <img src="/img/Slide1Laptop.webp" alt="Banner">
     </div>
 
     <div class="container">
@@ -27,32 +23,32 @@
                 <div class="brand-logos">
                     <a href="https://www.asus.com/vn/" class="brand-logos__link">
                         <div class="brand-logo-card">
-                            <img src="/img/Asus.jpg" alt="ASUS" class="brand-logo-card__image">
+                            <img src="/img/Menu_LT_asus.jpg" alt="ASUS" class="brand-logo-card__image">
                         </div>
                     </a>
                     <a href="https://www.apple.com/vn/" class="brand-logos__link">
                         <div class="brand-logo-card" data-brand="Apple">
-                            <img src="/img/apple.jpg" alt="Apple" class="brand-logo-card__image">
+                            <img src="/img/Menu_LT_apple.jpg" alt="Apple" class="brand-logo-card__image">
                         </div>
                     </a>
                     <a href="https://www.dell.com/vn/" class="brand-logos__link">
                         <div class="brand-logo-card" data-brand="Dell">
-                            <img src="/img/dell.jpg" alt="Dell" class="brand-logo-card__image">
+                            <img src="/img/Menu_LT_dell.jpg" alt="Dell" class="brand-logo-card__image">
                         </div>
                     </a>
                     <a href="https://www.hp.com/vn/" class="brand-logos__link">
                         <div class="brand-logo-card" data-brand="HP">
-                            <img src="/img/hp.jpg" alt="HP" class="brand-logo-card__image">
+                            <img src="/img/Menu_LT_hp.jpg" alt="HP" class="brand-logo-card__image">
                         </div>
                     </a>
                     <a href="https://www.lenovo.com/vn/" class="brand-logos__link">
                         <div class="brand-logo-card" data-brand="Lenovo">
-                            <img src="/img/lenovo.jpg" alt="Lenovo" class="brand-logo-card__image">
+                            <img src="/img/Menu_LT_lenovo.jpg" alt="Lenovo" class="brand-logo-card__image">
                         </div>
                     </a>
                     <a href="https://www.acer.com/vn-vi/" class="brand-logos__link">
                         <div class="brand-logo-card" data-brand="Acer">
-                            <img src="/img/acer.jpg" alt="Acer" class="brand-logo-card__image">
+                            <img src="/img/Menu_LT_acer.jpg" alt="Acer" class="brand-logo-card__image">
                         </div>
                     </a>
                 </div>
@@ -199,127 +195,202 @@
         <div class="content-wrapper">
             <div class="category-tabs">
                 <button class="category-tabs__button category-tabs__button--active">
-                    <img src="/img/Icon All.svg" alt="Tất cả">
+                    <img src="/img/DM_All.svg" alt="Tất cả">
                     <span>Tất cả</span>
                 </button>
                 <button class="category-tabs__button">
-                    <img src="/img/iphone223.png" alt="Điện thoại">
+                    <img src="/img/SP_DT_iphone.png" alt="Điện thoại">
                     <span>Điện thoại</span>
                 </button>
                 <button class="category-tabs__button">
-                    <img src="/img/laptop.png" alt="Laptop">
+                    <img src="/img/DM_Laptop.png" alt="Laptop">
                     <span>Laptop</span>
                 </button>
                 <button class="category-tabs__button">
-                    <img src="/img/tainghe.png" alt="Phụ kiện">
+                    <img src="/img/DM_TaiNghe.png" alt="Phụ kiện">
                     <span>Phụ kiện</span>
                 </button>
             </div>
             <!-- Phần sản phẩm -->
             <main class="products" id="product-list">
                 <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-                <div class="product-card">
-                    <img src="/img/laptop.png" alt="Sản phẩm 1" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price">34.290.000 ₫</span>
-                        <div class="product-card__new-price">30.090.000 ₫</div>
-                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
-                    </div>
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
+                    <!-- Icon bên phải sản phẩm -->
+                    <div class="product-card__feature">
 
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_nutgatcamera.svg" alt="" />
+                        </div>
+                        <div class="product-card__feature-text">Nút gạt tắt <br> camera</div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_mattroi.svg" alt="Mặt trời" />
+                        </div>
+                        <div class="product-card__feature-text">Màn hình chóng chói
+                        </div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/DT_vienmanhinh.svg" alt="">
+                        </div>
+                        <div class="product-card__feature-text">
+                            Viền màn hình <br> siêu mỏng
+                        </div>
+                    </div>
+                    <img src="/img/DM_laptop.png" alt="Sản phẩm 1" class="product-card__image">
+                    <p class="product-card__promo">Trả góp 0%</p>
+                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                    <div class="product-card__price-box">
+                        <span class="product-card__old-price">34.290.000 ₫</span>
+                        <div class="product-card__new-price">30.090.000 ₫</div>
+                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                    </div>
+                    <button class="product-card__button">Xem chi tiết</button>
+                </div>
+                <div class="product-card">
+                    <!-- Icon bên phải sản phẩm -->
+                    <div class="product-card__feature">
+
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_nutgatcamera.svg" alt="" />
+                        </div>
+                        <div class="product-card__feature-text">Nút gạt tắt <br> camera</div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_mattroi.svg" alt="Mặt trời" />
+                        </div>
+                        <div class="product-card__feature-text">Màn hình chóng chói
+                        </div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/DT_vienmanhinh.svg" alt="">
+                        </div>
+                        <div class="product-card__feature-text">
+                            Viền màn hình <br> siêu mỏng
+                        </div>
+                    </div>
+                    <img src="/img/DM_laptop.png" alt="Sản phẩm 1" class="product-card__image">
+                    <p class="product-card__promo">Trả góp 0%</p>
+                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                    <div class="product-card__price-box">
+                        <span class="product-card__old-price">34.290.000 ₫</span>
+                        <div class="product-card__new-price">30.090.000 ₫</div>
+                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                    </div>
+                    <button class="product-card__button">Xem chi tiết</button>
+                </div><div class="product-card">
+                    <!-- Icon bên phải sản phẩm -->
+                    <div class="product-card__feature">
+
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_nutgatcamera.svg" alt="" />
+                        </div>
+                        <div class="product-card__feature-text">Nút gạt tắt <br> camera</div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_mattroi.svg" alt="Mặt trời" />
+                        </div>
+                        <div class="product-card__feature-text">Màn hình chóng chói
+                        </div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/DT_vienmanhinh.svg" alt="">
+                        </div>
+                        <div class="product-card__feature-text">
+                            Viền màn hình <br> siêu mỏng
+                        </div>
+                    </div>
+                    <img src="/img/DM_laptop.png" alt="Sản phẩm 1" class="product-card__image">
+                    <p class="product-card__promo">Trả góp 0%</p>
+                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                    <div class="product-card__price-box">
+                        <span class="product-card__old-price">34.290.000 ₫</span>
+                        <div class="product-card__new-price">30.090.000 ₫</div>
+                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                    </div>
+                    <button class="product-card__button">Xem chi tiết</button>
+                </div><div class="product-card">
+                    <!-- Icon bên phải sản phẩm -->
+                    <div class="product-card__feature">
+
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_nutgatcamera.svg" alt="" />
+                        </div>
+                        <div class="product-card__feature-text">Nút gạt tắt <br> camera</div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_mattroi.svg" alt="Mặt trời" />
+                        </div>
+                        <div class="product-card__feature-text">Màn hình chóng chói
+                        </div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/DT_vienmanhinh.svg" alt="">
+                        </div>
+                        <div class="product-card__feature-text">
+                            Viền màn hình <br> siêu mỏng
+                        </div>
+                    </div>
+                    <img src="/img/DM_laptop.png" alt="Sản phẩm 1" class="product-card__image">
+                    <p class="product-card__promo">Trả góp 0%</p>
+                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                    <div class="product-card__price-box">
+                        <span class="product-card__old-price">34.290.000 ₫</span>
+                        <div class="product-card__new-price">30.090.000 ₫</div>
+                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                    </div>
+                    <button class="product-card__button">Xem chi tiết</button>
+                </div><div class="product-card">
+                    <!-- Icon bên phải sản phẩm -->
+                    <div class="product-card__feature">
+
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_nutgatcamera.svg" alt="" />
+                        </div>
+                        <div class="product-card__feature-text">Nút gạt tắt <br> camera</div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_mattroi.svg" alt="Mặt trời" />
+                        </div>
+                        <div class="product-card__feature-text">Màn hình chóng chói
+                        </div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/DT_vienmanhinh.svg" alt="">
+                        </div>
+                        <div class="product-card__feature-text">
+                            Viền màn hình <br> siêu mỏng
+                        </div>
+                    </div>
+                    <img src="/img/DM_laptop.png" alt="Sản phẩm 1" class="product-card__image">
+                    <p class="product-card__promo">Trả góp 0%</p>
+                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                    <div class="product-card__price-box">
+                        <span class="product-card__old-price">34.290.000 ₫</span>
+                        <div class="product-card__new-price">30.090.000 ₫</div>
+                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                    </div>
+                    <button class="product-card__button">Xem chi tiết</button>
+                </div><div class="product-card">
+                    <!-- Icon bên phải sản phẩm -->
+                    <div class="product-card__feature">
+
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_nutgatcamera.svg" alt="" />
+                        </div>
+                        <div class="product-card__feature-text">Nút gạt tắt <br> camera</div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/LT_mattroi.svg" alt="Mặt trời" />
+                        </div>
+                        <div class="product-card__feature-text">Màn hình chóng chói
+                        </div>
+                        <div class="product-card__feature-icon">
+                            <img src="/img/DT_vienmanhinh.svg" alt="">
+                        </div>
+                        <div class="product-card__feature-text">
+                            Viền màn hình <br> siêu mỏng
+                        </div>
+                    </div>
+                    <img src="/img/DM_laptop.png" alt="Sản phẩm 1" class="product-card__image">
+                    <p class="product-card__promo">Trả góp 0%</p>
+                    <h4 class="product-card__name">Tên sản phẩm Laptop A</h4>
+                    <div class="product-card__price-box">
+                        <span class="product-card__old-price">34.290.000 ₫</span>
+                        <div class="product-card__new-price">30.090.000 ₫</div>
+                        <div class="product-card__save-price">Giảm 4.200.000 ₫</div>
+                    </div>
+                    <button class="product-card__button">Xem chi tiết</button>
+                </div>
             </main>
         </div>
         <script src="script.js"></script>
 </body>
-
-</html>
+<?php View::endSection(); ?>

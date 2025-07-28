@@ -1,10 +1,11 @@
 <?php
     namespace App\Controllers\Web;
+use Core\View;
 class SearchpdlaptopController
 {
     public function searchPdlaptop()
     {
-        render('searchpdlaptop');
+        View::render('searchpdlaptop');
     }
 }
 ?>
