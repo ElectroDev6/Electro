@@ -7,7 +7,7 @@ use Core\View;
 
 class ProductController
 {
-    public function product()
+    public function showAll()
     {
         View::render('product');
     }

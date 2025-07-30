@@ -6,8 +6,8 @@ use Core\View;
 
 class UnboxingController
 {
-    public function Unboxing()
+    public function showUnboxing()
     {
-        View::render('Unboxing');
+        View::render('unboxing');
     }
 }

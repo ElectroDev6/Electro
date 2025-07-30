@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Controllers\Web;
+
 use Core\View;
+
 class SearchProductController
 {
-    public function SearchProduct()
+    public function searchProducts()
     {
-        View::render('SearchProduct');
+        View::render('searchProduct');
     }
 }
-?>

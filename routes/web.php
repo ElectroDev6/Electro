@@ -2,25 +2,39 @@
 
 use Core\Router;
 
+// Home
 Router::get('/', 'HomeController@index');
-Router::get('/test', 'TestController@index');
-Router::get('/product', 'ProductController@product');
-Router::get('/productlaptop', 'ProductLaptopController@productLaptop');
-Router::get('/searchproduct', 'SearchProductController@SearchProduct');
-Router::get('/searchpdlaptop', 'SearchpdlaptopController@searchPdlaptop');
-Router::get('/cart', 'CartController@index');
-Router::get('/checkout', 'CheckoutController@index');
-Router::get('/thankyou', 'ThankyouController@index');
-Router::get('/about', 'AboutController@about');
-Router::get('/contact', 'ContactController@contact');
-Router::get('/login', 'LoginController@login');
-Router::get('/register', 'AuthController@register');
-Router::get('/detail/(\d+)', 'DetailController@detail');
-Router::get('/infor', 'InforController@infor');
-Router::get('/history', 'HistoryController@history');
-Router::get('/policy', 'PolicyController@Policy');
-Router::get('/information', 'InformationController@information');
-Router::get('/refund', 'RefundController@refund');
-Router::get('/client', 'ClientController@client');
-Router::get('/unboxing', 'UnboxingController@Unboxing');
-Router::get('/repair', 'RepairController@repair');
+
+// Products
+Router::get('/products', 'ProductController@showAll');
+Router::get('/products/laptops', 'ProductLaptopController@showAllLaptops');
+
+// Search
+Router::get('/search/products', 'SearchProductController@searchProducts');
+Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
+
+// Cart & Order
+Router::get('/cart', 'CartController@showCart');
+Router::get('/checkout', 'CheckoutController@showCheckoutForm');
+Router::get('/thank-you', 'ThankyouController@showConfirmation');
+
+// Auth
+Router::get('/login', 'LoginController@showLoginForm');
+// Router::get('/register', 'AuthController@showRegisterForm');
+
+// Product Detail
+Router::get('/product/(\d+)', 'DetailController@showDetail');
+
+// Information & Pages
+Router::get('/about', 'AboutController@showAbout');
+Router::get('/contact', 'ContactController@showContact');
+Router::get('/profile', 'ProfileController@showProfile');
+Router::get('/history', 'HistoryController@showHistory');
+Router::get('/policy-mobile', 'PolicyController@showMobilePolicy');
+Router::get('/refund-policy', 'RefundController@showRefundPolicy');
+Router::get('/privacy-policy', 'RefundController@showPrivacyPolicy');
+
+// Other Features
+Router::get('/clients', 'ClientController@showClients');
+Router::get('/unboxing', 'UnboxingController@showUnboxing');
+Router::get('/repair', 'RepairController@showRepair');

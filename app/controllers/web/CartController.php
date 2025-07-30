@@ -6,7 +6,7 @@ use Core\View;
 
 class CartController
 {
-    public function index()
+    public function showCart()
     {
         View::render('cart');
     }

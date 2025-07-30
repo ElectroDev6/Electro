@@ -6,8 +6,8 @@ use Core\View;
 
 class RepairController
 {
-    public function Repair()
+    public function showRepair()
     {
-        View::render('Repair');
+        View::render('repair');
     }
 }

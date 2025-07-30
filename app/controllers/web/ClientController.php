@@ -6,8 +6,8 @@ use Core\View;
 
 class ClientController
 {
-    public function Client()
+    public function showClients()
     {
-        View::render('Client');
+        View::render('policy-client');
     }
 }

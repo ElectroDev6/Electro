@@ -6,7 +6,7 @@ use Core\View;
 
 class LoginController
 {
-    public function login()
+    public function showLoginForm()
     {
         View::render('login');
     }

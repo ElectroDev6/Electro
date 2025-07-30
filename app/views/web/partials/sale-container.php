@@ -4,7 +4,7 @@ use Core\View;
 ?>
 
 <div class="container-main">
-    <section class="sale">
+    <section class="sale category-product">
         <div class="sale__header">
             <h2 class="sale__title">HOT SALE CUỐI TUẦN</h2>
             <div class="sale__countdown-container">
@@ -19,10 +19,10 @@ use Core\View;
                 </div>
             </div>
         </div>
-
-        <div class="sale__list">
+        <?php View::component('components.arrow-buttons') ?>
+        <div class="sale__list scroll-horizontal">
             <?php foreach ($saleProducts as $saleProduct): ?>
-                <?php View::partial('components.product-sale', ['saleProduct' => $saleProduct]); ?>
+                <?php View::partial('components.product-card-sale', ['saleProduct' => $saleProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>

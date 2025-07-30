@@ -6,7 +6,7 @@ use Core\View;
 
 class HistoryController
 {
-    public function history()
+    public function showHistory()
     {
         View::render('history');
     }
