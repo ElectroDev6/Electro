@@ -1,0 +1,27 @@
+[
+  // iPhone 13
+  { "variant_id": 1, "value_id": 1 }, // Black
+  { "variant_id": 1, "value_id": 3 }, // 128GB
+
+  { "variant_id": 2, "value_id": 1 }, // Black
+  { "variant_id": 2, "value_id": 4 }, // 256GB
+
+  { "variant_id": 3, "value_id": 2 }, // White
+  { "variant_id": 3, "value_id": 3 }, // 128GB
+
+  { "variant_id": 4, "value_id": 2 }, // White
+  { "variant_id": 4, "value_id": 4 }, // 256GB
+
+  // iPhone 14
+  { "variant_id": 5, "value_id": 5 }, // Black
+  { "variant_id": 5, "value_id": 7 }, // 128GB
+
+  { "variant_id": 6, "value_id": 5 }, // Black
+  { "variant_id": 6, "value_id": 8 }, // 256GB
+
+  { "variant_id": 7, "value_id": 6 }, // White
+  { "variant_id": 7, "value_id": 7 }, // 128GB
+
+  { "variant_id": 8, "value_id": 6 }, // White
+  { "variant_id": 8, "value_id": 8 } // 256GB
+]
