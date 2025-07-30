@@ -1,6 +1,6 @@
 <?php
 use Core\Router;
-Router::get('/admin/dashboard', 'DashboardController@index');
+Router::get('/admin/index', 'DashboardController@index');
 Router::get('/admin/products', 'ProductsController@index');
 Router::get('/admin/users', 'UsersController@index');
 Router::get('/admin/userDetail', 'UserDetailController@index');

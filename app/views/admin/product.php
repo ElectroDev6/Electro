@@ -85,7 +85,9 @@ $product = $productDetail
                             <div class="product-detail__variants-manager">
                                 <?php foreach ($product['variants'] as $index => $variant): ?>
                                     <div class="product-detail__variant-item" data-variant-id="<?= $variant['id'] ?>">
-                                        <h3 class="product-detail__variant-title">Biến thể <?= htmlspecialchars($variant['capacity_group']) ?></h3>
+                                        <h3 class="product-detail__variant-title">
+                                            Biến thể <?= !empty($variant['capacity_group']) ? htmlspecialchars($variant['capacity_group']) : '' ?>
+                                        </h3>
                                         <div class="product-detail__form-row">
                                             <div class="product-detail__form-group">
                                                 <label class="product-detail__label">ID Biến thể</label>
@@ -93,7 +95,7 @@ $product = $productDetail
                                             </div>
                                             <div class="product-detail__form-group">
                                                 <label class="product-detail__label">Dung lượng</label>
-                                                <input type="text" class="product-detail__input" value="<?= htmlspecialchars($variant['capacity_group']) ?>" data-field="capacity">
+                                                    <input type="text" class="product-detail__input <?= empty($variant['capacity_group']) ? 'product-detaildisabled-input' : '' ?>" value="<?= !empty($variant['capacity_group']) ? htmlspecialchars($variant['capacity_group']) : 'Chưa có dung lượng' ?>" data-field="capacity">
                                             </div>
                                         </div>
                                         <div class="product-detail__form-row">
@@ -207,16 +209,20 @@ $product = $productDetail
                                     usort($firstActiveColor['gallery_images'], fn($a, $b) => $a['sort_order'] <=> $b['sort_order']);
                                     $firstImage = $firstActiveColor['gallery_images'][0];
                                     ?>
-                                    <img src="<?= htmlspecialchars($firstImage['url']) ?>" alt="<?= htmlspecialchars($firstImage['alt_text']) ?>" class="product-detail__main-img" id="previewMainImage">
+                                    <div class="product-detail__box-preview" id="box-preview"> 
+                                        <img src="<?= htmlspecialchars($firstImage['url']) ?>" alt="<?= htmlspecialchars($firstImage['alt_text']) ?>" class="product-detail__main-img" id="previewMainImage">
+                                    </div>
                                     <div class="product-detail__image-thumbnails" id="previewThumbnails">
+                                        <!-- box click  -->
                                         <?php foreach ($firstActiveColor['gallery_images'] as $image): ?>
-                                            <img src="<?= htmlspecialchars($image['url']) ?>" alt="<?= htmlspecialchars($image['alt_text']) ?>" class="product-detail__thumbnail" data-src="<?= htmlspecialchars($image['url']) ?>">
+                                            <img src="<?= htmlspecialchars($image['url']) ?>" alt="<?= htmlspecialchars($image['alt_text']) ?>" class="product-detail__thumbnail" data-src="<?= htmlspecialchars($image['url']) ?>">npm run debug_zval_dump
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
                                 <div class="product-detail__product-info">
                                     <div class="product-detail__variant-selectors">
-                                        <div class="product-detail__variant-selector">
+                                        <div class="product-detail__variant-selector product-detail__variant-hasNull">
+                                            <?php if(empty($product[0]['variants']['capacity_group'])) : ?>
                                             <label class="product-detail__variant-label">Dung lượng</label>
                                             <div class="product-detail__size-options" id="previewSizeOptions">
                                                 <?php foreach ($product['variants'] as $variant): ?>
@@ -224,7 +230,7 @@ $product = $productDetail
                                                         <?= htmlspecialchars($variant['capacity_group']) ?>
                                                     </button>
                                                 <?php endforeach; ?>
-                                            </div>
+                                            <?php endif ?>
                                         </div>
                                         <div class="product-detail__variant-selector">
                                             <label class="product-detail__variant-label">Màu sắc</label>
@@ -287,359 +293,464 @@ $product = $productDetail
             </div>
         </div>
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const editToggle = document.getElementById('editToggle');
-                const saveProduct = document.getElementById('saveProduct');
-                const adminForm = document.getElementById('adminForm');
-                const previewPanel = document.getElementById('previewPanel');
-                const productForm = document.getElementById('productForm');
-                const previewProductName = document.getElementById('previewProductName');
-                const previewDescription = document.getElementById('previewDescription');
-                const previewMainImage = document.getElementById('previewMainImage');
-                const previewThumbnails = document.getElementById('previewThumbnails');
-                const previewColorOptions = document.getElementById('previewColorOptions');
-                const previewSizeOptions = document.getElementById('previewSizeOptions');
-                const previewCurrentPrice = document.getElementById('previewCurrentPrice');
-                const previewOriginalPrice = document.getElementById('previewOriginalPrice');
-                const previewDiscount = document.getElementById('previewDiscount');
+document.addEventListener('DOMContentLoaded', () => {
+    const $getId = document.getElementById.bind(document);
+    const editToggle = $getId('editToggle');
+    const saveProduct = $getId('saveProduct');
+    const adminForm = $getId('adminForm');
+    const previewPanel = $getId('previewPanel');
+    const productForm = $getId('productForm');
+    const previewProductName = $getId('previewProductName');
+    const previewDescription = $getId('previewDescription');
+    const boxPreview = $getId('box-preview'); // Sử dụng id="box-preview" từ HTML
+    let previewMainImage = $getId('previewMainImage'); // Lấy từ DOM thay vì tạo mới
+    const previewThumbnails = $getId('previewThumbnails');
+    const previewColorOptions = $getId('previewColorOptions');
+    const previewSizeOptions = $getId('previewSizeOptions');
+    const previewCurrentPrice = $getId('previewCurrentPrice');
+    const previewOriginalPrice = $getId('previewOriginalPrice');
+    const previewDiscount = $getId('previewDiscount');
 
-                // Initialize product data
-                let productData = <?= json_encode($product) ?>;
-                let currentVariant = productData.variants[0];
-                let currentColor = currentVariant.colors.find(c => c.is_active == 1) || currentVariant.colors[0];
+    // Initialize product data with fallback
+    let productData = <?= json_encode($product) ?> || {
+        product_name: 'Product Default',
+        description_html: '<p>Description Default</p>',
+        variants: [{
+            id: 1,
+            price: 0,
+            original_price: 0,
+            capacity_group: 'Default',
+            stock_quantity: 0,
+            main_media: { url: '', alt_text: '' },
+            colors: [{ id: 1, name: 'Default', hex_code: '#000000', stock: 0, is_active: 1, gallery_images: [] }]
+        }]
+    };
+    let currentVariant = productData.variants[0];
+    let currentColor = currentVariant.colors.find(c => c.is_active == 1) || currentVariant.colors[0];
+    let isVideoMode = false;
 
-                // Toggle Edit Form
-                editToggle.addEventListener('click', () => {
-                    const isHidden = adminForm.style.display === 'none';
-                    adminForm.style.display = isHidden ? 'block' : 'none';
-                    previewPanel.classList.toggle('product-detail__preview-panel--small', isHidden);
-                    editToggle.innerHTML = isHidden ? '<i class="fas fa-eye"></i> Ẩn form' : '<i class="fas fa-edit"></i> Chỉnh sửa';
-                    saveProduct.disabled = !isHidden;
-                });
+    // Toggle Edit Form
+    editToggle.addEventListener('click', () => {
+        const isHidden = adminForm.style.display === 'none';
+        adminForm.style.display = isHidden ? 'block' : 'none';
+        previewPanel.classList.toggle('product-detail__preview-panel--small', isHidden);
+        editToggle.innerHTML = isHidden ? '<i class="fas fa-eye"></i> Ẩn form' : '<i class="fas fa-edit"></i> Chỉnh sửa';
+        saveProduct.disabled = !isHidden;
+    });
 
-                // Real-time Preview Updates
-                productForm.addEventListener('input', (e) => {
-                    const target = e.target;
-                    if (target.name === 'productName') {
-                        previewProductName.textContent = target.value;
-                        productData.product_name = target.value;
+    // Real-time Preview Updates
+    productForm.addEventListener('input', (e) => {
+        const target = e.target;
+        if (target.name === 'productName') {
+            previewProductName.textContent = target.value;
+            productData.product_name = target.value;
+        }
+        if (target.name === 'productDescription') {
+            previewDescription.innerHTML = target.value;
+            productData.description_html = target.value;
+        }
+        if (target.dataset.field === 'capacity') {
+            const variantItem = target.closest('.product-detail__variant-item');
+            const variantId = parseInt(variantItem.dataset.variantId);
+            const variant = productData.variants.find(v => v.id === variantId);
+            if (variant) variant.capacity_group = target.value;
+            updatePreviewVariants();
+        }
+        if (target.dataset.field === 'price' || target.dataset.field === 'original_price' || target.dataset.field === 'stock') {
+            const variantItem = target.closest('.product-detail__variant-item');
+            const variantId = parseInt(variantItem.dataset.variantId);
+            const variant = productData.variants.find(v => v.id === variantId);
+            if (variant) {
+                variant[target.dataset.field] = parseInt(target.value) || 0;
+                if (variant.id === currentVariant.id) {
+                    updatePreview({ target: previewSizeOptions.querySelector(`[data-variant-id="${variantId}"]`) });
+                }
+            }
+        }
+        if (target.dataset.field === 'color_name' || target.dataset.field === 'hex_code' || target.dataset.field === 'color_stock' || target.dataset.field === 'is_active') {
+            const colorItem = target.closest('.product-detail__color-item');
+            const variantItem = colorItem.closest('.product-detail__variant-item');
+            const variantId = parseInt(variantItem.dataset.variantId);
+            const colorId = parseInt(colorItem.dataset.colorId);
+            const variant = productData.variants.find(v => v.id === variantId);
+            const color = variant.colors.find(c => c.id === colorId);
+            if (color) {
+                if (target.dataset.field === 'is_active') {
+                    color.is_active = target.checked ? 1 : 0;
+                    if (!color.is_active && color.id === currentColor.id) {
+                        currentColor = variant.colors.find(c => c.is_active == 1) || variant.colors[0];
                     }
-                    if (target.name === 'productDescription') {
-                        previewDescription.innerHTML = target.value;
-                        productData.description_html = target.value;
+                } else {
+                    color[target.dataset.field] = target.dataset.field === 'color_stock' ? parseInt(target.value) || 0 : target.value;
+                }
+                if (variant.id === currentVariant.id) {
+                    updatePreviewColors();
+                }
+            }
+        }
+    });
+
+    // Image Upload Handler
+    document.querySelectorAll('.product-detail__file-input').forEach(input => {
+        input.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = input.closest('.product-detail__image-upload, .product-detail__color-item')
+                        .querySelector('.product-detail__preview-img, .product-detail__color-img');
+                    if (preview) preview.src = e.target.result;
+                    if (input.id === 'mainImage') {
+                        previewMainImage.src = e.target.result;
+                        currentVariant.main_media.url = e.target.result;
                     }
-                    if (target.dataset.field === 'capacity') {
-                        const variantItem = target.closest('.product-detail__variant-item');
-                        const variantId = parseInt(variantItem.dataset.variantId);
-                        const variant = productData.variants.find(v => v.id === variantId);
-                        if (variant) variant.capacity_group = target.value;
-                        updatePreviewVariants();
-                    }
-                    if (target.dataset.field === 'price' || target.dataset.field === 'original_price' || target.dataset.field === 'stock') {
-                        const variantItem = target.closest('.product-detail__variant-item');
-                        const variantId = parseInt(variantItem.dataset.variantId);
-                        const variant = productData.variants.find(v => v.id === variantId);
-                        if (variant) {
-                            variant[target.dataset.field] = parseInt(target.value) || 0;
-                            if (variant.id === currentVariant.id) {
-                                updatePreview({ target: previewSizeOptions.querySelector(`[data-variant-id="${variantId}"]`) });
-                            }
-                        }
-                    }
-                    if (target.dataset.field === 'color_name' || target.dataset.field === 'hex_code' || target.dataset.field === 'color_stock' || target.dataset.field === 'is_active') {
-                        const colorItem = target.closest('.product-detail__color-item');
-                        const variantItem = colorItem.closest('.product-detail__variant-item');
-                        const variantId = parseInt(variantItem.dataset.variantId);
-                        const colorId = parseInt(colorItem.dataset.colorId);
-                        const variant = productData.variants.find(v => v.id === variantId);
-                        const color = variant.colors.find(c => c.id === colorId);
-                        if (color) {
-                            if (target.dataset.field === 'is_active') {
-                                color.is_active = target.checked ? 1 : 0;
-                            } else {
-                                color[target.dataset.field] = target.dataset.field === 'color_stock' ? parseInt(target.value) || 0 : target.value;
-                            }
-                            if (variant.id === currentVariant.id) {
-                                updatePreviewColors();
-                            }
-                        }
-                    }
-                });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    });
 
-                // Image Upload Handler
-                document.querySelectorAll('.product-detail__file-input').forEach(input => {
-                    input.addEventListener('change', (e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                const preview = input.closest('.product-detail__image-upload, .product-detail__color-item')
-                                    .querySelector('.product-detail__preview-img, .product-detail__color-img');
-                                if (preview) preview.src = e.target.result;
-                                if (input.id === 'mainImage') {
-                                    previewMainImage.src = e.target.result;
-                                    currentVariant.main_media.url = e.target.result;
-                                }
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
-                });
+    // Variant Management
+    document.querySelector('.add-variant').addEventListener('click', () => {
+        const newVariant = {
+            id: Math.max(...productData.variants.map(v => v.id)) + 1,
+            price: 0,
+            original_price: 0,
+            capacity_group: '',
+            stock_quantity: 0,
+            main_media: { url: '', alt_text: '' },
+            colors: []
+        };
+        productData.variants.push(newVariant);
+        const variantItem = document.querySelector('.product-detail__variant-item').cloneNode(true);
+        variantItem.dataset.variantId = newVariant.id;
+        variantItem.querySelectorAll('input[data-field]').forEach(input => input.value = '');
+        variantItem.querySelector('.product-detail__colors-manager').innerHTML = '<button type="button" class="product-detail__btn product-detail__btn--outline add-color" data-variant-id="' + newVariant.id + '"><i class="fas fa-plus"></i> Thêm màu sắc</button>';
+        variantItem.querySelector('.remove-variant').disabled = false;
+        variantItem.querySelector('.product-detail__variant-title').textContent = 'Biến thể mới';
+        document.querySelector('.product-detail__variants-manager').insertBefore(variantItem, document.querySelector('.add-variant'));
+        initColorManagement(variantItem);
+        updatePreviewVariants();
+    });
 
-                // Variant Management
-                document.querySelector('.add-variant').addEventListener('click', () => {
-                    const newVariant = {
-                        id: Math.max(...productData.variants.map(v => v.id)) + 1,
-                        price: 0,
-                        original_price: 0,
-                        capacity_group: '',
-                        stock_quantity: 0,
-                        main_media: { url: '', alt_text: '' },
-                        colors: []
-                    };
-                    productData.variants.push(newVariant);
-                    const variantItem = document.querySelector('.product-detail__variant-item').cloneNode(true);
-                    variantItem.dataset.variantId = newVariant.id;
-                    variantItem.querySelectorAll('input[data-field]').forEach(input => input.value = '');
-                    variantItem.querySelector('.product-detail__colors-manager').innerHTML = '<button type="button" class="product-detail__btn product-detail__btn--outline add-color" data-variant-id="' + newVariant.id + '"><i class="fas fa-plus"></i> Thêm màu sắc</button>';
-                    variantItem.querySelector('.remove-variant').disabled = false;
-                    variantItem.querySelector('.product-detail__variant-title').textContent = 'Biến thể mới';
-                    document.querySelector('.product-detail__variants-manager').insertBefore(variantItem, document.querySelector('.add-variant'));
-                    initColorManagement(variantItem);
-                    updatePreviewVariants();
-                });
-
-                document.querySelectorAll('.remove-variant').forEach(button => {
-                    button.addEventListener('click', () => {
-                        if (document.querySelectorAll('.product-detail__variant-item').length > 1) {
-                            const variantItem = button.closest('.product-detail__variant-item');
-                            const variantId = parseInt(variantItem.dataset.variantId);
-                            productData.variants = productData.variants.filter(v => v.id !== variantId);
-                            variantItem.remove();
-                            if (currentVariant.id === variantId) {
-                                currentVariant = productData.variants[0];
-                                currentColor = currentVariant.colors.find(c => c.is_active == 1) || currentVariant.colors[0];
-                            }
-                            updatePreviewVariants();
-                        }
-                    });
-                });
-
-                // Color Management
-                function initColorManagement(variantItem) {
-                    const variantId = parseInt(variantItem.dataset.variantId);
-                    variantItem.querySelectorAll('.add-color').forEach(button => {
-                        button.addEventListener('click', () => {
-                            const variant = productData.variants.find(v => v.id === variantId);
-                            const newColor = {
-                                id: variant.colors.length ? Math.max(...variant.colors.map(c => c.id)) + 1 : 1,
-                                name: '',
-                                hex_code: '#000000',
-                                stock: 0,
-                                color_id: variant.colors.length + 1,
-                                is_active: 1,
-                                gallery_images: []
-                            };
-                            variant.colors.push(newColor);
-                            const colorItem = document.querySelector('.product-detail__color-item').cloneNode(true);
-                            colorItem.dataset.colorId = newColor.id;
-                            colorItem.querySelectorAll('input[data-field]').forEach(input => input.value = '');
-                            colorItem.querySelector('.product-detail__color-gallery').innerHTML = '';
-                            colorItem.querySelector('.remove-color').disabled = variant.colors.filter(c => c.is_active == 1).length === 1;
-                            colorItem.querySelector('.add-image').disabled = false;
-                            colorItem.querySelector('input[data-field="is_active"]').checked = true;
-                            variantItem.querySelector('.product-detail__colors-manager').insertBefore(colorItem, button);
-                            initImageManagement(colorItem);
-                            updatePreviewColors();
-                        });
-                    });
-
-                    variantItem.querySelectorAll('.remove-color').forEach(button => {
-                        button.addEventListener('click', () => {
-                            const colorItem = button.closest('.product-detail__color-item');
-                            const colorId = parseInt(colorItem.dataset.colorId);
-                            const variant = productData.variants.find(v => v.id === variantId);
-                            if (variant.colors.filter(c => c.is_active == 1).length > 1) {
-                                variant.colors = variant.colors.filter(c => c.id !== colorId);
-                                colorItem.remove();
-                                if (variant.id === currentVariant.id && currentColor.id === colorId) {
-                                    currentColor = variant.colors.find(c => c.is_active == 1) || variant.colors[0];
-                                }
-                                updatePreviewColors();
-                            }
-                        });
-                    });
+    document.querySelectorAll('.remove-variant').forEach(button => {
+        button.addEventListener('click', () => {
+            if (document.querySelectorAll('.product-detail__variant-item').length > 1) {
+                const variantItem = button.closest('.product-detail__variant-item');
+                const variantId = parseInt(variantItem.dataset.variantId);
+                productData.variants = productData.variants.filter(v => v.id !== variantId);
+                variantItem.remove();
+                if (currentVariant.id === variantId) {
+                    currentVariant = productData.variants[0];
+                    currentColor = currentVariant.colors.find(c => c.is_active == 1) || currentVariant.colors[0];
                 }
-
-                // Image Management
-                function initImageManagement(colorItem) {
-                    colorItem.querySelectorAll('.add-image').forEach(button => {
-                        button.addEventListener('click', () => {
-                            const gallery = button.closest('.product-detail__color-item').querySelector('.product-detail__color-gallery');
-                            const variantItem = button.closest('.product-detail__variant-item');
-                            const variantId = parseInt(variantItem.dataset.variantId);
-                            const colorId = parseInt(button.closest('.product-detail__color-item').dataset.colorId);
-                            const input = document.createElement('input');
-                            input.type = 'file';
-                            input.accept = 'image/*';
-                            input.className = 'product-detail__file-input';
-                            input.addEventListener('change', (e) => {
-                                const file = e.target.files[0];
-                                if (file) {
-                                    const reader = new FileReader();
-                                    reader.onload = (e) => {
-                                        const item = document.createElement('div');
-                                        item.className = 'product-detail__gallery-item';
-                                        item.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="product-detail__color-img"><button type="button" class="product-detail__btn product-detail__btn--icon remove-image"><i class="fas fa-trash"></i></button>`;
-                                        gallery.appendChild(item);
-                                        initRemoveImage(item.querySelector('.remove-image'));
-                                        const variant = productData.variants.find(v => v.id === variantId);
-                                        const color = variant.colors.find(c => c.id === colorId);
-                                        if (color) {
-                                            color.gallery_images.push({
-                                                id: color.gallery_images.length ? Math.max(...color.gallery_images.map(img => img.id)) + 1 : 1,
-                                                url: e.target.result,
-                                                alt_text: 'Uploaded Image',
-                                                sort_order: color.gallery_images.length + 1
-                                            });
-                                            updatePreviewColors();
-                                        }
-                                    };
-                                    reader.readAsDataURL(file);
-                                }
-                            });
-                            input.click();
-                        });
-                    });
-
-                    colorItem.querySelectorAll('.remove-image').forEach(initRemoveImage);
-                }
-
-                function initRemoveImage(button) {
-                    button.addEventListener('click', () => {
-                        const galleryItem = button.closest('.product-detail__gallery-item');
-                        const colorItem = button.closest('.product-detail__color-item');
-                        const variantItem = colorItem.closest('.product-detail__variant-item');
-                        const variantId = parseInt(variantItem.dataset.variantId);
-                        const colorId = parseInt(colorItem.dataset.colorId);
-                        const imgSrc = galleryItem.querySelector('img').src;
-                        const variant = productData.variants.find(v => v.id === variantId);
-                        const color = variant.colors.find(c => c.id === colorId);
-                        if (color) {
-                            color.gallery_images = color.gallery_images.filter(img => img.url !== imgSrc);
-                            galleryItem.remove();
-                            if (variant.id === currentVariant.id && color.id === currentColor.id) {
-                                updatePreviewColors();
-                            }
-                        }
-                    });
-                }
-
-                // Initialize color and image management for existing variants
-                document.querySelectorAll('.product-detail__variant-item').forEach(initColorManagement);
-
-                // Preview Variant and Color Updates
-                function updatePreviewVariants() {
-                    previewSizeOptions.innerHTML = '';
-                    productData.variants.forEach(variant => {
-                        const button = document.createElement('button');
-                        button.className = 'product-detail__size-option';
-                        button.textContent = variant.capacity_group || 'Chưa đặt dung lượng';
-                        button.dataset.variantId = variant.id;
-                        button.dataset.price = variant.price;
-                        button.dataset.original = variant.original_price;
-                        button.dataset.capacity = variant.capacity_group;
-                        button.addEventListener('click', updatePreview);
-                        previewSizeOptions.appendChild(button);
-                        if (variant.id === currentVariant.id) {
-                            button.classList.add('product-detail__size-option--active');
-                        }
-                    });
-                }
-
-                function updatePreviewColors() {
-                    previewColorOptions.innerHTML = '';
-                    currentVariant.colors.filter(c => c.is_active == 1).forEach(color => {
-                        const button = document.createElement('button');
-                        button.className = 'product-detail__color-option';
-                        button.textContent = color.name || 'Chưa đặt tên';
-                        button.dataset.colorId = color.id;
-                        button.dataset.color = color.name;
-                        button.style.backgroundColor = color.hex_code;
-                        button.addEventListener('click', updatePreview);
-                        previewColorOptions.appendChild(button);
-                        if (color.id === currentColor.id) {
-                            button.classList.add('product-detail__color-option--active');
-                        }
-                    });
-                    updatePreviewImages();
-                }
-
-                function updatePreviewImages() {
-                    if (currentColor.gallery_images.length > 0) {
-                        currentColor.gallery_images.sort((a, b) => a.sort_order - b.sort_order);
-                        previewMainImage.src = currentColor.gallery_images[0].url;
-                        previewMainImage.alt = currentColor.gallery_images[0].alt_text;
-                        previewThumbnails.innerHTML = '';
-                        currentColor.gallery_images.forEach(image => {
-                            const thumb = document.createElement('img');
-                            thumb.src = image.url;
-                            thumb.alt = image.alt_text;
-                            thumb.className = 'product-detail__thumbnail';
-                            thumb.dataset.src = image.url;
-                            thumb.addEventListener('click', updatePreview);
-                            previewThumbnails.appendChild(thumb);
-                            if (image.url === previewMainImage.src) {
-                                thumb.classList.add('product-detail__thumbnail--active');
-                            }
-                        });
-                    } else {
-                        previewMainImage.src = currentVariant.main_media.url || '';
-                        previewMainImage.alt = currentVariant.main_media.alt_text || '';
-                        previewThumbnails.innerHTML = '';
-                    }
-                }
-
-                // Update Preview
-                function updatePreview(e) {
-                    if (e.target.classList.contains('product-detail__size-option')) {
-                        const variantId = parseInt(e.target.dataset.variantId);
-                        currentVariant = productData.variants.find(v => v.id === variantId) || currentVariant;
-                        previewSizeOptions.querySelectorAll('.product-detail__size-option').forEach(btn => btn.classList.remove('product-detail__size-option--active'));
-                        e.target.classList.add('product-detail__size-option--active');
-                        currentColor = currentVariant.colors.find(c => c.is_active == 1) || currentVariant.colors[0];
-                        updatePreviewColors();
-                    } else if (e.target.classList.contains('product-detail__color-option')) {
-                        const colorId = parseInt(e.target.dataset.colorId);
-                        currentColor = currentVariant.colors.find(c => c.id === colorId) || currentColor;
-                        previewColorOptions.querySelectorAll('.product-detail__color-option').forEach(btn => btn.classList.remove('product-detail__color-option--active'));
-                        e.target.classList.add('product-detail__color-option--active');
-                        updatePreviewImages();
-                    } else if (e.target.classList.contains('product-detail__thumbnail')) {
-                        previewThumbnails.querySelectorAll('.product-detail__thumbnail').forEach(t => t.classList.remove('product-detail__thumbnail--active'));
-                        e.target.classList.add('product-detail__thumbnail--active');
-                        previewMainImage.src = e.target.dataset.src;
-                        previewMainImage.alt = e.target.alt;
-                    }
-
-                    // Update pricing
-                    previewCurrentPrice.textContent = formatPrice(currentVariant.price) + ' đ';
-                    previewOriginalPrice.textContent = formatPrice(currentVariant.original_price) + ' đ';
-                    previewDiscount.textContent = `Giảm ${calculateDiscount(currentVariant.price, currentVariant.original_price)}%`;
-                }
-
-                // Utility Functions
-                function formatPrice(price) {
-                    return price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '0';
-                }
-
-                function calculateDiscount(current, original) {
-                    return original > 0 ? Math.round(((original - current) / original) * 100) : 0;
-                }
-
-                // Initialize
                 updatePreviewVariants();
+            }
+        });
+    });
+
+    // Color Management
+    function initColorManagement(variantItem) {
+        const variantId = parseInt(variantItem.dataset.variantId);
+        variantItem.querySelectorAll('.add-color').forEach(button => {
+            button.addEventListener('click', () => {
+                const variant = productData.variants.find(v => v.id === variantId);
+                const newColor = {
+                    id: variant.colors.length ? Math.max(...variant.colors.map(c => c.id)) + 1 : 1,
+                    name: '',
+                    hex_code: '#000000',
+                    stock: 0,
+                    color_id: variant.colors.length + 1,
+                    is_active: 1,
+                    gallery_images: []
+                };
+                variant.colors.push(newColor);
+                const colorItem = document.querySelector('.product-detail__color-item').cloneNode(true);
+                colorItem.dataset.colorId = newColor.id;
+                colorItem.querySelectorAll('input[data-field]').forEach(input => input.value = '');
+                colorItem.querySelector('.product-detail__color-gallery').innerHTML = '';
+                colorItem.querySelector('.remove-color').disabled = variant.colors.filter(c => c.is_active == 1).length === 1;
+                colorItem.querySelector('.add-image').disabled = false;
+                colorItem.querySelector('input[data-field="is_active"]').checked = true;
+                variantItem.querySelector('.product-detail__colors-manager').insertBefore(colorItem, button);
+                initImageManagement(colorItem);
+                updatePreviewColors();
             });
+        });
+
+        variantItem.querySelectorAll('.remove-color').forEach(button => {
+            button.addEventListener('click', () => {
+                const colorItem = button.closest('.product-detail__color-item');
+                const colorId = parseInt(colorItem.dataset.colorId);
+                const variant = productData.variants.find(v => v.id === variantId);
+                if (variant.colors.filter(c => c.is_active == 1).length > 1) {
+                    variant.colors = variant.colors.filter(c => c.id !== colorId);
+                    colorItem.remove();
+                    if (variant.id === currentVariant.id && currentColor.id === colorId) {
+                        currentColor = variant.colors.find(c => c.is_active == 1) || variant.colors[0];
+                    }
+                    updatePreviewColors();
+                }
+            });
+        });
+    }
+
+    // Image Management
+    function initImageManagement(colorItem) {
+        colorItem.querySelectorAll('.add-image').forEach(button => {
+            button.addEventListener('click', () => {
+                const gallery = button.closest('.product-detail__color-item').querySelector('.product-detail__color-gallery');
+                const variantItem = button.closest('.product-detail__variant-item');
+                const variantId = parseInt(variantItem.dataset.variantId);
+                const colorId = parseInt(button.closest('.product-detail__color-item').dataset.colorId);
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.className = 'product-detail__file-input';
+                input.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const item = document.createElement('div');
+                            item.className = 'product-detail__gallery-item';
+                            item.innerHTML = `<img src="${e.target.result}" alt="Uploaded Image" class="product-detail__color-img"><button type="button" class="product-detail__btn product-detail__btn--icon remove-image"><i class="fas fa-trash"></i></button>`;
+                            gallery.appendChild(item);
+                            initRemoveImage(item.querySelector('.remove-image'));
+                            const variant = productData.variants.find(v => v.id === variantId);
+                            const color = variant.colors.find(c => c.id === colorId);
+                            if (color) {
+                                color.gallery_images.push({
+                                    id: color.gallery_images.length ? Math.max(...color.gallery_images.map(img => img.id)) + 1 : 1,
+                                    url: e.target.result,
+                                    alt_text: 'Uploaded Image',
+                                    sort_order: color.gallery_images.length + 1
+                                });
+                                updatePreviewColors();
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                input.click();
+            });
+        });
+
+        colorItem.querySelectorAll('.remove-image').forEach(initRemoveImage);
+    }
+
+    function initRemoveImage(button) {
+        button.addEventListener('click', () => {
+            const galleryItem = button.closest('.product-detail__gallery-item');
+            const colorItem = button.closest('.product-detail__color-item');
+            const variantItem = colorItem.closest('.product-detail__variant-item');
+            const variantId = parseInt(variantItem.dataset.variantId);
+            const colorId = parseInt(colorItem.dataset.colorId);
+            const imgSrc = galleryItem.querySelector('img').src;
+            const variant = productData.variants.find(v => v.id === variantId);
+            const color = variant.colors.find(c => c.id === colorId);
+            if (color) {
+                color.gallery_images = color.gallery_images.filter(img => img.url !== imgSrc);
+                galleryItem.remove();
+                if (variant.id === currentVariant.id && color.id === currentColor.id) {
+                    updatePreviewColors();
+                }
+            }
+        });
+    }
+
+    // Initialize color and image management for existing variants
+    document.querySelectorAll('.product-detail__variant-item').forEach(initColorManagement);
+
+    // Preview Variant and Color Updates
+    function updatePreviewVariants() {
+        previewSizeOptions.innerHTML = '';
+        if (productData.variants && productData.variants.length > 0) {
+            productData.variants.forEach(variant => {
+                const button = document.createElement('button');
+                button.className = 'product-detail__size-option';
+                button.textContent = variant.capacity_group || 'Chưa biến thể dung lượng';
+                button.dataset.variantId = variant.id;
+                button.dataset.price = variant.price;
+                button.dataset.original = variant.original_price;
+                button.dataset.capacity = variant.capacity_group;
+                button.addEventListener('click', updatePreview);
+                previewSizeOptions.appendChild(button);
+                if (variant.id === currentVariant.id) {
+                    button.classList.add('product-detail__size-option--active');
+                }
+            });
+            // Trigger initial update
+            if (previewSizeOptions.firstChild) {
+                previewSizeOptions.firstChild.click();
+            }
+        }
+    }
+
+    function updatePreviewColors() {
+        previewColorOptions.innerHTML = '';
+        currentVariant.colors.filter(c => c.is_active == 1).forEach(color => {
+            const button = document.createElement('button');
+            button.className = 'product-detail__color-option';
+            button.textContent = color.name || 'Chưa đặt tên';
+            button.dataset.colorId = color.id;
+            button.dataset.color = color.name;
+            button.style.backgroundColor = color.hex_code;
+            button.addEventListener('click', updatePreview);
+            previewColorOptions.appendChild(button);
+            if (color.id === currentColor.id) {
+                button.classList.add('product-detail__color-option--active');
+            }
+        });
+        updatePreviewImages();
+    }
+
+    function updatePreviewImages() {
+        if (currentColor.gallery_images.length > 0) {
+            currentColor.gallery_images.sort((a, b) => a.sort_order - b.sort_order);
+            if (!isVideoMode) {
+                previewMainImage.src = currentColor.gallery_images[0].url || currentVariant.main_media.url || '';
+                previewMainImage.alt = currentColor.gallery_images[0].alt_text || currentVariant.main_media.alt_text || '';
+            }
+            previewThumbnails.innerHTML = '';
+
+            // Add Video Button
+            const videoButton = document.createElement('button');
+            videoButton.className = 'product-detail__media-button';
+            videoButton.innerHTML = `
+                <div class="product-detail__media-button__icon">▶️</div>
+                <div class="product-detail__media-button__label">Video</div>
+            `;
+            videoButton.addEventListener('click', () => {
+                isVideoMode = true;
+                const iframe = document.createElement('iframe');
+                iframe.id = 'previewMainImage'; // Reassign ID to iframe
+                iframe.width = "100%";
+                iframe.height = "440px";
+                iframe.src = "https://www.youtube.com/embed/-iAJvsb03lM";
+                iframe.title = "Mở hộp iPhone Pro và iPhone 15 Pro Max chính hãng Việt Nam - Màu Titan Tự nhiên quá xịn !!!";
+                iframe.frameBorder = "0";
+                iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+                iframe.referrerPolicy = "strict-origin-when-cross-origin";
+                iframe.allowFullscreen = true;
+                boxPreview.replaceChild(iframe, previewMainImage); // Replace with iframe
+                previewMainImage = iframe; // Update reference
+                updatePreviewImages(); // Refresh thumbnails
+            });
+            previewThumbnails.appendChild(videoButton);
+
+            // Add Thumbnails
+            currentColor.gallery_images.forEach(image => {
+                const thumb = document.createElement('img');
+                thumb.src = image.url;
+                thumb.alt = image.alt_text;
+                thumb.className = 'product-detail__thumbnail';
+                thumb.dataset.src = image.url;
+                thumb.addEventListener('click', () => {
+                    if (isVideoMode) {
+                        isVideoMode = false;
+                        const newImage = document.createElement('img');
+                        newImage.id = 'previewMainImage';
+                        newImage.src = image.url;
+                        newImage.alt = image.alt_text;
+                        newImage.className = 'product-detail__main-img'; // Sử dụng class từ HTML gốc
+                        boxPreview.replaceChild(newImage, previewMainImage);
+                        previewMainImage = newImage; // Update reference
+                    } else {
+                        previewMainImage.src = image.url;
+                        previewMainImage.alt = image.alt_text;
+                    }
+                    previewThumbnails.querySelectorAll('.product-detail__thumbnail').forEach(t => t.classList.remove('product-detail__thumbnail--active'));
+                    thumb.classList.add('product-detail__thumbnail--active');
+                });
+                previewThumbnails.appendChild(thumb);
+                if (image.url === previewMainImage.src && !isVideoMode) {
+                    thumb.classList.add('product-detail__thumbnail--active');
+                }
+            });
+        } else {
+            if (!isVideoMode) {
+                previewMainImage.src = currentVariant.main_media.url || '';
+                previewMainImage.alt = currentVariant.main_media.alt_text || '';
+            }
+            previewThumbnails.innerHTML = '';
+
+            // Add Video Button when no images
+            const videoButton = document.createElement('button');
+            videoButton.className = 'product-detail__media-button';
+            videoButton.innerHTML = `
+                <div class="product-detail__media-button__icon">▶️</div>
+                <div class="product-detail__media-button__label">Video</div>
+            `;
+            videoButton.addEventListener('click', () => {
+                isVideoMode = true;
+                const iframe = document.createElement('iframe');
+                iframe.id = 'previewMainImage'; // Reassign ID to iframe
+                iframe.width = "100%";
+                iframe.height = "440px";
+                iframe.src = "https://www.youtube.com/embed/-iAJvsb03lM";
+                iframe.title = "Mở hộp iPhone Pro và iPhone 15 Pro Max chính hãng Việt Nam - Màu Titan Tự nhiên quá xịn !!!";
+                iframe.frameBorder = "0";
+                iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+                iframe.referrerPolicy = "strict-origin-when-cross-origin";
+                iframe.allowFullscreen = true;
+                boxPreview.replaceChild(iframe, previewMainImage); // Replace with iframe
+                previewMainImage = iframe; // Update reference
+            });
+            previewThumbnails.appendChild(videoButton);
+        }
+    }
+
+    // Update Preview
+    function updatePreview(e) {
+        if (e.target.classList.contains('product-detail__size-option')) {
+            const variantId = parseInt(e.target.dataset.variantId);
+            currentVariant = productData.variants.find(v => v.id === variantId) || currentVariant;
+            previewSizeOptions.querySelectorAll('.product-detail__size-option').forEach(btn => btn.classList.remove('product-detail__size-option--active'));
+            e.target.classList.add('product-detail__size-option--active');
+            currentColor = currentVariant.colors.find(c => c.is_active == 1) || currentVariant.colors[0];
+            updatePreviewColors();
+        } else if (e.target.classList.contains('product-detail__color-option')) {
+            const colorId = parseInt(e.target.dataset.colorId);
+            currentColor = currentVariant.colors.find(c => c.id === colorId) || currentColor;
+            previewColorOptions.querySelectorAll('.product-detail__color-option').forEach(btn => btn.classList.remove('product-detail__color-option--active'));
+            e.target.classList.add('product-detail__color-option--active');
+            updatePreviewImages();
+        } else if (e.target.classList.contains('product-detail__thumbnail')) {
+            if (isVideoMode) {
+                isVideoMode = false;
+                const newImage = document.createElement('img');
+                newImage.id = 'previewMainImage';
+                newImage.src = e.target.dataset.src;
+                newImage.alt = e.target.alt;
+                newImage.className = 'product-detail__main-img'; // Sử dụng class từ HTML gốc
+                boxPreview.replaceChild(newImage, previewMainImage);
+                previewMainImage = newImage; // Update reference
+            } else {
+                previewMainImage.src = e.target.dataset.src;
+                previewMainImage.alt = e.target.alt;
+            }
+            previewThumbnails.querySelectorAll('.product-detail__thumbnail').forEach(t => t.classList.remove('product-detail__thumbnail--active'));
+            e.target.classList.add('product-detail__thumbnail--active');
+        }
+
+        // Update pricing
+        previewCurrentPrice.textContent = formatPrice(currentVariant.price) + ' đ';
+        previewOriginalPrice.textContent = formatPrice(currentVariant.original_price) + ' đ';
+        previewDiscount.textContent = `Giảm ${calculateDiscount(currentVariant.price, currentVariant.original_price)}%`;
+    }
+
+    // Utility Functions
+    function formatPrice(price) {
+        return price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : '0';
+    }
+
+    function calculateDiscount(current, original) {
+        return original > 0 ? Math.round(((original - current) / original) * 100) : 0;
+    }
+    // Initialize
+    updatePreviewVariants();
+});
         </script>
     </main>
 </body>

@@ -17,7 +17,7 @@ body {
    padding: 30px;
 
    &__header {
-      margin-bottom: 24px;
+      margin-bottom: 10px;
    }
 
    &__title {
@@ -37,7 +37,7 @@ body {
    &__card {
       background-color: white;
       border-radius: 8px;
-      padding: 20px;
+      padding: 13px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
    }
 
@@ -48,7 +48,7 @@ body {
    }
 
    &__value {
-      font-size: 32px;
+      font-size: 2.2rem;
       font-weight: 700;
       color: #212529;
       margin-bottom: 8px;
@@ -74,7 +74,7 @@ body {
 .order-filter {
    background-color: white;
    border-radius: 8px;
-   padding: 24px;
+   padding: 15px;
    margin-bottom: 24px;
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
    display: grid;
@@ -307,218 +307,5 @@ body {
             background-color: #c82333;
          }
       }
-   }
-}
-
-// Pagination Block
-.pagination {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 20px 24px;
-   border-top: 1px solid #dee2e6;
-
-   &__info {
-      font-size: 14px;
-      color: #6c757d;
-   }
-
-   &__controls {
-      display: flex;
-      gap: 4px;
-   }
-
-   &__btn {
-      width: 32px;
-      height: 32px;
-      border: 1px solid #dee2e6;
-      background-color: white;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-
-      &:hover {
-         background-color: #f8f9fa;
-         border-color: #adb5bd;
-      }
-
-      &--active {
-         background-color: #4285f4;
-         color: white;
-         border-color: #4285f4;
-
-         &:hover {
-            background-color: #3367d6;
-            border-color: #3367d6;
-         }
-      }
-   }
-}
-
-// Responsive design
-@media (max-width: 1200px) {
-   .order-stats {
-      grid-template-columns: repeat(3, 1fr);
-   }
-
-   .order-table {
-      font-size: 13px;
-
-      &__cell,
-      &__header {
-         padding: 12px 16px;
-      }
-   }
-}
-
-@media (max-width: 992px) {
-   .order-stats {
-      grid-template-columns: repeat(2, 1fr);
-   }
-
-   .order-filter {
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-
-      &__group:nth-child(3) {
-         grid-column: span 2;
-      }
-
-      &__actions {
-         grid-column: span 2;
-         justify-self: end;
-      }
-   }
-
-   .order-table {
-      &__header:nth-child(n + 6),
-      &__cell:nth-child(n + 6) {
-         display: none;
-      }
-   }
-}
-
-@media (max-width: 768px) {
-   .order-stats {
-      grid-template-columns: repeat(2, 1fr);
-
-      &__card {
-         padding: 16px;
-      }
-
-      &__value {
-         font-size: 24px;
-      }
-   }
-
-   .order-filter {
-      grid-template-columns: 1fr;
-      gap: 16px;
-
-      &__group:nth-child(3) {
-         grid-column: 1;
-      }
-
-      &__actions {
-         grid-column: 1;
-         justify-self: stretch;
-      }
-   }
-
-   .order-table {
-      &__head {
-         display: none;
-      }
-
-      &__row {
-         display: block;
-         border: 1px solid #dee2e6;
-         border-radius: 8px;
-         margin-bottom: 16px;
-         padding: 16px;
-         background-color: white;
-      }
-
-      &__cell {
-         display: block;
-         padding: 8px 0;
-         border-bottom: 1px solid #f1f3f4;
-
-         &:last-child {
-            border-bottom: none;
-         }
-
-         &:before {
-            content: attr(data-label);
-            font-weight: 600;
-            display: block;
-            margin-bottom: 4px;
-            color: #495057;
-         }
-
-         &:nth-child(1):before {
-            content: "Ngày mua: ";
-         }
-
-         &:nth-child(2):before {
-            content: "Mã đơn hàng: ";
-         }
-
-         &:nth-child(3):before {
-            content: "Khách hàng: ";
-         }
-
-         &:nth-child(4):before {
-            content: "Trạng thái đơn hàng: ";
-         }
-
-         &:nth-child(5):before {
-            content: "Trạng thái thanh toán: ";
-         }
-
-         &:nth-child(6):before {
-            content: "Khách phải trả: ";
-         }
-
-         &:nth-child(7):before {
-            content: "Thao tác: ";
-         }
-
-         &--actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-
-            &:before {
-               display: block;
-               width: 100%;
-            }
-         }
-      }
-   }
-
-   .pagination {
-      flex-direction: column;
-      gap: 16px;
-      align-items: center;
-
-      &__info {
-         order: 2;
-      }
-
-      &__controls {
-         order: 1;
-      }
-   }
-}
-
-@media (max-width: 480px) {
-   .order-stats {
-      grid-template-columns: 1fr;
    }
 }

@@ -38,6 +38,44 @@ $font-size-xl: 20px;
 $font-size-xxl: 24px;
 
 .product-detail {
+   &__box-preview {
+      width: 100%;
+   }
+
+   &__disabled-input {
+      pointer-events: none;
+   }
+
+   &__media-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background-color: white;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+         box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+      }
+
+      &__icon {
+         font-size: 16px;
+         margin-bottom: 5px;
+         color: #6b7280; // hoặc dùng svg nếu cần
+      }
+
+      &__label {
+         font-size: 13px;
+         color: #1f2937;
+      }
+   }
+
    &__gallery-item {
       gap: 10px;
       display: flex;
@@ -986,27 +1024,26 @@ $font-size-xxl: 24px;
 
    &__main-img {
       width: 100%;
-      height: 400px;
-      object-fit: cover;
-      border-radius: $border-radius;
-      border: 1px solid $border-color;
+      height: 440px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
    }
 
    &__image-thumbnails {
       display: flex;
+      justify-content: center;
       gap: $spacing-xs;
       flex-wrap: nowrap;
       overflow-x: auto;
    }
 
    &__thumbnail {
-      width: 80px;
       height: 60px;
       object-fit: cover;
       border-radius: $border-radius-small;
       border: 1px solid $border-color;
       cursor: pointer;
-      opacity: 0.7;
 
       &:hover,
       &.active {

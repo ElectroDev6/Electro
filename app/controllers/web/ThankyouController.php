@@ -1,11 +1,11 @@
 <?php
 namespace App\Controllers\Web;  
 
-
+use Core\View;
 class ThankyouController
  {
      public function index()
      {
-         render('thankyou');
+         View::render('thankyou');
      }
  }

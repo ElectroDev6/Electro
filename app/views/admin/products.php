@@ -1,11 +1,11 @@
 <?php
-    include dirname(__DIR__) . '/admin/partials/sidebar.php';
+include dirname(__DIR__) . '/admin/partials/sidebar.php';
 ?>
 <?php
-    include dirname(__DIR__) . '/admin/partials/header.php';
+include dirname(__DIR__) . '/admin/partials/header.php';
 ?>
 <?php
-    include dirname(__DIR__) . '/admin/partials/pagination.php';
+include dirname(__DIR__) . '/admin/partials/pagination.php';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -16,52 +16,51 @@
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-<!-- <?php 
-    echo '<pre>';
-    echo json_encode($products, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    echo '</pre>';
-?> -->
-
+    <!-- <?php 
+        echo '<pre>';
+        echo json_encode($products, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        echo '</pre>';
+    ?> -->
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
-        <div class="product-page">
-        <!-- Header Section -->
-        <div class="product-page__header">
-            <h1 class="product-page__title">Trang sản phẩm</h1>
-            <button class="product-page__add-btn"> + Add new</button>
-        </div>
+        <div class="product-page" data-target="pagination-container">
+            <!-- Header Section -->
+            <div class="product-page__header">
+                <h1 class="product-page__title">Trang sản phẩm</h1>
+                <button class="product-page__add-btn"> + Add new</button>
+            </div>
  
-        <!-- Filter Section -->
-        <div class="product-filter">
-            <div class="product-filter__group">
-                <label class="product-filter__label">Tên sản phẩm</label>
-                <input type="text" class="product-filter__input" placeholder="Tìm kiếm sản phẩm...">
+            <!-- Filter Section -->
+            <div class="product-filter">
+                <div class="product-filter__group">
+                    <label class="product-filter__label">Tên sản phẩm</label>
+                    <input type="text" class="product-filter__input" placeholder="Tìm kiếm sản phẩm...">
+                </div>
+                
+                <div class="product-filter__group">
+                    <label class="product-filter__label">Danh mục</label>
+                    <select class="product-filter__select">
+                        <option>Tất cả danh mục</option>
+                    </select>
+                </div>
+                
+                <div class="product-filter__group">
+                    <label class="product-filter__label">Thương hiệu</label>
+                    <select class="product-filter__select">
+                        <option>Tất cả thương hiệu</option>
+                    </select>
+                </div>
+                
+                <div class="product-filter__actions">
+                    <button class="product-filter__btn product-filter__btn--primary">Lọc</button>
+                    <button class="product-filter__btn product-filter__btn--secondary">Reset</button>
+                </div>
             </div>
-            
-            <div class="product-filter__group">
-                <label class="product-filter__label">Danh mục</label>
-                <select class="product-filter__select">
-                    <option>Tất cả danh mục</option>
-                </select>
-            </div>
-            
-            <div class="product-filter__group">
-                <label class="product-filter__label">Thương hiệu</label>
-                <select class="product-filter__select">
-                    <option>Tất cả thương hiệu</option>
-                </select>
-            </div>
-            
-            <div class="product-filter__actions">
-                <button class="product-filter__btn product-filter__btn--primary">Lọc</button>
-                <button class="product-filter__btn product-filter__btn--secondary">Reset</button>
-            </div>
-        </div>
 
-        <!-- Products Section -->
-        <div class="product-list">
-            <h2 class="product-list__title">Sản phẩm</h2>
+            <!-- Products Section -->
+            <div class="product-list">
+                <h2 class="product-list__title">Sản phẩm</h2>
                 <div class="product-table">
                     <div class="product-table__header">
                         <div class="product-table__cell product-table__cell--header">Tên</div>
@@ -75,7 +74,6 @@
                         <?php
                             $variants = $product['variants'] ?? [];
                             $firstVariant = $variants[0] ?? null;
-
                             $mainImage = $firstVariant['main_media']['url'] ?? '/img/default.png';
                             $price = number_format($firstVariant['price'] ?? 0, 0, ',', '.') . 'đ';
 
@@ -85,7 +83,7 @@
                                 }, 0)
                                 : 0;
                         ?>
-                        <div class="product-table__row">
+                        <div class="products-table__row" data-product-id="<?= $product['product_id'] ?>">
                             <div class="product-table__cell product-table__cell--name">
                                 <img src="<?= htmlspecialchars($mainImage) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>" class="product-table__image">
                                 <span class="product-table__name"><?= htmlspecialchars($product['product_name']) ?></span>
@@ -105,9 +103,11 @@
 
                 </div>
 
-    <?php echo $htmlPagination; ?>
-        </div>
+                <?php echo $htmlPagination; ?>
+            </div>
         </div>
     </main>
+
+    <script src="/admin-ui/js/common/pagination.js"></script>
 </body>
 </html>

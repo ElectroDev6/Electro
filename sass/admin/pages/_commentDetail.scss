@@ -562,3 +562,57 @@
       text-align: right;
    }
 }
+
+.comment-detail__stats-panel {
+   background-color: #ffffff;
+   border-radius: 8px;
+   padding: 16px;
+   margin-bottom: 20px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+   .comment-detail__panel-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 8px;
+   }
+
+   .comment-detail__stats-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+   }
+
+   .comment-detail__stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+
+      .comment-detail__stat-label {
+         font-size: 1.45rem;
+         color: #666;
+         font-weight: 500;
+      }
+
+      .comment-detail__stat-value {
+         font-size: 1.4rem;
+         color: #222;
+         font-weight: 600;
+
+         // Highlight số liệu quan trọng
+         &.highlight {
+            color: #2ecc71;
+            font-weight: 700;
+         }
+      }
+
+      &:hover {
+         background-color: #f9f9f9;
+         border-radius: 4px;
+         transition: background-color 0.2s ease;
+      }
+   }
+}

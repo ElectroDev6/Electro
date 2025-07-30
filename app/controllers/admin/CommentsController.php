@@ -1,11 +1,20 @@
 <?php
 namespace App\Controllers\Admin;
-
+use App\Models\CommentsModel;
+use Container;
 use Core\View;
-    class CommentsController
+
+class CommentsController
+{
+    public function index()
     {
-        public function index()
-        {
-            View::render('comments');
-        }
+        $pdo = Container::get('pdo');
+        $commentsModel = new CommentsModel($pdo);
+        $comments = $commentsModel->getAllComments();
+
+        View::render('comments', [
+            'comments' => $comments
+        ]);
     }
+}
+?>
