@@ -131,21 +131,16 @@ Thanh toán
           <div class="order-payment__icon"></div>
           <span>Thanh toán khi nhận hàng</span>
         </div>
+        
+         
       </div>
+      
     </div>
 
     <!-- Sidebar -->
     <div class="order-page__sidebar">
       <div class="order-summary">
-        <div class="order-summary__promo">
-          <span class="order-summary__promo-icon">🏷️</span>
-          <span>Chọn hoặc nhập ưu đãi</span>
-        </div>
 
-        <div class="order-summary__promo">
-          <span class="order-summary__promo-icon">⚠️</span>
-          <span>Đăng nhập để sử dụng điểm thưởng</span>
-        </div>
 
         <div class="order-summary__title">Thông tin đơn hàng</div>
 
@@ -170,8 +165,8 @@ Thanh toán
         </div>
 
         <div class="order-summary__row">
-          <span>Điểm thưởng</span>
-          <span class="order-summary__points">+7.695</span>
+          <span>Voucher FreeShip</span>
+          <span class="order-summary__points">-20.000</span>
         </div>
 
         <button class="order-summary__btn">Đặt hàng</button>

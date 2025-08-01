@@ -1,88 +1,106 @@
-<?php
-
-use Core\View; ?>
-
+<?php use Core\View; ?>
 
 <?php View::extend('layouts.main'); ?>
-
 <?php View::section('content'); ?>
+
 <div class="container-main">
   <section class="cart-page">
     <div class="cart-page__header">
       <div class="cart-page__breadcrumb">Trang chủ / Giỏ hàng</div>
-      <h1 class="cart-page__title">Đây là trang giỏ hàng</h1>
+      <h1 class="cart-page__title">Giỏ hàng của tôi</h1>
     </div>
 
     <div class="container">
       <div class="main-content">
+
         <!-- Left: Cart Section -->
         <div class="cart">
-          <div class="cart__header">
-            <div class="cart__select-all">
-              <input type="checkbox" id="select-all">
-              <label for="select-all">Chọn tất cả (1)</label>
+          <?php if (empty($cart['products'])): ?>
+            <div class="cart__empty">
+              <p>🛒 Giỏ hàng của bạn chưa có sản phẩm nào!</p>
             </div>
-          </div>
-
-          <!-- Product 1 -->
-          <div class="product product--selected">
-            <div class="product__main">
-              <input type="checkbox" class="product__checkbox" checked>
-              <img src="https://cdn2.fptshop.com.vn/unsafe/128x0/filters:format(webp):quality(75)/00911929_robot_hut_bui_lau_nha_ecovacs_n30_pro_omni_f0d56eb739.png" alt="Robot hút bụi" class="product__image">
-              <div class="product__info">
-                <div class="product__name">Robot hút bụi lau nhà Dreame L40 Ultra Trắng</div>
-                <div class="product__variant">Màu: Trắng ▼</div>
+          <?php else: ?>
+            <?php
+                  // Xác định xem tất cả sản phẩm có được chọn không
+                  $allSelected = true;
+                  foreach ($cart['products'] as $product) {
+                    if (empty($product['selected'])) {
+                      $allSelected = false;
+                      break;
+                    }
+                  }
+                ?>
+            <div class="cart__header">
+              <div class="cart__select-all">
+                <form method="POST" action="/cart/select-all" id="select-all-form">
+                  <input
+                    type="checkbox"
+                    id="select-all"
+                    name="select_all"
+                    onchange="document.getElementById('select-all-form').submit();"
+                    <?= $allSelected ? 'checked' : '' ?>
+                  >
+                  <label for="select-all">Chọn tất cả (<?= count($cart['products']) ?>)</label>
+                </form>
               </div>
-              <div class="product__price">
-                <span class="product__price--current">17.290.000 đ</span>
-                <span class="product__price--original">35.990.000 đ</span>
-              </div>
-              <div class="product__quantity">
-                <button class="product__quantity-btn">-</button>
-                <input type="number" value="1" class="product__quantity-input">
-                <button class="product__quantity-btn">+</button>
-              </div>
-              <button class="product__delete-btn">🗑</button>
-            </div>
-
-            <div class="warranty">
-              <div class="warranty__text">
-                <input type="checkbox"> Đặc quyền bảo hành trọn đời
-                <span class="warranty__price">+1.800.000 đ</span>
-                <span class="warranty__price--original">3.600.000 đ</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Product 2 -->
-          <div class="product">
-            <div class="product__main">
-              <input type="checkbox" class="product__checkbox">
-              <img src="https://cdn2.fptshop.com.vn/unsafe/750x0/filters:format(webp):quality(75)/msi_mpg_271qrx_qd_oled_1_73a2121521.png" alt="Màn hình Xiaomi" class="product__image">
-              <div class="product__info">
-                <div class="product__name">Màn hình Xiaomi A27i EU...</div>
-                <div class="product__variant">Màu: Đen ▼</div>
-              </div>
-              <div class="product__price">
-                <span class="product__price--current">2.390.000 đ</span>
-                <span class="product__price--original">3.000.000 đ</span>
-              </div>
-              <div class="product__quantity">
-                <button class="product__quantity-btn">-</button>
-                <input type="number" value="1" class="product__quantity-input">
-                <button class="product__quantity-btn">+</button>
-              </div>
-              <button class="product__delete-btn">🗑</button>
             </div>
 
-            <div class="warranty">
-              <div class="warranty__text">
-                <input type="checkbox"> Đặc quyền bảo hành trọn đời
-                <span class="warranty__price">+300.000 đ</span>
-                <span class="warranty__price--original">600.000 đ</span>
+
+
+            <?php foreach ($cart['products'] as $product): ?>
+              <div class="product <?= $product['selected'] ? 'product--selected' : '' ?>">
+                <div class="product__main">
+                  <input type="checkbox" class="product__checkbox" <?= $product['selected'] ? 'checked' : '' ?>>
+
+                  <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="product__image">
+
+                 <div class="product__info">
+                    <div class="product__name"><?= htmlspecialchars($product['name']) ?></div>
+
+                    <form method="POST" action="/cart/update-color" class="product__variant">
+                      <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                      <label for="color-select-<?= $product['id'] ?>">Màu:</label>
+                      <select name="color" id="color-select-<?= $product['id'] ?>" onchange="this.form.submit()">
+                        <?php foreach ($product['available_colors'] as $colorOption): ?>
+                          <option value="<?= $colorOption ?>" <?= $colorOption === $product['color'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($colorOption) ?>
+                          </option>
+                        <?php endforeach; ?>
+                      </select>
+                    </form>
+                  </div>
+
+                  <div class="product__price">
+                    <span class="product__price--current"><?= number_format($product['price_current'], 0, ',', '.') ?> đ</span>
+                    <span class="product__price--original"><?= number_format($product['price_original'], 0, ',', '.') ?> đ</span>
+                  </div>
+
+                  <!-- Form cập nhật số lượng -->
+                  <div class="product__quantity">
+                    <form method="POST" action="/cart/update-quantity">
+                      <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                      <input type="number" name="quantity" value="<?= $product['quantity'] ?>" min="1" class="product__quantity-input" onchange="this.form.submit()">
+                    </form>
+                  </div>
+
+                  <!-- Form xoá sản phẩm -->
+                  <form method="POST" action="/cart/delete" onsubmit="return confirm('Bạn có chắc muốn xoá sản phẩm này?');" style="display:inline;">
+                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                    <button type="submit" class="product__delete-btn">🗑</button>
+                  </form>
+                </div>
+
+                <div class="warranty">
+                  <div class="warranty__text">
+                    <input type="checkbox" <?= $product['warranty']['enabled'] ? 'checked' : '' ?>>
+                    Đặc quyền bảo hành trọn đời
+                    <span class="warranty__price">+<?= number_format($product['warranty']['price'], 0, ',', '.') ?> đ</span>
+                    <span class="warranty__price--original"><?= number_format($product['warranty']['price_original'], 0, ',', '.') ?> đ</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            <?php endforeach; ?>
+          <?php endif; ?>
         </div>
 
         <!-- Right: Order Summary -->
@@ -90,21 +108,8 @@ use Core\View; ?>
           <div class="order-summary__promos">
             <div class="promo">
               <div class="promo__icon">🎁</div>
-              <span class="promo__text">Quà tặng</span>
-              <button>Xem ngay</button>
-            </div>
-
-            <div class="promo">
-              <div class="promo__icon">
-                <img src="https://www.svgrepo.com/show/222709/voucher-coupon.svg" alt="Voucher" style="width: 20px; height: 20px;">
-              </div>
               <span class="promo__text">Voucher</span>
               <button>Xem ngay</button>
-            </div>
-
-            <div class="promo">
-              <div class="promo__icon promo__icon--points">⭐</div>
-              <span class="promo__text">Đăng nhập để sử dụng điểm thưởng</span>
             </div>
           </div>
 
@@ -114,25 +119,21 @@ use Core\View; ?>
             <div class="order-summary__table">
               <div class="order-summary__row">
                 <div class="order-summary__label">Tổng tiền</div>
-                <div class="order-summary__value">37.980.000 ₫</div>
+                <div class="order-summary__value"><?= number_format($cart['summary']['total_price'], 0, ',', '.') ?> ₫</div>
               </div>
               <div class="order-summary__row">
                 <div class="order-summary__label">Tổng khuyến mãi</div>
-                <div class="order-summary__value">7.200.000 ₫</div>
+                <div class="order-summary__value"><?= number_format($cart['summary']['total_discount'], 0, ',', '.') ?> ₫</div>
+              </div>
+              <div class="order-summary__row">
+                <div class="order-summary__label">Tổng phí vận chuyển</div>
+                <div class="order-summary__value"><?= number_format($cart['summary']['shipping_fee'], 0, ',', '.') ?> ₫</div>
               </div>
               <div class="order-summary__row order-summary__row--total">
                 <div class="order-summary__label">Cần thanh toán</div>
-                <div class="order-summary__value">30.780.000 ₫</div>
-              </div>
-              <div class="order-summary__row">
-                <div class="order-summary__label">Điểm thưởng</div>
-                <div class="order-summary__value">
-                  <span class="order-summary__points-badge">+7.695</span>
-                </div>
-              </div>
+                <div class="order-summary__value"><?= number_format($cart['summary']['final_total'], 0, ',', '.') ?> ₫</div>
+              </div>            
             </div>
-
-            <a href="#" class="order-summary__view-details">Xem chi tiết ▼</a>
           </div>
 
           <button class="order-summary__checkout-btn">Xác nhận đơn</button>
@@ -141,4 +142,5 @@ use Core\View; ?>
     </div>
   </section>
 </div>
+
 <?php View::endSection(); ?>
