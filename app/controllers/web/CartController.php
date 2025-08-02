@@ -8,7 +8,7 @@ use App\Services\CartService;
 class CartController
 {
     protected CartService $cartService;
-    protected int $userId = 1; // Giả lập user, bạn có thể dùng session sau
+    protected int $userId = 1; // Giả lập user, có thể dùng session
 
     public function __construct()
     {
@@ -18,6 +18,17 @@ class CartController
     public function index()
     {
         $cartData = $this->cartService->getCartWithSummary($this->userId);
+
+        // Nếu giỏ hàng rỗng thì vẫn đảm bảo phần summary có giá trị mặc định
+        if (empty($cartData['products'])) {
+            $cartData['summary'] = [
+                'total_price' => 0,
+                'total_discount' => 0,
+                'shipping_fee' => 0,
+                'final_total' => 0,
+            ];
+        }
+
         View::render('cart', ['cart' => $cartData]);
     }
 
@@ -62,7 +73,6 @@ class CartController
     public function selectAll()
     {
         $this->cartService->selectAll($this->userId);
-
         header('Location: /cart');
         exit;
     }
@@ -70,7 +80,6 @@ class CartController
     public function unselectAll()
     {
         $this->cartService->unselectAll($this->userId);
-
         header('Location: /cart');
         exit;
     }
@@ -100,14 +109,14 @@ class CartController
         header('Location: /cart');
         exit;
     }
-        public function updateColor()
+
+    public function updateColor()
     {
-        $userId = 1; // giả lập user
         $productId = $_POST['product_id'] ?? null;
         $color = $_POST['color'] ?? null;
 
         if ($productId && $color) {
-            (new \App\Services\CartService())->updateColor($userId, (int)$productId, $color);
+            $this->cartService->updateColor($this->userId, (int)$productId, $color);
         }
 
         header('Location: /cart');
