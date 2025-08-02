@@ -1,8 +1,7 @@
 @forward "../base/reset";
 @forward "../base/common";
 @forward "../base/typography";
-@forward "../layouts/header";
-@forward "../layouts/footer";
-
-// @use "components/button";
+@forward "../partials/header";
+@forward "../partials/footer";
+@forward "../components/button-buynow";
 // @use "base/typography";

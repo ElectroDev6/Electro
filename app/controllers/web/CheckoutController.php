@@ -1,11 +1,13 @@
 <?php
-namespace App\Controllers\Web;  
 
+namespace App\Controllers\Web;
+
+use Core\View;
 
 class CheckoutController
- {
-     public function index()
-     {
-         render('checkout');
-     }
- }
+{
+    public function index()
+    {
+        View::render('checkout');
+    }
+}

@@ -50,7 +50,6 @@ class OrdersModel
                         ),
                         'address', JSON_OBJECT(
                             'id', ua.id,
-                            'phone', ua.phone,
                             'address_line', ua.address_line,
                             'ward', ua.ward,
                             'district', ua.district,
@@ -79,8 +78,8 @@ class OrdersModel
                                             'price', v.price,
                                             'original_price', v.original_price,
                                             'stock_quantity', v.stock_quantity,
-                                            'media_url', v.media_url,
-                                            'media_alt', v.media_alt,
+                                            'media_url', p.media_url,
+                                            'media_alt', p.media_alt,
                                             'product', JSON_OBJECT(
                                                 'id', p.id,
                                                 'name', p.name,

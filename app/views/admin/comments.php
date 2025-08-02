@@ -175,4 +175,3 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
     <script src="/admin-ui/js/common/pagination.js"></script>
 </body>
 </html>
-?>

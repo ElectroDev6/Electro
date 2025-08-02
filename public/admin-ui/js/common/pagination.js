@@ -52,8 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
       renderItems();
       updatePagination();
    }
-
-   // Tự động khởi tạo cho tất cả các container có data-target="pagination-container"
    document
       .querySelectorAll('[data-target="pagination-container"]')
       .forEach((container) => {

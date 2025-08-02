@@ -405,12 +405,15 @@
   }
 
   &__sidebar {
-    background: white;
-    padding: 20px;
-    border-radius: 20px; // ✅ Thêm dòng này
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  align-self: stretch;
+  height: 100%;
+}
 
   }
-}
+
 
 
 .order-product-box {
