@@ -1,6 +1,9 @@
 <?php
 
-use Core\View; ?>
+use Core\View;
+
+/** @var array $user */
+?>
 
 <?php View::extend('layouts.main'); ?>
 
@@ -8,10 +11,9 @@ use Core\View; ?>
 <div class="profile">
     <div class="profile__sidebar">
         <div class="profile__avatar">
-            <img src="https://i.pinimg.com/1200x/57/bb/f5/57bbf563a06ca4704171f1bbd0bd52b3.jpg"
-                alt="Avatar người dùng" />
-            <h3 class="profile__name">Duyne</h3>
-            <p class="profile__phone">0912812321</p>
+            <img src="<?= $user['avatar'] ?>" alt="Avatar người dùng" />
+            <h3 class="profile__name"><?= $user['name'] ?></h3>
+            <p class="profile__phone"><?= $user['phone'] ?></p>
         </div>
         <ul class="profile__menu">
             <li>Đơn hàng của tôi</li>
@@ -29,17 +31,17 @@ use Core\View; ?>
             <form class="profile__form">
                 <div class="profile__row">
                     <label>Họ và tên</label>
-                    <input type="text" value="Nguyễn Khánh Duy" disabled />
+                    <input type="text" value="<?= $user['name'] ?>" disabled />
                     <a href="#">Sửa</a>
                 </div>
                 <div class="profile__row">
                     <label>Số điện thoại</label>
-                    <input type="text" value="091283*****" disabled />
+                    <input type="text" value="<?= substr($user['phone'], 0, 6) . '*****' ?>" disabled />
                     <a href="#">Sửa</a>
                 </div>
                 <div class="profile__row">
                     <label>Email</label>
-                    <input type="email" value="hetoce*****@gmail.com" disabled />
+                    <input type="email" value="<?= substr($user['email'], 0, 7) . '*****' ?>" disabled />
                     <a href="#">Sửa</a>
                 </div>
                 <div class="profile__row--group">
@@ -47,22 +49,25 @@ use Core\View; ?>
                         <label>Ngày sinh</label>
                         <div class="profile__dob">
                             <select>
-                                <option>Ngày</option>
+                                <option selected><?= $user['dob']['day'] ?></option>
                             </select>
                             <select>
-                                <option>Tháng</option>
+                                <option selected><?= $user['dob']['month'] ?></option>
                             </select>
                             <select>
-                                <option>Năm</option>
+                                <option selected><?= $user['dob']['year'] ?></option>
                             </select>
                         </div>
                     </div>
                     <div class="profile__group">
                         <label>Giới tính</label>
                         <div class="profile__gender">
-                            <label><input type="radio" name="gender" /> Nam</label>
-                            <label><input type="radio" name="gender" /> Nữ</label>
-                            <label><input type="radio" name="gender" /> Khác</label>
+                            <label><input type="radio" name="gender"
+                                    <?= $user['gender'] === 'Nam' ? 'checked' : '' ?> /> Nam</label>
+                            <label><input type="radio" name="gender" <?= $user['gender'] === 'Nữ' ? 'checked' : '' ?> />
+                                Nữ</label>
+                            <label><input type="radio" name="gender"
+                                    <?= $user['gender'] === 'Khác' ? 'checked' : '' ?> /> Khác</label>
                         </div>
                     </div>
                 </div>
@@ -78,29 +83,30 @@ use Core\View; ?>
                     <div class="profile__row">
                         <label>Tỉnh/Thành phố</label>
                         <select>
-                            <option>TP Hồ Chí Minh</option>
+                            <option selected><?= $user['address']['city'] ?></option>
                         </select>
                     </div>
 
                     <div class="profile__row">
                         <label>Quận/Huyện</label>
                         <select>
-                            <option>Huyện Củ Chi</option>
+                            <option selected><?= $user['address']['district'] ?></option>
                         </select>
                     </div>
 
                     <div class="profile__row">
                         <label>Phường/Xã</label>
                         <select>
-                            <option>Xã Tân Phú Trung</option>
+                            <option selected><?= $user['address']['ward'] ?></option>
                         </select>
                     </div>
 
                     <div class="profile__row">
                         <label>Địa chỉ</label>
-                        <input type="text" value="Số 2.4, ABC" />
+                        <input type="text" value="<?= $user['address']['street'] ?>" />
                     </div>
                     <button class="profile__btn">Lưu</button>
+                </div>
             </form>
         </div>
     </div>
