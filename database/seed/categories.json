@@ -1,18 +1,82 @@
 [
   {
     "category_id": 1,
-    "name": "Apple"
+    "name": "Điện Thoại",
+    "description": "Các loại điện thoại di động đến từ nhiều thương hiệu nổi tiếng."
   },
   {
     "category_id": 2,
-    "name": "Samsung"
+    "name": "Máy Tính Bảng",
+    "description": "Máy tính bảng hỗ trợ học tập, làm việc và giải trí."
   },
   {
     "category_id": 3,
-    "name": "Xiaomi"
+    "name": "Laptop",
+    "description": "Các dòng laptop từ phổ thông đến cao cấp."
   },
   {
     "category_id": 4,
-    "name": "Oppo"
+    "name": "PC & Linh kiện",
+    "description": "Máy tính để bàn và các linh kiện như CPU, RAM, SSD."
+  },
+  {
+    "category_id": 5,
+    "name": "Tivi",
+    "description": "Tivi thông minh, LED, OLED từ nhiều hãng lớn."
+  },
+  {
+    "category_id": 6,
+    "name": "Màn Hình & Camera",
+    "description": "Màn hình máy tính, webcam, và camera giám sát."
+  },
+  {
+    "category_id": 7,
+    "name": "Thiết bị nhà bếp",
+    "description": "Đồ điện gia dụng như lò vi sóng, nồi chiên không dầu."
+  },
+  {
+    "category_id": 8,
+    "name": "Thiết bị sinh hoạt",
+    "description": "Máy lọc không khí, quạt, máy hút bụi, và các thiết bị khác."
+  },
+  {
+    "category_id": 9,
+    "name": "Gaming Gear",
+    "description": "Chuột, bàn phím, tai nghe và thiết bị chuyên cho game thủ."
+  },
+  {
+    "category_id": 10,
+    "name": "Thiết Bị & Phụ Kiện",
+    "description": "Các thiết bị điện tử và phụ kiện hỗ trợ sử dụng."
+  },
+  {
+    "category_id": 11,
+    "name": "Nấu Nướng",
+    "description": "Các thiết bị hỗ trợ nấu ăn như bếp điện, nồi cơm, lò nướng."
+  },
+  {
+    "category_id": 12,
+    "name": "Chuẩn Bị & Dọn Dẹp",
+    "description": "Thiết bị hỗ trợ dọn dẹp và chuẩn bị bữa ăn tiện lợi."
+  },
+  {
+    "category_id": 13,
+    "name": "Chăm Sóc Cá Nhân",
+    "description": "Máy sấy tóc, máy cạo râu, và các thiết bị cá nhân khác."
+  },
+  {
+    "category_id": 14,
+    "name": "Sức Khỏe",
+    "description": "Máy đo huyết áp, nhiệt kế điện tử và thiết bị chăm sóc sức khỏe."
+  },
+  {
+    "category_id": 15,
+    "name": "Phụ Kiện Điện Thoại",
+    "description": "Ốp lưng, cường lực, sạc, tai nghe và nhiều phụ kiện khác."
+  },
+  {
+    "category_id": 16,
+    "name": "Phụ Kiện Khác",
+    "description": "Các loại phụ kiện điện tử không thuộc nhóm chính."
   }
 ]

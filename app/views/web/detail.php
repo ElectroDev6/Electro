@@ -1,5 +1,15 @@
 <?php
 
+$colorMap = [
+    'Black' => '#000000',
+    'White' => '#ffffff',
+    'Blue'  => '#007bff',
+    'Red'   => '#ff0000',
+    'Gray'  => '#666666',
+];
+
+
+
 use Core\View; ?>
 <?php View::extend('layouts.main'); ?>
 
@@ -22,29 +32,24 @@ Chi tiết sản phẩm
             <div class="product-detail__images">
                 <!-- Main Image -->
                 <div class="product-detail__main-image">
-                    <img src="/img/tv-main.webp" alt="Tivi OLED 65 inch" />
+                    <img
+                        id="main-product-image"
+                        src="/img/products<?= htmlspecialchars($product['images'][$product['variants'][0]['sku_id']][0]['gallery_url'] ?? '') ?>"
+                        alt="Ảnh chính sản phẩm" />
                 </div>
 
                 <!-- Thumbnail Images -->
                 <div class="product-detail__thumbnail-images">
-                    <div class="product-detail__thumbnail product-detail__thumbnail--active">
-                        <img src="/img/tv-thumb1.webp" alt="Thumbnail 1" />
-                    </div>
-                    <div class="product-detail__thumbnail">
-                        <img src="/img/tv-thumb2.webp" alt="Thumbnail 2" />
-                    </div>
-                    <div class="product-detail__thumbnail">
-                        <img src="/img/tv-thumb3.webp" alt="Thumbnail 3" />
-                    </div>
-                    <div class="product-detail__thumbnail">
-                        <img src="/img/tv-thumb4.webp" alt="Thumbnail 4" />
-                    </div>
-                    <div class="product-detail__thumbnail">
-                        <img src="/img/tv-thumb5.webp" alt="Thumbnail 5" />
-                    </div>
-                    <div class="product-detail__thumbnail">
-                        <img src="/img/tv-thumb6.webp" alt="Thumbnail 6" />
-                    </div>
+                    <?php $defaultSkuId = $product['variants'][0]['sku_id'];
+                    $images = $product['images'][$defaultSkuId] ?? [];
+                    foreach (array_slice($images, 0, 4) as $img): ?>
+                        <div class="product-detail__thumbnail <?= $img['sort_order'] == 1 ? 'product-detail__thumbnail--active' : '' ?>">
+                            <img
+                                src="/img/products<?= htmlspecialchars($img['thumbnail_url']) ?>"
+                                data-gallery-url="/img/products<?= htmlspecialchars($img['gallery_url']) ?>"
+                                alt="Thumbnail" />
+                        </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <!-- Product Highlights and Policy -->
@@ -104,7 +109,7 @@ Chi tiết sản phẩm
             </div>
 
             <div class="product-detail__info">
-                <h1 class="product-detail__title">Tivi OLED Samsung QE65S95D 65 inch 4K Smart TV Quantum Dot mới 2024</h1>
+                <h1 class="product-detail__title"><?= htmlspecialchars($product['name']) ?></h1>
 
                 <div class="product-detail__rating">
                     <div class="product-detail__stars">
@@ -116,28 +121,70 @@ Chi tiết sản phẩm
                 </div>
 
                 <div class="product-detail__price">
-                    <div class="product-detail__current-price">23.990.000₫</div>
-                    <div class="product-detail__original-price">29.990.000₫</div>
-                    <div class="product-detail__discount-badge">-20%</div>
+                    <div class="product-detail__current-price">
+                        <?= number_format($product['variants'][0]['price_discount'] ?? 0, 0, ',', '.') ?> ₫
+                    </div>
+
+                    <div class="product-detail__original-price">
+                        <?= number_format($product['variants'][0]['price_original'] ?? 0, 0, ',', '.') ?> ₫
+                    </div>
+
+                    <div class="product-detail__discount-badge">-<?= $product['variants'][0]['discount_percent'] ?? 0 ?>%</div>
                 </div>
 
                 <div class="product-detail__options">
                     <div class="product-detail__size-options">
-                        <!-- <label class="product-detail__size-label">Kích thước:</label>
-                        <div class="product-detail__size-buttons">
-                            <button class="product-detail__size-btn">55 inch</button>
-                            <button class="product-detail__size-btn product-detail__size-btn--active">65 inch</button>
-                            <button class="product-detail__size-btn">75 inch</button>
-                        </div> -->
-                    </div>
 
-                    <div class="product-detail__color-options">
-                        <label class="product-detail__color-label">Màu sắc:</label>
-                        <div class="product-detail__color-buttons">
-                            <button class="product-detail__color-btn product-detail__color-btn--active" style="background: #000"></button>
-                            <button class="product-detail__color-btn" style="background: #666"></button>
+                    </div>
+                    <div class="product-detail__options">
+                        <div class="product-detail__color-options">
+                            <label class="product-detail__color-label">Màu sắc:</label>
+                            <div class="product-detail__color-buttons">
+                                <?php $i = 0;
+                                $colors = [];
+                                foreach ($product['variants'] as $variant) {
+                                    $attributes = $product['attributes'][$variant['sku_id']] ?? [];
+                                    $color = ucfirst($attributes[0]['option_value'] ?? 'Unknown');
+                                    $colors[$color] = $variant['sku_id'];
+                                }
+                                foreach ($colors as $colorName => $skuId): ?>
+                                    <button
+                                        class="product-detail__option-btn product-detail__color-btn <?= $i === 0 ? 'product-detail__color-btn--active' : '' ?>"
+                                        style="background-color: <?= $colorMap[$colorName] ?? '#ccc' ?>"
+                                        data-sku-id="<?= $skuId ?>"
+                                        data-option-id="1"
+                                        data-value="<?= htmlspecialchars($colorName) ?>">
+                                        <span class="product-detail__color-name"><?= htmlspecialchars($colorName) ?></span>
+                                    </button>
+                                <?php $i++;
+                                endforeach; ?>
+                            </div>
+                        </div>
+
+                        <div class="product-detail__capacity-options">
+                            <label class="product-detail__capacity-label">Dung lượng:</label>
+                            <div class="product-detail__capacity-buttons">
+                                <?php $j = 0;
+                                $capacities = [];
+                                foreach ($product['variants'] as $variant) {
+                                    $attributes = $product['attributes'][$variant['sku_id']] ?? [];
+                                    $capacity = $attributes[1]['option_value'] ?? 'Unknown';
+                                    $capacities[$capacity] = $variant['sku_id'];
+                                }
+                                foreach ($capacities as $capacity => $skuId): ?>
+                                    <button
+                                        class="product-detail__option-btn product-detail__capacity-btn <?= $j === 0 ? 'product-detail__capacity-btn--active' : '' ?>"
+                                        data-sku-id="<?= $skuId ?>"
+                                        data-option-id="2"
+                                        data-value="<?= htmlspecialchars($capacity) ?>">
+                                        <?= htmlspecialchars($capacity) ?>
+                                    </button>
+                                <?php $j++;
+                                endforeach; ?>
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="product-detail__quantity-section">
@@ -370,4 +417,29 @@ Chi tiết sản phẩm
         </div>
     </div>
 </div>
+
+<script>
+    const variants = <?= json_encode(array_map(function ($variant) use ($product) {
+                            $images = array_map(function ($img) {
+                                return [
+                                    'default_url' => $img['default_url'] ? '/img/products' . $img['default_url'] : '',
+                                    'thumbnail_url' => '/img/products' . $img['thumbnail_url'],
+                                    'gallery_url' => '/img/products' . $img['gallery_url'],
+                                    'sort_order' => $img['sort_order']
+                                ];
+                            }, $product['images'][$variant['sku_id']] ?? []);
+
+                            return [
+                                'sku_id' => $variant['sku_id'],
+                                'sku_code' => $variant['sku_code'],
+                                'price_original' => $variant['price_original'],
+                                'price_discount' => $variant['price_discount'],
+                                'discount_percent' => $variant['discount_percent'],
+                                'discount_amount' => $variant['discount_amount'],
+                                'stock_quantity' => $variant['stock_quantity'],
+                                'attributes' => $product['attributes'][$variant['sku_id']] ?? [],
+                                'images' => $images
+                            ];
+                        }, $product['variants'])) ?>;
+</script>
 <?php View::endSection(); ?>

@@ -1,14 +1,11 @@
 [
   {
     "product_id": 1,
+    "name": "iPhone 13 128GB",
     "brand_id": 1,
-    "category_id": 1,
-    "name": "iPhone 13"
-  },
-  {
-    "product_id": 2,
-    "brand_id": 1,
-    "category_id": 1,
-    "name": "iPhone 14"
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera kép 12MP.",
+    "base_price": 18990000,
+    "slug": "iphone-13-128gb"
   }
 ]

@@ -13,7 +13,7 @@ use Core\View;
                     <div class="slider__price">Từ <strong>$749<sup>99</sup></strong></div>
                     <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
                 </div>
-                <img class="slider__image" src="/img/watch1.png" alt="Smartwatch 1">
+                <img class="slider__image" src="/img/sliders/watch1.png" alt="Smartwatch 1">
             </div>
 
             <div class="slider__item">
@@ -23,7 +23,7 @@ use Core\View;
                     <div class="slider__price">Từ <strong>$659<sup>00</sup></strong></div>
                     <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
                 </div>
-                <img class="slider__image" src="/img/watch2.png" alt="Smartwatch 2">
+                <img class="slider__image" src="/img/sliders/watch2.png" alt="Smartwatch 2">
             </div>
 
             <div class="slider__item">
@@ -33,7 +33,7 @@ use Core\View;
                     <div class="slider__price">Từ <strong>$659<sup>00</sup></strong></div>
                     <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
                 </div>
-                <img class="slider__image" src="/img/watch3.png" alt="Smartwatch 3">
+                <img class="slider__image" src="/img/sliders/watch3.png" alt="Smartwatch 3">
             </div>
 
             <div class="slider__dots">

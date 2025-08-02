@@ -23,7 +23,7 @@ Router::get('/login', 'LoginController@showLoginForm');
 // Router::get('/register', 'AuthController@showRegisterForm');
 
 // Product Detail
-Router::get('/product/(\d+)', 'DetailController@showDetail');
+Router::get('/product/([\w\-]+)', 'DetailController@showDetail');
 
 // Information & Pages
 Router::get('/about', 'AboutController@showAbout');

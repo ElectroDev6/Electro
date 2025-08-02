@@ -188,7 +188,7 @@ Trang chủ
     'featuredProduct' => $featuredProduct,
 ]); ?>
 
-<?php View::partial('partials.product-container', ['audioProducts' => $audioProducts]); ?>
+<?php View::partial('partials.product-container', ['iphoneProducts' => $iphoneProducts]); ?>
 <?php View::partial('partials.accessory-container', ['accessories' => $accessories]); ?>
 
 <div class="container-main">
