@@ -1,12 +1,6 @@
-<?php
-
-use Core\View; ?>
-
+<?php use Core\View; ?>
 <?php View::extend('layouts.main'); ?>
-
 <?php View::section('content'); ?>
-
-
 
 <div class="container-history">
     <!-- Sidebar -->
@@ -27,45 +21,58 @@ use Core\View; ?>
     </div>
 
     <!-- Main content -->
-    <div class=" container-history__main">
+    <div class="container-history__main">
+        <!-- Tabs -->
         <div class="container-history__main-tabs">
-            <button class="container-history__main-tabs__btn container-history__main-tabs__btn--active">Tất
-                cả</button>
-            <button class="container-history__main-tabs__btn">Chờ xác nhận</button>
-            <button class="container-history__main-tabs__btn">Đang giao</button>
-            <button class="container-history__main-tabs__btn">Hoàn thành</button>
+            <a href="/history?status=all"
+                class="container-history__main-tabs__btn <?= $status === 'all' ? 'container-history__main-tabs__btn--active' : '' ?>">Tất
+                cả</a>
+            <a href="/history?status=cho-xac-nhan"
+                class="container-history__main-tabs__btn <?= $status === 'cho-xac-nhan' ? 'container-history__main-tabs__btn--active' : '' ?>">Chờ
+                xác nhận</a>
+            <a href="/history?status=dang-giao"
+                class="container-history__main-tabs__btn <?= $status === 'dang-giao' ? 'container-history__main-tabs__btn--active' : '' ?>">Đang
+                giao</a>
+            <a href="/history?status=hoan-thanh"
+                class="container-history__main-tabs__btn <?= $status === 'hoan-thanh' ? 'container-history__main-tabs__btn--active' : '' ?>">Hoàn
+                thành</a>
         </div>
 
+        <!-- Orders -->
         <div class="container-history__main-orders">
+            <?php foreach ($orders as $order): ?>
             <div class="order">
                 <div class="order__header">
-                    <div>Mã đơn: #123456 | 20/07/2025</div>
-                    <div class="order__header-status order__header-status--shipping">Đang giao</div>
+                    <div><strong>Mã đơn:</strong> <?= $order['id'] ?></div>
+                    <div><strong>Ngày:</strong> <?= $order['date'] ?></div>
+                    <div class="order__header-status"><strong>Trạng thái:</strong> <?= $order['status'] ?></div>
                 </div>
+
                 <div class="order__body">
-                    <img class="order__body-img" src="https://via.placeholder.com/80" alt="Product" />
+                    <img src="<?= $order['product']['image'] ?>" alt="Ảnh sản phẩm" class="order__body-img">
+
                     <div class="order__body-info">
-                        <h4 class="order__body-info__name">Máy xay sinh tố Philips HR2223</h4>
-                        <p class="order__body-info__desc">Phân loại: Trắng, Số lượng: 1</p>
+                        <div class="order__body-info__name"><?= $order['product']['name'] ?></div>
+                        <div class="order__body-info__desc"><?= $order['product']['desc'] ?></div>
                     </div>
+
                     <div class="order__body-price">
-                        <span class="order__body-price__new">1.290.000₫</span>
-                        <span class="order__body-price__old">1.590.000₫</span>
+                        <div class="order__body-price__new"><?= $order['product']['price_new'] ?></div>
+                        <div class="order__body-price__old"><?= $order['product']['price_old'] ?></div>
                     </div>
                 </div>
+
                 <div class="order__footer">
-                    <div>Tổng: 1.290.000₫</div>
+                    <div><strong>Tổng tiền:</strong> <?= $order['total'] ?></div>
                     <div class="order__footer-actions">
-                        <button class="order__footer-actions__btn order__footer-actions__btn--outline">Chi
-                            tiết</button>
-                        <button class="order__footer-actions__btn order__footer-actions__btn--primary">Liên
-                            hệ</button>
+                        <button class="order__footer-actions__btn order__footer-actions__btn--primary">Mua lại</button>
+                        <!-- Có thể thêm nút "Hủy" hoặc "Xem chi tiết" -->
                     </div>
                 </div>
             </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
-
 
 <?php View::endSection(); ?>
