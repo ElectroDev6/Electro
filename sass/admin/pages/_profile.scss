@@ -1,0 +1,239 @@
+// Profile block
+.profile {
+   min-height: 100vh;
+   padding: 20px;
+
+   &__title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 30px;
+      text-align: left;
+   }
+
+   &__section {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e9ecef;
+   }
+
+   &__section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #e9ecef;
+      padding-bottom: 12px;
+   }
+
+   // Avatar section
+   &__avatar-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+   }
+
+   &__avatar {
+      width: 64px;
+      height: 64px;
+      background: #007bff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+   }
+
+   &__avatar-initials {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 600;
+   }
+
+   &__change-avatar-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #007bff;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+         background: #0056b3;
+      }
+
+      i {
+         font-size: 12px;
+      }
+   }
+
+   // Form elements
+   &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+   }
+
+   &__form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+   }
+
+   &__label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #495057;
+   }
+
+   &__input {
+      padding: 12px 16px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background: #ffffff;
+
+      &:focus {
+         outline: none;
+         border-color: #007bff;
+         box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+      }
+
+      &::placeholder {
+         color: #6c757d;
+      }
+   }
+
+   &__password-note {
+      font-size: 12px;
+      color: #6c757d;
+      margin-top: -8px;
+      line-height: 1.4;
+   }
+
+   // Checkbox styles
+   &__checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+   }
+
+   &__checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1.5;
+   }
+
+   &__checkbox {
+      display: none;
+   }
+
+   &__checkbox-custom {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #ced4da;
+      border-radius: 3px;
+      background: #ffffff;
+      position: relative;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.2s ease;
+
+      &::after {
+         content: "";
+         position: absolute;
+         top: 2px;
+         left: 5px;
+         width: 4px;
+         height: 8px;
+         border: solid #ffffff;
+         border-width: 0 2px 2px 0;
+         transform: rotate(45deg);
+         opacity: 0;
+         transition: opacity 0.2s ease;
+      }
+   }
+
+   &__checkbox:checked + &__checkbox-custom {
+      background: #007bff;
+      border-color: #007bff;
+
+      &::after {
+         opacity: 1;
+      }
+   }
+
+   &__checkbox-text {
+      color: #495057;
+      flex: 1;
+   }
+
+   // Two-factor authentication
+   &__2fa-status {
+      margin-bottom: 16px;
+   }
+
+   &__2fa-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+
+      &--disabled {
+         background: #dc3545;
+         color: #ffffff;
+      }
+   }
+
+   &__2fa-description {
+      font-size: 14px;
+      color: #6c757d;
+      line-height: 1.5;
+      margin-bottom: 20px;
+   }
+
+   // Save buttons
+   &__save-btn {
+      align-self: flex-start;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &--primary {
+         background: #007bff;
+         color: #ffffff;
+
+         &:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+         }
+
+         &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+         }
+      }
+   }
+}
