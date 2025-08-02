@@ -8,6 +8,6 @@ class ClientController
 {
     public function Client()
     {
-        View::render('Client');
+        View::render('client');
     }
 }

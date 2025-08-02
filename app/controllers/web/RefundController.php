@@ -8,6 +8,6 @@ class RefundController
 {
     public function Refund()
     {
-        View::render('Refund');
+        View::render('refund');
     }
 }

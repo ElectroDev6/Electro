@@ -8,6 +8,6 @@ class PolicyController
 {
     public function Policy()
     {
-        View::render('Policy');
+        View::render('policy');
     }
 }

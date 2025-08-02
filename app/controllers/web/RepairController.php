@@ -8,6 +8,6 @@ class RepairController
 {
     public function Repair()
     {
-        View::render('Repair');
+        View::render('repair');
     }
 }
