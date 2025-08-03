@@ -57,12 +57,11 @@ const NotificationSystem = {
       notification.setAttribute("data-id", id);
 
       notification.innerHTML = `
-                    <div class="notification__message">${message}</div>
-                    <button class="notification__close" onclick="NotificationSystem.hide(${id})">
-                        ×
-                    </button>
-                `;
-
+            <div class="notification__message" style="font-size: 12px; margin: 0;">${message}</div>
+            <button class="notification__close" style="font-size: 10px; padding: 2px 5px; margin: 0; border: none; background: none; cursor: pointer;" onclick="NotificationSystem.hide(${id})">
+               ×
+            </button>
+         `;
       return notification;
    },
 

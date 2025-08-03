@@ -1,6 +1,6 @@
 // /admin/js/common/pagination.js
 document.addEventListener("DOMContentLoaded", () => {
-   function initializePagination(containerSelector, itemsPerPage = 6) {
+   function initializePagination(containerSelector, itemsPerPage = 8) {
       console.log(
          document.querySelectorAll('[data-target="pagination-container"]')
       );
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach((container) => {
          initializePagination(
             `.${container.className.split(" ").join(".")}`,
-            6
+            8
          );
       });
 });

@@ -154,12 +154,12 @@
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
    overflow: hidden;
 }
-
-// Order Table Block
 .order-table {
    width: 100%;
    border-collapse: collapse;
    font-size: 14px;
+   table-layout: fixed; // ✅ FIX: Cố định layout table
+   min-width: 1200px; // ✅ FIX: Đảm bảo có đủ không gian
 
    &__head {
       background-color: #f8f9fa;
@@ -170,12 +170,13 @@
    }
 
    &__header {
-      padding: 16px 20px;
+      padding: 12px 8px; // ✅ Giảm padding để tiết kiệm không gian
       text-align: left;
       font-weight: 600;
       color: #495057;
       background-color: #f8f9fa;
       border-bottom: 1px solid #dee2e6;
+      white-space: nowrap; // ✅ Không cho phép xuống dòng
    }
 
    &__body {
@@ -195,41 +196,95 @@
    }
 
    &__cell {
-      padding: 16px 20px;
+      padding: 12px 8px;
       vertical-align: middle;
+      text-overflow: ellipsis;
+      &:nth-child(1) {
+         width: 120px;
+      }
+      &:nth-child(2) {
+         width: 100px;
+      }
+      &:nth-child(3) {
+         width: 150px;
+         white-space: normal;
+         word-break: break-word;
+      }
+      &:nth-child(4) {
+         width: 130px;
+      }
+      &:nth-child(5) {
+         width: 140px;
+      }
+      &:nth-child(6) {
+         width: 120px;
+      }
+      &:nth-child(7) {
+         width: auto;
+      }
 
       &--actions {
          display: flex;
-         gap: 8px;
+         gap: 4px; // ✅ Giảm gap
          align-items: center;
-         flex-wrap: wrap;
+         flex-wrap: nowrap; // ✅ FIX: Không cho phép xuống dòng
+         justify-content: flex-start;
+         min-width: 0; // ✅ Cho phép shrink
       }
    }
 
    &__order-id {
-      padding: 4px 8px;
+      padding: 2px 6px; // ✅ Giảm padding
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 11px; // ✅ Giảm font-size
       font-weight: 600;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &--pending {
          background-color: #ffc107;
          color: white;
       }
+
+      &--paid {
+         background-color: #28a745;
+         color: white;
+      }
+
+      &--delivering {
+         background-color: #17a2b8;
+         color: white;
+      }
+
+      &--delivered {
+         background-color: #6c757d;
+         color: white;
+      }
+
+      &--canceled {
+         background-color: #dc3545;
+         color: white;
+      }
    }
 
    &__status {
-      padding: 4px 12px;
+      padding: 2px 8px; // ✅ Giảm padding
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 11px; // ✅ Giảm font-size
       font-weight: 500;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &--delivered {
          background-color: #d1fae5;
          color: #065f46;
       }
 
-      &--processing {
+      &--delivering {
          background-color: #dbeafe;
          color: #1e40af;
       }
@@ -238,13 +293,27 @@
          background-color: #fef3c7;
          color: #92400e;
       }
+
+      &--paid {
+         background-color: #d1fae5;
+         color: #065f46;
+      }
+
+      &--canceled {
+         background-color: #fee2e2;
+         color: #dc2626;
+      }
    }
 
    &__payment {
-      padding: 4px 12px;
+      padding: 2px 8px; // ✅ Giảm padding
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 11px; // ✅ Giảm font-size
       font-weight: 500;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &--paid {
          background-color: #d1fae5;
@@ -255,16 +324,29 @@
          background-color: #fef3c7;
          color: #92400e;
       }
+
+      &--refunding {
+         background-color: #fef3c7;
+         color: #f59e0b;
+      }
+
+      &--canceled {
+         background-color: #fee2e2;
+         color: #dc2626;
+      }
    }
 
    &__action-btn {
-      padding: 4px 8px;
+      padding: 4px 6px; // ✅ Giảm padding
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 10px; // ✅ Giảm font-size
       font-weight: 500;
       cursor: pointer;
       border: none;
       transition: all 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0; // ✅ Không cho shrink
+      min-width: auto;
 
       &--view {
          background-color: #17a2b8;
@@ -292,5 +374,30 @@
             background-color: #c82333;
          }
       }
+
+      &--complete {
+         background-color: #6c757d;
+         color: white;
+
+         &:hover {
+            background-color: #5a6268;
+         }
+      }
+   }
+
+   &__note {
+      font-size: 10px;
+      color: #6c757d;
+      font-style: italic;
+   }
+}
+
+// ✅ Container wrapper để scroll ngang nếu cần
+.order-table-wrapper {
+   overflow-x: auto;
+   width: 100%;
+
+   .order-table {
+      margin: 0;
    }
 }

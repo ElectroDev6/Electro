@@ -151,5 +151,25 @@ class OrdersModel
             $this->sortGalleryImagesRecursively($orders);
             return $orders;
     }
+
+
+    public function update($id, $data)
+    {
+        try {
+            $set = [];
+            $params = [':id' => $id];
+            foreach ($data as $key => $value) {
+                $set[] = "$key = :$key";
+                $params[":$key"] = $value;
+            }
+            $sql = "UPDATE orders SET " . implode(', ', $set) . " WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $result = $stmt->execute($params);
+            return $result;
+        } catch (PDOException $e) {
+            error_log("Error updating comment: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

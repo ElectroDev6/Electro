@@ -10,7 +10,6 @@ use Core\View;
         $pdo = Container::get('pdo');
         $orderModel = new OrdersModel($pdo);
         $orders = $orderModel->getAllOrders();
-
         // Truyền dữ liệu sang view
         View::render('orders', [
             'orders' => $orders

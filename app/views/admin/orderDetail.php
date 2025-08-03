@@ -13,12 +13,6 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-<!-- Debug output (comment out in production) -->
-<!-- <?php 
-echo '<pre>';
-print_r($orderDetail);
-echo '</pre>'; 
-?> -->
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -35,10 +29,43 @@ echo '</pre>';
                         <h1 class="page__title">Chi Tiết Đơn Hàng #<?php echo htmlspecialchars($orderDetail['id']); ?></h1>
                         <div class="page__actions">
                             <?php if ($orderDetail['status'] === 'pending'): ?>
-                                <button class="btn btn--success">Xác nhận</button>
-                                <button class="btn btn--danger">Từ chối</button>
+                                <form action="/admin/orders/approve" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?=$orderDetail['id'];?>">
+                                    <button type="submit" class="btn btn--success"
+                                            onclick="return confirm('Bạn có chắc muốn chấp nhận đơn hàng này không?')">
+                                        ✓ Chấp nhận
+                                    </button>
+                                </form>
+                                <form action="/admin/orders/cancel" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?=$orderDetail['id'];?>">
+                                    <button type="submit" class="btn btn--danger"
+                                            onclick="return confirm('Bạn có chắc muốn từ chối đơn hàng này không?')">
+                                        ✗ Từ chối
+                                    </button>
+                                </form>
+                            <?php elseif ($orderDetail['status'] === 'paid'): ?>
+                                <form action="/admin/orders/approve" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?=$orderDetail['id'];?>">
+                                    <button type="submit" class="btn btn--success"
+                                            onclick="return confirm('Duyệt đơn đã thanh toán này?')">
+                                        ✓ Duyệt đơn
+                                    </button>
+                                </form>
+                                <form action="/admin/orders/cancel" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?=$orderDetail['id'];?>">
+                                    <button type="submit" class="btn btn--danger"
+                                            onclick="return confirm('ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?')">
+                                        ✗ Hủy & Hoàn tiền
+                                    </button>
+                                </form>
+                            <?php elseif ($orderDetail['status'] === 'delivering'): ?>
+                                <form action="/admin/orders/complete" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?=$orderDetail['id'];?>">
+                                    <button type="submit" class="btn btn--success">
+                                        ✓ Đã giao xong
+                                    </button>
+                                </form>
                             <?php endif; ?>
-                            <button class="btn btn--warning">Chỉnh sửa</button>
                             <a href="/admin/orders" class="btn btn--secondary">Quay lại</a>
                         </div>
                     </div>
@@ -73,14 +100,15 @@ echo '</pre>';
                                                 <span class="info-row__label">Trạng Thái Đơn Hàng</span>
                                                 <span class="info-row__value"><?php
                                                     $statusMap = [
-                                                        'pending' => 'Chờ duyệt',
-                                                        'processing' => 'Đang xử lý',
-                                                        'delivered' => 'Đã giao',
-                                                        'cancelled' => 'Đã hủy'
+                                                        'pending'     => 'Chờ duyệt',
+                                                        'paid'        => 'Chờ duyệt',
+                                                        'delivering'  => 'Đang giao hàng',
+                                                        'delivered'   => 'Đã giao',
+                                                        'canceled'    => 'Đã hủy'
                                                     ];
                                                     echo htmlspecialchars($statusMap[$orderDetail['status']] ?? $orderDetail['status']);
                                                     if ($orderDetail['status'] === 'delivered') {
-                                                        echo ' ' . date('H:i:s d/m/Y', strtotime($lastTimeline['timestamp']));
+                                                        echo ' - ' . date('H:i:s d/m/Y', strtotime($lastTimeline['timestamp']));
                                                     }
                                                 ?></span>
                                             </div>
@@ -116,15 +144,46 @@ echo '</pre>';
                                         <div class="info-card__content">
                                             <div class="info-row">
                                                 <span class="info-row__label">Phương Thức Thanh Toán</span>
-                                                <span class="info-row__value"><?php echo htmlspecialchars($orderDetail['payment_method']); ?></span>
+                                                <span class="info-row__value"><?php 
+                                                    $paymentMethods = [
+                                                        'COD' => 'Thanh toán khi nhận hàng',
+                                                        'BankTransfer' => 'Chuyển khoản ngân hàng'
+                                                    ];
+                                                    echo htmlspecialchars($paymentMethods[$orderDetail['payment_method']] ?? $orderDetail['payment_method']); 
+                                                ?></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Trạng Thái Thanh Toán</span>
                                                 <span class="info-row__value"><?php
-                                                    $paymentStatus = array_filter($orderDetail['timeline'], function($item) {
-                                                        return $item['status'] === 'paid';
-                                                    });
-                                                    echo !empty($paymentStatus) ? 'Đã thanh toán' : 'Chờ thanh toán';
+                                                    $status = $orderDetail['status'];
+                                                    $paymentMethod = $orderDetail['payment_method'] ?? 'COD';
+                                                    
+                                                    if ($status === 'canceled') {
+                                                        $hasPaidBefore = false;
+                                                        if ($paymentMethod === 'BankTransfer' && !empty($orderDetail['payment_date'])) {
+                                                            $hasPaidBefore = true;
+                                                        }
+                                                        
+                                                        if ($hasPaidBefore) {
+                                                            echo 'Chờ hoàn tiền';
+                                                        } else {
+                                                            echo 'Đã hủy';
+                                                        }
+                                                    } elseif ($paymentMethod === 'COD') {
+                                                        if ($status === 'delivered') {
+                                                            echo 'Đã thanh toán';
+                                                        } else {
+                                                            echo 'Chưa thanh toán';
+                                                        }
+                                                    } else {
+                                                        if ($status === 'pending') {
+                                                            echo 'Chưa thanh toán';
+                                                        } elseif (in_array($status, ['paid', 'delivering', 'delivered'])) {
+                                                            echo 'Đã thanh toán';
+                                                        } else {
+                                                            echo 'Chưa thanh toán';
+                                                        }
+                                                    }
                                                 ?></span>
                                             </div>
                                             <div class="info-row">
@@ -203,35 +262,6 @@ echo '</pre>';
                         <aside class="content__sidebar">
                             <div class="order-sidebar">
                                 <div class="order-sidebar__section">
-                                    <h3 class="order-sidebar__title">Hành Động</h3>
-                                    <div class="action-buttons">
-                                        <?php if ($orderDetail['status'] === 'pending'): ?>
-                                            <button class="action-btn action-btn--success">
-                                                <span class="action-btn__icon">✓</span>
-                                                <div class="action-btn__content">
-                                                    <div class="action-btn__title">Xác Nhận Đơn Hàng</div>
-                                                    <div class="action-btn__time">Chưa thực hiện</div>
-                                                </div>
-                                            </button>
-                                            <button class="action-btn action-btn--danger">
-                                                <span class="action-btn__icon">✗</span>
-                                                <div class="action-btn__content">
-                                                    <div class="action-btn__title">Từ Chối Đơn Hàng</div>
-                                                    <div class="action-btn__time">Chưa thực hiện</div>
-                                                </div>
-                                            </button>
-                                        <?php endif; ?>
-                                        <button class="action-btn action-btn--warning">
-                                            <span class="action-btn__icon">✎</span>
-                                            <div class="action-btn__content">
-                                                <div class="action-btn__title">Chỉnh Sửa Đơn Hàng</div>
-                                                <div class="action-btn__time"><?php echo date('d/m/Y H:i', strtotime($orderDetail['order_date'])); ?></div>
-                                            </div>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="order-sidebar__section">
                                     <h3 class="order-sidebar__title">Lịch Sử Hoạt Động</h3>
                                     <div class="activity-list">
                                         <?php foreach ($orderDetail['timeline'] as $event): ?>
@@ -241,9 +271,9 @@ echo '</pre>';
                                                     $icons = [
                                                         'pending' => '📄',
                                                         'paid' => '💳',
-                                                        'processing' => '⚙️',
+                                                        'delivering' => '🚚',
                                                         'delivered' => '✅',
-                                                        'cancelled' => '✖️'
+                                                        'canceled' => '✖️'
                                                     ];
                                                     echo $icons[$event['status']] ?? '📄';
                                                     ?>
@@ -252,10 +282,10 @@ echo '</pre>';
                                                     <div class="activity-item__title"><?php
                                                         $statusMap = [
                                                             'pending' => 'Chờ duyệt',
-                                                            'processing' => 'Đang xử lý',
+                                                            'paid' => 'Chờ duyệt',
+                                                            'delivering' => 'Đang giao hàng',
                                                             'delivered' => 'Đã giao',
-                                                            'cancelled' => 'Đã hủy',
-                                                            'paid' => 'Đã thanh toán'
+                                                            'canceled' => 'Đã hủy'
                                                         ];
                                                         echo htmlspecialchars($statusMap[$event['status']] ?? $event['note']);
                                                     ?></div>

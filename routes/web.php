@@ -4,37 +4,17 @@ use Core\Router;
 
 // Home
 Router::get('/', 'HomeController@index');
-
-// Products
-Router::get('/products', 'ProductController@showAll');
-Router::get('/products/laptops', 'ProductLaptopController@showAllLaptops');
-
-// Search
-Router::get('/search/products', 'SearchProductController@searchProducts');
-Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
-
-// Cart & Order
-Router::get('/cart', 'CartController@showCart');
-Router::get('/checkout', 'CheckoutController@showCheckoutForm');
-Router::get('/thank-you', 'ThankyouController@showConfirmation');
-
-// Auth
-Router::get('/login', 'LoginController@showLoginForm');
-// Router::get('/register', 'AuthController@showRegisterForm');
-
-// Product Detail
-Router::get('/product/(\d+)', 'DetailController@showDetail');
-
-// Information & Pages
-Router::get('/about', 'AboutController@showAbout');
-Router::get('/contact', 'ContactController@showContact');
-Router::get('/profile', 'ProfileController@showProfile');
-Router::get('/history', 'HistoryController@showHistory');
-Router::get('/policy-mobile', 'PolicyController@showMobilePolicy');
-Router::get('/refund-policy', 'RefundController@showRefundPolicy');
-Router::get('/privacy-policy', 'RefundController@showPrivacyPolicy');
-
-// Other Features
-Router::get('/clients', 'ClientController@showClients');
-Router::get('/unboxing', 'UnboxingController@showUnboxing');
-Router::get('/repair', 'RepairController@showRepair');
+Router::get('/test', 'TestController@index');
+Router::get('/product', 'ProductController@showAll');
+Router::get('/cart', 'CartController@index'); // Thêm route cho giỏ hàng
+Router::get('/about', 'AboutController@about');
+Router::get('/contact', 'ContactController@contact');
+Router::get('/login', 'LoginController@login');
+Router::get('/register', 'AuthController@register');
+Router::get('/detail/(\d+)', 'DetailController@detail');
+Router::get('/productlaptop', 'ProductLaptopController@productLaptop'); // Thêm
+Router::get('/searchproduct', 'SearchProductController@SearchProduct'); // Thêm
+Router::get('/searchpdlaptop', 'SearchpdlaptopController@searchPdlaptop'); // Thêm route tìm kiếm sản phẩm laptop
+Router::get('/infor', 'InforController@infor'); // Thêm route cho trang thông tin
+Router::get('/history', 'HistoryController@history'); // Thêm route cho lich su don hang
+Router::get('/detail', 'DetailController@detail'); // Thêm route cho trang thanh toán

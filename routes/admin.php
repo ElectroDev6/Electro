@@ -36,10 +36,15 @@ Router::post('/admin/commentDetail/reply', 'CommentDetailController@reply');
 
 
 
-Router::get('/admin/users', 'UsersController@index');
-Router::get('/admin/userDetail', 'UserDetailController@index');
 Router::get('/admin/orders', 'OrdersController@index');
 Router::get('/admin/orderDetail', 'OrderDetailController@index');
+Router::post('/admin/orders/approve', 'OrderDetailController@approve');
+Router::post('/admin/orders/cancel', 'OrderDetailController@cancel');
+Router::post('/admin/orders/complete', 'OrderDetailController@complete');
+
+
+Router::get('/admin/users', 'UsersController@index');
+Router::get('/admin/userDetail', 'UserDetailController@index');
 Router::get('/admin/reviews', 'ReviewsController@index');
 Router::get('/admin/reviewDetail', 'ReviewDetailController@index');
 Router::get('/admin/blogs', 'BlogsController@index');

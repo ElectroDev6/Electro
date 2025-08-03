@@ -6,8 +6,6 @@ use Core\View; ?>
 
 <?php View::section('content'); ?>
 
-
-
 <div class="container-history">
     <!-- Sidebar -->
     <div class="container-history__sidebar">

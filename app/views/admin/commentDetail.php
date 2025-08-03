@@ -76,7 +76,6 @@ include dirname(__DIR__) . '/admin/partials/sidebar.php';
                         <div class="comment-detail__reply-section">
                             <?php $totalReplies = countAllReplies($comment['replies']); ?>
                             <h4 class="comment-detail__reply-title">Phản hồi (<?php echo $totalReplies; ?>)</h4>
-                            
                             <div class="comment-detail__reply-form" id="main-reply-form" style="display: none;">
                                 <label class="comment-detail__form-label">Phản hồi với tư cách</label>
                                 <select class="comment-detail__select">
