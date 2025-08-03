@@ -46,7 +46,7 @@ function importJson($table, $columns, $jsonFile)
 
 
 
-importJson('categories', ['category_id', 'name', 'description'], 'categories.json');
+importJson('categories', ['category_id', 'name', 'image', 'description', 'slug'], 'categories.json');
 
 importJson('subcategories', ['subcategory_id', 'category_id', 'name'], 'subcategories.json');
 

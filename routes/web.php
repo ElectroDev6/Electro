@@ -6,7 +6,7 @@ use Core\Router;
 Router::get('/', 'HomeController@index');
 
 // Products
-Router::get('/products', 'ProductController@showAll');
+Router::get('/products/iphone', 'ProductController@showAll');
 Router::get('/products/laptops', 'ProductLaptopController@showAllLaptops');
 
 // Search
@@ -23,7 +23,8 @@ Router::get('/login', 'LoginController@showLoginForm');
 // Router::get('/register', 'AuthController@showRegisterForm');
 
 // Product Detail
-Router::get('/product/([\w\-]+)', 'DetailController@showDetail');
+Router::get('/product/:slug', 'DetailController@showDetail');
+Router::post('/detail/add-to-cart', 'DetailController@addToCart');
 
 // Information & Pages
 Router::get('/about', 'AboutController@showAbout');

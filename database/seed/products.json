@@ -115,5 +115,14 @@
     "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
     "base_price": 18990000,
     "slug": "iphone-16-plus-128gb"
+  },
+  {
+    "product_id": 13,
+    "name": "PC Gaming E-Power N3050 Core i5 12400F",
+    "brand_id": 2,
+    "subcategory_id": 102,
+    "description": "PC Gaming E-Power N3050 Core i5 12400F / RAM 16GB / SSD 512GB / 650W / RTX 3050 6GB",
+    "base_price": 12990000,
+    "slug": "pc-gaming-e-power-n3050-core-i5-12400f"
   }
 ]

@@ -9,5 +9,6 @@ class ContactController
     public function showContact()
     {
         View::render('contact');
+        View::render('contact');
     }
 }

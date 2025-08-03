@@ -423,11 +423,8 @@ Chi tiết sản phẩm
                             array_map(function ($variant) use ($product) {
                                 $skuId = $variant['sku_id'];
                                 $images = [];
-
-                                // Lấy màu sắc hiện tại từ attributes
                                 $currentAttributes = $product['attributes'][$skuId] ?? [];
-                                $currentColor = strtolower($currentAttributes[0]['option_value'] ?? ''); // Giả sử Color là thuộc tính đầu tiên
-
+                                $currentColor = strtolower($currentAttributes[0]['option_value'] ?? '');
                                 if (!empty($product['images'][$skuId])) {
                                     foreach ($product['images'][$skuId] as $img) {
                                         $images[] = [
@@ -438,7 +435,6 @@ Chi tiết sản phẩm
                                         ];
                                     }
                                 } else {
-                                    // Tìm biến thể cùng màu để lấy ảnh
                                     $matchingSku = array_filter($product['variants'], function ($v) use ($skuId, $currentColor, $product) {
                                         $otherAttributes = $product['attributes'][$v['sku_id']] ?? [];
                                         $otherColor = strtolower($otherAttributes[0]['option_value'] ?? '');
@@ -454,12 +450,10 @@ Chi tiết sản phẩm
                                         ];
                                     }
                                 }
-
                                 $attributes = $product['attributes'][$skuId] ?? [];
                                 foreach ($attributes as &$attr) {
-                                    $attr['option_value'] = strtolower($attr['option_value']); // Chuẩn hóa thành chữ thường
+                                    $attr['option_value'] = strtolower($attr['option_value']);
                                 }
-
                                 return [
                                     'sku_id'          => $skuId,
                                     'sku_code'        => $variant['sku_code'],
@@ -473,6 +467,103 @@ Chi tiết sản phẩm
                                 ];
                             }, $product['variants'])
                         ) ?>;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const addToCartBtn = document.querySelector('.product-detail__btn-add-cart');
+        const qtyInput = document.querySelector('.product-detail__qty-input');
+        let selectedSkuId = variants[0].sku_id; // Mặc định chọn SKU đầu tiên
+
+        // Xử lý chọn màu sắc
+        document.querySelectorAll('.product-detail__color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.product-detail__color-btn').forEach(b => b.classList.remove('product-detail__color-btn--active'));
+                btn.classList.add('product-detail__color-btn--active');
+                updateSelectedSku();
+            });
+        });
+
+        // Xử lý chọn dung lượng
+        document.querySelectorAll('.product-detail__capacity-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.product-detail__capacity-btn').forEach(b => b.classList.remove('product-detail__capacity-btn--active'));
+                btn.classList.add('product-detail__capacity-btn--active');
+                updateSelectedSku();
+            });
+        });
+
+        // Cập nhật SKU dựa trên màu sắc và dung lượng
+        function updateSelectedSku() {
+            const selectedColor = document.querySelector('.product-detail__color-btn--active')?.dataset.value;
+            const selectedCapacity = document.querySelector('.product-detail__capacity-btn--active')?.dataset.value;
+            selectedSkuId = variants.find(v => {
+                const attrs = v.attributes;
+                return attrs.some(a => a.option_value === selectedColor) && attrs.some(a => a.option_value === selectedCapacity);
+            })?.sku_id || variants[0].sku_id;
+        }
+        console.log('[Variants Debug] All variants:', variants);
+        // Xử lý nút thêm vào giỏ hàng
+        addToCartBtn.addEventListener('click', () => {
+            const quantity = parseInt(qtyInput.value) || 1;
+
+            console.log('[Add to Cart] Bắt đầu gửi request...');
+            console.log('[Add to Cart] SKU:', selectedSkuId);
+            console.log('[Add to Cart] Quantity:', quantity);
+
+            fetch('/detail/add-to-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        sku_id: selectedSkuId,
+                        quantity: quantity
+                    })
+                })
+                .then(response => {
+                    console.log('[Fetch] Raw response object:', response);
+                    return response.text();
+                })
+                .then(text => {
+                    console.log('[Fetch] Raw response text:', text);
+                    const jsonMatch = text.match(/\{.*\}/s);
+                    if (jsonMatch) {
+                        const json = JSON.parse(jsonMatch[0]);
+                        console.log('[Fetch] Parsed JSON:', json);
+                        return json;
+                    } else {
+                        throw new Error('Không tìm thấy JSON hợp lệ trong response!');
+                    }
+                })
+                .then(data => {
+                    if (data.success) {
+                        console.log('[Add to Cart] Success:', data.message);
+                        alert(data.message);
+                        if (data.redirect) {
+                            window.location.href = data.redirect; // Chuyển hướng sang trang cart
+                        }
+                    } else {
+                        console.warn('[Add to Cart] Failure:', data.message);
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('[Catch Block] Error occurred:', error);
+                    alert('Đã xảy ra lỗi khi thêm vào giỏ hàng.');
+                });
+        });
+
+
+        // Xử lý tăng/giảm số lượng (chưa hoàn thiện theo yêu cầu)
+        document.querySelector('.product-detail__qty-btn--plus').addEventListener('click', () => {
+            qtyInput.value = parseInt(qtyInput.value) + 1;
+        });
+        document.querySelector('.product-detail__qty-btn--minus').addEventListener('click', () => {
+            if (parseInt(qtyInput.value) > 1) {
+                qtyInput.value = parseInt(qtyInput.value) - 1;
+            }
+        });
+    });
 </script>
 
 

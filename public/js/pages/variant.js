@@ -1,6 +1,5 @@
 export default class ProductDetail {
   constructor(variants) {
-    console.log("Dữ liệu variants:", JSON.stringify(variants, null, 2));
     this.variants = variants;
     this.selectedOptions = { Color: null, Capacity: null }; // Sử dụng tên thuộc tính thay vì ID
     this.selectedSkuId = variants[0]?.sku_id || null; // SKU mặc định
@@ -80,9 +79,9 @@ export default class ProductDetail {
   }
 
   updateVariantDisplay() {
-    console.log("==> Bắt đầu updateVariantDisplay()");
-    console.log("Lựa chọn hiện tại:", this.selectedOptions);
-    console.log("SKU ID hiện tại:", this.selectedSkuId);
+    // console.log("==> Bắt đầu updateVariantDisplay()");
+    // console.log("Lựa chọn hiện tại:", this.selectedOptions);
+    // console.log("SKU ID hiện tại:", this.selectedSkuId);
 
     const variant = this.variants.find((v) => v.sku_id === this.selectedSkuId);
     if (!variant) {
@@ -90,8 +89,8 @@ export default class ProductDetail {
       return;
     }
 
-    console.log("✅ Biến thể tìm thấy:", variant);
-    console.log("Ảnh của biến thể:", variant.images);
+    // console.log("✅ Biến thể tìm thấy:", variant);
+    // console.log("Ảnh của biến thể:", variant.images);
 
     // Cập nhật giá
     this.priceCurrent.textContent = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(variant.price_discount);
@@ -115,7 +114,7 @@ export default class ProductDetail {
     let defaultImage = variant.images.length > 0 ? variant.images[0] : null;
     if (defaultImage && defaultImage.gallery_url) {
       this.mainImage.src = defaultImage.gallery_url;
-      console.log("🖼️ Ảnh chính cập nhật:", defaultImage.gallery_url);
+      // console.log("🖼️ Ảnh chính cập nhật:", defaultImage.gallery_url);
     } else {
       console.warn("⚠️ Không có ảnh hợp lệ trong biến thể, giữ ảnh hiện tại:", this.mainImage.src);
     }
@@ -147,6 +146,6 @@ export default class ProductDetail {
       console.error("❌ Không tìm thấy container thumbnail!");
     }
 
-    console.log("==> Kết thúc updateVariantDisplay()");
+    // console.log("==> Kết thúc updateVariantDisplay()");
   }
 }
