@@ -1,0 +1,61 @@
+/* SCSS-like styles with notification prefix */
+.notification {
+   position: fixed;
+   top: -100px;
+   right: 20px;
+   min-width: 300px;
+   padding: 15px 20px;
+   font-size: 1.7rem;
+   border-radius: 6px;
+   color: white;
+   font-weight: 500;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+   z-index: 1000;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.notification--success {
+   background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.notification--error {
+   background: linear-gradient(135deg, #dc3545, #e74c3c);
+}
+
+.notification--show {
+   top: 20px;
+   transform: translateY(0);
+}
+
+.notification--hide {
+   transform: translateY(-20px);
+   opacity: 0;
+}
+
+.notification__message {
+   flex: 1;
+   margin-right: 10px;
+}
+
+.notification__close {
+   background: none;
+   border: none;
+   color: white;
+   font-size: 20px;
+   cursor: pointer;
+   padding: 0;
+   width: 24px;
+   height: 24px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 3px;
+   transition: background 0.2s ease;
+}
+
+.notification__close:hover {
+   background: rgba(255, 255, 255, 0.2);
+}

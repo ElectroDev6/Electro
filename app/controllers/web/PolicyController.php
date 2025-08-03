@@ -6,8 +6,8 @@ use Core\View;
 
 class PolicyController
 {
-    public function Policy()
+    public function showMobilePolicy()
     {
-        View::render('Policy');
+        View::render('policy-mobile');
     }
 }

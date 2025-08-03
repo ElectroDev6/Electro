@@ -1,52 +1,66 @@
 [
   {
-    "variant_id": 1,
+    "product_variant_id": 1,
     "product_id": 1,
-    "color_id": 1,
-    "storage_id": 1,
-    "original_price": 34290000,
-    "discount_percentage": 12,
-    "stock_quantity": 3,
-    "is_available": true
+    "price_discount": 950,
+    "price_original": 1000,
+    "stock_quantity": 20,
+    "is_default": 1
   },
   {
-    "variant_id": 2,
+    "product_variant_id": 2,
     "product_id": 1,
-    "color_id": 2,
-    "storage_id": 1,
-    "original_price": 34290000,
-    "discount_percentage": 12,
-    "stock_quantity": 2,
-    "is_available": true
+    "price_discount": 1100,
+    "price_original": 1200,
+    "stock_quantity": 15,
+    "is_default": 0
   },
   {
-    "variant_id": 3,
+    "product_variant_id": 3,
     "product_id": 1,
-    "color_id": 4,
-    "storage_id": 2,
-    "original_price": 39290000,
-    "discount_percentage": 10,
-    "stock_quantity": 5,
-    "is_available": true
+    "price_discount": 950,
+    "price_original": 1000,
+    "stock_quantity": 20,
+    "is_default": 0
   },
   {
-    "variant_id": 4,
+    "product_variant_id": 4,
+    "product_id": 1,
+    "price_discount": 1100,
+    "price_original": 1200,
+    "stock_quantity": 15,
+    "is_default": 0
+  },
+  {
+    "product_variant_id": 5,
     "product_id": 2,
-    "color_id": 1,
-    "storage_id": 3,
-    "original_price": 29990000,
-    "discount_percentage": 8,
-    "stock_quantity": 7,
-    "is_available": true
+    "price_discount": 1050,
+    "price_original": 1100,
+    "stock_quantity": 25,
+    "is_default": 1
   },
   {
-    "variant_id": 5,
-    "product_id": 3,
-    "color_id": 5,
-    "storage_id": 4,
-    "original_price": 18990000,
-    "discount_percentage": 15,
+    "product_variant_id": 6,
+    "product_id": 2,
+    "price_discount": 1200,
+    "price_original": 1300,
     "stock_quantity": 10,
-    "is_available": true
+    "is_default": 0
+  },
+  {
+    "product_variant_id": 7,
+    "product_id": 2,
+    "price_discount": 1050,
+    "price_original": 1100,
+    "stock_quantity": 25,
+    "is_default": 0
+  },
+  {
+    "product_variant_id": 8,
+    "product_id": 2,
+    "price_discount": 1200,
+    "price_original": 1300,
+    "stock_quantity": 10,
+    "is_default": 0
   }
 ]

@@ -1,27 +1,18 @@
 [
   {
     "category_id": 1,
-    "type": "smartphone",
-    "product_total": 10
+    "name": "Apple"
   },
   {
     "category_id": 2,
-    "type": "tablet",
-    "product_total": 8
+    "name": "Samsung"
   },
   {
     "category_id": 3,
-    "type": "laptop",
-    "product_total": 6
+    "name": "Xiaomi"
   },
   {
     "category_id": 4,
-    "type": "smartwatch",
-    "product_total": 5
-  },
-  {
-    "category_id": 5,
-    "type": "accessories",
-    "product_total": 15
+    "name": "Oppo"
   }
 ]

@@ -11,12 +11,12 @@ use Core\View;
 
         <div class="offer__wrapper">
             <div class="offer__featured">
-                <?php View::partial('components.product-featured', ['featuredProduct' => $featuredProduct]); ?>
+                <?php View::partial('components.product-card-featured', ['featuredProduct' => $featuredProduct]); ?>
             </div>
 
             <div class="offer__list">
                 <?php foreach ($regularProducts as $regularProduct): ?>
-                    <?php View::partial('components.product-regular', ['regularProduct' => $regularProduct]); ?>
+                    <?php View::partial('components.product-card', ['regularProduct' => $regularProduct]); ?>
                 <?php endforeach; ?>
             </div>
         </div>

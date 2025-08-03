@@ -2,11 +2,6 @@
 include dirname(__DIR__) . '/partials/sidebar.php';
 include dirname(__DIR__) . '/partials/header.php';
 ?>
-<?php
-echo '<pre>';
-print_r($product);
-echo '</pre>';
-?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -61,7 +56,10 @@ echo '</pre>';
                             </h2>
                             <div class="product-detail__image-upload">
                                 <div class="product-detail__image-preview">
-                                    <img src="<?= htmlspecialchars($product['variants'][0]['main_media']['url'] ?? '') ?>" alt="<?= htmlspecialchars($product['variants'][0]['main_media']['alt_text'] ?? '') ?>" class="product-detail__preview-img">
+                                <img 
+                                src="<?= htmlspecialchars($product['variants'][0]['main_media']['url'] ?? '') ?>" 
+                                alt="<?= htmlspecialchars($product['variants'][0]['main_media']['alt_text'] ?? '') ?>" 
+                                class="product-detail__preview-img">
                                     <div class="product-detail__image-overlay">
                                         <button type="button" class="product-detail__btn product-detail__btn--icon edit-image">
                                             <i class="fas fa-edit"></i>
@@ -225,35 +223,34 @@ echo '</pre>';
                                 <div class="product-detail__product-info">
                                     <div class="product-detail__variant-selectors">
                                         <div class="product-detail__variant-selector">
-                                            <?php
-$hasCapacityGroup = false;
-foreach ($product['variants'] as $variant) {
-    if (!empty($variant['capacity_group'])) {
-        $hasCapacityGroup = true;
-        break;
-    }
-}
-
-if ($hasCapacityGroup):
-?>
-    <label class="product-detail__variant-label">Dung lượng</label>
-    <div class="product-detail__size-options" id="previewSizeOptions">
-        <?php
-        $seenCapacities = [];
-        foreach ($product['variants'] as $variant):
-            if (!in_array($variant['capacity_group'], $seenCapacities)):
-                $seenCapacities[] = $variant['capacity_group'];
-        ?>
-            <button class="product-detail__size-option"
-                    data-variant-id="<?= $variant['id'] ?>"
-                    data-price="<?= $variant['price'] ?>"
-                    data-original="<?= $variant['original_price'] ?>"
-                    data-capacity="<?= htmlspecialchars($variant['capacity_group'] ?? '') ?>">
-                <?= htmlspecialchars($variant['capacity_group'] ?? 'Chưa có dung lượng') ?>
-            </button>
-        <?php endif; endforeach; ?>
-    </div>
-<?php endif; ?>
+                                        <?php
+                                        $hasCapacityGroup = false;
+                                        foreach ($product['variants'] as $variant) {
+                                            if (!empty($variant['capacity_group'])) {
+                                                $hasCapacityGroup = true;
+                                                break;
+                                            }
+                                        }
+                                        if ($hasCapacityGroup):
+                                        ?>
+                                            <label class="product-detail__variant-label">Dung lượng</label>
+                                            <div class="product-detail__size-options" id="previewSizeOptions">
+                                                <?php
+                                                $seenCapacities = [];
+                                                foreach ($product['variants'] as $variant):
+                                                    if (!in_array($variant['capacity_group'], $seenCapacities)):
+                                                        $seenCapacities[] = $variant['capacity_group'];
+                                                ?>
+                                                    <button class="product-detail__size-option"
+                                                            data-variant-id="<?= $variant['id'] ?>"
+                                                            data-price="<?= $variant['price'] ?>"
+                                                            data-original="<?= $variant['original_price'] ?>"
+                                                            data-capacity="<?= htmlspecialchars($variant['capacity_group'] ?? '') ?>">
+                                                        <?= htmlspecialchars($variant['capacity_group'] ?? 'Chưa có dung lượng') ?>
+                                                    </button>
+                                                <?php endif; endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
 
                                         </div>
                                         <div class="product-detail__variant-selector">
@@ -468,35 +465,61 @@ if ($hasCapacityGroup):
                 updatePreviewImages();
             }
 
-            function updatePreviewImages() {
-                if (currentColor && currentColor.images && currentColor.images.length > 0) {
-                    currentColor.images.sort((a, b) => a.sort_order - b.sort_order);
-                    previewMainImage.src = currentColor.images[0].gallery_image_url || currentVariant.main_media.url;
-                    previewMainImage.alt = currentColor.images[0].gallery_image_alt || currentVariant.main_media.alt_text;
-                    previewThumbnails.innerHTML = '';
-                    currentColor.images.forEach(image => {
-                        const thumb = document.createElement('img');
-                        thumb.src = image.gallery_image_url;
-                        thumb.alt = image.gallery_image_alt;
-                        thumb.className = 'product-detail__thumbnail';
-                        thumb.dataset.src = image.gallery_image_url;
-                        thumb.addEventListener('click', () => {
-                            previewMainImage.src = image.gallery_image_url;
-                            previewMainImage.alt = image.gallery_image_alt;
-                            previewThumbnails.querySelectorAll('.product-detail__thumbnail').forEach(t => t.classList.remove('product-detail__thumbnail--active'));
-                            thumb.classList.add('product-detail__thumbnail--active');
-                        });
-                        previewThumbnails.appendChild(thumb);
-                        if (image.gallery_image_url === previewMainImage.src) {
-                            thumb.classList.add('product-detail__thumbnail--active');
-                        }
-                    });
-                } else {
-                    previewMainImage.src = currentVariant.main_media.url || '';
-                    previewMainImage.alt = currentVariant.main_media.alt_text || '';
-                    previewThumbnails.innerHTML = '';
-                }
+          function updatePreviewImages() {
+    // Đảm bảo biến cần thiết không bị undefined
+    if (!previewMainImage || !previewThumbnails || !currentVariant) return;
+
+    // Nếu có màu đang chọn và có ảnh gallery
+    if (currentColor && Array.isArray(currentColor.images) && currentColor.images.length > 0) {
+        // Sắp xếp ảnh theo thứ tự
+        currentColor.images.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+
+        // Lấy ảnh đầu tiên
+        const firstImage = currentColor.images[0];
+
+        // Cập nhật ảnh chính
+        previewMainImage.src = firstImage.gallery_image_url || (currentVariant.main_media?.url || '');
+        previewMainImage.alt = firstImage.gallery_image_alt || (currentVariant.main_media?.alt_text || '');
+
+        // Xoá ảnh nhỏ cũ
+        previewThumbnails.innerHTML = '';
+
+        // Tạo ảnh thumbnail
+        currentColor.images.forEach(image => {
+            const thumb = document.createElement('img');
+            thumb.src = image.gallery_image_url || '';
+            thumb.alt = image.gallery_image_alt || '';
+            thumb.className = 'product-detail__thumbnail';
+            thumb.dataset.src = image.gallery_image_url || '';
+
+            // Gán sự kiện click
+            thumb.addEventListener('click', () => {
+                previewMainImage.src = image.gallery_image_url || '';
+                previewMainImage.alt = image.gallery_image_alt || '';
+
+                // Cập nhật trạng thái active
+                previewThumbnails.querySelectorAll('.product-detail__thumbnail').forEach(t => {
+                    t.classList.remove('product-detail__thumbnail--active');
+                });
+                thumb.classList.add('product-detail__thumbnail--active');
+            });
+
+            // Gắn vào khung thumbnail
+            previewThumbnails.appendChild(thumb);
+
+            // Đặt trạng thái active nếu trùng ảnh chính
+            if (image.gallery_image_url === previewMainImage.src) {
+                thumb.classList.add('product-detail__thumbnail--active');
             }
+        });
+
+    } else {
+        // Không có ảnh gallery, dùng ảnh chính mặc định
+        previewMainImage.src = currentVariant.main_media?.url || '';
+        previewMainImage.alt = currentVariant.main_media?.alt_text || '';
+        previewThumbnails.innerHTML = '';
+    }
+}
 
             function updatePreviewVariants() {
                 if(!previewSizeOptions) return;

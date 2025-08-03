@@ -20,7 +20,6 @@ class DeleteCategoryController
             ]);
             return;
         }
-
         $success = $model->deleteCategory($id);
         if ($success) {
             header('Location: /admin/categories?deleted=' . $id);

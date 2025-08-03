@@ -13,7 +13,7 @@ Trang chủ
 <?php View::endSection(); ?>
 
 <?php View::section('content'); ?>
-
+<!-- Menu -->
 <div class="container-main">
     <ul class="breadcrumb">
         <li class="breadcrumb__item has-submenu">
@@ -68,10 +68,10 @@ Trang chủ
 </div>
 
 <?php View::partial('partials.slider'); ?>
-
+<!-- Category -->
 <div class="container-main">
     <section class="category-list category-product" style="background-color: #f3f4f6;">
-        <div class="category-list__container category-product__list">
+        <div class="category-list__container scroll-horizontal">
             <div class="category-list__wrapper">
                 <div class="category-list__items">
                     <div class="category-list__item">
@@ -181,8 +181,6 @@ Trang chủ
         <?php View::component('components.arrow-buttons') ?>
     </section>
 </div>
-
-<script src="/js/category-list.js"></script>
 
 <?php View::partial('partials.sale-container', ['saleProducts' => $saleProducts]); ?>
 <?php View::partial('partials.special-offer-container', [

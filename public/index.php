@@ -12,4 +12,8 @@ require_once BASE_PATH . '/app/helpers/asset.php';
 require_once BASE_PATH . '/routes/web.php';
 require_once BASE_PATH . '/routes/admin.php';
 
-Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+$found = Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
+
+if ($found === false) {
+    require_once BASE_PATH . '/app/views/web/errors/404.php';
+}

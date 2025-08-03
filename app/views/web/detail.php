@@ -12,9 +12,9 @@ Chi tiết sản phẩm
     <div class="product-detail">
         <!-- Breadcrumb -->
         <div class="product-detail__breadcrumb">
-            <span class="product-detail__breadcrumb-item">Trang chủ</span>
-            <span class="product-detail__breadcrumb-separator">></span>
-            <span class="product-detail__breadcrumb-item">Tivi OLED</span>
+            <a href="/" class="product-detail__breadcrumb-item">Trang chủ</a>
+            <span class="product-detail__breadcrumb-separator">/</span>
+            <span class="product-detail__breadcrumb-item product-detail__breadcrumb-item--active">Tivi OLED</span>
         </div>
 
         <!-- Product Main Section -->
@@ -22,32 +22,83 @@ Chi tiết sản phẩm
             <div class="product-detail__images">
                 <!-- Main Image -->
                 <div class="product-detail__main-image">
-                    <img src="/images/tv-main.jpg" alt="Tivi OLED 65 inch" />
-                    <div class="product-detail__promotion-badge">
-                        <span class="product-detail__promo-text">TẤM NỀN QD-OLED THẾ HỆ MỚI</span>
-                        <p>Nâng tầm trải nghiệm Quantum Dot với tấm nền QD-OLED mới nhất từ Samsung Display, mang đến hình ảnh sắc nét và màu sắc sống động như thật.</p>
-                    </div>
+                    <img src="/img/tv-main.webp" alt="Tivi OLED 65 inch" />
                 </div>
 
                 <!-- Thumbnail Images -->
                 <div class="product-detail__thumbnail-images">
                     <div class="product-detail__thumbnail product-detail__thumbnail--active">
-                        <img src="/images/tv-thumb1.jpg" alt="Thumbnail 1" />
+                        <img src="/img/tv-thumb1.webp" alt="Thumbnail 1" />
                     </div>
                     <div class="product-detail__thumbnail">
-                        <img src="/images/tv-thumb2.jpg" alt="Thumbnail 2" />
+                        <img src="/img/tv-thumb2.webp" alt="Thumbnail 2" />
                     </div>
                     <div class="product-detail__thumbnail">
-                        <img src="/images/tv-thumb3.jpg" alt="Thumbnail 3" />
+                        <img src="/img/tv-thumb3.webp" alt="Thumbnail 3" />
                     </div>
                     <div class="product-detail__thumbnail">
-                        <img src="/images/tv-thumb4.jpg" alt="Thumbnail 4" />
+                        <img src="/img/tv-thumb4.webp" alt="Thumbnail 4" />
                     </div>
                     <div class="product-detail__thumbnail">
-                        <img src="/images/tv-thumb5.jpg" alt="Thumbnail 5" />
+                        <img src="/img/tv-thumb5.webp" alt="Thumbnail 5" />
                     </div>
                     <div class="product-detail__thumbnail">
-                        <img src="/images/tv-thumb6.jpg" alt="Thumbnail 6" />
+                        <img src="/img/tv-thumb6.webp" alt="Thumbnail 6" />
+                    </div>
+                </div>
+
+                <!-- Product Highlights and Policy -->
+                <div class="product-detail__info-box">
+                    <!-- Thông số nổi bật -->
+                    <div class="product-detail__highlights">
+                        <div class="highlights__header">
+                            <h3>Thông số nổi bật</h3>
+                            <a href="#" class="highlights__link">Xem tất cả thông số</a>
+                        </div>
+                        <div class="highlights__list">
+                            <div class="highlight__item">
+                                <img src="/icons/monitor.svg" alt="screen" />
+                                <p>Kích thước màn hình</p>
+                                <strong>27 inch</strong>
+                            </div>
+                            <div class="highlight__item">
+                                <img src="/icons/monitor.svg" alt="screen" />
+                                <p>Kích thước màn hình</p>
+                                <strong>27 inch</strong>
+                            </div>
+                            <div class="highlight__item">
+                                <img src="/icons/monitor.svg" alt="screen" />
+                                <p>Kích thước màn hình</p>
+                                <strong>27 inch</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chính sách sản phẩm -->
+                    <div class="product-detail__policy">
+                        <h3>Chính sách sản phẩm</h3>
+                        <div class="policy__list">
+                            <div class="policy__items">
+                                <div class="policy__item">
+                                    <img src="/icons/monitor.svg" alt="shield" />
+                                    <p>Hàng chính hãng – Bảo hành 36 tháng</p>
+                                </div>
+                                <div class="policy__item">
+                                    <img src="/icons/monitor.svg" alt="shield" />
+                                    <p>Hàng chính hãng – Bảo hành 36 tháng</p>
+                                </div>
+                            </div>
+                            <div class="policy__items">
+                                <div class="policy__item">
+                                    <img src="/icons/monitor.svg" alt="shield" />
+                                    <p>Hàng chính hãng – Bảo hành 36 tháng</p>
+                                </div>
+                                <div class="policy__item">
+                                    <img src="/icons/monitor.svg" alt="shield" />
+                                    <p>Hàng chính hãng – Bảo hành 36 tháng</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,7 +110,9 @@ Chi tiết sản phẩm
                     <div class="product-detail__stars">
                         <span>★★★★★</span>
                     </div>
-                    <span class="product-detail__rating-text">(234 đánh giá)</span>
+                    <span class="product-detail__rating-text">234 đánh giá</span>
+                    <span class="product-detail__sold">Đã bán 234</span>
+                    <a class="product-detail__link" href="#">Thông số kỹ thuật</a>
                 </div>
 
                 <div class="product-detail__price">
@@ -70,12 +123,12 @@ Chi tiết sản phẩm
 
                 <div class="product-detail__options">
                     <div class="product-detail__size-options">
-                        <label class="product-detail__size-label">Kích thước:</label>
+                        <!-- <label class="product-detail__size-label">Kích thước:</label>
                         <div class="product-detail__size-buttons">
                             <button class="product-detail__size-btn">55 inch</button>
                             <button class="product-detail__size-btn product-detail__size-btn--active">65 inch</button>
                             <button class="product-detail__size-btn">75 inch</button>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="product-detail__color-options">
@@ -98,7 +151,8 @@ Chi tiết sản phẩm
 
                 <div class="product-detail__action-buttons">
                     <button class="product-detail__btn-add-cart">Thêm vào giỏ hàng</button>
-                    <button class="product-detail__btn-buy-now">Mua ngay</button>
+                    <!-- <button class="product-detail__btn-buy-now">Mua ngay</button> -->
+                    <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
                 </div>
 
                 <div class="product-detail__shipping-info">
@@ -124,7 +178,7 @@ Chi tiết sản phẩm
                 <p>Tivi OLED Samsung QE65S95D 65 inch là sản phẩm tivi cao cấp mới nhất của Samsung, được trang bị công nghệ QD-OLED tiên tiến, mang đến trải nghiệm hình ảnh vượt trội với độ tương phản vô cực và dải màu rộng.</p>
 
                 <div class="product-detail__feature-image">
-                    <img src="/images/tv-feature.jpg" alt="Tính năng sản phẩm" />
+                    <img src="/img/tv-feature.webp" alt="Tính năng sản phẩm" />
                 </div>
             </div>
         </div>
@@ -187,7 +241,7 @@ Chi tiết sản phẩm
 
         <!-- Product Reviews -->
         <div class="product-detail__reviews-section">
-            <h2 class="product-detail__reviews-title">Mô tả sản phẩm</h2>
+            <h2 class="product-detail__reviews-title">Đánh giá sản phẩm</h2>
             <div class="product-detail__review-summary">
                 <div class="product-detail__rating-overview">
                     <span class="product-detail__rating-score">4 trên 5</span>
@@ -234,7 +288,7 @@ Chi tiết sản phẩm
             <div class="product-detail__reviews-list">
                 <div class="product-detail__review-item">
                     <div class="product-detail__reviewer-info">
-                        <img src="/images/avatar1.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <img src="/img/avatar.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
                         <div class="product-detail__reviewer-details">
                             <h4 class="product-detail__reviewer-name">Nguyễn Văn A</h4>
                             <div class="product-detail__review-rating">★★★★★</div>
@@ -244,15 +298,15 @@ Chi tiết sản phẩm
                     <div class="product-detail__review-content">
                         <p>Sản phẩm rất tốt, hình ảnh sắc nét, màn hình lớn phù hợp với phòng khách. Giao hàng nhanh, đóng gói cẩn thận. Tôi rất hài lòng với sản phẩm này. Sẽ tiếp tục ủng hộ shop.</p>
                         <div class="product-detail__review-images">
-                            <img src="/images/review1.jpg" alt="Review image" />
-                            <img src="/images/review2.jpg" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
                         </div>
                     </div>
                 </div>
 
                 <div class="product-detail__review-item">
                     <div class="product-detail__reviewer-info">
-                        <img src="/images/avatar2.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <img src="/img/avatar.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
                         <div class="product-detail__reviewer-details">
                             <h4 class="product-detail__reviewer-name">Trần Thị B</h4>
                             <div class="product-detail__review-rating">★★★★☆</div>
@@ -262,15 +316,15 @@ Chi tiết sản phẩm
                     <div class="product-detail__review-content">
                         <p>Tivi đẹp, chất lượng tốt. Nhân viên tư vấn nhiệt tình. Giao hàng đúng hẹn. Giá cả hợp lý. Recommend!</p>
                         <div class="product-detail__review-images">
-                            <img src="/images/review3.jpg" alt="Review image" />
-                            <img src="/images/review4.jpg" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
                         </div>
                     </div>
                 </div>
 
                 <div class="product-detail__review-item">
                     <div class="product-detail__reviewer-info">
-                        <img src="/images/avatar3.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <img src="/img/avatar.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
                         <div class="product-detail__reviewer-details">
                             <h4 class="product-detail__reviewer-name">Lê Văn C</h4>
                             <div class="product-detail__review-rating">★★★★★</div>
@@ -280,15 +334,15 @@ Chi tiết sản phẩm
                     <div class="product-detail__review-content">
                         <p>Màn hình to, hình ảnh đẹp, âm thanh hay. Shop tư vấn nhiệt tình, giao hàng nhanh. Sẽ giới thiệu cho bạn bè.</p>
                         <div class="product-detail__review-images">
-                            <img src="/images/review5.jpg" alt="Review image" />
-                            <img src="/images/review6.jpg" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
                         </div>
                     </div>
                 </div>
 
                 <div class="product-detail__review-item">
                     <div class="product-detail__reviewer-info">
-                        <img src="/images/avatar4.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                        <img src="/img/avatar.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
                         <div class="product-detail__reviewer-details">
                             <h4 class="product-detail__reviewer-name">Phạm Thị D</h4>
                             <div class="product-detail__review-rating">★★★★☆</div>
@@ -298,8 +352,8 @@ Chi tiết sản phẩm
                     <div class="product-detail__review-content">
                         <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn shop!</p>
                         <div class="product-detail__review-images">
-                            <img src="/images/review7.jpg" alt="Review image" />
-                            <img src="/images/review8.jpg" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
+                            <img src="/img/review.webp" alt="Review image" />
                         </div>
                     </div>
                 </div>
@@ -312,78 +366,7 @@ Chi tiết sản phẩm
 
         <!-- Related Products -->
         <div class="product-detail__related-products">
-            <h2 class="product-detail__related-title">Có thể bạn cũng thích</h2>
-            <div class="product-detail__products-grid">
-                <div class="product-detail__product-card">
-                    <div class="product-detail__product-image">
-                        <img src="/images/product1.jpg" alt="Product 1" />
-                    </div>
-                    <div class="product-detail__product-info">
-                        <h3 class="product-detail__product-name">Tivi OLED LG C3 55 inch</h3>
-                        <div class="product-detail__product-price">
-                            <span class="product-detail__current-price">18.990.000₫</span>
-                            <span class="product-detail__original-price">22.990.000₫</span>
-                        </div>
-                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <div class="product-detail__product-card">
-                    <div class="product-detail__product-image">
-                        <img src="/images/product2.jpg" alt="Product 2" />
-                    </div>
-                    <div class="product-detail__product-info">
-                        <h3 class="product-detail__product-name">Tivi QLED Samsung QN65Q80C</h3>
-                        <div class="product-detail__product-price">
-                            <span class="product-detail__current-price">25.990.000₫</span>
-                            <span class="product-detail__original-price">29.990.000₫</span>
-                        </div>
-                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <div class="product-detail__product-card">
-                    <div class="product-detail__product-image">
-                        <img src="/images/product3.jpg" alt="Product 3" />
-                    </div>
-                    <div class="product-detail__product-info">
-                        <h3 class="product-detail__product-name">Tivi Sony X90L 65 inch</h3>
-                        <div class="product-detail__product-price">
-                            <span class="product-detail__current-price">21.990.000₫</span>
-                            <span class="product-detail__original-price">24.990.000₫</span>
-                        </div>
-                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <div class="product-detail__product-card">
-                    <div class="product-detail__product-image">
-                        <img src="/images/product4.jpg" alt="Product 4" />
-                    </div>
-                    <div class="product-detail__product-info">
-                        <h3 class="product-detail__product-name">Tivi TCL C845 65 inch</h3>
-                        <div class="product-detail__product-price">
-                            <span class="product-detail__current-price">19.990.000₫</span>
-                            <span class="product-detail__original-price">23.990.000₫</span>
-                        </div>
-                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-
-                <div class="product-detail__product-card">
-                    <div class="product-detail__product-image">
-                        <img src="/images/product5.jpg" alt="Product 5" />
-                    </div>
-                    <div class="product-detail__product-info">
-                        <h3 class="product-detail__product-name">Tivi Xiaomi A Pro 65 inch</h3>
-                        <div class="product-detail__product-price">
-                            <span class="product-detail__current-price">16.990.000₫</span>
-                            <span class="product-detail__original-price">19.990.000₫</span>
-                        </div>
-                        <button class="product-detail__btn-add-cart">Thêm vào giỏ</button>
-                    </div>
-                </div>
-            </div>
+            <?php View::partial('partials.related-container', ['audioProducts' => $audioProducts]); ?>
         </div>
     </div>
 </div>

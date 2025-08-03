@@ -4,10 +4,10 @@ namespace App\Controllers\Web;
 
 use Core\View;
 
-class InformationController
+class PrimaryPolicyController
 {
-    public function information()
+    public function showPrivacyPolicy()
     {
-        View::render('information');
+        View::render('privacy-policy');
     }
 }

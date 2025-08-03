@@ -6,8 +6,8 @@ use Core\View;
 
 class RefundController
 {
-    public function Refund()
+    public function showRefundPolicy()
     {
-        View::render('Refund');
+        View::render('refund');
     }
 }

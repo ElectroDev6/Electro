@@ -11,59 +11,8 @@ include dirname(__DIR__) . '/admin/partials/sidebar.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi tiết Bình luận #<?php echo str_pad($comment['id'], 3, '0', STR_PAD_LEFT); ?></title>
     <link rel="stylesheet" href="/css/admin/style-admin.css">
-    <style>
-        .comment-detail__reply--nested {
-            border-left: 2px solid #e1e5e9;
-            background-color: #f8f9fa;
-        }
-        .comment-detail__reply-form-inline {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-        }
-        .comment-detail__inline-textarea {
-            width: 100%;
-            min-height: 60px;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-            padding: 8px;
-            resize: vertical;
-        }
-        .comment-detail__inline-actions {
-            margin-top: 8px;
-            display: flex;
-            gap: 8px;
-        }
-        .comment-detail__inline-btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .comment-detail__inline-btn--primary {
-            background-color: #007bff;
-            color: white;
-        }
-        .comment-detail__inline-btn--secondary {
-            background-color: #6c757d;
-            color: white;
-        }
-    </style>
 </head>
 <body>
-    <!-- Debug: Uncomment to view $comment data -->
-    <?php if (isset($_GET['debug'])): ?>
-    <div style="background: #f8f9fa; padding: 20px; margin: 20px; border-radius: 8px;">
-        <h3>Debug Data:</h3>
-        <pre style="max-height: 400px; overflow-y: auto; background: white; padding: 15px; border-radius: 4px;">
-<?php echo json_encode($comment, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE); ?>
-        </pre>
-    </div>
-    <?php endif; ?>
-    
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -71,10 +20,10 @@ include dirname(__DIR__) . '/admin/partials/sidebar.php';
             <div class="comment-detail__container">
                 <!-- Header -->
                 <div class="comment-detail__header">
-                    <h1 class="page__title">Chi tiết Bình luận #<?php echo str_pad($comment['id'], 3, '0', STR_PAD_LEFT); ?></h1>
+                    <h1 class="page__title">Chi tiết Bình luận #<?php $comment['id']?></h1>
                     <a href="/admin/comments" class="comment-detail__back-link">
                         <i class="fas fa-arrow-left"></i>
-                        Quay lại danh sách / Chi tiết Bình luận #<?php echo str_pad($comment['id'], 3, '0', STR_PAD_LEFT); ?>
+                        Quay lại danh sách / Chi tiết Bình luận #<?php echo $comment['id']?>
                     </a>
                 </div>
 
@@ -133,20 +82,19 @@ include dirname(__DIR__) . '/admin/partials/sidebar.php';
                                 <select class="comment-detail__select">
                                     <option>Admin shop</option>
                                 </select>
-                                
                                 <label class="comment-detail__form-label">Nội dung phản hồi</label>
-                                <textarea class="comment-detail__textarea" id="main-reply-content" placeholder="Nhập nội dung phản hồi..."></textarea>
-                                
-                                <div class="comment-detail__form-actions">
-                                    <button class="comment-detail__btn comment-detail__btn--primary" onclick="submitMainReply()">
-                                        <i class="fas fa-paper-plane"></i>
-                                        Gửi phản hồi
-                                    </button>
-                                    <button class="comment-detail__btn comment-detail__btn--secondary" onclick="hideMainReplyForm()">
-                                        <i class="fas fa-times"></i>
-                                        Hủy
-                                    </button>
-                                </div>
+                       <form id="main-reply-form" method="POST" action="/admin/commentDetail/reply?id=<?php echo $comment['id'] ?>">
+                        <textarea class="comment-detail__textarea" id="main-reply-content" name="main-reply-content" placeholder="Nhập nội dung phản hồi..."></textarea>
+                        <div class="comment-detail__form-actions">
+                            <button type="submit" class="comment-detail__btn comment-detail__btn--primary">
+                                Gửi phản hồi
+                            </button>
+                            <button type="button" class="comment-detail__btn comment-detail__btn--secondary" onclick="hideMainReplyForm()">
+                                <i class="fas fa-times"></i>
+                                Hủy
+                            </button>
+                        </div>
+                    </form>
                             </div>
 
                             <!-- Replies List -->
@@ -164,21 +112,43 @@ include dirname(__DIR__) . '/admin/partials/sidebar.php';
                     <div class="comment-detail__sidebar">
                         <!-- Actions -->
                         <div class="comment-detail__actions-panel">
+                        <div class="comment-detail__actions-panel">
                             <h4 class="comment-detail__panel-title">Hành động</h4>
                             <div class="comment-detail__action-buttons">
+
                                 <?php if ($comment['status'] !== 'approved'): ?>
-                                    <button class="comment-detail__action-button comment-detail__action-button--approve" data-comment-id="<?php echo $comment['id']; ?>">
+                                <form action="/admin/comments/approve" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?= $comment['id']; ?>">
+                                    <button type="submit" class="comment-detail__action-button comment-detail__action-button--approve"
+                                            onclick="return confirm('Bạn có chắc muốn chấp nhận bình luận này không?')">
                                         ✓ Chấp nhận
                                     </button>
+                                </form>
+
                                 <?php endif; ?>
-                                <?php if ($comment['status'] !== 'rejected'): ?>
-                                    <button class="comment-detail__action-button comment-detail__action-button--reject" data-comment-id="<?php echo $comment['id']; ?>">
-                                        ✗ Từ chối
+                                <?php if ($comment['status'] === 'approved'): ?>
+                                    <button class="comment-detail__action-button comment-detail__action-button--hide" 
+                                            data-comment-id="<?= $comment['id']; ?>">
+                                        👁️‍🗨️ Ẩn
                                     </button>
+                                <?php elseif ($comment['status'] !== 'rejected'): ?>
+                                    <form action="/admin/comments/reject" method="POST" style="display: inline">
+                                        <input type="hidden" name="id" value="<?= $comment['id']; ?>">
+                                        <button type="submit" class="comment-detail__action-button comment-detail__action-button--reject"
+                                                onclick="return confirm('Bạn có chắc muốn từ chối bình luận này không?')">
+                                            ✗ Từ chối
+                                        </button>
+                                    </form>
                                 <?php endif; ?>
-                                <button class="comment-detail__action-button comment-detail__action-button--edit" data-comment-id="<?php echo $comment['id']; ?>">
+                                    <a href="/admin/comments/edit?id=<?php echo $comment['id']; ?>" class="comment-detail__action-button comment-detail__action-button--edit" data-comment-id="<?php echo $comment['id']; ?>">
                                     ✎ Chỉnh sửa
+                                </a>
+                                <form action="/admin/comments/delete" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
+                                <input type="hidden" name="id" value="<?= $comment['id'] ?>">
+                                 <button class="comment-detail__btn comment-detail__btn--delete" type=submit>
+                                    Xóa
                                 </button>
+                            </form>
                             </div>
                         </div>
 
@@ -265,85 +235,17 @@ include dirname(__DIR__) . '/admin/partials/sidebar.php';
                 </div>
             </div>
         </div>
+        <?php if (!empty($successMessage)): ?>
+    <div class="alert alert-success">
+        <?= htmlspecialchars($successMessage) ?>
+    </div>
+<?php endif; ?>
+        <script type="module" src="/admin-ui/js/pages/comment-detail.js"></script>
     </main>
-
-    <script>
-        // Show/Hide main reply form
-        function showMainReplyForm() {
-            document.getElementById('main-reply-form').style.display = 'block';
-        }
-
-        function hideMainReplyForm() {
-            document.getElementById('main-reply-form').style.display = 'none';
-            document.getElementById('main-reply-content').value = '';
-        }
-
-        // Show/Hide inline reply forms
-        function showReplyForm(replyId) {
-            document.getElementById('reply-form-' + replyId).style.display = 'block';
-        }
-
-        function hideReplyForm(replyId) {
-            document.getElementById('reply-form-' + replyId).style.display = 'none';
-            const textarea = document.querySelector('#reply-form-' + replyId + ' textarea');
-            if (textarea) textarea.value = '';
-        }
-
-        // Submit main reply
-        function submitMainReply() {
-            const content = document.getElementById('main-reply-content').value.trim();
-            if (!content) {
-                alert('Vui lòng nhập nội dung phản hồi!');
-                return;
-            }
-            console.log('Submitting main reply:', {
-                parent_id: <?php echo $comment['id']; ?>,
-                content: content
-            });
-            hideMainReplyForm();
-            alert('Phản hồi đã được gửi!');
-        }
-
-        // Handle reply button clicks
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle reply buttons
-            document.querySelectorAll('.comment-detail__reply-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const replyId = this.getAttribute('data-reply-to');
-                    showReplyForm(replyId);
-                });
-            });
-
-            // Handle inline reply submissions
-            document.querySelectorAll('.comment-detail__inline-btn--primary').forEach(button => {
-                button.addEventListener('click', function() {
-                    const parentId = this.getAttribute('data-parent-id');
-                    const textarea = document.querySelector(`textarea[data-parent-id="${parentId}"]`);
-                    const content = textarea.value.trim();
-
-                    if (!content) {
-                        alert('Vui lòng nhập nội dung phản hồi!');
-                        return;
-                    }
-
-                    // TODO: Implement AJAX call to submit nested reply
-                    console.log('Submitting nested reply:', {
-                        parent_id: parentId,
-                        content: content
-                    });
-
-                    // For now, just hide the form
-                    hideReplyForm(parentId);
-                    alert('Phản hồi đã được gửi!');
-                });
-            });
-        });
-    </script>
 </body>
 </html>
 
 <?php
-// Hàm đệ quy để render nested replies - FIXED VERSION
 function renderReplies(array $replies, int $depth = 0) {
     if (empty($replies)) {
         return;

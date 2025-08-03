@@ -7,7 +7,8 @@
     "sass:build": "sass sass:public/css --no-source-map",
     "sass:watch": "sass --watch sass:public/css --no-source-map",
     "php:watch": "watch \"composer dump-autoload\" app",
-    "dev": "npm-run-all --parallel sass:watch php:watch"
+    "dev": "npm-run-all --parallel sass:watch php:watch",
+    "seed:clean": "node scripts/clean-json5.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "watch": "^0.13.0"
   },
   "dependencies": {
-    "composer": "^4.1.0"
+    "composer": "^4.1.0",
+    "json5": "^2.2.3"
   }
 }

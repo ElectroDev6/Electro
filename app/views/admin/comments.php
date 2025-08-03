@@ -14,7 +14,7 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-        <!-- <?php 
+            <!-- <?php
     echo '<pre>';
     echo json_encode($comments, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     echo '</pre>';
@@ -85,11 +85,9 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
                     <div class="comment-filters__search-wrapper">
                         <input type="text" class="comment-filters__search" placeholder="Tìm kiếm theo nội dung bình luận..." name="search">
                         <button class="comment-filters__search-btn">
-                            <i class="fas fa-search"></i>
                             Lọc
                         </button>
                         <button class="comment-filters__reset-btn">
-                            <i class="fas fa-times"></i>
                             Reset
                         </button>
                     </div>
@@ -141,7 +139,7 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
                                             'approved' => 'Đã duyệt',
                                             'rejected' => 'Từ chối'
                                         ];
-                                        echo htmlspecialchars($statusMap[$comment['status']] ?? ucfirst($comment['status']));
+                                        echo $comment['status'];
                                         ?>
                                     </span>
                                 </td>
@@ -156,12 +154,15 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
                                         <a href="/admin/commentDetail?id=<?php echo $comment['id']; ?>" class="comment-actions__btn comment-actions__btn--view">
                                             <img src="/icons/view_icon.svg" alt="Xem">
                                         </a>
-                                        <button class="comment-actions__btn comment-actions__btn--edit">
+                                        <a href="/admin/comments/edit?id=<?php echo $comment['id']?>" class="comment-actions__btn comment-actions__btn--edit">
                                             <img src="/icons/edit_icon.svg" alt="Sửa">
-                                        </button>
+                                        </a>
+                                        <form action="/admin/comments/delete" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
+                                        <input type="hidden" name="id" value="6">
                                         <button class="comment-actions__btn comment-actions__btn--delete">
                                             <img src="/icons/trash_icon.svg" alt="Xóa">
                                         </button>
+                                    </form>
                                     </div>
                                 </td>
                             </tr>
@@ -172,6 +173,7 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
             </section>
         </div>
     </main>
-    <script src="/admin-ui/js/common/pagination.js"></script>
+    <script type="module" src="/admin-ui/js/common/pagination.js"></script>
+    <script type="module" src="/admin-ui/js/pages/comments.js"></script>
 </body>
 </html>

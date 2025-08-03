@@ -80,7 +80,6 @@ include dirname(__DIR__) . '/partials/pagination.php';
                         <div class="product-table__cell product-table__cell--header">Số lượng</div>
                         <div class="product-table__cell product-table__cell--header">Action</div>
                     </div>
-
                     <?php foreach ($getProducts as $product): ?>
                         <?php
                             $productName = htmlspecialchars($product['Tên']);

@@ -1,0 +1,22 @@
+[
+  {
+    "option_id": 1,
+    "product_id": 1,
+    "name": "color"
+  },
+  {
+    "option_id": 2,
+    "product_id": 1,
+    "name": "capacity"
+  },
+  {
+    "option_id": 3,
+    "product_id": 2,
+    "name": "color"
+  },
+  {
+    "option_id": 4,
+    "product_id": 2,
+    "name": "capacity"
+  }
+]

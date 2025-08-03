@@ -11,124 +11,95 @@ class CommentsModel
         $this->pdo = $pdo;
     }
 
-    public function getAllComments(): array
+    public function getAllComments()
     {
         try {
             $query = "
-                WITH RECURSIVE comment_tree AS (
-                    -- Base case: comments gốc (cmt_replie = 0)
-                    SELECT 
-                        c.id, c.product_id, c.user_id, c.cmt_replie, 
-                        c.content, c.likes, c.status, c.created_at,
-                        0 AS depth,
-                        CAST(c.id AS CHAR(255)) AS path
-                    FROM comments c
-                    WHERE c.cmt_replie = 0
-                    
-                    UNION ALL
-                    
-                    -- Recursive case: tìm tất cả replies
-                    SELECT 
-                        c.id, c.product_id, c.user_id, c.cmt_replie,
-                        c.content, c.likes, c.status, c.created_at,
-                        ct.depth + 1,
-                        CONCAT(ct.path, '->', c.id)
-                    FROM comments c
-                    INNER JOIN comment_tree ct ON c.cmt_replie = ct.id
-                )
                 SELECT 
-                    ct.id,
-                    ct.product_id,
-                    ct.user_id,  
-                    ct.cmt_replie,
-                    ct.content,
-                    ct.likes,
-                    ct.status,
-                    ct.created_at,
-                    ct.depth,
-                    ct.path,
-                    -- Product info
-                    p.id as p_id,
-                    p.name as product_name,
+                    c.id,
+                    c.product_id,
+                    c.user_id,
+                    c.cmt_replie,
+                    c.content,
+                    c.likes,
+                    c.status,
+                    c.created_at,
+                    p.id AS p_id,
+                    p.name AS product_name,
                     p.description_html,
-                    p.create_at as product_create_at,
-                    p.update_date as product_update_date,
-                    -- Category info
-                    cat.id as category_id,
-                    cat.name as category_name,
-                    -- User info
+                    p.create_at AS product_create_at,
+                    p.update_date AS product_update_date,
+                    cat.id AS category_id,
+                    cat.name AS category_name,
                     u.username,
                     u.full_name,
                     u.phone,
                     u.role,
-                    u.created_at as user_created_at
-                FROM comment_tree ct
-                LEFT JOIN products p ON ct.product_id = p.id
+                    u.created_at AS user_created_at
+                FROM comments c
+                LEFT JOIN products p ON c.product_id = p.id
                 LEFT JOIN categories cat ON p.category_id = cat.id
-                LEFT JOIN users u ON ct.user_id = u.id
-                ORDER BY ct.path, ct.created_at ASC
+                LEFT JOIN users u ON c.user_id = u.id
+                ORDER BY 
+                    CASE WHEN c.cmt_replie = 0 THEN c.id ELSE c.cmt_replie END,
+                    c.cmt_replie,
+                    c.created_at ASC
             ";
 
             $stmt = $this->pdo->prepare($query);
             $stmt->execute();
-            $allComments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Chuyển đổi dữ liệu thành nested structure
-            return $this->buildNestedStructure($allComments);
-
+            return $this->buildNestedStructure($comments);
         } catch (\PDOException $e) {
             error_log("Error fetching comments: " . $e->getMessage());
             return [];
         }
     }
 
-    private function buildNestedStructure(array $comments): array
+    private function buildNestedStructure($comments)
     {
         $commentMap = [];
         $rootComments = [];
 
-        // Tạo map của tất cả comments với format đầy đủ
+        // Tạo map của tất cả comments
         foreach ($comments as $comment) {
             $formattedComment = [
-                'id' => (int)$comment['id'],
-                'product_id' => (int)$comment['product_id'],
+                'id' => $comment['id'],
+                'product_id' => $comment['product_id'],
                 'product' => [
-                    'id' => (int)$comment['p_id'],
+                    'id' => $comment['p_id'],
                     'name' => $comment['product_name'],
                     'description_html' => $comment['description_html'],
                     'create_at' => $comment['product_create_at'],
                     'update_date' => $comment['product_update_date'],
                     'category' => [
-                        'id' => (int)$comment['category_id'],
+                        'id' => $comment['category_id'],
                         'name' => $comment['category_name']
                     ]
                 ],
-                'user_id' => (int)$comment['user_id'],
+                'user_id' => $comment['user_id'],
                 'user' => [
-                    'id' => (int)$comment['user_id'],
+                    'id' => $comment['user_id'],
                     'username' => $comment['username'],
                     'full_name' => $comment['full_name'],
                     'phone' => $comment['phone'],
                     'role' => $comment['role'],
                     'created_at' => $comment['user_created_at']
                 ],
-                'cmt_replie' => (int)$comment['cmt_replie'],
+                'cmt_replie' => $comment['cmt_replie'],
                 'content' => $comment['content'],
-                'likes' => (int)$comment['likes'],
+                'likes' => $comment['likes'],
                 'status' => $comment['status'],
                 'created_at' => $comment['created_at'],
-                'replies' => [],
-                'depth' => (int)$comment['depth'],
-                'path' => $comment['path']
+                'replies' => []
             ];
 
             $commentMap[$comment['id']] = $formattedComment;
         }
-
-        // Xây dựng nested structure
         foreach ($commentMap as $id => $comment) {
-            if ($comment['depth'] == 0) {
-                // Comment gốc
+            if ($comment['cmt_replie'] == 0) {
+                // Comment gốc (cmt_replie = 0)
                 $rootComments[] = &$commentMap[$id];
             } else {
                 // Comment reply - thêm vào parent
@@ -138,148 +109,113 @@ class CommentsModel
                 }
             }
         }
-
-        // Loại bỏ depth và path khỏi kết quả cuối cùng
-        $this->cleanupStructure($rootComments);
-
+        
         return $rootComments;
     }
 
-    private function cleanupStructure(array &$comments): void
-    {
-        foreach ($comments as &$comment) {
-            unset($comment['depth'], $comment['path']);
-            
-            if (!empty($comment['replies'])) {
-                $this->cleanupStructure($comment['replies']);
-            }
-        }
-    }
+    
 
-    // Alternative method: Sử dụng pure SQL approach (giống code gốc của bạn nhưng dynamic)
-    public function getAllCommentsSQL(): array
+    public function deleteComment($id)
     {
         try {
-            // Lấy max depth để biết cần bao nhiêu cấp độ
-            $maxDepthQuery = "
-                WITH RECURSIVE comment_depth AS (
-                    SELECT id, cmt_replie, 0 AS depth
-                    FROM comments
-                    WHERE cmt_replie = 0
-                    UNION ALL
-                    SELECT c.id, c.cmt_replie, cd.depth + 1
-                    FROM comments c
-                    INNER JOIN comment_depth cd ON c.cmt_replie = cd.id
-                )
-                SELECT MAX(depth) as max_depth FROM comment_depth
-            ";
+            if ($id === null) {
+                error_log("Delete failed: Comment ID is null");
+                return false;
+            }
+
+            $sql = "DELETE FROM comments WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $result = $stmt->execute();
+
+            if ($result && $stmt->rowCount() > 0) {
+                return true;
+            }
             
-            $stmt = $this->pdo->prepare($maxDepthQuery);
-            $stmt->execute();
-            $maxDepth = $stmt->fetch(PDO::FETCH_ASSOC)['max_depth'] ?? 0;
-
-            // Tạo dynamic query dựa trên max depth
-            $repliesQuery = $this->buildDynamicRepliesQuery($maxDepth);
-
-            $query = "
-                SELECT 
-                    JSON_ARRAYAGG(
-                        JSON_OBJECT(
-                            'id', c.id,
-                            'product_id', c.product_id,
-                            'product', JSON_OBJECT(
-                                'id', p.id,
-                                'name', p.name,
-                                'description_html', p.description_html,
-                                'create_at', p.create_at,
-                                'update_date', p.update_date,
-                                'category', JSON_OBJECT(
-                                    'id', cat.id,
-                                    'name', cat.name
-                                )
-                            ),
-                            'user_id', c.user_id,
-                            'user', JSON_OBJECT(
-                                'id', u.id,
-                                'username', u.username,
-                                'full_name', u.full_name,
-                                'phone', u.phone,
-                                'role', u.role,
-                                'created_at', u.created_at
-                            ),
-                            'cmt_replie', c.cmt_replie,
-                            'replies', $repliesQuery,
-                            'content', c.content,
-                            'likes', c.likes,
-                            'status', c.status,
-                            'created_at', c.created_at
-                        )
-                    ) AS comments
-                FROM comments c
-                LEFT JOIN products p ON c.product_id = p.id
-                LEFT JOIN categories cat ON p.category_id = cat.id
-                LEFT JOIN users u ON c.user_id = u.id
-                WHERE c.cmt_replie = 0
-                ORDER BY c.created_at DESC
-            ";
-
-            $stmt = $this->pdo->prepare($query);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return json_decode($result['comments'] ?? '[]', true) ?: [];
-
+            error_log("Delete failed: No record found for ID $id");
+            return false;
         } catch (\PDOException $e) {
-            error_log("Error fetching comments with SQL: " . $e->getMessage());
-            return [];
+            error_log("Error deleting comment: " . $e->getMessage());
+            return false;
         }
     }
 
-    private function buildDynamicRepliesQuery(int $maxDepth, int $currentDepth = 1): string
+
+    public function update($id, $data)
     {
-        if ($currentDepth > $maxDepth) {
-            return 'NULL';
+        try {
+            $set = [];
+            $params = [':id' => $id];
+            
+            foreach ($data as $key => $value) {
+                $set[] = "$key = :$key";
+                $params[":$key"] = $value;
+            }
+            
+            $sql = "UPDATE comments SET " . implode(', ', $set) . " WHERE id = :id";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $result = $stmt->execute($params);
+
+            return $result;
+        } catch (PDOException $e) {
+            error_log("Error updating comment: " . $e->getMessage());
+            return false;
         }
-
-        $nextLevel = $this->buildDynamicRepliesQuery($maxDepth, $currentDepth + 1);
-        $alias = "cr" . $currentDepth;
-        $userAlias = "ur" . $currentDepth;
-
-        return "
-            (
-                SELECT JSON_ARRAYAGG(
-                    JSON_OBJECT(
-                        'id', $alias.id,
-                        'product_id', $alias.product_id,
-                        'user_id', $alias.user_id,
-                        'user', JSON_OBJECT(
-                            'id', $userAlias.id,
-                            'username', $userAlias.username,
-                            'full_name', $userAlias.full_name,
-                            'phone', $userAlias.phone,
-                            'role', $userAlias.role,
-                            'created_at', $userAlias.created_at
-                        ),
-                        'cmt_replie', $alias.cmt_replie,
-                        'content', $alias.content,
-                        'likes', $alias.likes,
-                        'status', $alias.status,
-                        'created_at', $alias.created_at,
-                        'replies', $nextLevel
-                    )
-                )
-                FROM comments $alias
-                LEFT JOIN users $userAlias ON $alias.user_id = $userAlias.id
-                WHERE $alias.cmt_replie = " . ($currentDepth == 1 ? "c.id" : "cr" . ($currentDepth - 1) . ".id") . "
-                ORDER BY $alias.created_at ASC
-            )
-        ";
     }
 
 
-    public function getNestedCommentsJson(): string
+    public function getCommentById($id)
     {
-        $comments = $this->getAllComments();
-        return json_encode($comments, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        try {
+            $stmt = $this->pdo->prepare("SELECT * FROM comments WHERE id = :id");
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error fetching comment: " . $e->getMessage());
+            return false;
+        }
     }
+
+
+public function createCommentReply($data) {
+        try {
+            $sql = "INSERT INTO comments (
+                product_id,
+                user_id,
+                cmt_replie,
+                content,
+                likes,
+                status,
+                hidden_comment,
+                created_at
+            ) VALUES (
+                :product_id,
+                :user_id,
+                :cmt_replie,
+                :content,
+                :likes,
+                :status,
+                :hidden_comment,
+                :created_at
+            )";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':product_id', $data['product_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':user_id', $data['user_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':cmt_replie', $data['cmt_replie'], PDO::PARAM_INT);
+            $stmt->bindParam(':content', $data['content'], PDO::PARAM_STR);
+            $stmt->bindParam(':likes', $data['likes'], PDO::PARAM_INT);
+            $stmt->bindParam(':status', $data['status'], PDO::PARAM_STR);
+            $stmt->bindParam(':hidden_comment', $data['hidden_comment'], PDO::PARAM_INT);
+            $stmt->bindParam(':created_at', $data['created_at'], PDO::PARAM_STR);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+
 }
 ?>

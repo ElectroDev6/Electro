@@ -16,5 +16,8 @@ class CommentsController
             'comments' => $comments
         ]);
     }
+
+    
+
 }
 ?>

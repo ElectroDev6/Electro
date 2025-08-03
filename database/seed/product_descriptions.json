@@ -2,31 +2,17 @@
   {
     "product_description_id": 1,
     "product_id": 1,
-    "title": "Thiết kế và màn hình",
-    "display_order": 1
+    "section_title": "Thiết kế và màn hình",
+    "content_text": "Thiết kế kim loại cao cấp với khung viền nhôm nguyên khối",
+    "image_url": "/img/tv-feature.webp",
+    "sort_order": 1
   },
   {
     "product_description_id": 2,
     "product_id": 1,
-    "title": "Hiệu năng và camera",
-    "display_order": 2
-  },
-  {
-    "product_description_id": 3,
-    "product_id": 2,
-    "title": "Thiết kế sang trọng",
-    "display_order": 1
-  },
-  {
-    "product_description_id": 4,
-    "product_id": 2,
-    "title": "Camera 200MP",
-    "display_order": 2
-  },
-  {
-    "product_description_id": 5,
-    "product_id": 3,
-    "title": "Cấu hình mạnh mẽ",
-    "display_order": 1
+    "section_title": "Thiết kế và màn hình",
+    "content_text": "Màn hình OLED 6.7 inch độ phân giải 2K+ cức nét",
+    "image_url": "/img/tv-feature.webp",
+    "sort_order": 2
   }
 ]

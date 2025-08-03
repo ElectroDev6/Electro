@@ -14,7 +14,6 @@ class ProductFilter {
       this.init();
       this.setupEventListeners();
    }
-
    init() {
       if (
          !this.elements.searchProduct ||

@@ -15,7 +15,6 @@ class HomeController
                 ['id' => 3, 'name' => 'Sản phẩm C', 'price' => 1000, 'image' => '/img/product1.webp'],
                 ['id' => 4, 'name' => 'Sản phẩm D', 'price' => 1000, 'image' => '/img/product1.webp'],
             ],
-
             // Thêm mảng sản phẩm sale
             'saleProducts' => [
                 [

@@ -196,5 +196,3 @@
         </div>
     </div>
 </header>
-
-<script src="/js/menu-mb.js"></script>

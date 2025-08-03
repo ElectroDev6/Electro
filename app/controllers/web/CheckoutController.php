@@ -6,7 +6,7 @@ use Core\View;
 
 class CheckoutController
 {
-    public function index()
+    public function showCheckoutForm()
     {
         View::render('checkout');
     }

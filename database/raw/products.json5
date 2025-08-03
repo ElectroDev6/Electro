@@ -1,0 +1,14 @@
+[
+  {
+    "product_id": 1,
+    "brand_id": 1,
+    "category_id": 1,
+    "name": "iPhone 13"
+  },
+  {
+    "product_id": 2,
+    "brand_id": 1,
+    "category_id": 1,
+    "name": "iPhone 14"
+  }
+]

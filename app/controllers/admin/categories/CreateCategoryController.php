@@ -23,7 +23,7 @@ class CreateCategoryController
 
     public function handleCreate()
     {
-        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
     $name = trim(filter_input(INPUT_POST, 'name'));
     $description = trim(filter_input(INPUT_POST, 'content_html'));
     $image = $_FILES['image'] ?? null;
