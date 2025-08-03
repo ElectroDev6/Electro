@@ -28,7 +28,12 @@ include dirname(__DIR__) . '/admin/partials/header.php';
                 <h1 class="user-detail__title">Chi tiết người dùng</h1>
                 <div class="user-detail__actions">
                     <a href="/admin/users" class="user-detail__button user-detail__button--back">← Back</a>
-                    <button class="user-detail__button user-detail__button--edit" onclick="editUser(<?php echo htmlspecialchars(json_encode($user)); ?>)">✏ Edit</button>
+                    <form action="/admin/users/editUser" method="POST" style="display:inline;">
+                                            <input type="hidden" name="id" value="6">
+                                            <button type="submit" class="user-detail__button user-detail__button--edit">
+                                                ✏ Edit
+                                            </button>
+                                        </form>
                 </div>
             </header>
 
@@ -132,13 +137,5 @@ include dirname(__DIR__) . '/admin/partials/header.php';
             </section>
         </div>
     </main>
-
-    <script>
-        // Placeholder function for edit action
-        function editUser(user) {
-            console.log('Edit user:', user);
-            // Implement edit logic (e.g., open modal or redirect to edit page)
-        }
-    </script>
 </body>
 </html>

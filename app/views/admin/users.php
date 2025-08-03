@@ -13,13 +13,6 @@ include dirname(__DIR__) . '/admin/helpers/DateTimeHelper.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-    <!-- <?php
-    // Debug output (remove in production)
-    echo '<pre>';
-    echo json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    echo '</pre>';
-    ?> -->
-
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -27,31 +20,22 @@ include dirname(__DIR__) . '/admin/helpers/DateTimeHelper.php';
             <!-- Header Section -->
             <div class="user-page__header">
                 <h1 class="user-page__title">Trang người dùng</h1>
-                <button class="user-page__add-btn">+ Add new</button>
+            <a href="/admin/users/addUser" class="user-page__add-btn">+ Thêm người dùng</a>
             </div>
-
             <!-- Filter Section -->
             <div class="user-filter">
                 <div class="user-filter__group">
                     <label class="user-filter__label">Tên người dùng</label>
-                    <input type="text" class="user-filter__input" placeholder="Tìm kiếm sản phẩm..." id="filter-username">
+                    <input type="text" class="user-filter__input" placeholder="Tìm kiếm người dùng..." id="filter-username">
                 </div>
                 
                 <div class="user-filter__group">
                     <label class="user-filter__label">Vai trò</label>
                     <select class="user-filter__select" id="filter-role">
                         <option value="">Tất cả vai trò</option>
-                        <option value="admin">Admin</option>
-                        <option value="customer">Customer</option>
-                    </select>
-                </div>
-                
-                <div class="user-filter__group">
-                    <label class="user-filter__label">Trạng thái</label>
-                    <select class="user-filter__select" id="filter-status">
-                        <option value="">Tất cả trạng thái</option>
-                        <option value="active">Đang hoạt động</option>
-                        <option value="inactive">Không hoạt động</option>
+                        <option value="0">Admin</option>
+                        <option value="1">User</option>
+                        <option value="2">Khách</option>
                     </select>
                 </div>
                 
@@ -70,7 +54,6 @@ include dirname(__DIR__) . '/admin/helpers/DateTimeHelper.php';
                             <th class="user-table__header">Email</th>
                             <th class="user-table__header">Vai trò</th>
                             <th class="user-table__header">SĐT</th>
-                            <th class="user-table__header">Trạng thái</th>
                             <th class="user-table__header">Lần cuối đăng nhập</th>
                             <th class="user-table__header">Điều hướng</th>
                         </tr>
@@ -86,20 +69,37 @@ include dirname(__DIR__) . '/admin/helpers/DateTimeHelper.php';
                                         <span class="user-table__username"><?php echo htmlspecialchars($user['full_name']); ?></span>
                                     </td>
                                     <td class="user-table__cell"><?php echo htmlspecialchars($user['username']); ?></td>
-                                    <td class="user-table__cell"><?php echo htmlspecialchars($user['role']); ?></td>
-                                    <td class="user-table__cell"><?php echo htmlspecialchars($user['phone']); ?></td>
                                     <td class="user-table__cell">
-                                        <span class="user-table__status user-table__status--<?php echo ($user['role'] === 'admin' ? 'active' : 'inactive'); ?>">
-                                            <?php echo ($user['role'] === 'admin' ? 'đang hoạt động' : 'không hoạt động'); ?>
-                                        </span>
+                                        <?php 
+                                        $roleMap = [
+                                            0 => 'Admin',
+                                            1 => 'User',
+                                            2 => 'Khách'
+                                        ];
+                                        echo htmlspecialchars($roleMap[$user['role']] ?? 'Unknown');
+                                        ?>
                                     </td>
+                                    <td class="user-table__cell"><?php echo htmlspecialchars($user['phone']); ?></td>
+                                    
                                     <td class="user-table__cell">
                                         <?php echo formatTimeAgo($user['created_at']); ?>
                                     </td>
                                     <td class="user-table__cell user-table__cell--actions">
-                                        <a href="/admin/userDetail?id=<?php echo htmlspecialchars($user['id']); ?>" class="user-table__action-btn">👁</a>
-                                        <button class="user-table__action-btn" onclick="editUser(<?php echo htmlspecialchars(json_encode($user)); ?>)">✏️</button>
-                                        <button class="user-table__action-btn" onclick="deleteUser(<?php echo htmlspecialchars($user['id']); ?>)">🗑</button>
+                                        <a href="/admin/userDetail?id=<?php echo htmlspecialchars($user['id']); ?>" class="product-table__action-btn">
+                                            <img src="/icons/view_icon.svg" alt="Xem">
+                                        </a>
+                                        <form action="/admin/users/editUser" method="POST" style="display:inline;">
+                                            <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                                            <button type="submit" class="product-table__action-btn">
+                                                <img src="/icons/edit_icon.svg" alt="Sửa">
+                                            </button>
+                                        </form>
+                                        <form action="/admin/users/delete" method="POST" style="display:inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xoá?')">
+                                            <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                                            <button type="submit" class="product-table__action-btn">
+                                                <img src="/icons/trash_icon.svg" alt="Xóa">
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -125,7 +125,7 @@ include dirname(__DIR__) . '/admin/helpers/DateTimeHelper.php';
             </div>
         </div>
     </main>
-    <script src="/admin-ui/js/common/pagination.js"></script>
-    </script>
+    <script type="module" src="/admin-ui/js/common/pagination.js"></script>
+    <script type="module" src="/admin-ui/js/pages/user-filter.js"></script>
 </body>
 </html>

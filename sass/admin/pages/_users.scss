@@ -30,6 +30,68 @@
    }
 }
 
+.user-edit-form {
+   padding: 24px;
+   background-color: #fff;
+   border-radius: 12px;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+   font-family: "Segoe UI", sans-serif;
+}
+
+.user-edit-form h2 {
+   margin-bottom: 24px;
+   font-size: 24px;
+   color: #333;
+   text-align: center;
+}
+
+.user-edit-form label {
+   display: block;
+   margin-bottom: 6px;
+   font-weight: 600;
+   color: #555;
+}
+
+.user-edit-form input,
+.user-edit-form select {
+   width: 100%;
+   padding: 10px 12px;
+   margin-bottom: 16px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   font-size: 14px;
+   transition: border-color 0.2s;
+}
+
+.user-edit-form input:focus,
+.user-edit-form select:focus {
+   outline: none;
+   border-color: #007bff;
+}
+
+.user-edit-form input[readonly] {
+   background-color: #f4f4f4;
+   color: #888;
+   cursor: not-allowed;
+}
+
+.user-edit-form button {
+   display: block;
+   width: 100%;
+   padding: 12px;
+   background-color: #007bff;
+   color: white;
+   font-size: 16px;
+   border: none;
+   border-radius: 8px;
+   cursor: pointer;
+   transition: background-color 0.2s;
+}
+
+.user-edit-form button:hover {
+   background-color: #0056b3;
+}
+
 // User Filter Block
 .user-filter {
    background-color: white;

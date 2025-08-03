@@ -42,9 +42,15 @@ Router::post('/admin/orders/approve', 'OrderDetailController@approve');
 Router::post('/admin/orders/cancel', 'OrderDetailController@cancel');
 Router::post('/admin/orders/complete', 'OrderDetailController@complete');
 
-
 Router::get('/admin/users', 'UsersController@index');
 Router::get('/admin/userDetail', 'UserDetailController@index');
+Router::post('/admin/users/delete', 'UserDetailController@delete');
+Router::post('/admin/users/editUser', 'UserDetailController@edit');
+Router::post('/admin/users/update', 'UserDetailController@update');
+Router::get('/admin/users/addUser', 'UserDetailController@add');
+Router::post('/admin/users/addUser', 'UserDetailController@add');
+
+
 Router::get('/admin/reviews', 'ReviewsController@index');
 Router::get('/admin/reviewDetail', 'ReviewDetailController@index');
 Router::get('/admin/blogs', 'BlogsController@index');
