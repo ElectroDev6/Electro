@@ -6,10 +6,10 @@ $product = $regularProduct ?? [];
 use Core\View; ?>
 
 <?php if (!empty($product)): ?>
-    <a href="/product/<?= $product['slug'] ?>" class="product__link">
-        <div class="product">
+    <div class="product">
+        <a href="/product/<?= $product['slug'] ?>" class="product__link">
             <div class="product__image-container">
-                <img src="/img/products<?= $product['default_url'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product__image" />
+                <img src="<?= $product['default_url'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product__image" />
 
                 <ul class="product__features">
                     <div class="product__feature">
@@ -50,9 +50,9 @@ use Core\View; ?>
             <p class="product__name"><?= $product['name'] ?? 'Camera giám sát IP 3MP 365 Selection C1' ?></p>
 
             <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
+        </a>
+    </div>
 
-        </div>
-    </a>
 <?php else: ?>
     <p>Không có dữ liệu sản phẩm.</p>
 <?php endif; ?>

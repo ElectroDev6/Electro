@@ -12,7 +12,9 @@
                     <div class="submenu-column">
                         <h4 class="submenu-column-title">Điện Thoại</h4>
                         <ul>
-                            <li class="category-menu__submenu-item">iPhone</li>
+                            <a href="/product/iphone">
+                                <li class="category-menu__submenu-item">iPhone</li>
+                            </a>
                             <li class="category-menu__submenu-item">Samsung</li>
                             <li class="category-menu__submenu-item">OPPO</li>
                             <li class="category-menu__submenu-item">Xiaomi</li>

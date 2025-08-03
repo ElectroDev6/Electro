@@ -18,7 +18,7 @@ class DetailController
     public function showDetail($slug)
     {
         $product = $this->productService->getProductService($slug);
-        // debug tạm thờ<i></i>
+        // debug tạm thời
         // echo '<pre>';
         // print_r($product);
         // echo '</pre>';

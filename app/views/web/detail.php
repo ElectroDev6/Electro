@@ -1,11 +1,11 @@
 <?php
 
 $colorMap = [
-    'Black' => '#000000',
-    'White' => '#ffffff',
-    'Blue'  => '#007bff',
-    'Red'   => '#ff0000',
-    'Gray'  => '#666666',
+    'black' => '#000000',
+    'white' => '#ffffff',
+    'blue'  => '#007bff',
+    'red'   => '#ff0000',
+    'gray'  => '#666666',
 ];
 
 
@@ -39,8 +39,9 @@ Chi tiết sản phẩm
                 </div>
 
                 <!-- Thumbnail Images -->
-                <div class="product-detail__thumbnail-images">
-                    <?php $defaultSkuId = $product['variants'][0]['sku_id'];
+                <div class="product-detail__thumbnail-images" id="thumbnail-container">
+                    <?php
+                    $defaultSkuId = $product['variants'][0]['sku_id'];
                     $images = $product['images'][$defaultSkuId] ?? [];
                     foreach (array_slice($images, 0, 4) as $img): ?>
                         <div class="product-detail__thumbnail <?= $img['sort_order'] == 1 ? 'product-detail__thumbnail--active' : '' ?>">
@@ -144,17 +145,17 @@ Chi tiết sản phẩm
                                 $colors = [];
                                 foreach ($product['variants'] as $variant) {
                                     $attributes = $product['attributes'][$variant['sku_id']] ?? [];
-                                    $color = ucfirst($attributes[0]['option_value'] ?? 'Unknown');
-                                    $colors[$color] = $variant['sku_id'];
+                                    $color = strtolower($attributes[0]['option_value'] ?? 'unknown');
+                                    $colors[$color] = true;
                                 }
-                                foreach ($colors as $colorName => $skuId): ?>
+                                // print_r($colors);
+                                foreach (array_keys($colors) as $colorName): ?>
                                     <button
                                         class="product-detail__option-btn product-detail__color-btn <?= $i === 0 ? 'product-detail__color-btn--active' : '' ?>"
                                         style="background-color: <?= $colorMap[$colorName] ?? '#ccc' ?>"
-                                        data-sku-id="<?= $skuId ?>"
                                         data-option-id="1"
                                         data-value="<?= htmlspecialchars($colorName) ?>">
-                                        <span class="product-detail__color-name"><?= htmlspecialchars($colorName) ?></span>
+                                        <span class="product-detail__color-name"></span>
                                     </button>
                                 <?php $i++;
                                 endforeach; ?>
@@ -168,16 +169,15 @@ Chi tiết sản phẩm
                                 $capacities = [];
                                 foreach ($product['variants'] as $variant) {
                                     $attributes = $product['attributes'][$variant['sku_id']] ?? [];
-                                    $capacity = $attributes[1]['option_value'] ?? 'Unknown';
-                                    $capacities[$capacity] = $variant['sku_id'];
+                                    $capacity = strtolower($attributes[1]['option_value'] ?? 'unknown'); // Chuẩn hóa thành chữ thường
+                                    $capacities[$capacity] = true;
                                 }
-                                foreach ($capacities as $capacity => $skuId): ?>
+                                foreach (array_keys($capacities) as $capacity): ?>
                                     <button
                                         class="product-detail__option-btn product-detail__capacity-btn <?= $j === 0 ? 'product-detail__capacity-btn--active' : '' ?>"
-                                        data-sku-id="<?= $skuId ?>"
                                         data-option-id="2"
-                                        data-value="<?= htmlspecialchars($capacity) ?>">
-                                        <?= htmlspecialchars($capacity) ?>
+                                        data-value="<?= htmlspecialchars(strtolower($capacity)) ?>">
+                                        <?= htmlspecialchars(strtoupper($capacity)) ?>
                                     </button>
                                 <?php $j++;
                                 endforeach; ?>
@@ -419,27 +419,61 @@ Chi tiết sản phẩm
 </div>
 
 <script>
-    const variants = <?= json_encode(array_map(function ($variant) use ($product) {
-                            $images = array_map(function ($img) {
-                                return [
-                                    'default_url' => $img['default_url'] ? '/img/products' . $img['default_url'] : '',
-                                    'thumbnail_url' => '/img/products' . $img['thumbnail_url'],
-                                    'gallery_url' => '/img/products' . $img['gallery_url'],
-                                    'sort_order' => $img['sort_order']
-                                ];
-                            }, $product['images'][$variant['sku_id']] ?? []);
+    const variants = <?= json_encode(
+                            array_map(function ($variant) use ($product) {
+                                $skuId = $variant['sku_id'];
+                                $images = [];
 
-                            return [
-                                'sku_id' => $variant['sku_id'],
-                                'sku_code' => $variant['sku_code'],
-                                'price_original' => $variant['price_original'],
-                                'price_discount' => $variant['price_discount'],
-                                'discount_percent' => $variant['discount_percent'],
-                                'discount_amount' => $variant['discount_amount'],
-                                'stock_quantity' => $variant['stock_quantity'],
-                                'attributes' => $product['attributes'][$variant['sku_id']] ?? [],
-                                'images' => $images
-                            ];
-                        }, $product['variants'])) ?>;
+                                // Lấy màu sắc hiện tại từ attributes
+                                $currentAttributes = $product['attributes'][$skuId] ?? [];
+                                $currentColor = strtolower($currentAttributes[0]['option_value'] ?? ''); // Giả sử Color là thuộc tính đầu tiên
+
+                                if (!empty($product['images'][$skuId])) {
+                                    foreach ($product['images'][$skuId] as $img) {
+                                        $images[] = [
+                                            'default_url'   => !empty($img['default_url']) ? $img['default_url'] : '',
+                                            'thumbnail_url' => $img['thumbnail_url'],
+                                            'gallery_url'   => $img['gallery_url'],
+                                            'sort_order'    => $img['sort_order'],
+                                        ];
+                                    }
+                                } else {
+                                    // Tìm biến thể cùng màu để lấy ảnh
+                                    $matchingSku = array_filter($product['variants'], function ($v) use ($skuId, $currentColor, $product) {
+                                        $otherAttributes = $product['attributes'][$v['sku_id']] ?? [];
+                                        $otherColor = strtolower($otherAttributes[0]['option_value'] ?? '');
+                                        return $v['sku_id'] !== $skuId && $currentColor === $otherColor && !empty($product['images'][$v['sku_id']]);
+                                    });
+                                    $fallbackSkuId = !empty($matchingSku) ? reset($matchingSku)['sku_id'] : $product['variants'][0]['sku_id'];
+                                    foreach ($product['images'][$fallbackSkuId] ?? [] as $img) {
+                                        $images[] = [
+                                            'default_url'   => !empty($img['default_url']) ? $img['default_url'] : '',
+                                            'thumbnail_url' => $img['thumbnail_url'],
+                                            'gallery_url'   => $img['gallery_url'],
+                                            'sort_order'    => $img['sort_order'],
+                                        ];
+                                    }
+                                }
+
+                                $attributes = $product['attributes'][$skuId] ?? [];
+                                foreach ($attributes as &$attr) {
+                                    $attr['option_value'] = strtolower($attr['option_value']); // Chuẩn hóa thành chữ thường
+                                }
+
+                                return [
+                                    'sku_id'          => $skuId,
+                                    'sku_code'        => $variant['sku_code'],
+                                    'price_original'  => $variant['price_original'],
+                                    'price_discount'  => $variant['price_discount'],
+                                    'discount_percent' => $variant['discount_percent'],
+                                    'discount_amount' => $variant['discount_amount'],
+                                    'stock_quantity'  => $variant['stock_quantity'],
+                                    'attributes'      => $attributes,
+                                    'images'          => $images,
+                                ];
+                            }, $product['variants'])
+                        ) ?>;
 </script>
+
+
 <?php View::endSection(); ?>

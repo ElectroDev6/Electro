@@ -52,7 +52,7 @@ importJson('subcategories', ['subcategory_id', 'category_id', 'name'], 'subcateg
 
 importJson('brands', ['brand_id', 'name', 'description', 'logo_url'], 'brands.json');
 
-importJson('products', ['product_id', 'name', 'brand_id', 'subcategory_id', 'description', 'base_price', 'slug'], 'products.json');
+importJson('products', ['product_id', 'name', 'brand_id', 'subcategory_id', 'description', 'base_price', 'slug', 'is_featured'], 'products.json');
 
 importJson('product_descriptions', ['product_description_id', 'product_id', 'section_title', 'content_text', 'image_url', 'sort_order'], 'product_descriptions.json');
 

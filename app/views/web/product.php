@@ -172,6 +172,7 @@ Sản phẩm
                 </div>
             </div>
         </aside>
+
         <!-- Phần sản phẩm -->
         <main class="products" id="product-list">
             <div class="product-card">
@@ -438,7 +439,8 @@ Sản phẩm
                     <div class="product-card__color-swatch" style="background-color: #000000;"></div>
                 </div>
                 <button class="product-card__button">Xem chi tiết</button>
-            </div><div class="product-card">
+            </div>
+            <div class="product-card">
                 <!-- Icon bên phải sản phẩm -->
                 <div class="product-card__feature">
                     <div class="product-card__feature-icon">
@@ -490,7 +492,8 @@ Sản phẩm
                     <div class="product-card__color-swatch" style="background-color: #000000;"></div>
                 </div>
                 <button class="product-card__button">Xem chi tiết</button>
-            </div><div class="product-card">
+            </div>
+            <div class="product-card">
                 <!-- Icon bên phải sản phẩm -->
                 <div class="product-card__feature">
                     <div class="product-card__feature-icon">
@@ -542,7 +545,8 @@ Sản phẩm
                     <div class="product-card__color-swatch" style="background-color: #000000;"></div>
                 </div>
                 <button class="product-card__button">Xem chi tiết</button>
-            </div><div class="product-card">
+            </div>
+            <div class="product-card">
                 <!-- Icon bên phải sản phẩm -->
                 <div class="product-card__feature">
                     <div class="product-card__feature-icon">

@@ -1,7 +1,8 @@
 export default class ProductDetail {
   constructor(variants) {
+    console.log("Dữ liệu variants:", JSON.stringify(variants, null, 2));
     this.variants = variants;
-    this.selectedOptions = { 1: null, 2: null }; // 1: Color, 2: Capacity
+    this.selectedOptions = { Color: null, Capacity: null }; // Sử dụng tên thuộc tính thay vì ID
     this.selectedSkuId = variants[0]?.sku_id || null; // SKU mặc định
     this.init();
   }
@@ -21,6 +22,7 @@ export default class ProductDetail {
     this.stockDisplay = document.querySelector(".product-detail__stock");
     this.addToCartBtn = document.querySelector(".product-detail__btn-add-cart");
     this.buyNowBtn = document.querySelector(".button-buy-now");
+    this.discountBadge = document.querySelector(".product-detail__discount-badge");
   }
 
   bindEvents() {
@@ -35,15 +37,33 @@ export default class ProductDetail {
 
     this.optionButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const optionId = btn.dataset.optionId;
-        const value = btn.dataset.value;
-        const skuId = parseInt(btn.dataset.skuId);
+        const optionType = btn.dataset.optionId === "1" ? "Color" : "Capacity";
+        let value = btn.dataset.value.toLowerCase();
+        console.log("Option type:", optionType, "Value:", value);
 
-        document.querySelectorAll(`.product-detail__option-btn[data-option-id="${optionId}"]`).forEach((el) => el.classList.remove("product-detail__color-btn--active", "product-detail__capacity-btn--active"));
-        btn.classList.add(optionId === "1" ? "product-detail__color-btn--active" : "product-detail__capacity-btn--active");
+        this.selectedOptions[optionType] = value;
 
-        this.selectedOptions[optionId] = value;
-        this.selectedSkuId = skuId; // Cập nhật SKU dựa trên data-sku-id
+        document.querySelectorAll(`.product-detail__option-btn[data-option-id="${btn.dataset.optionId}"]`).forEach((el) => el.classList.remove("product-detail__color-btn--active", "product-detail__capacity-btn--active"));
+        btn.classList.add(btn.dataset.optionId === "1" ? "product-detail__color-btn--active" : "product-detail__capacity-btn--active");
+
+        const matchedVariant = this.variants.find((variant) => {
+          if (!variant.attributes) return false;
+
+          // Kiểm tra nếu user đã chọn hết tất cả attribute của variant này
+          const allAttributesSelected = variant.attributes.every((attr) => this.selectedOptions[attr.attribute_name] !== undefined);
+          if (!allAttributesSelected) return false;
+
+          // So sánh từng giá trị đã chọn
+          return variant.attributes.every((attr) => {
+            const selectedValue = this.selectedOptions[attr.attribute_name];
+            const variantValue = attr.option_value.toLowerCase();
+            return selectedValue === variantValue;
+          });
+        });
+
+        this.selectedSkuId = matchedVariant ? matchedVariant.sku_id : this.variants[0].sku_id;
+        console.log("Biến thể được chọn:", matchedVariant);
+
         this.updateVariantDisplay();
       });
     });
@@ -52,8 +72,8 @@ export default class ProductDetail {
   selectDefaultVariant() {
     const defaultVariant = this.variants[0];
     if (defaultVariant && defaultVariant.attributes) {
-      defaultVariant.attributes.forEach((attr, index) => {
-        this.selectedOptions[index === 0 ? "1" : "2"] = attr.option_value; // Cập nhật Color và Capacity
+      defaultVariant.attributes.forEach((attr) => {
+        this.selectedOptions[attr.attribute_name] = attr.option_value;
       });
     }
     this.updateVariantDisplay();
@@ -63,62 +83,69 @@ export default class ProductDetail {
     console.log("==> Bắt đầu updateVariantDisplay()");
     console.log("Lựa chọn hiện tại:", this.selectedOptions);
     console.log("SKU ID hiện tại:", this.selectedSkuId);
-    console.log("✅ Tìm kiếm variant với sku_id. Danh sách variants:", this.variants);
-    console.log(
-      "Danh sách sku_ids trong variants:",
-      this.variants.map((v) => v.sku_id)
-    );
 
     const variant = this.variants.find((v) => v.sku_id === this.selectedSkuId);
     if (!variant) {
-      console.warn("❌ Không tìm thấy variant với sku_id:", this.selectedSkuId);
+      console.error("❌ Không tìm thấy biến thể với sku_id:", this.selectedSkuId);
       return;
     }
 
-    console.log("✅ Variant tìm thấy:", variant);
-    console.log("Ảnh của variant:", variant.images); // Thêm log này
+    console.log("✅ Biến thể tìm thấy:", variant);
+    console.log("Ảnh của biến thể:", variant.images);
 
-    // ✅ Cập nhật giá
+    // Cập nhật giá
     this.priceCurrent.textContent = new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(variant.price_discount);
     this.priceOriginal.textContent = variant.discount_percent ? new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(variant.price_original) : "";
-    console.log("💰 Giá cập nhật:", variant.price_discount);
 
-    // ✅ Cập nhật tồn kho và nút hành động
+    // Cập nhật badge giảm giá
+    const discountBadge = document.querySelector(".product-detail__discount-badge");
+    if (variant.discount_percent && Number(variant.discount_percent) > 0) {
+      discountBadge.textContent = `-${variant.discount_percent}%`;
+      discountBadge.style.display = "block";
+    } else {
+      discountBadge.style.display = "none";
+    }
+
+    // Cập nhật tồn kho và nút hành động
     if (this.stockDisplay) this.stockDisplay.textContent = `Còn ${variant.stock_quantity} sản phẩm`;
     if (this.addToCartBtn) this.addToCartBtn.setAttribute("data-sku-id", variant.sku_id);
     if (this.buyNowBtn) this.buyNowBtn.setAttribute("data-sku-id", variant.sku_id);
 
-    // ✅ Cập nhật ảnh chính
-    let defaultImage = variant.images.length > 0 ? variant.images[0] : null; // Lấy ảnh đầu tiên nếu có
-    console.log("🖼️ Ảnh mặc định:", defaultImage);
-    if (defaultImage) {
+    // Cập nhật ảnh chính
+    let defaultImage = variant.images.length > 0 ? variant.images[0] : null;
+    if (defaultImage && defaultImage.gallery_url) {
       this.mainImage.src = defaultImage.gallery_url;
       console.log("🖼️ Ảnh chính cập nhật:", defaultImage.gallery_url);
     } else {
-      console.log("⚠️ Không có ảnh trong variant, giữ ảnh hiện tại:", this.mainImage.src);
-      // Giữ ảnh hiện tại nếu không có ảnh mới
+      console.warn("⚠️ Không có ảnh hợp lệ trong biến thể, giữ ảnh hiện tại:", this.mainImage.src);
     }
 
-    this.thumbnailButtons.forEach((el) => el.classList.remove("product-detail__thumbnail--active"));
-    if (defaultImage) {
-      const matchedThumbnail = Array.from(this.thumbnailButtons).find((btn) => {
-        const img = btn.querySelector("img");
-        return img && img.dataset.galleryUrl === defaultImage.gallery_url;
+    // Cập nhật các thumbnail
+    const thumbnailContainer = document.querySelector("#thumbnail-container");
+    if (thumbnailContainer) {
+      thumbnailContainer.innerHTML = ""; // Xóa các thumbnail hiện tại
+      variant.images.forEach((img, index) => {
+        const thumbnailDiv = document.createElement("div");
+        thumbnailDiv.classList.add("product-detail__thumbnail");
+        if (index === 0) thumbnailDiv.classList.add("product-detail__thumbnail--active");
+
+        const imgEl = document.createElement("img");
+        imgEl.src = img.thumbnail_url;
+        imgEl.dataset.galleryUrl = img.gallery_url;
+        imgEl.alt = "Thumbnail";
+
+        thumbnailDiv.appendChild(imgEl);
+        thumbnailContainer.appendChild(thumbnailDiv);
+
+        imgEl.addEventListener("click", () => {
+          this.mainImage.src = img.gallery_url;
+          document.querySelectorAll(".product-detail__thumbnail").forEach((el) => el.classList.remove("product-detail__thumbnail--active"));
+          thumbnailDiv.classList.add("product-detail__thumbnail--active");
+        });
       });
-      if (matchedThumbnail) matchedThumbnail.classList.add("product-detail__thumbnail--active");
+    } else {
+      console.error("❌ Không tìm thấy container thumbnail!");
     }
-
-    // ✅ Cập nhật các thumbnail
-    this.thumbnailButtons.forEach((btn, index) => {
-      const imgEl = btn.querySelector("img");
-      if (imgEl && variant.images[index]) {
-        imgEl.src = variant.images[index].thumbnail_url;
-        imgEl.dataset.galleryUrl = variant.images[index].gallery_url;
-      } else if (imgEl) {
-        imgEl.src = ""; // Xóa ảnh nếu không có dữ liệu
-        imgEl.dataset.galleryUrl = "";
-      }
-    });
 
     console.log("==> Kết thúc updateVariantDisplay()");
   }

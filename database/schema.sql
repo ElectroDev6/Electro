@@ -68,6 +68,7 @@ CREATE TABLE products (
     description TEXT,
     base_price DECIMAL(10, 2) NOT NULL CHECK (base_price >= 0),
     slug VARCHAR(255) UNIQUE,
+    is_featured BOOLEAN DEFAULT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (brand_id) REFERENCES brands(brand_id) ON DELETE

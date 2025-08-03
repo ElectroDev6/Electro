@@ -15,7 +15,7 @@ Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
 
 // Cart & Order
 Router::get('/cart', 'CartController@showCart');
-Router::get('/checkout', 'CheckoutController@showCheckoutForm');
+// Router::get('/checkout', 'CheckoutController@showCheckoutForm');
 Router::get('/thank-you', 'ThankyouController@showConfirmation');
 
 // Auth
@@ -38,3 +38,19 @@ Router::get('/privacy-policy', 'RefundController@showPrivacyPolicy');
 Router::get('/clients', 'ClientController@showClients');
 Router::get('/unboxing', 'UnboxingController@showUnboxing');
 Router::get('/repair', 'RepairController@showRepair');
+
+
+Router::post('/cart/add', 'CartController@add');
+Router::post('/cart/update-quantity', 'CartController@updateQuantity');
+Router::post('/cart/delete', 'CartController@delete');
+Router::post('/cart/select-all', 'CartController@selectAll');
+Router::post('/cart/unselect-all', 'CartController@unselectAll');
+Router::post('/cart/toggle-select', 'CartController@toggleSelect');
+Router::post('/cart/toggle-warranty', 'CartController@toggleWarranty');
+Router::post('/cart/update-color', 'CartController@updateColor');
+Router::get('/checkout', 'CheckoutController@index');
+Router::post('/checkout', 'CheckoutController@submit');
+Router::post('/checkout/vnpay', 'CheckoutController@vnpayCheckout');
+Router::post('/checkout/submit', 'CheckoutController@submit');
+Router::get('/thankyou', 'ThankyouController@index');
+Router::get('/thankyou', 'CheckoutController@thankyou');
