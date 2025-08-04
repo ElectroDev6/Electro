@@ -89,19 +89,19 @@
          <h3 class="footer__section-title">CHÍNH SÁCH</h3>
          <ul class="footer__section-list">
            <li class="footer__section-item">
-             <a href="#" class="footer__section-link">Chính sách bán hàng</a>
+             <a href="/policy-mobile" class="footer__section-link">Chính sách bán hàng</a>
            </li>
            <li class="footer__section-item">
-             <a href="#" class="footer__section-link">Chính sách đổi trả</a>
+             <a href="/refund-policy" class="footer__section-link">Chính sách đổi trả</a>
            </li>
            <li class="footer__section-item">
-             <a href="#" class="footer__section-link">Chính sách bảo mật</a>
+             <a href="/refund-policy" class="footer__section-link">Chính sách bảo mật</a>
            </li>
            <li class="footer__section-item">
-             <a href="#" class="footer__section-link">Chính sách trả góp</a>
+             <a href="" class="footer__section-link">Chính sách trả góp</a>
            </li>
            <li class="footer__section-item">
-             <a href="#" class="footer__section-link">Chính sách khui hộp sản phẩm</a>
+             <a href="/unboxing" class="footer__section-link">Chính sách khui hộp sản phẩm</a>
            </li>
            <li class="footer__section-item">
              <a href="#" class="footer__section-link">Chính sách giao hàng & lắp đặt</a>
@@ -119,7 +119,7 @@
              <a href="#" class="footer__section-link">Chính sách giao hàng & lắp đặt Điện máy, Gia dụng</a>
            </li>
            <li class="footer__section-item">
-             <a href="#" class="footer__section-link">Chính sách chương trình khách hàng thân thiết</a>
+             <a href="/clients" class="footer__section-link">Chính sách chương trình khách hàng thân thiết</a>
            </li>
          </ul>
        </div>

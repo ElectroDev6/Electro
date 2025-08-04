@@ -13,8 +13,11 @@ use Core\View; ?>
             <p class="profile__phone"><?= htmlspecialchars($user['phone_number'] ?? '') ?></p>
         </div>
         <ul class="profile__menu">
+            <li><a href="#">Tổng quan</a></li>
+            <li><a href="#">Đơn hàng của tôi</a></li>
             <li><a href="#">Thông tin bảo hành</a></li>
             <li><a href="#">Địa chỉ nhận hàng</a></li>
+            <li><a href="#">Sản phẩm yêu thích</a></li>
             <li><a href="/history">Lịch sử mua hàng</a></li>
             <li><a href="/logout">Đăng xuất</a></li>
         </ul>

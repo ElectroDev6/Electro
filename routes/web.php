@@ -34,7 +34,6 @@ Router::get('/logout', 'InforController@logout');
 Router::get('/history', 'HistoryController@showHistory');
 Router::get('/policy-mobile', 'PolicyController@showMobilePolicy');
 Router::get('/refund-policy', 'RefundController@showRefundPolicy');
-Router::get('/privacy-policy', 'RefundController@showPrivacyPolicy');
 
 // Other Features
 Router::get('/clients', 'ClientController@showClients');
@@ -56,3 +55,7 @@ Router::post('/checkout/vnpay', 'CheckoutController@vnpayCheckout');
 Router::post('/checkout/submit', 'CheckoutController@submit');
 Router::get('/thankyou', 'ThankyouController@index');
 Router::get('/thankyou', 'CheckoutController@thankyou');
+Router::get('/delivery', 'DeliveryController@delivery');
+Router::get('/customer', 'CustomerController@customer');
+Router::get('/frequently_questions', 'frequently_questionsController@frequently_questions');
+Router::get('/Introducing_shop', 'Introducing_shopController@introducing_shop');

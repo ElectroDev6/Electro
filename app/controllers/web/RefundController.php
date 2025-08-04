@@ -8,6 +8,6 @@ class RefundController
 {
     public function showRefundPolicy()
     {
-        View::render('refund');
+        View::render('policy-refund');
     }
 }

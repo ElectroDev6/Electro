@@ -8,6 +8,6 @@ class UnboxingController
 {
     public function showUnboxing()
     {
-        View::render('unboxing');
+        View::render('policy-unboxing');
     }
 }
