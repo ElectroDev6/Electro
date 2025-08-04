@@ -28,3 +28,12 @@ span {
   margin: 0 auto;
   position: relative;
 }
+
+.popup {
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-overlay {
+  z-index: 999;
+}

@@ -19,8 +19,8 @@ Router::get('/cart', 'CartController@showCart');
 Router::get('/thank-you', 'ThankyouController@showConfirmation');
 
 // Auth
-Router::get('/login', 'LoginController@showLoginForm');
-// Router::get('/register', 'AuthController@showRegisterForm');
+Router::get('/login', 'AuthController@showAuthForm');
+Router::post('/handle-auth', 'AuthController@handleAuth');
 
 // Product Detail
 Router::get('/product/:slug', 'DetailController@showDetail');
@@ -29,7 +29,8 @@ Router::post('/detail/add-to-cart', 'DetailController@addToCart');
 // Information & Pages
 Router::get('/about', 'AboutController@showAbout');
 Router::get('/contact', 'ContactController@showContact');
-Router::get('/profile', 'ProfileController@showProfile');
+Router::get('/profile', 'InforController@showProfile');
+Router::get('/logout', 'InforController@logout');
 Router::get('/history', 'HistoryController@showHistory');
 Router::get('/policy-mobile', 'PolicyController@showMobilePolicy');
 Router::get('/refund-policy', 'RefundController@showRefundPolicy');
