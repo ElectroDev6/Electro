@@ -204,6 +204,7 @@ Sản phẩm
                 </div>
             </form>
         </aside>
+
         <!-- Phần sản phẩm -->
         <main class="products" id="product-list">
             <?php foreach ($products as $product): ?>

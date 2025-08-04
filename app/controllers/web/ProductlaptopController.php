@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Controllers\Web;
 
+
 use Core\View;
+
 class ProductLaptopController
 {
     public function productLaptop()
@@ -359,3 +362,4 @@ class ProductLaptopController
         View::render('productlaptop', ['products' => $productslaptop]);
     }
 }
+

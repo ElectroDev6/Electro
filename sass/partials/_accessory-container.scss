@@ -1,0 +1,19 @@
+.accessory {
+  margin-bottom: 2rem;
+  &__header {
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 3.6rem;
+    font-weight: bold;
+    padding: 1rem 0;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+}

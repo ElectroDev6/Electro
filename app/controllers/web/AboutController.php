@@ -6,7 +6,7 @@ use Core\View;
 
 class AboutController
 {
-    public function about()
+    public function showAbout()
     {
         View::render('about');
     }

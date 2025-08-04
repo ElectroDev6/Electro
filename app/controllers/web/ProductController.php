@@ -6,7 +6,7 @@ use Core\View;
 
 class ProductController
 {
-    public function product()
+    public function showAll()
     {
         $products = [
             [
@@ -213,6 +213,7 @@ class ProductController
                 return $product['Hz'] === $Hz;
             });
         }
+
         View::render('product', ['products' => $products]);
     }
 }

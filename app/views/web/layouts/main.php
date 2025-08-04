@@ -21,5 +21,9 @@
 
     <?php Core\View::partial('partials.footer'); ?>
 </body>
+<?php Core\View::yield('page_styles'); ?>
+<script type="module" src="<?= asset("js/{$pageName}.js") ?>"></script>
+<?php
+?>
 
 </html>

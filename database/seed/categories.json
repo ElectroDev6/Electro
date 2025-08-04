@@ -1,27 +1,142 @@
 [
   {
     "category_id": 1,
-    "type": "smartphone",
-    "product_total": 10
+    "name": "Điện thoại",
+    "image": "/img/category/phone_cate.webp",
+    "description": "Các loại điện thoại di động đến từ nhiều thương hiệu nổi tiếng.",
+    "slug": "dien-thoai"
   },
   {
     "category_id": 2,
-    "type": "tablet",
-    "product_total": 8
+    "name": "Máy tính bảng",
+    "image": "/img/category/may_tinh_bang_cate.webp",
+    "description": "Máy tính bảng hỗ trợ học tập, làm việc và giải trí.",
+    "slug": "may-tinh-bang"
   },
   {
     "category_id": 3,
-    "type": "laptop",
-    "product_total": 6
+    "name": "Laptop",
+    "image": "/img/category/laptop_cate.webp",
+    "description": "Các dòng laptop từ phổ thông đến cao cấp.",
+    "slug": "laptop"
   },
   {
     "category_id": 4,
-    "type": "smartwatch",
-    "product_total": 5
+    "name": "Phụ kiện",
+    "image": "/img/category/phu_kien_cate.webp",
+    "description": "Các loại phụ kiện điện tử như ốp lưng, tai nghe, sạc.",
+    "slug": "phu-kien"
   },
   {
     "category_id": 5,
-    "type": "accessories",
-    "product_total": 15
+    "name": "Tivi",
+    "image": "/img/category/tivi_cate.webp",
+    "description": "Tivi thông minh, LED, OLED từ nhiều hãng lớn.",
+    "slug": "tivi"
+  },
+  {
+    "category_id": 6,
+    "name": "Tủ lạnh",
+    "image": "/img/category/tu_lanh_cate.webp",
+    "description": "Tủ lạnh tiết kiệm điện, đa dạng dung tích và kiểu dáng.",
+    "slug": "tu-lanh"
+  },
+  {
+    "category_id": 7,
+    "name": "Điện gia dụng",
+    "image": "/img/category/dien_gia_dung_cate.webp",
+    "description": "Các thiết bị gia dụng như máy giặt, máy hút bụi.",
+    "slug": "dien-gia-dung"
+  },
+  {
+    "category_id": 8,
+    "name": "SIM",
+    "image": "/img/category/sim_cate.webp",
+    "description": "Thẻ SIM từ các nhà mạng, hỗ trợ 4G/5G.",
+    "slug": "sim"
+  },
+  {
+    "category_id": 9,
+    "name": "Quạt điều hòa",
+    "image": "/img/category/dieu_hoa_cate.webp",
+    "description": "Quạt điều hòa làm mát hiệu quả, tiết kiệm năng lượng.",
+    "slug": "quat-dieu-hoa"
+  },
+  {
+    "category_id": 10,
+    "name": "Màn hình",
+    "image": "/img/category/phone_cate.webp",
+    "description": "Màn hình máy tính chất lượng cao cho công việc và giải trí.",
+    "slug": "man-hinh"
+  },
+  {
+    "category_id": 11,
+    "name": "Camera",
+    "image": "/img/category/may_tinh_bang_cate.webp",
+    "description": "Camera giám sát, webcam và thiết bị ghi hình.",
+    "slug": "camera"
+  },
+  {
+    "category_id": 12,
+    "name": "Thiết bị nhà bếp",
+    "image": "/img/category/laptop_cate.webp",
+    "description": "Đồ điện gia dụng như lò vi sóng, nồi chiên không dầu.",
+    "slug": "thiet-bi-nha-bep"
+  },
+  {
+    "category_id": 13,
+    "name": "Thiết bị sinh hoạt",
+    "image": "/img/category/phu_kien_cate.webp",
+    "description": "Máy lọc không khí, quạt, máy hút bụi và các thiết bị khác.",
+    "slug": "thiet-bi-sinh-hoat"
+  },
+  {
+    "category_id": 14,
+    "name": "Gaming",
+    "image": "/img/category/tivi_cate.webp",
+    "description": "Chuột, bàn phím, tai nghe và thiết bị chuyên cho game thủ.",
+    "slug": "gaming"
+  },
+  {
+    "category_id": 15,
+    "name": "Chăm sóc cá nhân",
+    "image": "/img/category/tu_lanh_cate.webp",
+    "description": "Máy sấy tóc, máy cạo râu, và các thiết bị cá nhân khác.",
+    "slug": "cham-soc-ca-nhan"
+  },
+  {
+    "category_id": 16,
+    "name": "Card đồ họa",
+    "image": "/img/category/dieu_hoa_cate.webp",
+    "description": "Card đồ họa hiệu năng cao cho chơi game và thiết kế.",
+    "slug": "card-do-hoa"
+  },
+  {
+    "category_id": 17,
+    "name": "PC & Linh kiện",
+    "image": "",
+    "description": "Máy tính để bàn và các linh kiện như CPU, RAM, SSD.",
+    "slug": "pc-linh-kien"
+  },
+  {
+    "category_id": 18,
+    "name": "Nấu Nướng",
+    "image": "",
+    "description": "Các thiết bị hỗ trợ nấu ăn như bếp điện, nồi cơm, lò nướng.",
+    "slug": "nau-nuong"
+  },
+  {
+    "category_id": 19,
+    "name": "Chuẩn Bị & Dọn Dẹp",
+    "image": "",
+    "description": "Thiết bị hỗ trợ dọn dẹp và chuẩn bị bữa ăn tiện lợi.",
+    "slug": "chuan-bi-don-dep"
+  },
+  {
+    "category_id": 20,
+    "name": "Sức Khỏe",
+    "image": "",
+    "description": "Máy đo huyết áp, nhiệt kế điện tử và thiết bị chăm sóc sức khỏe.",
+    "slug": "suc-khoe"
   }
 ]
