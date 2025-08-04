@@ -100,6 +100,45 @@ class ProductController
                 'image' => '/img/SP_DT_Oppo.png',
                 'Hz' => '60'
             ],
+            [
+                'name' => 'OPPO A5i Pro',
+                'price' => 22000000,
+                'old_price' => 25000000,
+                'rom' => ['1TB'],
+                'ram' => '16GB',
+                'brand' => 'Oppo',
+                'screen' => '6.5',
+                'battery' => 4800,
+                'os' => 'Android',
+                'image' => '/img/SP_DT_Oppo.png',
+                'Hz' => '60'
+            ],
+            [
+                'name' => 'OPPO A5i Pro',
+                'price' => 22000000,
+                'old_price' => 25000000,
+                'rom' => ['1TB'],
+                'ram' => '16GB',
+                'brand' => 'Oppo',
+                'screen' => '6.5',
+                'battery' => 4800,
+                'os' => 'Android',
+                'image' => '/img/SP_DT_Oppo.png',
+                'Hz' => '60'
+            ],
+            [
+                'name' => 'OPPO A5i Pro',
+                'price' => 22000000,
+                'old_price' => 25000000,
+                'rom' => ['1TB'],
+                'ram' => '16GB',
+                'brand' => 'Oppo',
+                'screen' => '6.5',
+                'battery' => 4800,
+                'os' => 'Android',
+                'image' => '/img/SP_DT_Oppo.png',
+                'Hz' => '60'
+            ],
 
             // Thêm sản phẩm khác tại đây
         ];
@@ -113,15 +152,21 @@ class ProductController
         $screen = $_GET['screen'] ?? 'all';
         $Hz = $_GET['hz'] ?? 'all';
 
-        if ($priceRange !== 'all') {
-            [$min, $max] = explode('-', $priceRange);
+        if (!empty($priceRanges)) {
+    $products = array_filter($products, function ($product) use ($priceRanges) {
+        foreach ($priceRanges as $range) {
+            [$min, $max] = explode('-', $range);
             $minPrice = (int) $min * 1000000;
             $maxPrice = (int) $max * 1000000;
-            // Lọc danh sách theo khoảng giá
-            $products = array_filter($products, function ($product) use ($minPrice, $maxPrice) {
-                return $product['price'] >= $minPrice && $product['price'] <= $maxPrice;
-            });
+
+            if ($product['price'] >= $minPrice && $product['price'] <= $maxPrice) {
+                return true;
+            }
         }
+        return false;
+    });
+}
+
 
         if ($brand !== 'all') {
             // Lọc danh sách brand
@@ -147,7 +192,8 @@ class ProductController
             $products = array_filter($products, function ($product) use ($minBattery, $maxBattery) {
                 return $product['battery'] >= $minBattery && $product['battery'] <= $maxBattery;
             });
-        }if ($Ram !== 'all') {
+        }
+        if ($Ram !== 'all') {
             // Lọc danh sách theo Ram
             $products = array_filter($products, function ($product) use ($Ram) {
                 return $product['ram'] === $Ram;

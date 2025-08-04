@@ -65,7 +65,7 @@ Sản phẩm
                     <!-- Các hãng khác -->
                 </div>
             </div>
-            <form method="GET" action="/product" id="priceFilter">
+            <form method="GET" action="/product" id="mainFilter">
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Mức giá</h4>
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="all"
@@ -85,10 +85,8 @@ Sản phẩm
                     </label>
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="duoi10"
                             class="filter-group__radio"> Dưới 10 triệu </label>
-
                 </div>
-            </form>
-            <form method="GET" action="/product" id="osFilter">
+            
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Hệ điều hành</h4>
                     <label class="filter-group__label">
@@ -99,8 +97,8 @@ Sản phẩm
                     </label>
 
                 </div>
-            </form>
-            <form method="GET" action="/product" id="romFilter">
+          
+            
                 <div class="filter-group filter-group--ram">
                     <h4 class="filter-group__heading">Dung lượng ROM</h4>
                     <div class="ram-options">
@@ -126,8 +124,8 @@ Sản phẩm
                         </a>
                     </div>
                 </div>
-            </form>
-            <form method="GET" action="/product" id="pinFilter">
+         
+            
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Hiệu năng và Pin</h4>
                     <label class="filter-group__label"><input type="checkbox" name="battery" value="0-3000"
@@ -139,8 +137,8 @@ Sản phẩm
                     <label class="filter-group__label"><input type="checkbox" name="battery" value="5500-6000"
                             class="filter-group__checkbox"> Trên 5000 mah </label>
                 </div>
-            </form>
-            <form method="GET" action="/product" id="ramFilter">
+            
+
                 <div class="filter-group filter-group--ram">
                     <h4 class="filter-group__heading">Dung lượng RAM</h4>
                     <div class="ram-options">
@@ -166,8 +164,8 @@ Sản phẩm
                         </a>
                     </div>
                 </div>
-            </form>
-            <form method="GET" action="/product" id="screenFilter">
+          
+            
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Kích thước màn hình</h4>
                     <label class="filter-group__label"><input type="checkbox" name="screen" value="5-6.5"
@@ -177,8 +175,8 @@ Sản phẩm
                     <label class="filter-group__label"><input type="checkbox" name="screen" value="6.8-"
                             class="filter-group__checkbox"> Trên 6.8 inch</label>
                 </div>
-            </form>
-            <form method="GET" action="/product">
+          
+            
                 <div class="filter-group filter-group--refresh-rate">
                     <h4 class="filter-group__heading">Tần số quét</h4>
                     <div class="refresh-rate-options">
@@ -270,40 +268,16 @@ Sản phẩm
 
 </body>
 <script>
-    // Tự động gửi form khi thay đổi
-    const form = document.getElementById('osFilter');//Hệ điều hành
-    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    const mainForm = document.getElementById('mainFilterForm');
+    const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
 
-    const priceForm = document.getElementById('priceFilter');//Mức giá
-    const radios = priceForm.querySelectorAll('input[type="checkbox"]');
-
-    const pinForm = document.getElementById('pinFilter');//Dung lượng pin
-    const PinForm = pinForm.querySelectorAll('input[type="checkbox"]');
-
-    const screenForm = document.getElementById('screenFilter');//Kích thước màn hình
-    const screenCheckboxes = screenForm.querySelectorAll('input[type="checkbox"]');
-
-    checkboxes.forEach(cb => {//Hệ điều hành
+    allCheckboxes.forEach(cb => {
         cb.addEventListener('change', () => {
-            form.submit();
-        });
-    });
-    radios.forEach(radio => {//Mức giá
-        radio.addEventListener('change', () => {
-            priceForm.submit();
-        });
-    });
-    PinForm.forEach(pin => {//Dung lượng pin
-        pin.addEventListener('change', () => {
-            pinForm.submit();
-        });
-    });
-    screenCheckboxes.forEach(screen => {//Kích thước màn hình
-        screen.addEventListener('change', () => {
-            screenForm.submit();
+            mainForm.submit();
         });
     });
 </script>
+
 
 
 <?php View::endSection(); ?>
