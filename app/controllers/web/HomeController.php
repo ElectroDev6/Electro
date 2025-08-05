@@ -2,252 +2,62 @@
 
 namespace App\Controllers\Web;
 
+use App\Services\ProductService;
+use App\Services\CategoryService;
 use Core\View;
 
 class HomeController
 {
+    private $productService;
+    private $categoryService;
+
+    public function __construct(\PDO $pdo)
+    {
+        $this->productService = new ProductService($pdo); // Không cần truyền CartService ở đây
+        $this->categoryService = new CategoryService($pdo);
+    }
+
     public function index()
     {
+        $iphoneProducts = $this->productService->getHomeProductsByCategoryId(1, 15);
+        $saleProducts = $this->productService->getSaleProducts(5);
+        $featuredProducts = $this->productService->getFeaturedProducts(9);
+        $categories = $this->categoryService->getAllCategories();
+
+        // Dữ liệu tạm thời cho phụ kiện và linh kiện máy tính
+        $accessories = [
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory1.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory2.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory3.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory4.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory5.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory6.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory7.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory8.png'],
+        ];
+
+        $computerAccessories = [
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer1.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer2.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer3.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer4.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer5.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer6.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer7.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer8.png'],
+        ];
+
+        $featuredProduct = $featuredProducts[0] ?? null;
+        $regularProducts = array_slice($featuredProducts, 1);
+
         View::render('home', [
-            'products' => [
-                ['id' => 1, 'name' => 'Sản phẩm A', 'price' => 1000, 'image' => '/img/product1.webp'],
-                ['id' => 2, 'name' => 'Sản phẩm B', 'price' => 1000, 'image' => '/img/product1.webp'],
-                ['id' => 3, 'name' => 'Sản phẩm C', 'price' => 1000, 'image' => '/img/product1.webp'],
-                ['id' => 4, 'name' => 'Sản phẩm D', 'price' => 1000, 'image' => '/img/product1.webp'],
-            ],
-            // Thêm mảng sản phẩm sale
-            'saleProducts' => [
-                [
-                    'id' => 11,
-                    'name' => 'Camera giám sát 3MP',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Camera giám sát IP 3MP 365 Selection C1Camera giám sát IP 3MP 365 Selection C1'
-                ],
-                [
-                    'id' => 12,
-                    'name' => 'Laptop Aspire',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Laptop giá tốt cuối tuần'
-                ],
-                [
-                    'id' => 13,
-                    'name' => 'Tủ lạnh mini',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tủ lạnh nhỏ gọn cho gia đình'
-                ],
-                [
-                    'id' => 14,
-                    'name' => 'Tivi 32 inch',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tivi giá rẻ full HD'
-                ],
-                [
-                    'id' => 15,
-                    'name' => 'Ấm siêu tốc',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Ấm đun nước inox'
-                ],
-            ],
-
-            'featuredProduct' => [
-                'image' => '/img/tv-lg-nano.webp',
-                'name' => 'LG Smart TV NanoCell 65 inch 4K 65NANO81TSA',
-                'price' => 15490000,
-            ],
-
-            'regularProducts' => [
-                [
-                    'id' => 11,
-                    'name' => 'Camera giám sát 3MP',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Camera giám sát IP 3MP 365 Selection C1Camera giám sát IP 3MP 365 Selection C1'
-                ],
-                [
-                    'id' => 12,
-                    'name' => 'Laptop Aspire',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Laptop giá tốt cuối tuần'
-                ],
-                [
-                    'id' => 13,
-                    'name' => 'Tủ lạnh mini',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tủ lạnh nhỏ gọn cho gia đình'
-                ],
-                [
-                    'id' => 14,
-                    'name' => 'Tivi 32 inch',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tivi giá rẻ full HD'
-                ],
-                [
-                    'id' => 15,
-                    'name' => 'Ấm siêu tốc',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Ấm đun nước inox'
-                ],
-                [
-                    'id' => 12,
-                    'name' => 'Laptop Aspire',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Laptop giá tốt cuối tuần'
-                ],
-                [
-                    'id' => 13,
-                    'name' => 'Tủ lạnh mini',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tủ lạnh nhỏ gọn cho gia đình'
-                ],
-                [
-                    'id' => 14,
-                    'name' => 'Tivi 32 inch',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tivi giá rẻ full HD'
-                ],
-            ],
-
-            'audioProducts' => [
-                [
-                    'id' => 20,
-                    'name' => 'Camera giám sát 3MP',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Camera giám sát IP 3MP 365 Selection C1Camera giám sát IP 3MP 365 Selection C1'
-                ],
-                [
-                    'id' => 12,
-                    'name' => 'Laptop Aspire',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Laptop giá tốt cuối tuần'
-                ],
-                [
-                    'id' => 13,
-                    'name' => 'Tủ lạnh mini',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tủ lạnh nhỏ gọn cho gia đình'
-                ],
-                [
-                    'id' => 14,
-                    'name' => 'Tivi 32 inch',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tivi giá rẻ full HD'
-                ],
-                [
-                    'id' => 14,
-                    'name' => 'Tivi 32 inch',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tivi giá rẻ full HD'
-                ],
-                [
-                    'id' => 14,
-                    'name' => 'Tivi 32 inch',
-                    'image' => '/img/product1.webp',
-                    'price' => 1390000,
-                    'old_price' => 2390000,
-                    'discount' => 64,
-                    'description' => 'Tivi giá rẻ full HD'
-                ],
-            ],
-            'accessories' => [
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ],
-                [
-                    'id' => 20,
-                    'name' => 'Phụ kiện Apple',
-                    'image' => '/img/HAVIT-TW903.webp',
-                ]
-            ]
+            'iphoneProducts' => $iphoneProducts,
+            'saleProducts' => $saleProducts,
+            'featuredProduct' => $featuredProduct,
+            'regularProducts' => $regularProducts,
+            'categories' => $categories,
+            'accessories' => $accessories,
+            'computerAccessories' => $computerAccessories
         ]);
     }
 }

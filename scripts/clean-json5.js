@@ -7,7 +7,7 @@ const rawDir = path.join(__dirname, "../database/raw");
 const seedDir = path.join(__dirname, "../database/seed");
 
 // Các tên file không có phần mở rộng
-const files = ["brands", "categories", "products", "product_descriptions", "product_options", "product_option_values", "product_variants", "product_variant_values", "variant_images"];
+const files = ["users", "user_address", "categories", "subcategories", "brands", "products", "product_descriptions", "attributes", "attribute_options", "skus", "attribute_option_sku", "variant_images", "promotions", "cart", "cart_items", "reviews", "wishlist", "coupons", "orders", "order_items", "payments", "shipping"];
 
 files.forEach((name) => {
   const srcPath = path.join(rawDir, `${name}.json5`);

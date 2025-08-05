@@ -69,118 +69,8 @@ Trang chủ
 
 <?php View::partial('partials.slider'); ?>
 <!-- Category -->
-<div class="container-main">
-    <section class="category-list category-product" style="background-color: #f3f4f6;">
-        <div class="category-list__container scroll-horizontal">
-            <div class="category-list__wrapper">
-                <div class="category-list__items">
-                    <div class="category-list__item">
-                        <p class="category-list__name">Điện thoại</p>
-                        <img src="/img/category/phone_cate.webp" alt="Điện thoại" class="category-list__image" />
-                    </div>
 
-                    <div class="category-list__item">
-                        <p class="category-list__name">Máy tính bảng</p>
-                        <img src="/img/category/may_tinh_bang_cate.webp" alt="Máy tính bảng" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Laptop</p>
-                        <img src="/img/category/laptop_cate.webp" alt="Laptop" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Phụ kiện</p>
-                        <img src="/img/category/phu_kien_cate.webp" alt="Phụ kiện" class="category-list__image" />
-                    </div>
-                </div>
-
-                <div class="category-list__items">
-                    <div class="category-list__item category-list__item--wide">
-                        <p class="category-list__name">Tivi</p>
-                        <img src="/img/category/tivi_cate.webp" alt="Tivi" class="category-list__image" />
-                    </div>
-                </div>
-
-                <div class="category-list__items">
-                    <div class="category-list__item">
-                        <p class="category-list__name">Tủ lạnh</p>
-                        <img src="/img/category/tu_lanh_cate.webp" alt="Tủ lạnh" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Điện gia dụng</p>
-                        <img src="/img/category/dien_gia_dung_cate.webp" alt="Điện gia dụng" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">SIM</p>
-                        <img src="/img/category/sim_cate.webp" alt="SIM" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Quạt điều hòa</p>
-                        <img src="/img/category/dieu_hoa_cate.webp" alt="Quạt điều hòa" class="category-list__image" />
-                    </div>
-                </div>
-            </div>
-            <!-- ẩn khúc này -->
-            <div class="category-list__wrapper">
-                <div class="category-list__items">
-                    <div class="category-list__item">
-                        <p class="category-list__name">Điện thoại</p>
-                        <img src="/img/category/phone_cate.webp" alt="Điện thoại" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Máy tính bảng</p>
-                        <img src="/img/category/may_tinh_bang_cate.webp" alt="Máy tính bảng" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Laptop</p>
-                        <img src="/img/category/laptop_cate.webp" alt="Laptop" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Phụ kiện</p>
-                        <img src="/img/category/phu_kien_cate.webp" alt="Phụ kiện" class="category-list__image" />
-                    </div>
-                </div>
-
-                <div class="category-list__items">
-                    <div class="category-list__item category-list__item--wide">
-                        <p class="category-list__name">Tivi</p>
-                        <img src="/img/category/tivi_cate.webp" alt="Tivi" class="category-list__image" />
-                    </div>
-                </div>
-
-                <div class="category-list__items">
-                    <div class="category-list__item">
-                        <p class="category-list__name">Tủ lạnh</p>
-                        <img src="/img/category/tu_lanh_cate.webp" alt="Tủ lạnh" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Điện gia dụng</p>
-                        <img src="/img/category/dien_gia_dung_cate.webp" alt="Điện gia dụng" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">SIM</p>
-                        <img src="/img/category/sim_cate.webp" alt="SIM" class="category-list__image" />
-                    </div>
-
-                    <div class="category-list__item">
-                        <p class="category-list__name">Quạt điều hòa</p>
-                        <img src="/img/category/dieu_hoa_cate.webp" alt="Quạt điều hòa" class="category-list__image" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php View::component('components.arrow-buttons') ?>
-    </section>
-</div>
+<?php View::partial('partials.category-container', ['categories' => $categories]); ?>
 
 <?php View::partial('partials.sale-container', ['saleProducts' => $saleProducts]); ?>
 <?php View::partial('partials.special-offer-container', [
@@ -188,8 +78,12 @@ Trang chủ
     'featuredProduct' => $featuredProduct,
 ]); ?>
 
-<?php View::partial('partials.product-container', ['audioProducts' => $audioProducts]); ?>
-<?php View::partial('partials.accessory-container', ['accessories' => $accessories]); ?>
+<?php View::partial('partials.product-container', ['iphoneProducts' => $iphoneProducts]); ?>
+
+<?php View::partial('partials.accessory-container', [
+    'accessories' => $accessories,
+    'computerAccessories' => $computerAccessories
+]); ?>
 
 <div class="container-main">
     <div class="tech-news">
@@ -198,49 +92,49 @@ Trang chủ
         <div class="tech-news__container">
             <div class="tech-news__main">
                 <div class="news-card news-card--large news-card--microsoft">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                    <img src="/img/news/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--office">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                    <img src="/img/news/apple.webp" alt="News image" class="news-card__image">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--windows">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                    <img src="/img/news/camera.webp" alt="News image" class="news-card__image">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--samsung">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                    <img src="/img/news/camera360.webp" alt="News image" class="news-card__image">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Samsung Galaxy Z Fold7 và Z Flip7 có thể đây là tên thị, đồng thời cải tiến nhờ vào các tính năng Galaxy AI</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--phone">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                    <img src="/img/news/dienthoai.webp" alt="News image" class="news-card__image">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--laptop">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                    <img src="/img/news/espon.webp" alt="News image" class="news-card__image">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--chip">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                    <img src="/img/news/galaxy.webp" alt="News image" class="news-card__image">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
@@ -249,63 +143,63 @@ Trang chủ
 
             <div class="tech-news__sidebar">
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/gool.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/intel.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/iphone17.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/mediah2.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/newphone.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/tainghe.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/tv.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/win11.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/bao-hiem-allianz-life-hack.webp" alt="News image" class="sidebar-item__image-s">
+                    <img src="/img/news/3tiiphone.webp" alt="News image" class="sidebar-item__image-s">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>

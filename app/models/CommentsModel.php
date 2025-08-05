@@ -187,7 +187,6 @@ public function createCommentReply($data) {
                 content,
                 likes,
                 status,
-                hidden_comment,
                 created_at
             ) VALUES (
                 :product_id,
@@ -196,7 +195,6 @@ public function createCommentReply($data) {
                 :content,
                 :likes,
                 :status,
-                :hidden_comment,
                 :created_at
             )";
             $stmt = $this->pdo->prepare($sql);
@@ -206,7 +204,6 @@ public function createCommentReply($data) {
             $stmt->bindParam(':content', $data['content'], PDO::PARAM_STR);
             $stmt->bindParam(':likes', $data['likes'], PDO::PARAM_INT);
             $stmt->bindParam(':status', $data['status'], PDO::PARAM_STR);
-            $stmt->bindParam(':hidden_comment', $data['hidden_comment'], PDO::PARAM_INT);
             $stmt->bindParam(':created_at', $data['created_at'], PDO::PARAM_STR);
             return $stmt->execute();
         } catch (PDOException $e) {

@@ -2,17 +2,9 @@
   {
     "product_description_id": 1,
     "product_id": 1,
-    "section_title": "Thiết kế và màn hình",
-    "content_text": "Thiết kế kim loại cao cấp với khung viền nhôm nguyên khối",
+    "section_title": "Thiết kế hiện đại",
+    "content_text": "iPhone 13 sở hữu thiết kế viền phẳng sang trọng, khung nhôm bền bỉ và mặt kính Ceramic Shield cứng cáp.",
     "image_url": "/img/tv-feature.webp",
     "sort_order": 1
-  },
-  {
-    "product_description_id": 2,
-    "product_id": 1,
-    "section_title": "Thiết kế và màn hình",
-    "content_text": "Màn hình OLED 6.7 inch độ phân giải 2K+ cức nét",
-    "image_url": "/img/tv-feature.webp",
-    "sort_order": 2
   }
 ]

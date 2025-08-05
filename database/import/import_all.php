@@ -40,19 +40,49 @@ function importJson($table, $columns, $jsonFile)
     }
 }
 
-<<<<<<< HEAD
-// Test với bảng categories
-importJson('categories2', ['category_id', 'name', 'product_total'], 'test.json');
-echo "✅ Quá trình test hoàn tất!\n";
-?>
-=======
-importJson('brands', ['brand_id', 'name'], 'brands.json');
-importJson('categories', ['category_id', 'name'], 'categories.json');
-importJson('products', ['product_id', 'brand_id', 'category_id', 'name'], 'products.json');
+
+
+
+importJson('categories', ['category_id', 'name', 'image', 'description', 'slug'], 'categories.json');
+
+importJson('subcategories', ['subcategory_id', 'category_id', 'name'], 'subcategories.json');
+
+importJson('brands', ['brand_id', 'name', 'description', 'logo_url'], 'brands.json');
+
+importJson('products', ['product_id', 'name', 'brand_id', 'subcategory_id', 'description', 'base_price', 'slug', 'is_featured'], 'products.json');
+
 importJson('product_descriptions', ['product_description_id', 'product_id', 'section_title', 'content_text', 'image_url', 'sort_order'], 'product_descriptions.json');
-importJson('product_options', ['option_id', 'product_id', 'name'], 'product_options.json');
-importJson('product_option_values', ['value_id', 'option_id', 'value'], 'product_option_values.json');
-importJson('product_variants', ['product_variant_id', 'product_id', 'price_original', 'price_discount', 'stock_quantity'], 'product_variants.json');
-importJson('product_variant_values', ['variant_id', 'value_id'], 'product_variant_values.json');
-importJson('variant_images', ['image_id', 'variant_id', 'default_url', 'thumbnail_url', 'gallery_url', 'is_default'], 'variant_images.json');
->>>>>>> 10e2fb04ca958735bba2c3e7c742f96ae19ae87f
+
+importJson('attributes', ['attribute_id', 'name', 'display_type'], 'attributes.json');
+
+importJson('attribute_options', ['attribute_option_id', 'attribute_id', 'value', 'display_order'], 'attribute_options.json');
+
+importJson('skus', ['sku_id', 'product_id', 'sku_code', 'price', 'stock_quantity', 'is_active'], 'skus.json');
+
+importJson('attribute_option_sku', ['sku_id', 'attribute_option_id'], 'attribute_option_sku.json');
+
+importJson('variant_images', ['image_id', 'sku_id', 'default_url', 'thumbnail_url', 'gallery_url', 'is_default', 'sort_order'], 'variant_images.json');
+
+importJson('promotions', ['promotion_id', 'sku_id', 'discount_percent', 'start_date', 'end_date'], 'promotions.json');
+
+importJson('users', ['user_id', 'name', 'email', 'password_hash', 'phone_number', 'gender', 'birth_date', 'role', 'is_active', 'avatar_url'], 'users.json');
+
+importJson('user_address', ['user_address_id', 'user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'], 'user_address.json');
+
+importJson('cart', ['cart_id', 'user_id', 'session_id'], 'cart.json');
+
+importJson('cart_items', ['cart_item_id', 'cart_id', 'sku_id', 'quantity'], 'cart_items.json');
+
+importJson('reviews', ['review_id', 'user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text', 'review_date'], 'reviews.json');
+
+importJson('wishlist', ['user_id', 'product_id', 'added_at'], 'wishlist.json');
+
+importJson('coupons', ['coupon_id', 'code', 'discount_percent', 'start_date', 'expires_at', 'max_usage', 'is_active'], 'coupons.json');
+
+importJson('orders', ['order_id', 'user_id', 'user_address_id', 'coupon_id', 'status', 'total_price'], 'orders.json');
+
+importJson('order_items', ['order_item_id', 'order_id', 'sku_id', 'quantity', 'price'], 'order_items.json');
+
+importJson('payments', ['payment_id', 'order_id', 'payment_method', 'amount', 'payment_date', 'status'], 'payments.json');
+
+importJson('shipping', ['shipping_id', 'order_id', 'carrier', 'tracking_number', 'estimated_delivery', 'status'], 'shipping.json');

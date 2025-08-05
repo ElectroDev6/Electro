@@ -12,11 +12,11 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-    <!-- <?php 
+    <?php 
         echo '<pre>';
         echo json_encode($orders, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         echo '</pre>';
-    ?> -->
+    ?>
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -161,24 +161,17 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
                   <tbody class="order-table__body">
                     <?php foreach ($orders as $order): ?>
                         <tr class="orders-table__row">
-                            <!-- Ngày tạo đơn -->
                             <td class="order-table__cell">
                                 <?= date('H:i:s d/m/Y', strtotime($order['order_date'])) ?>
                             </td>
-
-                            <!-- Mã đơn hàng -->
                             <td class="order-table__cell">
                                 <span class="order-table__order-id order-table__order-id--<?= strtolower($order['status']) ?>">
                                     <?= htmlspecialchars($order['id']) ?>
                                 </span>
                             </td>
-
-                            <!-- Tên người dùng -->
                             <td class="order-table__cell">
                                 <?= htmlspecialchars($order['user']['full_name']) ?>
                             </td>
-
-                            <!-- Trạng thái đơn hàng -->
                             <td class="order-table__cell">
                                 <?php
                                 $statusMap = [

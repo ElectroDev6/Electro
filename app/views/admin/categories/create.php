@@ -15,6 +15,7 @@ include dirname(__DIR__) . '/partials/sidebar.php';
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
+        
         <?php if (!empty($errors)): ?>
             <div class="category-detail__alert category-detail__alert--danger">
                 <ul class="category-detail__alert-list">
@@ -24,19 +25,29 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                 </ul>
             </div>
         <?php endif; ?>
+        
+        <?php if (!empty($error)): ?>
+            <div class="category-detail__alert category-detail__alert--danger">
+                <?php echo htmlspecialchars($error); ?>
+            </div>
+        <?php endif; ?>
+        
         <?php if (isset($_GET['deleted'])): ?>
             <div class="category-detail__alert category-detail__alert--success">
                 Đã xoá danh mục thành công.
             </div>
         <?php endif; ?>
+        
         <div class="category-detail__container">
-            <!-- Form chỉnh sửa -->
             <div id="edit-form-container" class="category-detail__form-container">
                 <div class="category-detail__form">
                     <h3 class="category-detail__heading">Tạo mới danh mục</h3>
                     <form action="/admin/categories/handleCreate" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                       <label class="category-detail__form-label" for="name">Tên danh mục:</label>
-                        <input class="category-detail__form-input" name="name" id="name">
+                        <!-- BỎ input hidden id vì đây là tạo mới -->
+                        
+                        <label class="category-detail__form-label" for="name">Tên danh mục:</label>
+                        <input class="category-detail__form-input" name="name" id="name" 
+                               value="<?= isset($name) ? htmlspecialchars($name) : '' ?>">
 
                         <label class="category-detail__form-label" for="image">Hình ảnh:</label>
                         <input class="category-detail__form-input" type="file" name="image" id="image" accept="image/*">
@@ -45,13 +56,14 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                         </small>
 
                         <label class="category-detail__form-label" for="content_html">Mô tả:</label>
-                        <textarea class="category-detail__form-textarea" name="content_html" id="content_html" rows="4" placeholder="Nhập mô tả cho danh mục..."></textarea>
+                        <textarea class="category-detail__form-textarea" name="content_html" id="content_html" rows="4" 
+                                  placeholder="Nhập mô tả cho danh mục..."><?= isset($content_html) ? htmlspecialchars($content_html) : '' ?></textarea>
 
                         <div style="margin-top: 20px; display: flex; align-items: center">
                             <button type="submit" class="category-detail__btn category-detail__btn--save">Thêm mới</button>
                             <a href="/admin/categories" type="button" class="category-detail__btn category-detail__btn--cancel">
-                        Hủy bỏ
-                        </a>
+                                Hủy bỏ
+                            </a>
                         </div>
                     </form>
                 </div>

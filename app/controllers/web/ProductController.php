@@ -147,7 +147,8 @@ class ProductController
             $products = array_filter($products, function ($product) use ($minBattery, $maxBattery) {
                 return $product['battery'] >= $minBattery && $product['battery'] <= $maxBattery;
             });
-        }if ($Ram !== 'all') {
+        }
+        if ($Ram !== 'all') {
             // Lọc danh sách theo Ram
             $products = array_filter($products, function ($product) use ($Ram) {
                 return $product['ram'] === $Ram;
@@ -167,6 +168,7 @@ class ProductController
                 return $product['Hz'] === $Hz;
             });
         }
+
         View::render('product', ['products' => $products]);
     }
 }

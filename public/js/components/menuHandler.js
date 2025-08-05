@@ -10,6 +10,10 @@ export default class MenuHandler {
     }
   }
 
+  isMobileView() {
+    return window.innerWidth <= 1230;
+  }
+
   showOverlay() {
     this.overlay.classList.add("active");
   }
@@ -19,6 +23,8 @@ export default class MenuHandler {
   }
 
   toggleMenu() {
+    if (!this.isMobileView()) return;
+
     this.menu.classList.toggle("active");
     if (this.menu.classList.contains("active")) {
       this.showOverlay();
@@ -29,6 +35,8 @@ export default class MenuHandler {
   }
 
   toggleSubmenu(clickedItem) {
+    if (!this.isMobileView()) return;
+
     this.submenuItems.forEach((item) => {
       if (item !== clickedItem && item.classList.contains("active")) {
         item.classList.remove("active");
@@ -46,6 +54,8 @@ export default class MenuHandler {
   }
 
   handleDocumentClick(e) {
+    if (!this.isMobileView()) return;
+
     const target = e.target;
 
     if (!this.menu.contains(target) && !this.toggleBtn.contains(target)) {
@@ -67,12 +77,14 @@ export default class MenuHandler {
 
   initEvents() {
     this.toggleBtn.addEventListener("click", (e) => {
+      if (!this.isMobileView()) return;
       e.stopPropagation();
       this.toggleMenu();
     });
 
     this.submenuItems.forEach((item) => {
       item.addEventListener("click", (e) => {
+        if (!this.isMobileView()) return;
         e.stopPropagation();
         this.toggleSubmenu(item);
       });
@@ -81,6 +93,7 @@ export default class MenuHandler {
     document.addEventListener("click", this.handleDocumentClick.bind(this));
 
     this.overlay.addEventListener("click", () => {
+      if (!this.isMobileView()) return;
       this.menu.classList.remove("active");
       this.submenuItems.forEach((item) => item.classList.remove("active"));
       this.hideOverlay();

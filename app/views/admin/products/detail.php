@@ -322,21 +322,21 @@ include dirname(__DIR__) . '/partials/header.php';
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const $getId = document.getElementById.bind(document);
-            const editToggle = $getId('editToggle');
-            const saveProduct = $getId('saveProduct');
-            const adminForm = $getId('adminForm');
-            const previewPanel = $getId('previewPanel');
-            const productForm = $getId('productForm');
-            const previewProductName = $getId('previewProductName');
-            const previewDescription = $getId('previewDescription');
-            const previewMainImage = $getId('previewMainImage');
-            const previewThumbnails = $getId('previewThumbnails');
-            const previewColorOptions = $getId('previewColorOptions');
-            const previewSizeOptions = $getId('previewSizeOptions');
-            const previewCurrentPrice = $getId('previewCurrentPrice');
-            const previewOriginalPrice = $getId('previewOriginalPrice');
-            const previewDiscount = $getId('previewDiscount');
+            const $ = document.getElementById.bind(document);
+            const editToggle = $('editToggle');
+            const saveProduct = $('saveProduct');
+            const adminForm = $('adminForm');
+            const previewPanel = $('previewPanel');
+            const productForm = $('productForm');
+            const previewProductName = $('previewProductName');
+            const previewDescription = $('previewDescription');
+            const previewMainImage = $('previewMainImage');
+            const previewThumbnails = $('previewThumbnails');
+            const previewColorOptions = $('previewColorOptions');
+            const previewSizeOptions = $('previewSizeOptions');
+            const previewCurrentPrice = $('previewCurrentPrice');
+            const previewOriginalPrice = $('previewOriginalPrice');
+            const previewDiscount = $('previewDiscount');
 
             let productData = <?= json_encode($product, JSON_UNESCAPED_SLASHES) ?>;
             let currentVariant = productData.variants[0];
@@ -466,18 +466,10 @@ include dirname(__DIR__) . '/partials/header.php';
             }
 
           function updatePreviewImages() {
-    // Đảm bảo biến cần thiết không bị undefined
     if (!previewMainImage || !previewThumbnails || !currentVariant) return;
-
-    // Nếu có màu đang chọn và có ảnh gallery
     if (currentColor && Array.isArray(currentColor.images) && currentColor.images.length > 0) {
-        // Sắp xếp ảnh theo thứ tự
         currentColor.images.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-
-        // Lấy ảnh đầu tiên
         const firstImage = currentColor.images[0];
-
-        // Cập nhật ảnh chính
         previewMainImage.src = firstImage.gallery_image_url || (currentVariant.main_media?.url || '');
         previewMainImage.alt = firstImage.gallery_image_alt || (currentVariant.main_media?.alt_text || '');
 
@@ -503,18 +495,13 @@ include dirname(__DIR__) . '/partials/header.php';
                 });
                 thumb.classList.add('product-detail__thumbnail--active');
             });
-
-            // Gắn vào khung thumbnail
             previewThumbnails.appendChild(thumb);
-
-            // Đặt trạng thái active nếu trùng ảnh chính
             if (image.gallery_image_url === previewMainImage.src) {
                 thumb.classList.add('product-detail__thumbnail--active');
             }
         });
 
     } else {
-        // Không có ảnh gallery, dùng ảnh chính mặc định
         previewMainImage.src = currentVariant.main_media?.url || '';
         previewMainImage.alt = currentVariant.main_media?.alt_text || '';
         previewThumbnails.innerHTML = '';

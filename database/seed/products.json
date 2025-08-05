@@ -1,14 +1,128 @@
 [
   {
     "product_id": 1,
+    "name": "iPhone 13 128GB",
     "brand_id": 1,
-    "category_id": 1,
-    "name": "iPhone 13"
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera kép 12MP.",
+    "base_price": 18990000,
+    "slug": "iphone-13-128gb",
+    "is_featured": true
   },
   {
     "product_id": 2,
+    "name": "iPhone 14 128GB",
     "brand_id": 1,
-    "category_id": 1,
-    "name": "iPhone 14"
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera kép 12MP.",
+    "base_price": 12990000,
+    "slug": "iphone-14-128gb",
+    "is_featured": true
+  },
+  {
+    "product_id": 3,
+    "name": "iPhone 14 Plus 128GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera kép 12MP.",
+    "base_price": 14990000,
+    "slug": "iphone-14-plus-128gb",
+    "is_featured": true
+  },
+  {
+    "product_id": 4,
+    "name": "iPhone 15 128GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera kép 12MP.",
+    "base_price": 15990000,
+    "slug": "iphone-15-128gb",
+    "is_featured": true
+  },
+  {
+    "product_id": 5,
+    "name": "iPhone 15 Pro Max 256GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 19990000,
+    "slug": "iphone-15-pro-max-256gb",
+    "is_featured": true
+  },
+  {
+    "product_id": 6,
+    "name": "iPhone 15 Plus 128GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 16990000,
+    "slug": "iphone-15-plus-128gb",
+    "is_featured": true
+  },
+  {
+    "product_id": 7,
+    "name": "iPhone 15 Pro 1TB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 21990000,
+    "slug": "iphone-15-pro-1tb",
+    "is_featured": true
+  },
+  {
+    "product_id": 8,
+    "name": "iPhone 16 Pro Max 256GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 24990000,
+    "slug": "iphone-16-pro-max-256gb",
+    "is_featured": true
+  },
+  {
+    "product_id": 9,
+    "name": "iPhone 16e 128GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 17990000,
+    "slug": "iphone-16e-128gb",
+    "is_featured": true
+  },
+  {
+    "product_id": 10,
+    "name": "iPhone 16 Pro 128GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 19990000,
+    "slug": "iphone-16-pro-128gb"
+  },
+  {
+    "product_id": 11,
+    "name": "iPhone 16 128GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 16990000,
+    "slug": "iphone-16-128gb"
+  },
+  {
+    "product_id": 12,
+    "name": "iPhone 16 Plus 128GB",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "description": "iPhone 13 với bộ nhớ trong 128GB, hiệu năng mạnh mẽ từ chip A15 Bionic, màn hình Super Retina XDR 6.1 inch, và hệ thống camera ketogenic.",
+    "base_price": 18990000,
+    "slug": "iphone-16-plus-128gb"
+  },
+  {
+    "product_id": 13,
+    "name": "PC Gaming E-Power N3050 Core i5 12400F",
+    "brand_id": 2,
+    "subcategory_id": 102,
+    "description": "PC Gaming E-Power N3050 Core i5 12400F / RAM 16GB / SSD 512GB / 650W / RTX 3050 6GB",
+    "base_price": 12990000,
+    "slug": "pc-gaming-e-power-n3050-core-i5-12400f"
   }
 ]

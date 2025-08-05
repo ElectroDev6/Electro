@@ -6,11 +6,11 @@ use Core\View;
 <div class="container-main">
     <section class="category-product">
         <div class="category-product__header">
-            <h2 class="category-product__title">Xem đã mắt, nghe đã tai</h2>
+            <h2 class="category-product__title">Thế Giới Iphone</h2>
         </div>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($iphoneProducts as $iphoneProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $iphoneProduct]); ?>
             <?php endforeach; ?>
         </div>
         <?php View::component('components.arrow-buttons') ?>
@@ -21,8 +21,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($iphoneProducts as $iphoneProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $iphoneProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>
@@ -32,8 +32,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($iphoneProducts as $iphoneProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $iphoneProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>
@@ -43,8 +43,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($iphoneProducts as $iphoneProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $iphoneProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>
@@ -54,8 +54,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($iphoneProducts as $iphoneProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $iphoneProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>
@@ -65,8 +65,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($iphoneProducts as $iphoneProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $iphoneProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>
@@ -76,8 +76,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($iphoneProducts as $iphoneProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $iphoneProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>

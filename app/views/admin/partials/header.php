@@ -33,7 +33,7 @@ ob_start();
                 </div>
                 <div class="header__user">
                     <div class="header__user-avatar">
-                        <img class="header__user-image" src="/img/avatar.png" alt="User avatar" />
+                        <img class="header__user-image" src="/img/avatar/avatar.png" alt="User avatar" />
                         <?php echo $htmlDropdownUser; ?>
                     </div>
                     <span class="header__user-name">Adminshop</span>

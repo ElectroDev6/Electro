@@ -206,6 +206,7 @@ Sản phẩm
                 </div>
             </form>
         </aside>
+
         <!-- Phần sản phẩm -->
         <main class="products" id="product-list">
             <?php foreach ($products as $product): ?>
@@ -271,34 +272,34 @@ Sản phẩm
 </body>
 <script>
     // Tự động gửi form khi thay đổi
-    const form = document.getElementById('osFilter');//Hệ điều hành
+    const form = document.getElementById('osFilter'); //Hệ điều hành
     const checkboxes = form.querySelectorAll('input[type="checkbox"]');
 
-    const priceForm = document.getElementById('priceFilter');//Mức giá
+    const priceForm = document.getElementById('priceFilter'); //Mức giá
     const radios = priceForm.querySelectorAll('input[type="checkbox"]');
 
-    const pinForm = document.getElementById('pinFilter');//Dung lượng pin
+    const pinForm = document.getElementById('pinFilter'); //Dung lượng pin
     const PinForm = pinForm.querySelectorAll('input[type="checkbox"]');
 
-    const screenForm = document.getElementById('screenFilter');//Kích thước màn hình
+    const screenForm = document.getElementById('screenFilter'); //Kích thước màn hình
     const screenCheckboxes = screenForm.querySelectorAll('input[type="checkbox"]');
 
-    checkboxes.forEach(cb => {//Hệ điều hành
+    checkboxes.forEach(cb => { //Hệ điều hành
         cb.addEventListener('change', () => {
             form.submit();
         });
     });
-    radios.forEach(radio => {//Mức giá
+    radios.forEach(radio => { //Mức giá
         radio.addEventListener('change', () => {
             priceForm.submit();
         });
     });
-    PinForm.forEach(pin => {//Dung lượng pin
+    PinForm.forEach(pin => { //Dung lượng pin
         pin.addEventListener('change', () => {
             pinForm.submit();
         });
     });
-    screenCheckboxes.forEach(screen => {//Kích thước màn hình
+    screenCheckboxes.forEach(screen => { //Kích thước màn hình
         screen.addEventListener('change', () => {
             screenForm.submit();
         });

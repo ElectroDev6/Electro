@@ -2,102 +2,74 @@
 
 namespace App\Controllers\Web;
 
+use App\Services\ProductService;
+use App\Services\CartService;
 use Core\View;
-use App\Models\DetailModel;
 
 class DetailController
 {
-    // private $detailModel;
+    private $productService;
+    private $cartService;
 
-    // public function __construct(\PDO $pdo)
-    // {
-    //     $this->detailModel = new DetailModel($pdo);
-    // }
-
-    public function showDetail($productId)
+    public function __construct(\PDO $pdo)
     {
-        View::render(
-            'detail',
-            [
-                'audioProducts' => [
-                    [
-                        'id' => 20,
-                        'name' => 'Camera giám sát 3MP',
-                        'image' => '/img/product1.webp',
-                        'price' => 1390000,
-                        'old_price' => 2390000,
-                        'discount' => 64,
-                        'description' => 'Camera giám sát IP 3MP 365 Selection C1Camera giám sát IP 3MP 365 Selection C1'
-                    ],
-                    [
-                        'id' => 12,
-                        'name' => 'Laptop Aspire',
-                        'image' => '/img/product1.webp',
-                        'price' => 1390000,
-                        'old_price' => 2390000,
-                        'discount' => 64,
-                        'description' => 'Laptop giá tốt cuối tuần'
-                    ],
-                    [
-                        'id' => 13,
-                        'name' => 'Tủ lạnh mini',
-                        'image' => '/img/product1.webp',
-                        'price' => 1390000,
-                        'old_price' => 2390000,
-                        'discount' => 64,
-                        'description' => 'Tủ lạnh nhỏ gọn cho gia đình'
-                    ],
-                    [
-                        'id' => 14,
-                        'name' => 'Tivi 32 inch',
-                        'image' => '/img/product1.webp',
-                        'price' => 1390000,
-                        'old_price' => 2390000,
-                        'discount' => 64,
-                        'description' => 'Tivi giá rẻ full HD'
-                    ],
-                    [
-                        'id' => 14,
-                        'name' => 'Tivi 32 inch',
-                        'image' => '/img/product1.webp',
-                        'price' => 1390000,
-                        'old_price' => 2390000,
-                        'discount' => 64,
-                        'description' => 'Tivi giá rẻ full HD'
-                    ],
-                    [
-                        'id' => 14,
-                        'name' => 'Tivi 32 inch',
-                        'image' => '/img/product1.webp',
-                        'price' => 1390000,
-                        'old_price' => 2390000,
-                        'discount' => 64,
-                        'description' => 'Tivi giá rẻ full HD'
-                    ],
-                ]
-            ]
-        );
+        $this->cartService = new CartService($pdo);
+        $this->productService = new ProductService($pdo, $this->cartService);
     }
 
-    // public function showDetail($productId)
-    // {
-    //     $productId = (int) $productId;
+    public function showDetail($slug)
+    {
+        $product = $this->productService->getProductService($slug);
+        View::render('detail', ['product' => $product]);
+    }
 
-    //     if ($productId <= 0) {
-    //         http_response_code(400);
-    //         echo "Invalid product ID";
-    //         return;
-    //     }
+    public function showCart()
+    {
+        $userId = $_SESSION['user_id'] ?? null;
+        $sessionId = session_id();
+        $cart = $this->cartService->getCart($userId, $sessionId);
+        View::render('cart', ['cart' => $cart]);
+    }
 
-    //     $product = $this->detailModel->getProductDetail($productId);
+    public function addToCart($input = [], $matches = [])
+    {
+        error_log("DetailController: Entered addToCart, Input: " . json_encode($input) . ", Matches: " . json_encode($matches));
 
-    //     if (!$product) {
-    //         http_response_code(404);
-    //         echo "Product not found";
-    //         return;
-    //     }
+        if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+            error_log("DetailController: Not an AJAX request");
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Yêu cầu không hợp lệ.']);
+            return;
+        }
 
-    //     // require_once BASE_PATH . '/app/views/web/detail.php';
-    //     View::render('detail', ['product' => $product]);
-    // }
+        $skuId = $input['sku_id'] ?? null;
+        $quantity = $input['quantity'] ?? 1;
+
+        error_log("DetailController: Received SKU ID: " . ($skuId ?? 'null') . ", Quantity: " . $quantity);
+
+        if (!$skuId) {
+            error_log("DetailController: SKU is invalid or null, Input: " . json_encode($input));
+            echo json_encode(['success' => false, 'message' => 'SKU không hợp lệ.']);
+            return;
+        }
+
+        $userId = $_SESSION['user_id'] ?? null;
+        $sessionId = session_id();
+        error_log("DetailController: User ID: " . ($userId ?? 'null') . ", Session ID: " . ($sessionId ?? 'null'));
+
+        $result = $this->productService->addToCart($skuId, $quantity, $userId, $sessionId);
+        error_log("DetailController: Add to cart result: " . json_encode($result));
+
+        if ($result['success']) {
+            // Trả về redirect thay vì chỉ JSON
+            header('Content-Type: application/json');
+            echo json_encode([
+                'success' => true,
+                'message' => $result['message'],
+                'redirect' => '/cart'
+            ]);
+        } else {
+            echo json_encode($result);
+        }
+    }
 }
