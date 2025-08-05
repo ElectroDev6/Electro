@@ -1,4 +1,6 @@
-<?php use Core\View; ?>
+<?php
+
+use Core\View; ?>
 
 <?php View::extend('layouts.main'); ?>
 <?php View::section('content'); ?>
@@ -13,7 +15,7 @@
             <p class="auth__subtitle">Chào mừng bạn đã trở lại.</p>
 
             <?php if (!empty($error) && isset($_POST['action']) && $_POST['action'] === 'login') : ?>
-            <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
+                <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
 
             <input name="username" type="text" placeholder="Tên đăng nhập" class="auth__input" required />
@@ -37,7 +39,7 @@
             <p class="auth__subtitle">Tạo tài khoản mới để có trải nghiệm tốt nhất.</p>
 
             <?php if (!empty($error) && isset($_POST['action']) && $_POST['action'] === 'register') : ?>
-            <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
+                <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
 
             <input name="reg_username" type="text" placeholder="Tên đăng ký" class="auth__input" required />
@@ -50,6 +52,15 @@
             </label>
             <button type="submit" class="auth__btn">Đăng ký</button>
         </form>
+
+        <!-- Popup thành công -->
+        <?php if (isset($success)): ?>
+            <div id="registerSuccessPopup" class="popup" style="display: block; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000;">
+                <p><?= htmlspecialchars($success) ?></p>
+                <button onclick="this.parentElement.style.display='none'; window.location.href='/';" class="auth__btn">Đóng và chuyển đến Home</button>
+            </div>
+            <div class="popup-overlay" style="display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999;"></div>
+        <?php endif; ?>
 
     </section>
 </main>

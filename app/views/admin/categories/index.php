@@ -12,6 +12,11 @@ include dirname(__DIR__) . '/partials/sidebar.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
+<!-- <?php  
+    echo '<pre>';
+    print_r($categories);
+    echo '</pre>';
+    ?> -->
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -30,12 +35,6 @@ include dirname(__DIR__) . '/partials/sidebar.php';
             $totalCategories = count($categories);
             $totalActive = 0;
             $totalProducts = 0;
-            foreach ($categories as $category) {
-                $totalProducts += $category['total_products'] ?? 0;
-                if (!empty($category['is_active'])) {
-                    $totalActive++;
-                }
-            }
             ?>
 
             <!-- Stats -->
@@ -67,14 +66,13 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                         <div class="categories__card-content">
                             <div class="categories__card-header">
                                 <h3 class="categories__card-title"><?php echo $category['name']; ?></h3>
-                                <span class="categories__card-id">#<?php echo $category['id']; ?></span>
+                                <span class="categories__card-id">#<?php echo $category['category_id']; ?></span>
                             </div>
                             <div class="categories__card-meta">
-                                <span class="categories__card-products">Sản phẩm: <?php echo $category['total_products']; ?></span>
                                 <div class="categories__card-actions">
-                                    <a href="/admin/categories/detail?id=<?php echo $category['id']; ?>" class="categories__action-btn categories__action-btn--view">Xem</a>
+                                    <a href="/admin/categories/detail?category_id=<?php echo $category['category_id']; ?>" class="categories__action-btn categories__action-btn--view">Xem</a>
                                     <button class="categories__action-btn categories__action-btn--delete"
-                                            onclick="confirmDelete(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')">
+                                            onclick="confirmDelete(<?= $category['category_id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')">
                                         Xoá
                                     </button>
                                 </div>

@@ -1,29 +1,49 @@
 <?php
 
-namespace App\controllers\web;
+namespace App\Controllers\Web;
 
+use App\Services\ProfileService;
+use App\Models\ProfileModel;
 use Core\View;
 
 class InforController
 {
-    public function infor()
-    {
-        $user = [
-            'name' => 'Nguyễn Khánh Duy',
-            'phone' => '0912812321',
-            'email' => 'hetoce*****@gmail.com',
-            'dob' => ['day' => '01', 'month' => '01', 'year' => '2000'],
-            'gender' => 'Nam',
-            'address' => [
-                'city' => 'TP Hồ Chí Minh',
-                'district' => 'Huyện Củ Chi',
-                'ward' => 'Xã Tân Phú Trung',
-                'street' => 'Số 2.4, ABC'
-            ],
-            'avatar' => 'https://i.pinimg.com/1200x/57/bb/f5/57bbf563a06ca4704171f1bbd0bd52b3.jpg'
-        ];
+    private $profileService;
 
-        View::render('infor', ['user' => $user]);
+    public function __construct(\PDO $pdo)
+    {
+        $profileModel = new ProfileModel($pdo);
+        $this->profileService = new ProfileService($profileModel);
     }
-    
+
+    public function showProfile()
+    {
+        $userId = $_SESSION['user_id'] ?? null;
+
+        if (!$userId) {
+            error_log("InforController: No user_id in session, redirecting to /login");
+            header('Location: /login');
+            exit;
+        }
+
+        $user = $this->profileService->getUserProfile($userId);
+
+        if (!$user) {
+            error_log("InforController: No user profile found for user_id: $userId");
+            View::render('profile', ['error' => 'Không tìm thấy thông tin người dùng']);
+            return;
+        }
+
+        error_log("InforController: Successfully loaded profile for user_id: $userId");
+        View::render('profile', ['user' => $user]);
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_unset(); // Xóa tất cả session variables
+        session_destroy(); // Hủy session
+        header('Location: /login');
+        exit;
+    }
 }

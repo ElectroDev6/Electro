@@ -46,18 +46,19 @@ class CartService
 
         $pdo = $this->cartModel->getPdo();
         $stmt = $pdo->prepare("
-        SELECT ci.*, s.price, p.name, pd.image_url
-        FROM cart_items ci
-        JOIN skus s ON ci.sku_id = s.sku_id
-        JOIN products p ON s.product_id = p.product_id
-        LEFT JOIN (
-            SELECT product_id, image_url
-            FROM product_descriptions
-            WHERE sort_order = 0
-            GROUP BY product_id
-        ) pd ON p.product_id = pd.product_id
-        WHERE ci.cart_id = :cart_id
-    ");
+    SELECT ci.*, s.price, p.name, vi.image_url
+    FROM cart_items ci
+    JOIN skus s ON ci.sku_id = s.sku_id
+    JOIN products p ON s.product_id = p.product_id
+    LEFT JOIN (
+        SELECT sku_id, MIN(thumbnail_url) AS image_url
+        FROM variant_images
+        GROUP BY sku_id
+    ) vi ON s.sku_id = vi.sku_id
+    WHERE ci.cart_id = :cart_id
+");
+
+
         $stmt->execute([':cart_id' => $cartId]);
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         error_log("CartService: Fetched items: " . print_r($items, true));

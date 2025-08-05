@@ -20,6 +20,10 @@ class DetailController
     public function showDetail($slug)
     {
         $product = $this->productService->getProductService($slug);
+        // echo "<pre>";
+        // print_r($product);
+        // echo "</pre>";
+        // exit;
         View::render('detail', ['product' => $product]);
     }
 

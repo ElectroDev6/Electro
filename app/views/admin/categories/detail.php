@@ -101,6 +101,12 @@ include dirname(__DIR__) . '/partials/sidebar.php';
     </style>
 </head>
 <body>
+    <!-- <?php
+        echo '<pre>';
+        print_r($category);
+        echo '</pre>';
+        // exit;
+        ?> -->
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -128,11 +134,11 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                     <div class="category-detail__card-header">
                         <h2 class="category-detail__card-title">Thông tin danh mục</h2>
                         <div class="category-detail__actions">
-                            <a href="/admin/categories/update?id=<?= $category['id'] ?>" class="category-detail__btn category-detail__btn--edit">Chỉnh sửa
+                            <a href="/admin/categories/update?id=<?= $category['category_id'] ?>" class="category-detail__btn category-detail__btn--edit">Chỉnh sửa
                             </a>
                             <button 
                             class="category-detail__btn category-detail__btn--delete"
-                            onclick="confirmDelete(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')"
+                            onclick="confirmDelete(<?= $category['category_id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')"
                             >
                             Xóa
                             </button>
@@ -154,7 +160,7 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                             <div class="category-detail__details">
                                 <div class="category-detail__field">
                                     <label class="category-detail__label">ID danh mục:</label>
-                                    <span class="category-detail__value category-detail__value--id">#<?php echo $category['id']; ?></span>
+                                    <span class="category-detail__value category-detail__value--id">#<?php echo $category['category_id']; ?></span>
                                 </div>
 
                                 <div class="category-detail__field">
@@ -164,35 +170,17 @@ include dirname(__DIR__) . '/partials/sidebar.php';
 
                                 <div class="category-detail__field">
                                     <label class="category-detail__label">Mô tả:</label>
-                                    <span class="category-detail__value"><?php echo $category['content_html']; ?></span>
-                                </div>
-
-                                <div class="category-detail__field">
-                                    <label class="category-detail__label">Số lượng sản phẩm:</label>
-                                    <span class="category-detail__value category-detail__value--count"><?php echo $category['total_products']; ?> sản phẩm</span>
-                                </div>
-
-                                <div class="category-detail__field">
-                                    <label class="category-detail__label">Trạng thái:</label>
-                                    <span class="category-detail__value">
-                                        <span class="category-detail__status category-detail__status--active">Đang hoạt động
-                                        </span>
-                                    </span>
+                                    <span class="category-detail__value"><?php echo $category['description']; ?></span>
                                 </div>
 
                                 <div class="category-detail__field">
                                     <label class="category-detail__label">Ngày tạo:</label>
-                                    <span class="category-detail__value"><?php echo date('d/m/Y H:i', strtotime($category['create_at'])); ?></span>
+                                    <span class="category-detail__value"><?php echo date('d/m/Y H:i', strtotime($category['created_at'])); ?></span>
                                 </div>
 
                                 <div class="category-detail__field">
                                     <label class="category-detail__label">Cập nhật lần cuối:</label>
-                                    <span class="category-detail__value"><?php echo date('d/m/Y H:i', strtotime($category['update_date'])); ?></span>
-                                </div>
-
-                                <div class="category-detail__field">
-                                    <label class="category-detail__label">Người tạo:</label>
-                                    <span class="category-detail__value">Admin</span>
+                                    <span class="category-detail__value"><?php echo date('d/m/Y H:i', strtotime($category['updated_at'])); ?></span>
                                 </div>
                             </div>
                         </div>

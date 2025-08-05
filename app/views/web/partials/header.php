@@ -84,10 +84,10 @@
                 </button>
             </div>
 
-            <form class="header__search">
+            <form class="header__search" id="searchForm">
                 <input type="text" class="header__input" id="header__input" placeholder="Tìm kiếm sản phẩm" />
                 <select class="header__select" id="header__select">
-                    <option>Tất cả các danh mục</option>
+                    <option value="">Tất cả các danh mục</option>
                     <option value="1">Danh mục 1</option>
                     <option value="2">Danh mục 2</option>
                     <option value="3">Danh mục 3</option>
@@ -100,13 +100,31 @@
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                             <g id="SVGRepo_iconCarrier">
                                 <g id="layer1">
-                                    <path d="M 7.5 0 C 3.3637867 0 0 3.3637867 0 7.5 C 0 11.636213 3.3637867 15 7.5 15 C 9.3884719 15 11.109883 14.292492 12.429688 13.136719 L 19.146484 19.853516 A 0.50083746 0.50083746 0 1 0 19.853516 19.146484 L 13.136719 12.429688 C 14.292492 11.109883 15 9.3884719 15 7.5 C 15 3.3637867 11.636213 0 7.5 0 z M 7.5 1 C 11.095773 1 14 3.9042268 14 7.5 C 14 11.095773 11.095773 14 7.5 14 C 3.9042268 14 1 11.095773 1 7.5 C 1 3.9042268 3.9042268 1 7.5 1 z " style="fill:#333e48; fill-opacity:1; stroke:none; stroke-width:0px;"></path>
+                                    <!-- SVG content here (giả sử bạn đã có) -->
                                 </g>
                             </g>
                         </svg>
                     </span>
                 </button>
             </form>
+
+            <script>
+                document.getElementById('searchForm').addEventListener('submit', function(event) {
+                    event.preventDefault(); // Ngăn chặn form submit mặc định
+                    const keyword = document.getElementById('header__input').value.trim().toLowerCase();
+                    const category = document.getElementById('header__select').value;
+
+                    if (keyword) {
+                        let url = '/products/' + encodeURIComponent(keyword);
+                        if (category) {
+                            url += '?category=' + encodeURIComponent(category);
+                        }
+                        window.location.href = url;
+                    } else {
+                        alert('Vui lòng nhập từ khóa tìm kiếm!');
+                    }
+                });
+            </script>
 
             <div class="header__search-dropdown">
                 <form class="header__search-dropdown-form">
@@ -168,16 +186,26 @@
                 </div>
                 <!-- user -->
                 <div class="header__icon">
-                    <a href="/login">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <circle cx="12" cy="6" r="4" stroke="#333e48" stroke-width="1.5"></circle>
-                                <path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="#333e48" stroke-width="1.5"></path>
-                            </g>
-                        </svg>
-                    </a>
+                    <?php
+                    if (isset($_SESSION['user_id'])) {
+                        // Đã đăng nhập, hiển thị tên hoặc avatar
+                        echo '<a href="/profile">';
+                        echo '<span>' . htmlspecialchars($_SESSION['user_name']) . '</span>'; // Hoặc thay bằng avatar nếu có
+                        echo '</a>';
+                    } else {
+                        // Chưa đăng nhập, hiển thị icon login
+                        echo '<a href="/login">';
+                        echo '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <circle cx="12" cy="6" r="4" stroke="#333e48" stroke-width="1.5"></circle>
+                    <path d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z" stroke="#333e48" stroke-width="1.5"></path>
+                </g>
+            </svg>';
+                        echo '</a>';
+                    }
+                    ?>
                 </div>
                 <!-- cart -->
                 <div class="header__icon">

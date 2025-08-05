@@ -7,43 +7,37 @@ use PDOException;
 class CategoriesModel
 {
     private $pdo;
-    private string $table = 'categories';
-
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
-
     public function fetchAllCategories()
     {
         $sql = "
             SELECT 
-                JSON_ARRAYAGG(
-                    JSON_OBJECT(
-                        'id', c.id,
-                        'name', c.name,
-                        'image', c.image,
-                        'create_at', c.create_at,
-                        'content_html', c.content_html,
-                        'total_products', c.total_products
-                    )
-                ) AS categories
-            FROM {$this->table} c
+                category_id,
+                name,
+                image,
+                description,
+                slug,
+                created_at,
+                updated_at
+            FROM categories
         ";
 
         try {
             $stmt = $this->pdo->query($sql);
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return json_decode($result['categories'] ?? '[]', true);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log('Error fetching categories: ' . $e->getMessage());
             return [];
         }
     }
 
+
     public function getCategoryById($id)
     {
-        $sql = "SELECT * FROM {$this->table} WHERE id = :id";
+        $sql = "SELECT * FROM categories WHERE category_id = :id";
         try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute(['id' => $id]);
