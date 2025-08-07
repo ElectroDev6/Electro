@@ -46,4 +46,10 @@ class ProductService
         error_log("ProductService: Add to cart result for SKU $skuId: " . json_encode($result));
         return $result;
     }
+    public function getAllProduct()
+    {
+        return $this->productModel->getAllProducts();
+    }
+    
+    
 }

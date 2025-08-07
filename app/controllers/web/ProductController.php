@@ -1,13 +1,19 @@
 <?php
 
 namespace App\Controllers\Web;
-
+use App\Services\ProductService;
 use Core\View;
 
 class ProductController
 {
+    private $productService;
+    public function __construct(\PDO $pdo)
+    {
+        $this->productService = new ProductService($pdo);
+    }
     public function showAll()
     {
+<<<<<<< Updated upstream
         $products = [
             [
                 'name' => 'iPhone 16 Pro Max',
@@ -142,7 +148,14 @@ class ProductController
 
             // Thêm sản phẩm khác tại đây
         ];
+=======
+        $products = $this->productService->getAllProduct();
+        if (!is_array($products)) {
+            $products = [];
+        }
+>>>>>>> Stashed changes
         // Lấy filter từ query string
+        // Các filter giữ nguyên như bạn đang có:
         $priceRange = $_GET['price'] ?? 'all';
         $brand = $_GET['brand'] ?? 'all';
         $osFilters = $_GET['os'] ?? [];
@@ -152,6 +165,7 @@ class ProductController
         $screen = $_GET['screen'] ?? 'all';
         $Hz = $_GET['hz'] ?? 'all';
 
+<<<<<<< Updated upstream
         if (!empty($priceRanges)) {
     $products = array_filter($products, function ($product) use ($priceRanges) {
         foreach ($priceRanges as $range) {
@@ -162,6 +176,14 @@ class ProductController
             if ($product['price'] >= $minPrice && $product['price'] <= $maxPrice) {
                 return true;
             }
+=======
+        // Filter logic giữ nguyên (chỉ thay $products là dữ liệu DB thật)
+        if ($priceRange !== 'all') {
+            [$min, $max] = explode('-', $priceRange);
+            $minPrice = (int) $min * 1000000;
+            $maxPrice = (int) $max * 1000000;
+            $products = array_filter($products, fn($p) => $p['price_discount'] >= $minPrice && $p['price_discount'] <= $maxPrice);
+>>>>>>> Stashed changes
         }
         return false;
     });
@@ -169,11 +191,11 @@ class ProductController
 
 
         if ($brand !== 'all') {
-            // Lọc danh sách brand
             $products = array_filter($products, function ($product) use ($brand) {
-                return $product['brand'] === $brand;
+                return strtolower($product['brand_name']) === strtolower($brand);
             });
         }
+
         if (!empty($osFilters)) {
             $products = array_filter($products, function ($product) use ($osFilters) {
                 return in_array($product['os'], $osFilters);

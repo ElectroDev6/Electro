@@ -1,3 +1,4 @@
+<!-- Trang sản phẩm Iphone -->
 <?php
 
 use Core\View; ?>
@@ -10,8 +11,12 @@ Sản phẩm
 <?php View::section('content'); ?>
 
 <body>
+    <?php echo '<pre>';
+    print_r($products);
+    echo '</pre>';
+    ?>
     <div class="navigation">
-        <a href="/">Trang chủ</a> / <a class="active" href="/product">Điện thoại</a>
+        <a href="/">Trang chủ</a> / <a class="active" href="/products/iphone">Điện thoại</a>
     </div>
     <div class="banner">
         <img src="/img/Slide2Laptop.jpg" alt="Banner">
@@ -47,17 +52,17 @@ Sản phẩm
             <div class="filter-group">
                 <h4 class="filter-group__heading">Hãng sản xuất</h4>
                 <div class="brand-logos" id="brand-logos">
-                    <a href="/product?brand=Oppo" class="brand-logos__link">
+                    <a href="/products/iphone?brand=Oppo" class="brand-logos__link">
                         <div class="brand-logo-card">
                             <img src="/img/Menu_DT_oppo.jpg" alt="Oppo" class="brand-logo-card__image">
                         </div>
                     </a>
-                    <a href="/product?brand=Apple" class="brand-logos__link">
+                    <a href="/products/iphone?brand=Apple" class="brand-logos__link">
                         <div class="brand-logo-card" data-brand="Apple">
                             <img src="/img/Menu_LT_apple.jpg" alt="Apple" class="brand-logo-card__image">
                         </div>
                     </a>
-                    <a href="/product?brand=Vivo" class="brand-logos__link">
+                    <a href="/products/iphone?brand=Vivo" class="brand-logos__link">
                         <div class="brand-logo-card" data-brand="Dell">
                             <img src="/img/Menu_DT_vivo.jpg" alt="Dell" class="brand-logo-card__image">
                         </div>
@@ -65,7 +70,11 @@ Sản phẩm
                     <!-- Các hãng khác -->
                 </div>
             </div>
+<<<<<<< Updated upstream
             <form method="GET" action="/product" id="mainFilter">
+=======
+            <form method="GET" action="/products/iphone" id="priceFilter">
+>>>>>>> Stashed changes
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Mức giá</h4>
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="all"
@@ -86,7 +95,12 @@ Sản phẩm
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="duoi10"
                             class="filter-group__radio"> Dưới 10 triệu </label>
                 </div>
+<<<<<<< Updated upstream
             
+=======
+
+
+>>>>>>> Stashed changes
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Hệ điều hành</h4>
                     <label class="filter-group__label">
@@ -97,36 +111,49 @@ Sản phẩm
                     </label>
 
                 </div>
+<<<<<<< Updated upstream
           
             
                 <div class="filter-group filter-group--ram">
+=======
+
+
+                <!-- <div class="filter-group filter-group--ram">
+>>>>>>> Stashed changes
                     <h4 class="filter-group__heading">Dung lượng ROM</h4>
                     <div class="ram-options">
-                        <a href="/product?rom=128GB" class="ram-options__link">
+                        <a href="/products/iphone?rom=128GB" class="ram-options__link">
                             <div class="ram-option-card">
                                 <p class="ram-option-card__text">128GB</p>
                             </div>
                         </a>
-                        <a href="/product?rom=256GB" class="ram-options__link">
+                        <a href="/products/iphone?rom=256GB" class="ram-options__link">
                             <div class="ram-option-card" data-brand="Apple">
                                 <p class="ram-option-card__text">256GB</p>
                             </div>
                         </a>
-                        <a href="/product?rom=512GB" class="ram-options__link">
+                        <a href="/products/iphone?rom=512GB" class="ram-options__link">
                             <div class="ram-option-card" data-brand="Dell">
                                 <p class="ram-option-card__text">512GB</p>
                             </div>
                         </a>
-                        <a href="/product?rom=1TB" class="ram-options__link">
+                        <a href="/products/iphone?rom=1TB" class="ram-options__link">
                             <div class="ram-option-card" data-brand="HP">
                                 <p class="ram-option-card__text">1TB</p>
                             </div>
                         </a>
                     </div>
+<<<<<<< Updated upstream
                 </div>
          
             
                 <div class="filter-group">
+=======
+                </div> -->
+
+
+                <!-- <div class="filter-group">
+>>>>>>> Stashed changes
                     <h4 class="filter-group__heading">Hiệu năng và Pin</h4>
                     <label class="filter-group__label"><input type="checkbox" name="battery" value="0-3000"
                             class="filter-group__checkbox"> Dưới 3000 mah</label>
@@ -136,6 +163,7 @@ Sản phẩm
                             class="filter-group__checkbox"> Từ 4000 - 5000 mah </label>
                     <label class="filter-group__label"><input type="checkbox" name="battery" value="5500-6000"
                             class="filter-group__checkbox"> Trên 5000 mah </label>
+<<<<<<< Updated upstream
                 </div>
             
 
@@ -166,6 +194,36 @@ Sản phẩm
                 </div>
           
             
+=======
+                </div> -->
+
+                    <!-- <div class="filter-group filter-group--ram">
+                        <h4 class="filter-group__heading">Dung lượng RAM</h4>
+                        <div class="ram-options">
+                            <a href="/products/iphone?ram=4GB" class="ram-options__link">
+                                <div class="ram-option-card">
+                                    <p class="ram-option-card__text">4GB</p>
+                                </div>
+                            </a>
+                            <a href="/products/iphone?ram=6GB" class="ram-options__link">
+                                <div class="ram-option-card" data-brand="Apple">
+                                    <p class="ram-option-card__text">6GB</p>
+                                </div>
+                            </a>
+                            <a href="/products/iphone?ram=8GB" class="ram-options__link">
+                                <div class="ram-option-card" data-brand="Dell">
+                                    <p class="ram-option-card__text">8GB</p>
+                                </div>
+                            </a>
+                            <a href="/products/iphone?ram=16GB" class="ram-options__link">
+                                <div class="ram-option-card" data-brand="HP">
+                                    <p class="ram-option-card__text">16GB</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div> -->
+
+>>>>>>> Stashed changes
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Kích thước màn hình</h4>
                     <label class="filter-group__label"><input type="checkbox" name="screen" value="5-6.5"
@@ -175,27 +233,31 @@ Sản phẩm
                     <label class="filter-group__label"><input type="checkbox" name="screen" value="6.8-"
                             class="filter-group__checkbox"> Trên 6.8 inch</label>
                 </div>
+<<<<<<< Updated upstream
           
             
+=======
+
+>>>>>>> Stashed changes
                 <div class="filter-group filter-group--refresh-rate">
                     <h4 class="filter-group__heading">Tần số quét</h4>
                     <div class="refresh-rate-options">
-                        <a href="/product?hz=60" class="refresh-rate-options__link">
+                        <a href="/products/iphone?hz=60" class="refresh-rate-options__link">
                             <div class="refresh-rate-option-card">
                                 <p class="refresh-rate-option-card__text">60Hz</p>
                             </div>
                         </a>
-                        <a href="/product?hz=90" class="refresh-rate-options__link">
+                        <a href="/products/iphone?hz=90" class="refresh-rate-options__link">
                             <div class="refresh-rate-option-card" data-brand="Apple">
                                 <p class="refresh-rate-option-card__text">90Hz</p>
                             </div>
                         </a>
-                        <a href="/product?hz=120" class="refresh-rate-options__link">
+                        <a href="/products/iphone?hz=120" class="refresh-rate-options__link">
                             <div class="refresh-rate-option-card" data-brand="Dell">
                                 <p class="refresh-rate-option-card__text">120Hz</p>
                             </div>
                         </a>
-                        <a href="/product?hz=144" class="refresh-rate-options__link">
+                        <a href="/products/iphone?hz=144" class="refresh-rate-options__link">
                             <div class="refresh-rate-option-card" data-brand="HP">
                                 <p class="refresh-rate-option-card__text">144Hz</p>
                             </div>
@@ -208,15 +270,13 @@ Sản phẩm
         <!-- Phần sản phẩm -->
         <main class="products" id="product-list">
             <?php foreach ($products as $product): ?>
-                <div class="product-card" data-brand="<?= $product['brand'] ?>" data-price="<?= $product['price'] ?>"
-                    data-rom="<?= $product['rom'] ?>" data-ram="<?= $product['ram'] ?>" data-os="<?= $product['os'] ?>"
-                    data-battery="<?= $product['battery'] ?>" data-screen="<?= $product['screen'] ?>">
+                <div class="product-card">
 
                     <div class="product-card__feature">
                         <div class="product-card__feature-icon">
                             <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
                         </div>
-                        <div class="product-card__feature-text">Màn hình cực lớn<br> <?= $product['screen'] ?> inch</div>
+                        <div class="product-card__feature-text">Màn hình cực lớn<br> inch</div>
                         <div class="product-card__feature-icon">
                             <img src="/img/DT_nutcamera.svg" alt="">
                         </div>
@@ -227,30 +287,32 @@ Sản phẩm
                         <div class="product-card__feature-text">Viền màn hình<br>siêu mỏng</div>
                     </div>
 
-                    <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>" class="product-card__image">
+                    <img src="<?= $product['default_url'] ?>" alt="<?= $product['name'] ?>" class="product-card__image">
                     <p class="product-card__promo">Trả góp 0%</p>
                     <h4 class="product-card__name"><?= $product['name']; ?></h4>
                     <div class="product-card__price-box">
-                        <span class="product-card__old-price"><?= number_format($product['old_price'], 0, ',', '.') ?>
+                        <span class="product-card__old-price"><?= number_format($product['price_original'], 0, ',', '.') ?>
                             ₫</span>
-                        <div class="product-card__new-price"><?= number_format($product['price'], 0, ',', '.') ?> ₫</div>
+                        <div class="product-card__new-price"><?= number_format($product['price_discount'], 0, ',', '.') ?> ₫
+                        </div>
                         <div class="product-card__save-price">Giảm
-                            <?= number_format($product['old_price'] - $product['price'], 0, ',', '.') ?> ₫
+                            <?= number_format($product['price_original'] - $product['price_discount'], 0, ',', '.') ?> ₫
                         </div>
                     </div>
 
-                    <div class="product-card__storage-options">
-                        <?php foreach ($product['rom'] as $romOption): ?>
-                            <div class="product-card__storage-card"><span><?= $romOption ?></span></div>
-                        <?php endforeach; ?>
+                    <!-- <div class="product-card__storage-options">
+                        <div class="product-card__storage-card">
+                            <span><?= htmlspecialchars($product['storage']) ?></span>
+                        </div>
                     </div>
+
 
                     <div class="product-card__color-options">
                         <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
                         <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
                         <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
                         <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                    </div>
+                    </div> -->
 
                     <button class="product-card__button">Xem chi tiết</button>
                 </div>
@@ -269,12 +331,31 @@ Sản phẩm
 
 </body>
 <script>
+<<<<<<< Updated upstream
     const mainForm = document.getElementById('mainFilterForm');
     const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
 
     allCheckboxes.forEach(cb => {
         cb.addEventListener('change', () => {
             mainForm.submit();
+=======
+    document.querySelectorAll('.filter input[type=checkbox], .filter input[type=radio]').forEach(el => {
+        el.addEventListener('change', () => {
+            const params = new URLSearchParams();
+
+            // Duyệt tất cả checkbox đã check
+            document.querySelectorAll('.filter input[type=checkbox]:checked').forEach(cb => {
+                params.append(cb.name, cb.value);
+            });
+
+            // Duyệt tất cả radio đã chọn
+            document.querySelectorAll('.filter input[type=radio]:checked').forEach(rd => {
+                params.set(rd.name, rd.value);
+            });
+
+            // Reload lại trang với URL chứa filter
+            window.location.search = '?' + params.toString();
+>>>>>>> Stashed changes
         });
     });
 </script>
