@@ -11,6 +11,7 @@ class CartService
     private $cartModel;
     private $productService;
 
+
     public function __construct(\PDO $pdo, ?ProductService $productService = null)
     {
         $this->cartModel = new CartModel($pdo);
@@ -94,4 +95,122 @@ class CartService
             ]
         ];
     }
+    public function removeFromCart($productId, $userId = null, $sessionId = null)
+{
+    error_log("CartService: Attempting to remove SKU $productId - UserID: " . ($userId ?? 'null') . ", SessionID: " . ($sessionId ?? 'null'));
+
+    $cartId = $this->cartModel->getCartId($userId, $sessionId);
+    if (!$cartId) {
+        return ['success' => false, 'message' => 'Không thể tìm thấy giỏ hàng.'];
+    }
+
+    $result = $this->cartModel->removeFromCartModel($cartId);
+    if ($result['success']) {
+    // Có thể lưu message vào session để hiển thị thông báo:
+    $_SESSION['success_message'] = $result['message'];
+} else {
+    $_SESSION['error_message'] = $result['message'];
+}
+}
+public function setProductQuantity($productId, $quantity, $userId = null, $sessionId = null)
+{
+    error_log("CartService: Attempting to update quantity for SKU $productId to $quantity - UserID: " . ($userId ?? 'null') . ", SessionID: " . ($sessionId ?? 'null'));
+
+    $cartId = $this->cartModel->updateProductQuantity($userId, $sessionId);
+    if (!$cartId) {
+        return ['success' => false, 'message' => 'Không tìm thấy giỏ hàng.'];
+    }
+
+    $result = $this->cartModel->updateProductQuantityByCartId($cartId, $productId, $quantity);
+
+    if ($result) {
+        $_SESSION['success_message'] = 'Cập nhật số lượng sản phẩm thành công.';
+        return ['success' => true, 'message' => 'Đã cập nhật số lượng.'];
+    } else {
+        $_SESSION['error_message'] = 'Không thể cập nhật số lượng sản phẩm.';
+        return ['success' => false, 'message' => 'Cập nhật thất bại.'];
+    }
+}
+
+public function updateProductQuantityByCartId($productId, $quantity, $userId = null, $sessionId = null)
+{
+    $cartId = $this->cartModel->updateProductQuantity($userId, $sessionId);
+    if (!$cartId) {
+        return ['success' => false, 'message' => 'Không tìm thấy giỏ hàng'];
+    }
+
+    $result = $this->cartModel->updateProductQuantityByCartId($cartId, $productId, $quantity);
+
+    if ($result) {
+        return ['success' => true, 'message' => 'Cập nhật số lượng thành công'];
+    } else {
+        return ['success' => false, 'message' => 'Cập nhật thất bại'];
+    }
+}
+
+public function setSelectAll($isSelected, $userId = null, $sessionId = null)
+{
+    $cartId = $this->cartModel->getCartIdBySessionOrUserOnly($userId, $sessionId);
+
+    if (!$cartId) {
+        return ['success' => false, 'message' => 'Không tìm thấy giỏ hàng.'];
+    }
+
+    $result = $this->cartModel->updateSelectAllProducts($cartId, $isSelected);
+
+    if ($result) {
+        return ['success' => true, 'message' => 'Cập nhật chọn tất cả thành công.'];
+    } else {
+        return ['success' => false, 'message' => 'Cập nhật thất bại.'];
+    }
+}
+    // Xử lý đổi màu sản phẩm
+    // Đổi màu sản phẩm bằng attribute_option_id (tức là ID của màu)
+public function updateColorByAttributeId(int $skuId, int $productId, ?int $userId = null, ?string $sessionId = null): array
+{
+    // B1: Kiểm tra xem skuId có phải là màu sắc hợp lệ không (attribute_id = 1)
+    if (!$this->cartModel->isValidColorAttributeOption($skuId)) {
+        return ['failed' => false, 'message' => 'Giá trị không phải màu sắc hợp lệ.'];
+    }
+
+    // B2: Cập nhật color_id = skuId (vì skuId chính là id của màu sắc trong attribute_options)
+    $colorId = $skuId;
+
+    $result = $this->cartModel->updateProductColorByAttributeId(
+        $skuId,
+        $colorId,
+        $productId,
+        $userId,
+        $sessionId
+    );
+
+    if ($result) {
+        return ['success' => true, 'message' => 'Cập nhật màu thành công.'];
+    } else {
+        return ['failed' => false, 'message' => 'Cập nhật màu thất bại.'];
+    }
+}
+
+public function getAvailableColors(): array
+{
+    return $this->cartModel->getColorOptions();
+}
+
+public function updateProductColor(int $cartItemId, int $colorId): bool
+{
+    return $this->cartModel->updateColor($cartItemId, $colorId);
+}
+
+
+
+
+
+// CartService.php
+public function getSelectedCartItems(?int $userId, ?string $sessionId): array
+{
+    return $this->cartModel->fetchSelectedItems($userId, $sessionId);
+}
+
+
+
 }

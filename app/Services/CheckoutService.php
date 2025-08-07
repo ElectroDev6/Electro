@@ -2,80 +2,80 @@
 
 namespace App\Services;
 
-use App\Services\CartService;
-use App\Models\Order;
+use App\Models\CartModel;
+use App\Models\CheckoutModel;
+use App\Services\ProductService;
 
 class CheckoutService
 {
+    protected CartModel $cartModel;
+    protected CheckoutModel $checkoutModel;
+    protected ?ProductService $productService;
     protected CartService $cartService;
 
-    public function __construct()
+    public function __construct(\PDO $pdo, ?ProductService $productService = null)
     {
-        $this->cartService = new CartService();
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->cartModel = new CartModel($pdo);
+        $this->checkoutModel = new CheckoutModel($pdo); // ✅ thiếu dòng này gây lỗi
+        $this->productService = $productService;
+        $this->cartService = new CartService($pdo, $productService);
     }
 
-    /**
-     * Tạo đơn hàng mới từ giỏ hàng
-     */
-    public function createOrder(int $userId, array $data): string
+    public function createOrder(int $userId, array $postData, array $cartItems): ?int
     {
-        $cart = $this->cartService->getCartWithSummary($userId);
+        // Kiểm tra dữ liệu đầu vào
+        $name = $postData['name'] ?? '';
+        $phone = $postData['phone'] ?? '';
+        $address = $postData['address'] ?? '';
+        $payment = $postData['payment_method'] ?? 'cod';
 
-        if (empty($cart['products'])) {
-            return '';
+        if (!$name || !$phone || !$address) {
+            return null;
         }
 
-        $orderId = uniqid('order_');
+        // Tính tổng tiền
+        $total = 0;
+        foreach ($cartItems as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
 
-        $order = [
-            'id' => $orderId,
+        // 1. Tạo đơn hàng
+        $orderId = $this->checkoutModel->createOrder([
             'user_id' => $userId,
-            'products' => $cart['products'],
-            'summary' => $cart['summary'],
-            'info' => [
-                'fullname' => $data['fullname'] ?? '',
-                'phone' => $data['phone'] ?? '',
-                'email' => $data['email'] ?? '',
-                'address' => $data['address'] ?? '',
-                'note' => $data['note'] ?? '',
-            ],
-            'payment_method' => $data['payment_method'] ?? 'cod',
-            'created_at' => date('Y-m-d H:i:s')
-        ];
+            'name' => $name,
+            'phone' => $phone,
+            'address' => $address,
+            'payment_method' => $payment,
+            'total_price' => $total
+        ]);
 
-        // Lưu vào session (giả lập DB)
-        $_SESSION['orders'][] = $order;
-
-        // Nếu có model lưu DB: Order::create($order);
+        // 2. Ghi từng sản phẩm
+        foreach ($cartItems as $item) {
+            $this->checkoutModel->addOrderItem([
+                'order_id' => $orderId,
+                'product_id' => $item['product_id'] ?? $item['id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+            ]);
+        }
 
         return $orderId;
     }
 
-    /**
-     * Lấy URL thanh toán VNPay (giả lập)
-     */
     public function createVNPayUrl(int $userId): string
     {
         $txnId = uniqid('vnp_');
         return "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_TxnRef=$txnId";
     }
 
-    /**
-     * Lấy tất cả đơn hàng trong session
-     */
     public function getOrders(): array
     {
         return $_SESSION['orders'] ?? [];
     }
 
-    /**
-     * Xóa tất cả đơn hàng
-     */
     public function clearOrders(): void
     {
         $_SESSION['orders'] = [];
     }
 }
+

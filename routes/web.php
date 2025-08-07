@@ -42,17 +42,17 @@ Router::get('/repair', 'RepairController@showRepair');
 
 
 Router::post('/cart/add', 'CartController@add');
-Router::post('/cart/update-quantity', 'CartController@updateQuantity');
+Router::post('/cart/update-quantity', 'CartController@updateProductQuantity');
 Router::post('/cart/delete', 'CartController@delete');
-Router::post('/cart/select-all', 'CartController@selectAll');
-Router::post('/cart/unselect-all', 'CartController@unselectAll');
-Router::post('/cart/toggle-select', 'CartController@toggleSelect');
-Router::post('/cart/toggle-warranty', 'CartController@toggleWarranty');
+Router::post('/cart/select-all', 'CartController@toggleselectAll');
 Router::post('/cart/update-color', 'CartController@updateColor');
 Router::get('/checkout', 'CheckoutController@index');
+
+
 Router::post('/checkout', 'CheckoutController@submit');
 Router::post('/checkout/vnpay', 'CheckoutController@vnpayCheckout');
 Router::post('/checkout/submit', 'CheckoutController@submit');
+Router::get('checkout', 'CheckoutController@confirmOder');
 Router::get('/thankyou', 'ThankyouController@index');
 Router::get('/thankyou', 'CheckoutController@thankyou');
 Router::get('/delivery', 'DeliveryController@delivery');

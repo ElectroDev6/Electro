@@ -58,15 +58,19 @@
 
                 <form method="POST" action="/cart/update-color" class="product__variant">
                   <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                  <input type="hidden" name="sku_id" value="<?= $product['attribute_option_id'] ?? '' ?>">
+
+                  
                   <label for="color-select-<?= $product['id'] ?>">Màu:</label>
-                  <select name="color" id="color-select-<?= $product['id'] ?>" onchange="this.form.submit()">
-                    <?php foreach ($product['available_colors'] as $colorOption): ?>
-                      <option value="<?= $colorOption ?>" <?= $colorOption === $product['color'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($colorOption) ?>
+                  <select name="color_id" id="color-select-<?= $product['id'] ?>" onchange="this.form.submit()">
+                    <?php foreach ($product['available_colors'] as $option): ?>
+                      <option value="<?= $option['attribute_option_id'] ?>" <?= $option['attribute_option_id'] === $product['color_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($option['value']) ?>
                       </option>
                     <?php endforeach; ?>
                   </select>
                 </form>
+
               </div>
 
               <div class="product__price">
@@ -83,6 +87,12 @@
               </div>
 
               <!-- Xoá sản phẩm -->
+               <?php if (isset($_SESSION['message'])): ?>
+                  <div class="alert">
+                      <?= $_SESSION['message'] ?>
+                  </div>
+                  <?php unset($_SESSION['message']); ?>
+              <?php endif; ?>
               <form method="POST" action="/cart/delete" onsubmit="return confirm('Bạn có chắc muốn xoá sản phẩm này?');" style="display:inline;">
                 <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                 <button type="submit" class="product__delete-btn">🗑</button>
@@ -109,7 +119,8 @@
           <div class="promo">
             <div class="promo__icon">🎁</div>
             <span class="promo__text">Voucher</span>
-            <button>Xem ngay</button>
+            <input type="nhập voucher" name=" " value="">
+            <button>Xác nhận voucher</button>
           </div>
         </div>
 
