@@ -1,63 +1,28 @@
-// /admin/js/common/pagination.js
+const paginationButtons = document.querySelectorAll(".pagination__btn");
+// Initialize pagination state
+function updatePagination() {
+   const currentPage =
+      new URLSearchParams(window.location.search).get("page") || "1";
+   paginationButtons.forEach((btn) => {
+      btn.classList.remove("pagination__btn--active");
+      // Only apply active class to the page number button matching the current page
+      if (
+         btn.classList.contains("page-btn") &&
+         btn.dataset.page === currentPage
+      ) {
+         btn.classList.add("pagination__btn--active");
+      }
+   });
+}
+// Prevent clicks on disabled buttons
+paginationButtons.forEach((btn) => {
+   btn.addEventListener("click", (e) => {
+      if (btn.classList.contains("pagination__btn--disabled")) {
+         e.preventDefault();
+      }
+   });
+});
+// Run on page load
 document.addEventListener("DOMContentLoaded", () => {
-   function initializePagination(containerSelector, itemsPerPage = 8) {
-      console.log(
-         document.querySelectorAll('[data-target="pagination-container"]')
-      );
-      const url = window.location.pathname; // Ví dụ: "/admin/orders/edit/123"
-      const lastPart = url.substring(url.lastIndexOf("/") + 1);
-      const container = document.querySelector(containerSelector);
-      if (!container) return;
-      let currentPage = 1;
-      const rows = container.querySelectorAll(`.${lastPart}-table__row`);
-      const pagination = container.querySelector(".pagination");
-      const paginationInfo = pagination.querySelector(".pagination__info");
-      const paginationControls = pagination.querySelector(
-         ".pagination__controls"
-      );
-
-      function renderItems() {
-         const start = (currentPage - 1) * itemsPerPage;
-         const end = start + itemsPerPage;
-
-         rows.forEach((row, index) => {
-            row.style.display = index >= start && index < end ? "" : "none";
-         });
-      }
-
-      function updatePagination() {
-         const totalPages = Math.ceil(rows.length / itemsPerPage);
-         paginationControls.innerHTML = "";
-         for (let i = 1; i <= totalPages; i++) {
-            const btn = document.createElement("button");
-            btn.className = `pagination__btn ${
-               i === currentPage ? "pagination__btn--active" : ""
-            }`;
-            btn.textContent = i;
-            btn.addEventListener("click", () => {
-               currentPage = i;
-               renderItems();
-               updatePagination();
-            });
-            paginationControls.appendChild(btn);
-         }
-         paginationInfo.textContent = `Hiển thị ${
-            (currentPage - 1) * itemsPerPage + 1
-         }-${Math.min(currentPage * itemsPerPage, rows.length)} trong số ${
-            rows.length
-         } mục`;
-      }
-
-      // Khởi tạo
-      renderItems();
-      updatePagination();
-   }
-   document
-      .querySelectorAll('[data-target="pagination-container"]')
-      .forEach((container) => {
-         initializePagination(
-            `.${container.className.split(" ").join(".")}`,
-            8
-         );
-      });
+   updatePagination();
 });

@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin\Products;
 
-use App\Models\ProductsModel;
+use App\Models\admin\ProductsModel;
 use Container;
 
 class DeleteProductController

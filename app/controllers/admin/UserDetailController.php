@@ -4,7 +4,7 @@ use App\Models\UsersModel;
 use Container;
 use Core\View;
     class UserDetailController {
-        public function index() {
+    public function index() {
             $pdo = Container::get('pdo');
             $usersModel = new UsersModel($pdo);
             $users = $usersModel->getAllUsers();

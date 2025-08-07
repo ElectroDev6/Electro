@@ -1,8 +1,8 @@
 <?php
 namespace App\Controllers\Admin\Products;
 
-use App\Models\ProductsModel;
-use App\Models\CategoriesModel;
+use App\Models\admin\ProductsModel;
+use App\Models\admin\CategoriesModel;
 use Core\View;
 use Container;
 

@@ -12,11 +12,11 @@ include dirname(__DIR__) . '/partials/pagination.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-    <!-- <?php
+    <?php
         echo '<pre>';
-        print_r($categories);
+        print_r($products);
         echo '</pre>';
-    ?> -->
+        ?>
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -38,9 +38,9 @@ include dirname(__DIR__) . '/partials/pagination.php';
                     <select class="product-filter__select" id="categoryFilter">
                         <option value="">Tất cả danh mục</option>
                         <?php
-                        $uniqueCategories = array_unique(array_column($getProducts, 'Danh mục'));
-                        foreach ($categories as $category) {
-                            echo "<option value='" . htmlspecialchars($category['name']) . "'>" . htmlspecialchars($category['name']) . "</option>";
+                        $uniqueCategories = array_unique(array_column($products, 'category_name'));
+                        foreach ($uniqueCategories as $category) {
+                            echo "<option value='" . htmlspecialchars($category) . "'>" . htmlspecialchars($category) . "</option>";
                         }
                         ?>
                     </select>
@@ -51,10 +51,8 @@ include dirname(__DIR__) . '/partials/pagination.php';
                     <select class="product-filter__select" id="brandFilter">
                         <option value="">Tất cả thương hiệu</option>
                         <?php
-                        $brands = array_unique(array_map(function($product) {
-                            return 'Apple'; // Giả định thương hiệu là Apple
-                        }, $getProducts));
-                        foreach ($brands as $brand) {
+                        $uniqueBrands = array_unique(array_column($products, 'brand_name'));
+                        foreach ($uniqueBrands as $brand) {
                             if (!empty($brand)) {
                                 echo "<option value='" . htmlspecialchars($brand) . "'>" . htmlspecialchars($brand) . "</option>";
                             }
@@ -80,17 +78,17 @@ include dirname(__DIR__) . '/partials/pagination.php';
                         <div class="product-table__cell product-table__cell--header">Số lượng</div>
                         <div class="product-table__cell product-table__cell--header">Action</div>
                     </div>
-                    <?php foreach ($getProducts as $product): ?>
+                    <?php foreach ($products as $product): ?>
                         <?php
-                            $productName = htmlspecialchars($product['Tên']);
-                            $category = htmlspecialchars($product['Danh mục']);
-                            $price = htmlspecialchars($product['Giá']);
-                            $stock = htmlspecialchars($product['Số lượng']);
-                            $mediaUrl = htmlspecialchars($product['media_url'] ?? '/img/default.png');
-                            $mediaAlt = htmlspecialchars($product['media_alt'] ?? $productName);
+                            $productName = htmlspecialchars($product['product_name']);
+                            $category = htmlspecialchars($product['category_name']);
+                            $price = number_format($product['sku_price'], 0, ',', '.') . ' VNĐ'; // Định dạng giá tiền
+                            $stock = htmlspecialchars($product['stock_quantity']);
+                            $mediaUrl = htmlspecialchars($product['default_url'] ?? '/img/default.png'); // Sử dụng default_url làm media_url
+                            $mediaAlt = htmlspecialchars($product['product_name']);
                             $productId = htmlspecialchars($product['product_id']);
                         ?>
-                        <div class="products-table__row productRows" data-product-id="<?= $productId ?>" data-brand="Apple">
+                        <div class="products-table__row productRows" data-product-id="<?= $productId ?>" data-brand="<?= htmlspecialchars($product['brand_name']) ?>">
                             <div class="product-table__cell product-table__cell--name">
                                 <img src="<?= $mediaUrl ?>" alt="<?= $mediaAlt ?>" class="product-table__image">
                                 <span class="product-table__name"><?= $productName ?></span>

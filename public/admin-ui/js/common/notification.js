@@ -1,77 +1,33 @@
-// Notification System
-const NotificationSystem = {
-   container: null,
-   notifications: [],
-   init() {
-      // Create container if not exists
-      if (!this.container) {
-         this.container = document.createElement("div");
-         this.container.id = "notification-container";
-         document.body.appendChild(this.container);
-      }
-   },
+const notification = document.getElementById("success-notification");
+const successMessage = document.getElementById("success-message");
 
-   show(type, message, duration = 4000) {
-      this.init();
+// Show notification if success message exists
+document.addEventListener("DOMContentLoaded", () => {
+   if (successMessage) {
+      if (successMessage.textContent.trim() !== "") {
+         notification.classList.add("show");
+         console.log(
+            "Notification shown with message:",
+            successMessage.textContent
+         );
 
-      const id = Date.now();
-      const notification = this.createElement(id, type, message);
-
-      this.container.appendChild(notification);
-      this.notifications.push({ id, element: notification });
-
-      // Show animation
-      setTimeout(() => {
-         notification.classList.add("notification--show");
-      }, 50);
-
-      // Auto hide
-      if (duration > 0) {
          setTimeout(() => {
-            this.hide(id);
-         }, duration);
+            notification.classList.remove("show");
+            // Remove success query parameter from URL
+            const url = new URL(window.location);
+            url.searchParams.delete("success");
+            window.history.replaceState({}, document.title, url);
+         }, 3000);
       }
+   }
+});
 
-      return id;
-   },
-
-   hide(id) {
-      const notificationData = this.notifications.find((n) => n.id === id);
-      if (!notificationData) return;
-
-      const { element } = notificationData;
-      element.classList.remove("notification--show");
-      element.classList.add("notification--hide");
-
-      setTimeout(() => {
-         if (element.parentNode) {
-            element.parentNode.removeChild(element);
-         }
-         this.notifications = this.notifications.filter((n) => n.id !== id);
-      }, 300);
-   },
-
-   createElement(id, type, message) {
-      const notification = document.createElement("div");
-      notification.className = `notification notification--${type}`;
-      notification.setAttribute("data-id", id);
-
-      notification.innerHTML = `
-            <div class="notification__message" style="font-size: 12px; margin: 0;">${message}</div>
-            <button class="notification__close" style="font-size: 10px; padding: 2px 5px; margin: 0; border: none; background: none; cursor: pointer;" onclick="NotificationSystem.hide(${id})">
-               ×
-            </button>
-         `;
-      return notification;
-   },
-
-   success(message, duration) {
-      return this.show("success", message, duration);
-   },
-
-   error(message, duration) {
-      return this.show("error", message, duration);
-   },
-};
-
-export default NotificationSystem;
+// Hide notification on click
+if (notification) {
+   notification.addEventListener("click", () => {
+      notification.classList.remove("show");
+      const url = new URL(window.location);
+      url.searchParams.delete("success");
+      window.history.replaceState({}, document.title, url);
+   });
+}

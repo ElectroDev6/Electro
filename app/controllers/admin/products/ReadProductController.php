@@ -2,8 +2,8 @@
 
 namespace App\Controllers\Admin\Products;
 
-use App\Models\ProductsModel;
-use App\Models\CategoriesModel;
+use App\Models\admin\ProductsModel;
+use App\Models\admin\CategoriesModel;
 use Core\View;
 use Container;
 
@@ -13,15 +13,10 @@ class ReadProductController
     {
         $pdo = Container::get('pdo');
         $productModel = new ProductsModel($pdo);
-        $categoriesModel = new CategoriesModel($pdo);
-        $products = $productModel->getAllProducts();
-        $categories = $categoriesModel->fetchAllCategories();
-        $colors = $productModel->getAllColors();
+        $products = $productModel->fetchAllProducts();
 
         View::render('products/index', [
-            'getProducts' => $products,
-            'categories' => $categories,
-            'colors' => $colors
+            'products' => $products
         ]);
     }
 

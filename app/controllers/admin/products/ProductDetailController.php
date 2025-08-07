@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Admin\Products;
 // namespace trong PHP dùng để định danh (xác định) vị trí và tên đầy đủ của class
-use App\Models\ProductsModel;
+use App\Models\admin\ProductsModel;
 use Core\View;
 use Container;
 
