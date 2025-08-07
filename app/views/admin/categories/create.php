@@ -15,50 +15,47 @@ include dirname(__DIR__) . '/partials/sidebar.php';
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
-        
-        <?php if (!empty($errors)): ?>
-            <div class="category-detail__alert category-detail__alert--danger">
-                <ul class="category-detail__alert-list">
-                    <?php foreach ($errors as $err): ?>
-                        <li class="category-detail__alert-item"><?php echo htmlspecialchars($err); ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
-        
-        <?php if (!empty($error)): ?>
-            <div class="category-detail__alert category-detail__alert--danger">
-                <?php echo htmlspecialchars($error); ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if (isset($_GET['deleted'])): ?>
-            <div class="category-detail__alert category-detail__alert--success">
-                Đã xoá danh mục thành công.
-            </div>
-        <?php endif; ?>
-        
         <div class="category-detail__container">
+            <?php if (!empty($error)): ?>
+                <div class="category-detail__alert category-detail__alert--danger">
+                    <p><?= htmlspecialchars($error) ?></p>
+                </div>
+            <?php endif; ?>
             <div id="edit-form-container" class="category-detail__form-container">
                 <div class="category-detail__form">
                     <h3 class="category-detail__heading">Tạo mới danh mục</h3>
                     <form action="/admin/categories/handleCreate" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                        <!-- BỎ input hidden id vì đây là tạo mới -->
-                        
                         <label class="category-detail__form-label" for="name">Tên danh mục:</label>
                         <input class="category-detail__form-input" name="name" id="name" 
-                               value="<?= isset($name) ? htmlspecialchars($name) : '' ?>">
+                            value="<?= htmlspecialchars($name ?? '') ?>" 
+                            maxlength="255">
+                        <?php if (isset($errors['name'])): ?>
+                            <span class="category-detail--error"><?= htmlspecialchars($errors['name']) ?></span>
+                        <?php endif; ?>
 
                         <label class="category-detail__form-label" for="image">Hình ảnh:</label>
-                        <input class="category-detail__form-input" type="file" name="image" id="image" accept="image/*">
+                        <input class="category-detail__form-input" type="file" name="image" id="image" accept="image/png, image/jpeg, image/gif, image/webp">
                         <small class="category-detail__note">
-                            Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Tối đa 2MB.
+                            Chỉ chấp nhận file ảnh (JPG, PNG, GIF, WEBP). Tối đa 2MB.
                         </small>
+                        <?php if (isset($error) && strpos($error, 'image') !== false): ?>
+                            <span class="category-detail--error"><?= htmlspecialchars($error) ?></span>
+                        <?php endif; ?>
 
-                        <label class="category-detail__form-label" for="content_html">Mô tả:</label>
-                        <textarea class="category-detail__form-textarea" name="content_html" id="content_html" rows="4" 
-                                  placeholder="Nhập mô tả cho danh mục..."><?= isset($content_html) ? htmlspecialchars($content_html) : '' ?></textarea>
-
+                        <label class="category-detail__form-label" for="description">Mô tả:</label>
+                        <textarea class="category-detail__form-textarea" name="description" id="description" rows="4" 
+                            placeholder="Nhập mô tả cho danh mục..." maxlength="1000"><?= htmlspecialchars($description ?? '') ?></textarea>
+                        <?php if (isset($errors['description'])): ?>
+                            <span class="category-detail--error"><?= htmlspecialchars($errors['description']) ?></span>
+                        <?php endif; ?>
+                        <label class="category-detail__form-label" for="slug">Slug:</label>
+                        <input class="category-detail__form-textarea" name="slug" id="slug"
+                            placeholder="Nhập slug cho danh mục..." 
+                            value="<?= htmlspecialchars($slug ?? '') ?>" 
+                            maxlength="255" title="Chỉ bao gồm chữ thường, số và dấu gạch ngang">
+                            <?php if (isset($errors['slug'])): ?>
+                                <span class="category-detail--error"><?= htmlspecialchars($errors['slug']) ?></span>
+                            <?php endif; ?>
                         <div style="margin-top: 20px; display: flex; align-items: center">
                             <button type="submit" class="category-detail__btn category-detail__btn--save">Thêm mới</button>
                             <a href="/admin/categories" type="button" class="category-detail__btn category-detail__btn--cancel">

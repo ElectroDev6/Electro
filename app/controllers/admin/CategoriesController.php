@@ -48,6 +48,5 @@ class CategoriesController
     public function delete()
     {
         DeleteCategoryController::handle();
-        
     }
 }

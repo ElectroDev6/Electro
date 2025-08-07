@@ -70,7 +70,7 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                             </div>
                             <div class="categories__card-meta">
                                 <div class="categories__card-actions">
-                                    <a href="/admin/categories/detail?category_id=<?php echo $category['category_id']; ?>" class="categories__action-btn categories__action-btn--view">Xem</a>
+                                    <a href="/admin/categories/detail?id=<?php echo $category['category_id']; ?>" class="categories__action-btn categories__action-btn--view">Xem</a>
                                     <button class="categories__action-btn categories__action-btn--delete"
                                             onclick="confirmDelete(<?= $category['category_id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')">
                                         Xoá
@@ -83,6 +83,6 @@ include dirname(__DIR__) . '/partials/sidebar.php';
             </section>
         </div>
     </main>
-    <script src="/admin-ui/js/pages/category-detail.js"></script>
+    <script type="module" src="/admin-ui/js/pages/category-detail.js"></script>
 </body>
 </html>

@@ -9,10 +9,22 @@ Router::get('/admin/index', 'DashboardController@index');
 Router::get('/admin/categories', 'CategoriesController@index'); 
 Router::get('/admin/categories/create', 'CategoriesController@create'); 
 Router::post('/admin/categories/handleCreate', 'CategoriesController@handleCreate');
+Router::post('/admin/categories/delete', 'CategoriesController@delete');
 Router::get('/admin/categories/detail', 'CategoriesController@detail');
 Router::get('/admin/categories/update', 'CategoriesController@update'); 
 Router::post('/admin/categories/update', 'CategoriesController@handleUpdate'); 
-Router::get('/admin/categories/delete', 'CategoriesController@delete');
+
+
+
+Router::get('/admin/users', 'UsersController@index');
+Router::get('/admin/users/create', 'UsersController@create');
+Router::post('/admin/users/handleCreate', 'UsersController@handleCreate');
+Router::post('/admin/users/delete', 'UsersController@delete');
+Router::get('/admin/users/detail', 'UsersController@detail');
+Router::get('/admin/users/update', 'UsersController@update');
+Router::post('/admin/users/update', 'UsersController@handleUpdate');
+
+
 
 
 
@@ -41,15 +53,6 @@ Router::get('/admin/orderDetail', 'OrderDetailController@index');
 Router::post('/admin/orders/approve', 'OrderDetailController@approve');
 Router::post('/admin/orders/cancel', 'OrderDetailController@cancel');
 Router::post('/admin/orders/complete', 'OrderDetailController@complete');
-
-Router::get('/admin/users', 'UsersController@index');
-Router::get('/admin/userDetail', 'UserDetailController@index');
-Router::post('/admin/users/delete', 'UserDetailController@delete');
-Router::post('/admin/users/editUser', 'UserDetailController@edit');
-Router::post('/admin/users/update', 'UserDetailController@update');
-Router::get('/admin/users/addUser', 'UserDetailController@add');
-Router::post('/admin/users/addUser', 'UserDetailController@add');
-
 
 Router::get('/admin/reviews', 'ReviewsController@index');
 Router::get('/admin/reviewDetail', 'ReviewDetailController@index');

@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers\Admin\Categories;
 
-use App\Models\CategoriesModel;
+use App\Models\admin\CategoriesModel;
 use Container;
 use Core\View;
 
@@ -23,52 +23,52 @@ class CreateCategoryController
 
     public function handleCreate()
     {
-    $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-    $name = trim(filter_input(INPUT_POST, 'name'));
-    $description = trim(filter_input(INPUT_POST, 'content_html'));
-    $image = $_FILES['image'] ?? null;
+        session_start();
+        $name = trim($_POST['name'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $image = $_FILES['image'] ?? null;
+        $slug = trim($_POST['slug'] ?? '');
+        $errors = [];
 
-    $errors = [];
+        if (empty($name)) {
+            $errors['name'] = 'Vui lòng nhập tên danh mục.';
+        } elseif ($this->model->categoryExistsByName($name)) {
+            $errors['name'] = 'Tên danh mục đã tồn tại.';
+        }
+        if (empty($description)) {
+            $errors['description'] = 'Vui lòng nhập mô tả danh mục.';
+        }
 
-    // Validate name
-    if (empty($name)) {
-        $errors[] = 'Vui lòng nhập tên danh mục.';
-    } elseif ($this->model->categoryExistsByName($name, $id)) {
-        $errors[] = 'Tên danh mục đã tồn tại.';
-    }
+        if (!empty($errors)) {
+            View::render('categories/create', [
+                'errors' => $errors,
+                'name' => $name,
+                'description' => $description,
+                'slug' => $slug
+            ]);
+            return;
+        }
 
-    if (empty($description)) {
-        $errors[] = 'Vui lòng nhập mô tả danh mục.';
-    }
-
-    // Nếu có lỗi → render lại form
-    if (!empty($errors)) {
-        $category = $this->model->getCategoryById($id);
-        View::render('categories/update', [
-            'errors' => $errors,
-            'category' => $category
-        ]);
-        return;
-    }
-        // Handle image upload
         $imagePathForDB = null;
         if ($image && $image['error'] === UPLOAD_ERR_OK) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             $maxSize = 2 * 1024 * 1024; // 2MB
-
             if (!in_array($image['type'], $allowedTypes) || $image['size'] > $maxSize) {
                 View::render('categories/create', [
                     'error' => 'Invalid image format or size exceeds 2MB',
-                    'categories' => $this->model->fetchAllCategories()
+                    'name' => $name,
+                    'description' => $description,
+                    'slug' => $slug
                 ]);
                 return;
             }
-
             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/admin-ui/imgs/';
             if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
                 View::render('categories/create', [
                     'error' => 'Failed to create upload directory',
-                    'categories' => $this->model->fetchAllCategories()
+                    'name' => $name,
+                    'description' => $description,
+                    'slug' => $slug
                 ]);
                 return;
             }
@@ -79,7 +79,9 @@ class CreateCategoryController
             if (!move_uploaded_file($image['tmp_name'], $targetPath)) {
                 View::render('categories/create', [
                     'error' => 'Failed to upload image',
-                    'categories' => $this->model->fetchAllCategories()
+                    'name' => $name,
+                    'description' => $description,
+                    'slug' => $slug
                 ]);
                 return;
             }
@@ -87,21 +89,24 @@ class CreateCategoryController
             $imagePathForDB = '/admin-ui/imgs/' . $filename;
         }
 
-        // Create category
         $id = $this->model->createCategory([
             'name' => $name,
-            'content_html' => $description,
-            'image' => $imagePathForDB
+            'description' => $description,
+            'image' => $imagePathForDB,
+            'slug' => $slug
         ]);
 
         if ($id) {
-            header('Location: /admin/categories/detail?id=' . $id . '&success=1');
+            $_SESSION['success'] = 'Tạo mới danh mục thành công!'; // Lưu thông báo vào session
+            header('Location: /admin/categories/detail?id=' . $id);
             exit;
         }
 
         View::render('categories/create', [
-            'error' => 'Failed to create category',
-            'categories' => $this->model->fetchAllCategories()
+            'error' => 'Không thể tạo danh mục.',
+            'name' => $name,
+            'description' => $description,
+            'slug' => $slug
         ]);
     }
 }

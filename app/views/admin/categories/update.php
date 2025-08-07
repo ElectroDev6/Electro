@@ -14,13 +14,10 @@ include dirname(__DIR__) . '/partials/sidebar.php';
 <body>
 
 <?php echo $htmlHeader; ?>
-
 <main class="wrapper">
   <?php echo $contentSidebar; ?>
-
   <div class="category-detail">
     <div id="edit-form-container" class="category-detail__form-container active">
-
       <?php if (!empty($errors)): ?>
         <div class="category-detail__alert category-detail__alert--danger">
           <ul class="category-detail__alert-list">
@@ -34,32 +31,41 @@ include dirname(__DIR__) . '/partials/sidebar.php';
           <?php echo htmlspecialchars($error); ?>
         </div>
       <?php endif; ?>
-
       <div class="category-detail__form">
         <h3 class="category-detail__heading">Chỉnh sửa danh mục</h3>
-        <form action="/admin/categories/update" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-          <input type="hidden" name="id" value="<?= $category['id'] ?? '' ?>">
+    <form action="/admin/categories/update" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="category_id" value="<?= $category['category_id'] ?? '' ?>">
+        <?php if (!empty($success)): ?>
+          <div class="success-message"><?= htmlspecialchars($success) ?></div>
+        <?php endif; ?>
 
-          <label for="name" class="category-detail__form-label">Tên danh mục:</label>
-          <input type="text" name="name" class="category-detail__form-input" value="<?= htmlspecialchars($category['name'] ?? '') ?>">
+        <label for="name" class="category-detail__form-label">Tên danh mục:</label>
+        <input type="text" name="name" class="category-detail__form-input" value="<?= htmlspecialchars($category['name'] ?? '') ?>" required>
 
-          <label for="image" class="category-detail__form-label">Hình ảnh:</label>
-          <input type="file" name="image" id="image" class="category-detail__form-input" accept="image/*">
+        <label for="image" class="category-detail__form-label">Hình ảnh:</label>
 
-          <p class="category-detail__note">Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Tối đa 2MB.</p>
+        <?php if (!empty($category['image'])): ?>
+          <div style="margin-bottom: 10px;">
+            <img src="<?= $category['image'] ?>" alt="Ảnh hiện tại" style="max-height: 100px;">
+          </div>
+        <?php endif; ?>
 
-          <label for="content_html" class="category-detail__form-label">Mô tả:</label>
-          <textarea name="content_html" class="category-detail__form-textarea"><?= htmlspecialchars($category['content_html'] ?? '') ?></textarea>
+        <input type="file" name="image" id="image" class="category-detail__form-input" accept="image/*">
+        <p class="category-detail__note">Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Tối đa 2MB.</p>
 
-          <div  style="margin-top: 20px; display: flex; align-items: center">
+        <label for="description" class="category-detail__form-label">Mô tả:</label>
+        <textarea name="description" class="category-detail__form-textarea" required><?= htmlspecialchars($category['description'] ?? '') ?></textarea>
+
+        <div style="margin-top: 20px; display: flex; align-items: center">
             <button type="submit" class="category-detail__btn category-detail__btn--save">
-              <i class="fas fa-save"></i> Lưu thay đổi
+                Lưu thay đổi
             </button>
             <a href="/admin/categories" class="category-detail__btn category-detail__btn--cancel">
-              Hủy bỏ
+                Hủy bỏ
             </a>
-          </div>
-        </form>
+        </div>
+    </form>
+
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Models\admin;
 
 use PDO;
 use PDOException;
@@ -56,10 +56,11 @@ class CategoriesModel
 
         $updates = [];
         $params = [':id' => $id];
+
         foreach ($data as $key => $value) {
-            if ($value !== null && in_array($key, ['name', 'content_html', 'image'])) {
-                $updates[] = "$key = :$key";
-                $params[":$key"] = $value;
+            if ($value !== null && in_array($key, ['name', 'description', 'image'])) {
+                $updates[] = "$key = :{$key}";
+                $params[":{$key}"] = $value;
             }
         }
 
@@ -67,7 +68,8 @@ class CategoriesModel
             return false;
         }
 
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $updates) . ", update_date = NOW() WHERE id = :id";
+        $sql = "UPDATE categories SET " . implode(', ', $updates) . ", updated_at = NOW() WHERE category_id = :id";
+
         try {
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute($params);
@@ -77,19 +79,19 @@ class CategoriesModel
         }
     }
 
+
     public function createCategory(array $data)
     {
-        $sql = "INSERT INTO {$this->table} (name, content_html, image, create_at, update_date)
-                VALUES (:name, :content_html, :image, NOW(), NOW())";
-
+        $sql = "INSERT INTO categories (name, description, slug, image, created_at, updated_at)
+                VALUES (:name, :description, :slug, :image, NOW(), NOW())";
         try {
             $stmt = $this->pdo->prepare($sql);
             $success = $stmt->execute([
                 ':name' => $data['name'] ?? null,
-                ':content_html' => $data['content_html'] ?? null,
+                ':description' => $data['description'] ?? null,
+                ':slug' => $data['slug'] ?? null,
                 ':image' => $data['image'] ?? null
             ]);
-
             return $success ? (int)$this->pdo->lastInsertId() : false;
         } catch (PDOException $e) {
             error_log('Error creating category: ' . $e->getMessage());
@@ -99,17 +101,19 @@ class CategoriesModel
 
     public function deleteCategory($id)
     {
-        $sql = "DELETE FROM categories WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([':id' => $id]);
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM categories WHERE category_id = :id");
+            return $stmt->execute([':id' => $id]);
+        } catch (PDOException $e) {
+            error_log("Error deleting category: " . $e->getMessage());
+            return false;
+        }
     }
-
 
     public function categoryExistsByName($name, $excludeId = null)
     {
         $sql = "SELECT COUNT(*) FROM categories WHERE LOWER(name) = LOWER(:name)";
         $params = ['name' => $name];
-
         if ($excludeId !== null) {
             $sql .= " AND id != :id";
             $params['id'] = $excludeId;

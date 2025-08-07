@@ -98,6 +98,16 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                 padding: 15px;
             }
         }
+    .category-detail__alert {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+    .category-detail__alert--success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
     </style>
 </head>
 <body>
@@ -111,11 +121,11 @@ include dirname(__DIR__) . '/partials/sidebar.php';
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
         <div class="category-detail">
-            <?php if (!empty($_GET['success'])): ?>
-                <div class="category-detail__alert category-detail__alert--success">
-                    Danh mục đã được tạo thành công!
-                </div>
-            <?php endif; ?>
+            <?php if (!empty($success)): ?>
+            <div class="category-detail__alert category-detail__alert--success">
+                <?php echo htmlspecialchars($success); ?>
+            </div>
+        <?php endif; ?>
             <div class="category-detail__container">
                 <!-- Header -->
                 <div class="category-detail__header">
@@ -136,12 +146,18 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                         <div class="category-detail__actions">
                             <a href="/admin/categories/update?id=<?= $category['category_id'] ?>" class="category-detail__btn category-detail__btn--edit">Chỉnh sửa
                             </a>
-                            <button 
-                            class="category-detail__btn category-detail__btn--delete"
-                            onclick="confirmDelete(<?= $category['category_id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')"
+                            <form 
+                                method="POST" 
+                                action="/admin/categories/delete" 
+                                onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục <?= htmlspecialchars($category['name']) ?> không?');"
+                                style="display: inline"
                             >
-                            Xóa
-                            </button>
+                                <input type="hidden" name="id" value="<?= $category['category_id'] ?>">
+                                <input type="hidden" name="name" value="<?= $category['name'] ?>">
+                                <button type="submit" class="category-detail__btn category-detail__btn--delete">
+                                    Xóa
+                                </button>
+                            </form>
                         </div>
                     </div>
 
@@ -155,7 +171,6 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                                          class="category-detail__image">
                                 </div>
                             </div>
-
                             <!-- Category Details -->
                             <div class="category-detail__details">
                                 <div class="category-detail__field">
@@ -167,7 +182,6 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                                     <label class="category-detail__label">Tên danh mục:</label>
                                     <span class="category-detail__value"><?php echo htmlspecialchars($category['name']); ?></span>
                                 </div>
-
                                 <div class="category-detail__field">
                                     <label class="category-detail__label">Mô tả:</label>
                                     <span class="category-detail__value"><?php echo $category['description']; ?></span>
@@ -177,7 +191,6 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                                     <label class="category-detail__label">Ngày tạo:</label>
                                     <span class="category-detail__value"><?php echo date('d/m/Y H:i', strtotime($category['created_at'])); ?></span>
                                 </div>
-
                                 <div class="category-detail__field">
                                     <label class="category-detail__label">Cập nhật lần cuối:</label>
                                     <span class="category-detail__value"><?php echo date('d/m/Y H:i', strtotime($category['updated_at'])); ?></span>
@@ -189,6 +202,5 @@ include dirname(__DIR__) . '/partials/sidebar.php';
             </div>
         </div>
     </main>
-    <script src="/admin-ui/js/pages/category-detail.js"></script>
 </body>
 </html>
