@@ -19,9 +19,25 @@ class HomeController
 
     public function index()
     {
-        $iphoneProducts = $this->productService->getHomeProductsByCategoryId(1, 15);
+
         $saleProducts = $this->productService->getSaleProducts(5);
+        // echo "<pre>";
+        // print_r($saleProducts);
+        // echo "</pre>";
+        // exit;
+
+        $iphoneProducts = $this->productService->getHomeProductsByCategoryId(1, 15);
+        // echo "<pre>";
+        // print_r($iphoneProducts);
+        // echo "</pre>";
+        // exit;
+
         $featuredProducts = $this->productService->getFeaturedProducts(9);
+
+        // echo "<pre>";
+        // print_r($featuredProducts);
+        // echo "</pre>";
+        // exit;
         $categories = $this->categoryService->getAllCategories();
 
         // Dữ liệu tạm thời cho phụ kiện và linh kiện máy tính

@@ -1,19 +1,17 @@
 [
   {
-    "review_id": 1,
     "user_id": 1,
     "product_id": 1,
-    "parent_review_id": null,
+    "parent_review_id": 1,
     "rating": 5,
     "comment_text": "Sản phẩm tuyệt vời, hiệu năng mượt mà!",
     "review_date": "2025-08-02 10:00:00"
   },
   {
-    "review_id": 2,
     "user_id": 2,
     "product_id": 1,
     "parent_review_id": 1,
-    "rating": null,
+    "rating": 1,
     "comment_text": "Đồng ý, mình cũng rất hài lòng!",
     "review_date": "2025-08-02 11:00:00"
   }

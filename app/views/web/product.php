@@ -208,7 +208,7 @@ Sản phẩm
         </aside>
 
         <!-- Phần sản phẩm -->
-        <main class="products" id="product-list">
+        <!-- <main class="products" id="product-list">
             <?php foreach ($products as $product): ?>
                 <div class="product-card" data-brand="<?= $product['brand'] ?>" data-price="<?= $product['price'] ?>"
                     data-rom="<?= $product['rom'] ?>" data-ram="<?= $product['ram'] ?>" data-os="<?= $product['os'] ?>"
@@ -257,7 +257,9 @@ Sản phẩm
                     <button class="product-card__button">Xem chi tiết</button>
                 </div>
             <?php endforeach; ?>
-        </main>
+        </main> -->
+        <?php View::partial('partials.product-container', ['iphoneProducts' => $iphoneProducts]); ?>
+
 
     </div>
     <div class="pagination">

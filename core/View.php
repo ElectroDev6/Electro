@@ -59,6 +59,7 @@ class View
             $layoutPath = BASE_PATH . '/app/views/admin/layouts/main.php';
         } else {
             $viewPath = BASE_PATH . '/app/views/web/' . str_replace('.', '/', $view) . '.php';
+            $layoutPath = BASE_PATH . '/app/views/web/layouts/main.php';
         }
 
         return $viewPath;

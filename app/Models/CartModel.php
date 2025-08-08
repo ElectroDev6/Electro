@@ -96,4 +96,25 @@ class CartModel
             return false;
         }
     }
+
+    // Lấy cart_id theo user hoặc session
+    public function getCartId($userId, $sessionId)
+    {
+        if ($userId) {
+            $stmt = $this->pdo->prepare("SELECT cart_id FROM cart WHERE user_id = ?");
+            $stmt->execute([$userId]);
+        } else {
+            $stmt = $this->pdo->prepare("SELECT cart_id FROM cart WHERE session_id = ?");
+            $stmt->execute([$sessionId]);
+        }
+
+        return $stmt->fetchColumn(); // trả về cart_id
+    }
+
+    // Xoá sản phẩm trong giỏ hàng
+    public function deleteCartItem($cartId, $skuId)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM cart_items WHERE cart_id = ? AND sku_id = ?");
+        return $stmt->execute([$cartId, $skuId]);
+    }
 }

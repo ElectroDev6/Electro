@@ -1,16 +1,14 @@
 [
   {
-    "order_item_id": 1,
     "order_id": 1,
     "sku_id": 1,
     "quantity": 1,
-    "price": 21990000
+    "price": 21990000.0
   },
   {
-    "order_item_id": 2,
     "order_id": 2,
     "sku_id": 2,
     "quantity": 1,
-    "price": 15990000
+    "price": 15990000.0
   }
 ]

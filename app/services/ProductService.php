@@ -17,17 +17,26 @@ class ProductService
 
     public function getHomeProductsByCategoryId(int $categoryId, int $limit = 8): array
     {
-        return $this->productModel->getHomeProductsByCategoryId($categoryId, $limit);
+        return $this->productModel->getProducts([
+            'category_id' => 1,
+            'limit' => 8
+        ]);
     }
 
     public function getSaleProducts(int $limit = 8): array
     {
-        return $this->productModel->getSaleProducts($limit);
+        return $this->productModel->getProducts([
+            'is_sale' => true,
+            'limit' => 8
+        ]);
     }
 
     public function getFeaturedProducts(int $limit = 6): array
     {
-        return $this->productModel->getFeaturedProducts($limit);
+        return $this->productModel->getProducts([
+            'is_featured' => true,
+            'limit' => 6
+        ]);
     }
 
     public function getProductService(string $slug): array

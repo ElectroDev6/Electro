@@ -67,7 +67,6 @@ CREATE TABLE products (
     name VARCHAR(255) NOT NULL,
     brand_id INT,
     subcategory_id INT NOT NULL,
-    description TEXT,
     base_price DECIMAL(10, 2) NOT NULL CHECK (base_price >= 0),
     slug VARCHAR(255) UNIQUE,
     is_featured BOOLEAN DEFAULT NULL,
@@ -79,19 +78,16 @@ CREATE TABLE products (
         FOREIGN KEY (subcategory_id) REFERENCES subcategories(subcategory_id) ON DELETE RESTRICT
 );
 
--- Bảng product_descriptions
-CREATE TABLE product_descriptions (
-    product_description_id INT PRIMARY KEY AUTO_INCREMENT,
+-- Bảng product_contents
+CREATE TABLE product_contents (
+    content_id INT PRIMARY KEY AUTO_INCREMENT,
     product_id INT NOT NULL,
-    section_title VARCHAR(255) NOT NULL,
-    content_text TEXT NOT NULL,
-    image_url VARCHAR(255),
-    sort_order INT NOT NULL DEFAULT 0,
+    description_html TEXT,
+    highlights_html TEXT,
+    specs_html TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
-    UNIQUE (product_id, section_title),
-    UNIQUE (product_id, sort_order)
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
 -- Bảng attributes
@@ -131,7 +127,7 @@ CREATE TABLE skus (
 -- Bảng promotions
 CREATE TABLE promotions (
     promotion_id INT PRIMARY KEY AUTO_INCREMENT,
-    sku_id INT NOT NULL,
+    sku_code VARCHAR(50) NOT NULL,
     discount_percent INT CHECK (
         discount_percent BETWEEN 1
         AND 100
@@ -140,7 +136,7 @@ CREATE TABLE promotions (
     end_date DATETIME NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE
+    FOREIGN KEY (sku_code) REFERENCES skus(sku_code) ON DELETE CASCADE
 );
 
 -- Bảng attribute_option_sku
@@ -156,9 +152,7 @@ CREATE TABLE attribute_option_sku (
 CREATE TABLE variant_images (
     image_id INT PRIMARY KEY AUTO_INCREMENT,
     sku_id INT NOT NULL,
-    default_url VARCHAR(255),
-    thumbnail_url VARCHAR(255),
-    gallery_url VARCHAR(255),
+    image_set VARCHAR(50),
     is_default BOOLEAN DEFAULT FALSE,
     sort_order INT DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

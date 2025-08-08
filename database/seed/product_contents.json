@@ -1,0 +1,14 @@
+[
+  {
+    "product_id": 1,
+    "description_html": "<p>TV QD-OLED thế hệ mới mang đến trải nghiệm hình ảnh sống động và màu sắc trung thực.</p>",
+    "highlights_html": "<ul><li>✓ Tấm nền QD-OLED thế hệ mới</li><li>✓ Độ phân giải 4K Ultra HD</li><li>✓ Smart TV với hệ điều hành Tizen</li><li>✓ Hỗ trợ HDR10+, Dolby Vision</li></ul>",
+    "specs_html": "<table><tr><th>Màn hình</th><td>QD-OLED</td></tr><tr><th>Độ phân giải</th><td>4K Ultra HD</td></tr></table>"
+  },
+  {
+    "product_id": 2,
+    "description_html": "<p>Laptop gaming hiệu suất cao, thiết kế hiện đại, phù hợp cho game thủ.</p>",
+    "highlights_html": "<ul><li>✓ CPU Intel Gen 13</li><li>✓ RAM 16GB DDR5</li><li>✓ Card RTX 4060</li></ul>",
+    "specs_html": "<table><tr><th>CPU</th><td>Intel Core i7</td></tr><tr><th>RAM</th><td>16GB DDR5</td></tr></table>"
+  }
+]

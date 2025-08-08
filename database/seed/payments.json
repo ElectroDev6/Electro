@@ -1,18 +1,16 @@
 [
   {
-    "payment_id": 1,
     "order_id": 1,
     "payment_method": "momo",
-    "amount": 21990000,
+    "amount": 21990000.0,
     "payment_date": "2025-08-01 10:05:00",
     "status": "success"
   },
   {
-    "payment_id": 2,
     "order_id": 2,
     "payment_method": "cod",
-    "amount": 15990000,
-    "payment_date": null,
+    "amount": 15990000.0,
+    "payment_date": "2025-08-01 10:05:00",
     "status": "pending"
   }
 ]

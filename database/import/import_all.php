@@ -1,91 +1,126 @@
 <?php
 
-function importJson($table, $columns, $jsonFile)
+require_once BASE_PATH . '/Core/Container.php';
+
+function importJson($table, $columns, $jsonFile, &$skuCodeMap = [])
 {
-    global $pdo;
+    $pdo = \Container::get('pdo');
 
     $path = BASE_PATH . "/database/seed/$jsonFile";
     if (!file_exists($path)) {
         echo "❌ Không tìm thấy file: $jsonFile\n";
-        return;
+        return $skuCodeMap;
     }
 
     $data = json_decode(file_get_contents($path), true);
     if (!is_array($data)) {
         echo "❌ Dữ liệu không hợp lệ trong $jsonFile\n";
-        return;
+        return $skuCodeMap;
     }
 
     try {
-        $pdo->beginTransaction(); // ✅ Bắt đầu transaction
+        $pdo->beginTransaction();
 
         $cols = implode(', ', $columns);
-        // $cols = 'id, name';
         $placeholders = ':' . implode(', :', $columns);
-        // $placeholders = ':id, :name';
         $sql = "INSERT INTO $table ($cols) VALUES ($placeholders)";
-        // INSERT INTO categories (id, name) VALUES (:id, :name)
         $stmt = $pdo->prepare($sql);
 
-        foreach ($data as $row) {
-            $values = [];
-            foreach ($columns as $col) {
-                $values[":$col"] = $row[$col] ?? null;
+        $newSkuCodeMap = $skuCodeMap;
+        $insertedCount = 0;
+        $recordsToRetry = [];
+
+        // Xử lý riêng cho các bảng phân cấp
+        $isNested = in_array($table, ['skus', 'attribute_option_sku', 'variant_images']);
+        foreach ($data as $item) {
+            $records = $isNested ? ($item[$table === 'skus' ? 'skus' : ($table === 'attribute_option_sku' ? 'attribute_options' : 'images')] ?? []) : [$item];
+            foreach ($records as $row) {
+                $values = [];
+                foreach ($columns as $col) {
+                    if ($col === 'sku_id' && isset($row['sku_code'])) {
+                        $values[":$col"] = isset($newSkuCodeMap[$row['sku_code']]) ? $newSkuCodeMap[$row['sku_code']] : null;
+                    } elseif ($col === 'product_id' && !isset($row['product_id']) && isset($item['product_id'])) {
+                        $values[":$col"] = $item['product_id'];
+                    } else {
+                        $values[":$col"] = $row[$col] ?? null;
+                    }
+                }
+                try {
+                    $stmt->execute($values);
+                    $insertedCount++;
+                } catch (PDOException $e) {
+                    if ($e->getCode() == 23000 && in_array($table, ['attribute_option_sku', 'variant_images', 'promotions', 'cart_items', 'order_items'])) {
+                        $recordsToRetry[] = ['row' => $row, 'values' => $values];
+                    } else {
+                        throw $e;
+                    }
+                }
+
+                // Cập nhật sku_id vào ánh xạ sau khi insert skus
+                if ($table === 'skus' && isset($row['sku_code'])) {
+                    $skuId = $pdo->lastInsertId();
+                    $newSkuCodeMap[$row['sku_code']] = $skuId;
+                    if (!isset($skuCodeMap[$row['sku_code']])) {
+                        $updateSql = "UPDATE $table SET sku_id = :sku_id WHERE sku_id IS NULL AND sku_code = :sku_code";
+                        $updateStmt = $pdo->prepare($updateSql);
+                        $updateStmt->execute([':sku_id' => $skuId, ':sku_code' => $row['sku_code']]);
+                    }
+                }
             }
-            $stmt->execute($values);
         }
 
-        $pdo->commit(); // ✅ Commit nếu không lỗi
+        // Thử lại các bản ghi có sku_id null sau khi cập nhật ánh xạ
+        if (!empty($recordsToRetry) && $newSkuCodeMap !== $skuCodeMap) {
+            foreach ($recordsToRetry as $retry) {
+                $row = $retry['row'];
+                $values = $retry['values'];
+                if (isset($row['sku_code']) && isset($newSkuCodeMap[$row['sku_code']])) {
+                    $values[':sku_id'] = $newSkuCodeMap[$row['sku_code']];
+                    $stmt->execute($values);
+                    $insertedCount++;
+                }
+            }
+        }
+
+        $pdo->commit();
         echo "✅ Đã nhập dữ liệu bảng `$table` từ file `$jsonFile`\n";
-    } catch (PDOException $e) {
-        $pdo->rollBack(); // ⛔ Rollback nếu có lỗi
+        return $newSkuCodeMap;
+    } catch (Exception $e) {
+        $pdo->rollBack();
         echo "❌ Lỗi khi nhập `$jsonFile`: " . $e->getMessage() . "\n";
+        return $skuCodeMap;
     }
 }
 
+// Khởi tạo ánh xạ sku_code -> sku_id
+$skuCodeMap = [];
 
-
-
-importJson('categories', ['category_id', 'name', 'image', 'description', 'slug'], 'categories.json');
-
+// Nhập các bảng không phụ thuộc
+importJson('categories', ['name', 'image', 'description', 'slug'], 'categories.json');
 importJson('subcategories', ['subcategory_id', 'category_id', 'name'], 'subcategories.json');
-
-importJson('brands', ['brand_id', 'name', 'description', 'logo_url'], 'brands.json');
-
-importJson('products', ['product_id', 'name', 'brand_id', 'subcategory_id', 'description', 'base_price', 'slug', 'is_featured'], 'products.json');
-
-importJson('product_descriptions', ['product_description_id', 'product_id', 'section_title', 'content_text', 'image_url', 'sort_order'], 'product_descriptions.json');
-
-importJson('attributes', ['attribute_id', 'name', 'display_type'], 'attributes.json');
-
+importJson('brands', ['name', 'description', 'logo_url'], 'brands.json');
+importJson('products', ['name', 'brand_id', 'subcategory_id', 'base_price', 'slug', 'is_featured'], 'products.json');
+importJson('product_contents', ['product_id', 'description_html', 'highlights_html', 'specs_html'], 'product_contents.json');
+importJson('attributes', ['name', 'display_type'], 'attributes.json');
 importJson('attribute_options', ['attribute_option_id', 'attribute_id', 'value', 'display_order'], 'attribute_options.json');
 
-importJson('skus', ['sku_id', 'product_id', 'sku_code', 'price', 'stock_quantity', 'is_active'], 'skus.json');
+// Nhập skus và lấy ánh xạ
+$skuCodeMap = importJson('skus', ['sku_code', 'product_id', 'price', 'stock_quantity', 'is_active'], 'skus.json', $skuCodeMap);
 
-importJson('attribute_option_sku', ['sku_id', 'attribute_option_id'], 'attribute_option_sku.json');
+// Nhập các bảng phụ thuộc
+$skuCodeMap = importJson('attribute_option_sku', ['sku_id', 'attribute_option_id'], 'attribute_option_sku.json', $skuCodeMap);
+$skuCodeMap = importJson('variant_images', ['sku_id', 'image_set', 'is_default', 'sort_order'], 'variant_images.json', $skuCodeMap);
+$skuCodeMap = importJson('promotions', ['sku_code', 'discount_percent', 'start_date', 'end_date'], 'promotions.json', $skuCodeMap);
 
-importJson('variant_images', ['image_id', 'sku_id', 'default_url', 'thumbnail_url', 'gallery_url', 'is_default', 'sort_order'], 'variant_images.json');
-
-importJson('promotions', ['promotion_id', 'sku_id', 'discount_percent', 'start_date', 'end_date'], 'promotions.json');
-
-importJson('users', ['user_id', 'name', 'email', 'password_hash', 'phone_number', 'gender', 'birth_date', 'role', 'is_active', 'avatar_url'], 'users.json');
-
-importJson('user_address', ['user_address_id', 'user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'], 'user_address.json');
-
-importJson('cart', ['cart_id', 'user_id', 'session_id'], 'cart.json');
-
-importJson('cart_items', ['cart_item_id', 'cart_id', 'sku_id', 'quantity'], 'cart_items.json');
-
-importJson('reviews', ['review_id', 'user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text', 'review_date'], 'reviews.json');
-
+// Nhập các bảng còn lại
+importJson('users', ['name', 'email', 'password_hash', 'phone_number', 'gender', 'birth_date', 'role', 'is_active', 'avatar_url'], 'users.json');
+importJson('user_address', ['user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'], 'user_address.json');
+importJson('cart', ['user_id', 'session_id'], 'cart.json');
+importJson('cart_items', ['cart_id', 'sku_id', 'quantity'], 'cart_items.json');
+importJson('reviews', ['user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text', 'review_date'], 'reviews.json');
 importJson('wishlist', ['user_id', 'product_id', 'added_at'], 'wishlist.json');
-
-importJson('coupons', ['coupon_id', 'code', 'discount_percent', 'start_date', 'expires_at', 'max_usage', 'is_active'], 'coupons.json');
-
-importJson('orders', ['order_id', 'user_id', 'user_address_id', 'coupon_id', 'status', 'total_price'], 'orders.json');
-
-importJson('order_items', ['order_item_id', 'order_id', 'sku_id', 'quantity', 'price'], 'order_items.json');
-
-importJson('payments', ['payment_id', 'order_id', 'payment_method', 'amount', 'payment_date', 'status'], 'payments.json');
-
-importJson('shipping', ['shipping_id', 'order_id', 'carrier', 'tracking_number', 'estimated_delivery', 'status'], 'shipping.json');
+importJson('coupons', ['code', 'discount_percent', 'start_date', 'expires_at', 'max_usage', 'is_active'], 'coupons.json');
+importJson('orders', ['user_id', 'user_address_id', 'coupon_id', 'status', 'total_price'], 'orders.json');
+importJson('order_items', ['order_id', 'sku_id', 'quantity', 'price'], 'order_items.json');
+importJson('payments', ['order_id', 'payment_method', 'amount', 'payment_date', 'status'], 'payments.json');
+importJson('shipping', ['order_id', 'carrier', 'tracking_number', 'estimated_delivery', 'status'], 'shipping.json');

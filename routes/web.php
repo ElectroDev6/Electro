@@ -15,6 +15,8 @@ Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
 
 // Cart & Order
 Router::get('/cart', 'CartController@showCart');
+Router::post('/cart/delete', 'CartController@delete');
+
 // Router::get('/checkout', 'CheckoutController@showCheckoutForm');
 Router::get('/thank-you', 'ThankyouController@showConfirmation');
 
@@ -23,7 +25,7 @@ Router::get('/login', 'AuthController@showAuthForm');
 Router::post('/handle-auth', 'AuthController@handleAuth');
 
 // Product Detail
-Router::get('/product/:slug', 'DetailController@showDetail');
+Router::get('/detail/:slug', 'DetailController@showDetail');
 Router::post('/detail/add-to-cart', 'DetailController@addToCart');
 
 // Information & Pages

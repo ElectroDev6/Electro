@@ -51,7 +51,7 @@ class CartService
     JOIN skus s ON ci.sku_id = s.sku_id
     JOIN products p ON s.product_id = p.product_id
     LEFT JOIN (
-        SELECT sku_id, MIN(thumbnail_url) AS image_url
+        SELECT sku_id, MIN(image_set) AS image_url
         FROM variant_images
         GROUP BY sku_id
     ) vi ON s.sku_id = vi.sku_id
@@ -93,5 +93,14 @@ class CartService
                 'final_total' => $finalTotal
             ]
         ];
+    }
+
+    public function removeProductFromCart($productId, $userId, $sessionId)
+    {
+        $cartId = $this->cartModel->getCartId($userId, $sessionId);
+
+        if ($cartId) {
+            $this->cartModel->deleteCartItem($cartId, $productId); // productId thực chất là sku_id
+        }
     }
 }

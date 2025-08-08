@@ -3,7 +3,7 @@ $product = $featuredProduct ?? [];
 ?>
 
 <div class="product-featured">
-    <img src="<?= $product['default_url'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product-featured__image" />
+    <img src="/img/products/default/<?= $product['default_image'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product-featured__image" />
 
     <h3 class="product-featured__name"><?= $product['name'] ?? '' ?></h3>
     <p class="product-featured__price"><?= number_format($product['price_discount'] ?? 0, 0, ',', '.') ?> ₫</p>

@@ -7,9 +7,9 @@ use Core\View; ?>
 
 <?php if (!empty($product)): ?>
     <div class="product">
-        <a href="/product/<?= $product['slug'] ?>" class="product__link">
+        <a href="/detail/<?= $product['slug'] ?>" class="product__link">
             <div class="product__image-container">
-                <img src="<?= $product['default_url'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product__image" />
+                <img src="/img/products/default/<?= $product['default_image'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product__image" />
 
                 <ul class="product__features">
                     <div class="product__feature">
@@ -33,7 +33,7 @@ use Core\View; ?>
                         <span class="product__current-price"><?= number_format($product['price_discount'] ?? 0, 0, ',', '.') ?> ₫</span>
                         <span class="product__old-price"><?= number_format($product['price_original'] ?? 0, 0, ',', '.') ?> ₫</span>
                         <span class="product__discount-cl">
-                            <?php if (!empty($product['discount_amount'])): ?>
+                            <?php if (!empty($product['discount_amount']) && $product['discount_amount'] > 0): ?>
                                 Giảm <?= number_format($product['discount_amount'], 0, ',', '.') ?>đ
                             <?php endif; ?>
                         </span>

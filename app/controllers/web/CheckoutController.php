@@ -15,32 +15,33 @@ class CheckoutController
 
     public function __construct()
     {
-        $this->cartService = new CartService();
-        $this->checkoutService = new CheckoutService();
+        // $this->cartService = new CartService();  
+        // $this->checkoutService = new CheckoutService();
     }
 
     // Hiển thị trang thanh toán
     public function index()
     {
-        $cartData = $this->cartService->getCartWithSummary($this->userId);
+        // $cartData = $this->cartService->getCartWithSummary($this->userId);
 
-        View::render('checkout', ['cart' => $cartData]);
+        // View::render('checkout', ['cart' => $cartData]);
+        View::render('checkout');
     }
 
     // Xử lý khi người dùng đặt hàng (COD)
-    public function submit()
-    {
-        $postData = $_POST;
+    // public function submit()
+    // {
+    //     $postData = $_POST;
 
-        $orderId = $this->checkoutService->createOrder($this->userId, $postData);
+    //     $orderId = $this->checkoutService->createOrder($this->userId, $postData);
 
-        if ($orderId) {
-            $this->cartService->clearCart($this->userId);
-            Redirect::to('/thank-you');
-        } else {
-            Redirect::to('/checkout?error=cart-empty');
-        }
-    }
+    //     if ($orderId) {
+    //         $this->cartService->clearCart($this->userId);
+    //         Redirect::to('/thank-you');
+    //     } else {
+    //         Redirect::to('/checkout?error=cart-empty');
+    //     }
+    // }
 
     // Xử lý thanh toán bằng VNPay
     public function vnpayCheckout()

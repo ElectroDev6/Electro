@@ -1,386 +1,457 @@
 [
   {
-    "sku_id": 1,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 1,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 2,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 2,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 3,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 3,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 4,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 4,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 5,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 5,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 6,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 6,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 7,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 7,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 8,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 8,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 9,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 9,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 10,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 10,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 11,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 11,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 12,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 12,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 13,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 13,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 14,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 14,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 15,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 15,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 16,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 16,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 17,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 17,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 18,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 18,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 19,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 19,
-    "attribute_option_id": 5
-  },
-  {
-    "sku_id": 20,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 20,
-    "attribute_option_id": 5
-  },
-  {
-    "sku_id": 21,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 21,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 22,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 22,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 23,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 23,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 24,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 24,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 25,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 25,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 26,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 26,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 27,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 27,
-    "attribute_option_id": 5
-  },
-  {
-    "sku_id": 28,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 28,
-    "attribute_option_id": 5
-  },
-  {
-    "sku_id": 29,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 29,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 30,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 30,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 31,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 31,
-    "attribute_option_id": 5
-  },
-  {
-    "sku_id": 32,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 32,
-    "attribute_option_id": 5
-  },
-  {
-    "sku_id": 33,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 33,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 34,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 34,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 35,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 35,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 36,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 36,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 37,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 37,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 38,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 38,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 39,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 39,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 40,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 40,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 41,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 41,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 42,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 42,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 43,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 43,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 44,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 44,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 45,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 45,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 46,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 46,
-    "attribute_option_id": 3
-  },
-  {
-    "sku_id": 47,
-    "attribute_option_id": 1
-  },
-  {
-    "sku_id": 47,
-    "attribute_option_id": 4
-  },
-  {
-    "sku_id": 48,
-    "attribute_option_id": 2
-  },
-  {
-    "sku_id": 48,
-    "attribute_option_id": 4
+    "product_id": 1,
+    "attribute_options": [
+      {
+        "sku_code": "IP13-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP13-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP13-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP13-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP13-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP13-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP13-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP13-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
+  },
+  {
+    "product_id": 2,
+    "attribute_options": [
+      {
+        "sku_code": "IP14-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP14-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP14-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP14-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP14-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP14-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP14-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP14-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
+  },
+  {
+    "product_id": 3,
+    "attribute_options": [
+      {
+        "sku_code": "IP14PLUS-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP14PLUS-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP14PLUS-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP14PLUS-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP14PLUS-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP14PLUS-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP14PLUS-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP14PLUS-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
+  },
+  {
+    "product_id": 4,
+    "attribute_options": [
+      {
+        "sku_code": "IP15-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
+  },
+  {
+    "product_id": 5,
+    "attribute_options": [
+      {
+        "sku_code": "IP15PROMAX-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PROMAX-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15PROMAX-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PROMAX-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-WHITE",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15PROMAX-1TB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PROMAX-1TB-BLACK",
+        "attribute_option_id": 5
+      },
+      {
+        "sku_code": "IP15PROMAX-1TB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PROMAX-1TB-WHITE",
+        "attribute_option_id": 5
+      }
+    ]
+  },
+  {
+    "product_id": 6,
+    "attribute_options": [
+      {
+        "sku_code": "IP15PLUS-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PLUS-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15PLUS-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PLUS-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15PLUS-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PLUS-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15PLUS-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PLUS-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
+  },
+  {
+    "product_id": 7,
+    "attribute_options": [
+      {
+        "sku_code": "IP15PRO-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PRO-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15PRO-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PRO-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP15PRO-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PRO-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15PRO-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PRO-256GB-WHITE",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15PRO-1TB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PRO-1TB-BLACK",
+        "attribute_option_id": 5
+      },
+      {
+        "sku_code": "IP15PRO-1TB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PRO-1TB-WHITE",
+        "attribute_option_id": 5
+      }
+    ]
+  },
+  {
+    "product_id": 8,
+    "attribute_options": [
+      {
+        "sku_code": "IP16-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP16-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
+  },
+  {
+    "product_id": 9,
+    "attribute_options": [
+      {
+        "sku_code": "IP16PROMAX-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16PROMAX-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16PROMAX-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16PROMAX-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-WHITE",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP16PROMAX-1TB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16PROMAX-1TB-BLACK",
+        "attribute_option_id": 5
+      },
+      {
+        "sku_code": "IP16PROMAX-1TB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16PROMAX-1TB-WHITE",
+        "attribute_option_id": 5
+      }
+    ]
+  },
+  {
+    "product_id": 10,
+    "attribute_options": [
+      {
+        "sku_code": "IP16PLUS-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16PLUS-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16PLUS-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16PLUS-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16PLUS-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16PLUS-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP16PLUS-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16PLUS-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
+  },
+  {
+    "product_id": 11,
+    "attribute_options": [
+      {
+        "sku_code": "IP16E-128GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16E-128GB-BLACK",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16E-128GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16E-128GB-WHITE",
+        "attribute_option_id": 3
+      },
+      {
+        "sku_code": "IP16E-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16E-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP16E-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16E-256GB-WHITE",
+        "attribute_option_id": 4
+      }
+    ]
   }
 ]
