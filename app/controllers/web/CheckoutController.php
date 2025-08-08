@@ -12,58 +12,72 @@ class CheckoutController
 {
     protected CartService $cartService;
     protected CheckoutService $checkoutService;
-    protected int $userId = 1; // Giả lập người dùng (thay bằng session khi cần)
+    protected int $userId;
+    protected string $sessionId;
 
-     public function __construct(\PDO $pdo)
-{
-    $productService = new ProductService($pdo);
+    public function __construct(\PDO $pdo)
+    {
+        $productService = new ProductService($pdo);
 
-    $this->cartService = new CartService($pdo, $productService); 
-    $this->checkoutService = new CheckoutService($pdo, $productService); // ✅ sửa chỗ này
-}
+        $this->cartService = new CartService($pdo, $productService);
+        $this->checkoutService = new CheckoutService($pdo, $productService);
 
+        $this->userId = $_SESSION['user_id'] ?? 1; // Giả lập nếu chưa login
+        $this->sessionId = session_id();
+    }
 
-    // Hiển thị trang thanh toán
+    /**
+     * Trang checkout
+     */
     public function index()
     {
-        $cartData = $this->cartService->getCartWithSummary($this->userId);
+        // Chỉ lấy sản phẩm đã chọn để thanh toán
+        $cartData = $this->cartService->getSelectedCartWithSummary($this->userId, $this->sessionId);
+
+        if (empty($cartData['products'])) {
+            $_SESSION['error_message'] = "Vui lòng chọn ít nhất 1 sản phẩm để thanh toán.";
+            Redirect::to('/cart');
+            return;
+        }
 
         View::render('checkout', ['cart' => $cartData]);
     }
 
-    // Xử lý khi người dùng đặt hàng (COD)
+    /**
+     * Xác nhận đơn hàng (COD)
+     */
     public function submit()
-{
-    $postData = $_POST;
+    {
+        $postData = $_POST;
 
-    // Lấy toàn bộ sản phẩm từ cart của user
-    $cartItems = $this->cartService->getCartItems($this->userId);
+        // Lấy sản phẩm đã chọn
+        $cartItems = $this->cartService->getSelectedCartItems($this->userId, $this->sessionId);
 
-    // Nếu giỏ hàng rỗng thì không tạo đơn
-    if (empty($cartItems)) {
-        Redirect::to('/checkout?error=cart-empty');
-        return;
+        if (empty($cartItems)) {
+            Redirect::to('/checkout?error=cart-empty');
+            return;
+        }
+
+        // Tạo đơn
+        $orderId = $this->checkoutService->createOrder($this->userId, $postData, $cartItems);
+
+        if ($orderId) {
+            // Xóa sản phẩm đã chọn khỏi giỏ
+            $this->cartService->clearSelectedItems($this->userId, $this->sessionId);
+
+            Redirect::to('/thank-you');
+        } else {
+            Redirect::to('/checkout?error=order-failed');
+        }
     }
 
-    // Tạo đơn hàng và lưu chi tiết sản phẩm từ cart
-    $orderId = $this->checkoutService->createOrder($this->userId, $postData, $cartItems);
-
-    if ($orderId) {
-        // Xóa giỏ hàng sau khi đặt
-        $this->cartService->clearCart($this->userId);
-        Redirect::to('/thank-you');
-    } else {
-        Redirect::to('/checkout?error=order-failed');
-    }
-}
-
-
-    // Xử lý thanh toán bằng VNPay
+    /**
+     * Thanh toán VNPay
+     */
     public function vnpayCheckout()
     {
         $redirectUrl = $this->checkoutService->createVNPayUrl($this->userId);
         header("Location: $redirectUrl");
         exit;
     }
-    
 }

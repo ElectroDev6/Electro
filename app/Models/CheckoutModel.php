@@ -13,7 +13,19 @@ class CheckoutModel
         $this->pdo = $pdo;
     }
 
-    // Tạo đơn hàng mới
+    /**
+     * Lấy kết nối PDO để service có thể dùng transaction
+     */
+    public function getPdo(): PDO
+    {
+        return $this->pdo;
+    }
+
+    /**
+     * Tạo đơn hàng mới
+     * @param array $orderData
+     * @return int ID của đơn hàng mới
+     */
     public function createOrder(array $orderData): int
     {
         $stmt = $this->pdo->prepare("
@@ -33,23 +45,28 @@ class CheckoutModel
         return (int)$this->pdo->lastInsertId();
     }
 
-    // Lưu từng sản phẩm trong đơn hàng vào bảng order_items
+    /**
+     * Lưu từng sản phẩm trong đơn hàng vào bảng order_items
+     * @param array $itemData
+     */
     public function addOrderItem(array $itemData): void
     {
         $stmt = $this->pdo->prepare("
-            INSERT INTO order_items (order_id, product_id, quantity, price)
-            VALUES (:order_id, :product_id, :quantity, :price)
+            INSERT INTO order_items (order_id, sku_id, quantity, price)
+            VALUES (:order_id, :sku_id, :quantity, :price)
         ");
 
         $stmt->execute([
             ':order_id' => $itemData['order_id'],
-            ':product_id' => $itemData['product_id'],
+            ':sku_id'   => $itemData['sku_id'],
             ':quantity' => $itemData['quantity'],
-            ':price' => $itemData['price'],
+            ':price'    => $itemData['price'],
         ]);
     }
 
-    // (Tùy chọn) Lấy chi tiết đơn hàng theo ID
+    /**
+     * Lấy chi tiết đơn hàng theo ID
+     */
     public function getOrderById(int $orderId): ?array
     {
         $stmt = $this->pdo->prepare("SELECT * FROM orders WHERE id = :id");
@@ -57,7 +74,9 @@ class CheckoutModel
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
-    // (Tùy chọn) Lấy danh sách sản phẩm của đơn hàng
+    /**
+     * Lấy danh sách sản phẩm của đơn hàng
+     */
     public function getOrderItems(int $orderId): array
     {
         $stmt = $this->pdo->prepare("SELECT * FROM order_items WHERE order_id = :order_id");

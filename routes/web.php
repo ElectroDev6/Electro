@@ -44,8 +44,10 @@ Router::get('/repair', 'RepairController@showRepair');
 Router::post('/cart/add', 'CartController@add');
 Router::post('/cart/update-quantity', 'CartController@updateProductQuantity');
 Router::post('/cart/delete', 'CartController@delete');
-Router::post('/cart/select-all', 'CartController@toggleselectAll');
+Router::post('/cart/select-all', 'CartController@toggleSelectAll');
+Router::post('/cart/unselect-all', 'CartController@unselectAll');
 Router::post('/cart/update-color', 'CartController@updateColor');
+Router::post('/cart/checkout', 'CartController@checkout');
 Router::get('/checkout', 'CheckoutController@index');
 
 

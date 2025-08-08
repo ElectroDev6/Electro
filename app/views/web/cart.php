@@ -7,9 +7,9 @@
   <section class="cart-page">
    <div class="cart-page__header">
     <div class="cart-page__breadcrumb">
-      <a href="/">Trang chủ</a> / Thanh Toán
+      <a href="/">Trang chủ</a> / Giỏ hàng
     </div>
-    <h1 class="cart-page__title">Đây là trang thanh toán</h1>
+    <h1 class="cart-page__title">Giỏ hàng của bạn</h1>
   </div>
 
     <div class="container">
@@ -34,15 +34,22 @@
         <div class="cart__header">
           <div class="cart__select-all">
             <form method="POST" action="/cart/select-all" id="select-all-form">
-              <input
-                type="checkbox"
-                id="select-all"
-                name="select_all"
-                onchange="document.getElementById('select-all-form').submit();"
-                <?= $allSelected ? 'checked' : '' ?>
-              >
-              <label for="select-all">Chọn tất cả (<?= count($cart['products']) ?>)</label>
-            </form>
+    <input
+        type="hidden"
+        name="selected"
+        value="<?= $allSelected ? '0' : '1' ?>"
+    >
+    <input
+        type="checkbox"
+        id="select-all"
+        <?= $allSelected ? 'checked' : '' ?>
+        onchange="document.getElementById('select-all-form').submit();"
+    >
+    <label for="select-all">
+        Chọn tất cả (<?= count($cart['products']) ?>)
+    </label>
+</form>
+
           </div>
         </div>
 
@@ -58,18 +65,20 @@
 
                 <form method="POST" action="/cart/update-color" class="product__variant">
                   <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                  <input type="hidden" name="sku_id" value="<?= $product['attribute_option_id'] ?? '' ?>">
-
+                  <input type="hidden" name="sku_id" value="<?= $product['id'] ?>">
                   
                   <label for="color-select-<?= $product['id'] ?>">Màu:</label>
-                  <select name="color_id" id="color-select-<?= $product['id'] ?>" onchange="this.form.submit()">
-                    <?php foreach ($product['available_colors'] as $option): ?>
-                      <option value="<?= $option['attribute_option_id'] ?>" <?= $option['attribute_option_id'] === $product['color_id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($option['value']) ?>
-                      </option>
-                    <?php endforeach; ?>
+                  <select name="color" id="color-select-<?= $product['id'] ?>" onchange="this.form.submit()">
+                      <?php foreach ($product['available_colors'] as $color): ?>
+                          <option value="<?= htmlspecialchars($color) ?>"
+                              <?= isset($_POST['selected_color']) && $_POST['selected_color'] === $color ? 'selected' : '' ?>>
+                              <?= htmlspecialchars($color) ?>
+                          </option>
+                      <?php endforeach; ?>
                   </select>
-                </form>
+              </form>
+
+
 
               </div>
 
@@ -147,7 +156,10 @@
           </div>
         </div>
 
-        <button class="order-summary__checkout-btn">Xác nhận đơn</button>
+        <form action="/cart/checkout" method="POST">
+            <!-- Có thể kèm theo hidden input nếu cần gửi dữ liệu bổ sung -->
+            <button type="submit" class="order-summary__checkout-btn">Xác nhận đơn</button>
+        </form>
       </div>
     <?php endif; ?>
   </div>

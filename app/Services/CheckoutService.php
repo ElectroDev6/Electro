@@ -21,25 +21,28 @@ class CheckoutService
         $this->cartService = new CartService($pdo, $productService);
     }
 
-    public function createOrder(int $userId, array $postData, array $cartItems): ?int
-    {
-        // Kiểm tra dữ liệu đầu vào
-        $name = $postData['name'] ?? '';
-        $phone = $postData['phone'] ?? '';
-        $address = $postData['address'] ?? '';
-        $payment = $postData['payment_method'] ?? 'cod';
+   public function createOrder(int $userId, array $postData): ?int
+{
+    $name = trim($postData['name'] ?? '');
+    $phone = trim($postData['phone'] ?? '');
+    $address = trim($postData['address'] ?? '');
+    $payment = $postData['payment_method'] ?? 'cod';
 
-        if (!$name || !$phone || !$address) {
-            return null;
-        }
+    if (!$name || !$phone || !$address) {
+        return null;
+    }
 
-        // Tính tổng tiền
-        $total = 0;
-        foreach ($cartItems as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
+    $cartItems = $this->cartService->getCartItems($userId);
+    if (empty($cartItems)) {
+        return null;
+    }
 
-        // 1. Tạo đơn hàng
+    $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cartItems));
+
+    $pdo = $this->checkoutModel->getPdo();
+    $pdo->beginTransaction();
+
+    try {
         $orderId = $this->checkoutModel->createOrder([
             'user_id' => $userId,
             'name' => $name,
@@ -49,18 +52,27 @@ class CheckoutService
             'total_price' => $total
         ]);
 
-        // 2. Ghi từng sản phẩm
         foreach ($cartItems as $item) {
             $this->checkoutModel->addOrderItem([
                 'order_id' => $orderId,
-                'product_id' => $item['product_id'] ?? $item['id'],
+                'sku_id' => $item['sku_id'], // dùng sku_id để khớp DB
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
         }
 
+        $this->cartService->clearCart($userId);
+
+        $pdo->commit();
         return $orderId;
+
+    } catch (\Exception $e) {
+        $pdo->rollBack();
+        error_log("CheckoutService: " . $e->getMessage());
+        return null;
     }
+}
+
 
     public function createVNPayUrl(int $userId): string
     {
