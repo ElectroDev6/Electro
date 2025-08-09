@@ -269,14 +269,18 @@ class ProductModel
         END AS discount_amount,
         vi.default_url,
 
-        -- Lấy dung lượng từ sku_code
+        -- Dung lượng
         SUBSTRING_INDEX(SUBSTRING_INDEX(s.sku_code, '-', 2), '-', -1) AS storage,
 
-        -- Lấy tên thương hiệu
-        b.name AS brand_name
+        -- Thương hiệu
+        b.name AS brand_name,
+
+        --  Hệ điều hành
+        os.name AS operating_system
 
     FROM products p
 
+    -- SKU chính
     INNER JOIN (
         SELECT s1.*
         FROM skus s1
@@ -287,20 +291,30 @@ class ProductModel
         ) s2 ON s1.sku_id = s2.min_sku_id
     ) s ON s.product_id = p.product_id
 
+    -- Ảnh
     LEFT JOIN variant_images vi ON vi.sku_id = s.sku_id AND vi.is_default = 1
+
+    -- Khuyến mãi
     LEFT JOIN promotions pr 
         ON pr.sku_id = s.sku_id 
         AND pr.start_date <= NOW() 
         AND pr.end_date >= NOW()
 
-    -- JOIN với brands
+    -- Thương hiệu
     LEFT JOIN brands b ON b.brand_id = p.brand_id
 
-    -- ✅ Lọc chỉ Apple, Oppo, Vivo
+    --  Hệ điều hành
+    LEFT JOIN operating_systems os ON os.id = p.operating_system_id
+
+    -- Bộ lọc thương hiệu
     WHERE b.name IN ('Apple', 'Oppo', 'Vivo')
+
+    -- (Tùy chọn) Bộ lọc hệ điều hành:
+    -- AND os.slug = 'android'  -- hoặc 'ios'
 
     ORDER BY p.created_at DESC
 ";
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

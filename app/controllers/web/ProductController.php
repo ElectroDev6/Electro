@@ -13,181 +13,33 @@ class ProductController
     }
     public function showAll()
     {
-<<<<<<< Updated upstream
-        $products = [
-            [
-                'name' => 'iPhone 16 Pro Max',
-                'price' => 30090000,
-                'old_price' => 34290000,
-                'rom' => ['128GB', '256GB', '512GB'],
-                'ram' => '8GB',
-                'brand' => 'Apple',
-                'screen' => '6.8',
-                'battery' => 5000,
-                'os' => 'IOS',
-                'image' => '/img/SP_DT_iphone.png',
-                'Hz' => '120'
-            ],
-            [
-                'name' => 'Vivo Y03',
-                'price' => 27000000,
-                'old_price' => 29900000,
-                'rom' => ['128GB', '256GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Vivo',
-                'screen' => '6.5',
-                'battery' => 4000,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Vivo.png',
-                'Hz' => '90'
-            ],
-            [
-                'name' => 'OPPO A5i Pro',
-                'price' => 15000000,
-                'old_price' => 18000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '4GB',
-                'brand' => 'Oppo',
-                'screen' => '5',
-                'battery' => 3500,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Oppo.png',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'iPhone 16 Pro Max',
-                'price' => 20000000,
-                'old_price' => 22000000,
-                'rom' => ['128GB', '256GB'],
-                'ram' => '8GB',
-                'brand' => 'Apple',
-                'screen' => '6.5',
-                'battery' => 4500,
-                'os' => 'IOS',
-                'image' => '/img/SP_DT_iphone.png',
-                'Hz' => '120'
-            ],
-            [
-                'name' => 'Vivo Y03',
-                'price' => 35000000,
-                'old_price' => 40000000,
-                'rom' => ['128GB', '256GB', '512GB'],
-                'ram' => '32GB',
-                'brand' => 'Vivo',
-                'screen' => '6.8',
-                'battery' => 6000,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Vivo.png',
-                'Hz' => '90'
-            ],
-            [
-                'name' => 'OPPO A5i Pro',
-                'price' => 22000000,
-                'old_price' => 25000000,
-                'rom' => ['128GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Oppo',
-                'screen' => '6.5',
-                'battery' => 4800,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Oppo.png',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'OPPO A5i Pro',
-                'price' => 22000000,
-                'old_price' => 25000000,
-                'rom' => ['1TB'],
-                'ram' => '16GB',
-                'brand' => 'Oppo',
-                'screen' => '6.5',
-                'battery' => 4800,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Oppo.png',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'OPPO A5i Pro',
-                'price' => 22000000,
-                'old_price' => 25000000,
-                'rom' => ['1TB'],
-                'ram' => '16GB',
-                'brand' => 'Oppo',
-                'screen' => '6.5',
-                'battery' => 4800,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Oppo.png',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'OPPO A5i Pro',
-                'price' => 22000000,
-                'old_price' => 25000000,
-                'rom' => ['1TB'],
-                'ram' => '16GB',
-                'brand' => 'Oppo',
-                'screen' => '6.5',
-                'battery' => 4800,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Oppo.png',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'OPPO A5i Pro',
-                'price' => 22000000,
-                'old_price' => 25000000,
-                'rom' => ['1TB'],
-                'ram' => '16GB',
-                'brand' => 'Oppo',
-                'screen' => '6.5',
-                'battery' => 4800,
-                'os' => 'Android',
-                'image' => '/img/SP_DT_Oppo.png',
-                'Hz' => '60'
-            ],
 
-            // Thêm sản phẩm khác tại đây
-        ];
-=======
+
         $products = $this->productService->getAllProduct();
         if (!is_array($products)) {
             $products = [];
         }
->>>>>>> Stashed changes
+
         // Lấy filter từ query string
         // Các filter giữ nguyên như bạn đang có:
         $priceRange = $_GET['price'] ?? 'all';
         $brand = $_GET['brand'] ?? 'all';
-        $osFilters = $_GET['os'] ?? [];
-        $Rom = $_GET['rom'] ?? 'all';
+        $operating_system = $_GET['operating_system'] ?? [];
+        $storage = $_GET['storage'] ?? 'all';
         $battery = $_GET['battery'] ?? 'all';
         $Ram = $_GET['ram'] ?? 'all';
         $screen = $_GET['screen'] ?? 'all';
         $Hz = $_GET['hz'] ?? 'all';
 
-<<<<<<< Updated upstream
-        if (!empty($priceRanges)) {
-    $products = array_filter($products, function ($product) use ($priceRanges) {
-        foreach ($priceRanges as $range) {
-            [$min, $max] = explode('-', $range);
-            $minPrice = (int) $min * 1000000;
-            $maxPrice = (int) $max * 1000000;
 
-            if ($product['price'] >= $minPrice && $product['price'] <= $maxPrice) {
-                return true;
-            }
-=======
         // Filter logic giữ nguyên (chỉ thay $products là dữ liệu DB thật)
         if ($priceRange !== 'all') {
             [$min, $max] = explode('-', $priceRange);
             $minPrice = (int) $min * 1000000;
             $maxPrice = (int) $max * 1000000;
             $products = array_filter($products, fn($p) => $p['price_discount'] >= $minPrice && $p['price_discount'] <= $maxPrice);
->>>>>>> Stashed changes
+
         }
-        return false;
-    });
-}
 
 
         if ($brand !== 'all') {
@@ -195,18 +47,23 @@ class ProductController
                 return strtolower($product['brand_name']) === strtolower($brand);
             });
         }
-
+        if (!empty($operating_system)) {
+            $operating_system = array_map('strtolower', $operating_system);
+            $products = array_filter($products, function ($product) use ($operating_system) {
+                return in_array(strtolower($product['operating_system']), $operating_system);
+            });
+        }
         if (!empty($osFilters)) {
             $products = array_filter($products, function ($product) use ($osFilters) {
                 return in_array($product['os'], $osFilters);
             });
         }
-        if ($Rom !== 'all') {
-            // Lọc danh sách theo Rom
-            $products = array_filter($products, function ($product) use ($Rom) {
-                return in_array($Rom, $product['rom']);
+        if ($storage !== 'all') {
+            $products = array_filter($products, function ($product) use ($storage) {
+                return $product['storage'] === $storage;
             });
         }
+
         if ($battery !== 'all' && strpos($battery, '-') !== false) { // Lọc theo Pin
             [$minBattery, $maxBattery] = explode('-', $battery);
             $minBattery = (int) $minBattery;
@@ -236,6 +93,10 @@ class ProductController
             });
         }
 
-        View::render('product', ['products' => $products]);
+        View::render('product', [
+            'products' => $products,
+            'storage' => $storage
+        ]);
+
     }
 }

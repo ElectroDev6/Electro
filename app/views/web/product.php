@@ -15,6 +15,11 @@ Sản phẩm
     print_r($products);
     echo '</pre>';
     ?>
+    Phần dung lươợng
+    <?php echo '<pre>';
+    print_r($storage);
+    echo '</pre>';
+    ?>
     <div class="navigation">
         <a href="/">Trang chủ</a> / <a class="active" href="/products/iphone">Điện thoại</a>
     </div>
@@ -70,11 +75,8 @@ Sản phẩm
                     <!-- Các hãng khác -->
                 </div>
             </div>
-<<<<<<< Updated upstream
+
             <form method="GET" action="/product" id="mainFilter">
-=======
-            <form method="GET" action="/products/iphone" id="priceFilter">
->>>>>>> Stashed changes
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Mức giá</h4>
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="all"
@@ -95,65 +97,48 @@ Sản phẩm
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="duoi10"
                             class="filter-group__radio"> Dưới 10 triệu </label>
                 </div>
-<<<<<<< Updated upstream
-            
-=======
 
-
->>>>>>> Stashed changes
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Hệ điều hành</h4>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="os[]" value="IOS" class="filter-group__checkbox"> IOS
+                        <input type="checkbox" name="operating_system[]" value="IOS" class="filter-group__checkbox"> IOS
                     </label>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="os[]" value="Android" class="filter-group__checkbox"> Android
+                        <input type="checkbox" name="operating_system[]" value="Android" class="filter-group__checkbox">
+                        Android
                     </label>
 
                 </div>
-<<<<<<< Updated upstream
-          
-            
+
                 <div class="filter-group filter-group--ram">
-=======
-
-
-                <!-- <div class="filter-group filter-group--ram">
->>>>>>> Stashed changes
-                    <h4 class="filter-group__heading">Dung lượng ROM</h4>
+                    <h4 class="filter-group__heading">Dung lượng</h4>
                     <div class="ram-options">
-                        <a href="/products/iphone?rom=128GB" class="ram-options__link">
+                        <a href="/products/iphone?storage=128GB" class="ram-options__link">
                             <div class="ram-option-card">
                                 <p class="ram-option-card__text">128GB</p>
                             </div>
                         </a>
-                        <a href="/products/iphone?rom=256GB" class="ram-options__link">
+                        <a href="/products/iphone?storage=256GB" class="ram-options__link">
                             <div class="ram-option-card" data-brand="Apple">
                                 <p class="ram-option-card__text">256GB</p>
                             </div>
                         </a>
-                        <a href="/products/iphone?rom=512GB" class="ram-options__link">
+                        <a href="/products/iphone?storage=512GB" class="ram-options__link">
                             <div class="ram-option-card" data-brand="Dell">
                                 <p class="ram-option-card__text">512GB</p>
                             </div>
                         </a>
-                        <a href="/products/iphone?rom=1TB" class="ram-options__link">
+                        <a href="/products/iphone?storage=1TB" class="ram-options__link">
                             <div class="ram-option-card" data-brand="HP">
                                 <p class="ram-option-card__text">1TB</p>
                             </div>
                         </a>
                     </div>
-<<<<<<< Updated upstream
-                </div>
-         
-            
-                <div class="filter-group">
-=======
-                </div> -->
 
+                </div>
 
                 <!-- <div class="filter-group">
->>>>>>> Stashed changes
+
                     <h4 class="filter-group__heading">Hiệu năng và Pin</h4>
                     <label class="filter-group__label"><input type="checkbox" name="battery" value="0-3000"
                             class="filter-group__checkbox"> Dưới 3000 mah</label>
@@ -163,10 +148,9 @@ Sản phẩm
                             class="filter-group__checkbox"> Từ 4000 - 5000 mah </label>
                     <label class="filter-group__label"><input type="checkbox" name="battery" value="5500-6000"
                             class="filter-group__checkbox"> Trên 5000 mah </label>
-<<<<<<< Updated upstream
+
                 </div>
             
-
                 <div class="filter-group filter-group--ram">
                     <h4 class="filter-group__heading">Dung lượng RAM</h4>
                     <div class="ram-options">
@@ -193,11 +177,9 @@ Sản phẩm
                     </div>
                 </div>
           
-            
-=======
                 </div> -->
 
-                    <!-- <div class="filter-group filter-group--ram">
+                <!-- <div class="filter-group filter-group--ram">
                         <h4 class="filter-group__heading">Dung lượng RAM</h4>
                         <div class="ram-options">
                             <a href="/products/iphone?ram=4GB" class="ram-options__link">
@@ -223,7 +205,6 @@ Sản phẩm
                         </div>
                     </div> -->
 
->>>>>>> Stashed changes
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Kích thước màn hình</h4>
                     <label class="filter-group__label"><input type="checkbox" name="screen" value="5-6.5"
@@ -233,12 +214,7 @@ Sản phẩm
                     <label class="filter-group__label"><input type="checkbox" name="screen" value="6.8-"
                             class="filter-group__checkbox"> Trên 6.8 inch</label>
                 </div>
-<<<<<<< Updated upstream
-          
-            
-=======
 
->>>>>>> Stashed changes
                 <div class="filter-group filter-group--refresh-rate">
                     <h4 class="filter-group__heading">Tần số quét</h4>
                     <div class="refresh-rate-options">
@@ -322,7 +298,7 @@ Sản phẩm
     </div>
     <div class="pagination">
         <a href="?page=1" class="pagination__link">1</a>
-        <a href="?page=2" class="pagination__link">2</a>
+        <a href="/products/laptops" class="pagination__link">2</a>
         <a href="?page=3" class="pagination__link">3</a>
         <span class="pagination__ellipsis">...</span>
         <a href="?page=10" class="pagination__link">10</a>
@@ -331,33 +307,23 @@ Sản phẩm
 
 </body>
 <script>
-<<<<<<< Updated upstream
-    const mainForm = document.getElementById('mainFilterForm');
+    const mainForm = document.getElementById('mainFilter');
     const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
 
     allCheckboxes.forEach(cb => {
         cb.addEventListener('change', () => {
-            mainForm.submit();
-=======
-    document.querySelectorAll('.filter input[type=checkbox], .filter input[type=radio]').forEach(el => {
-        el.addEventListener('change', () => {
             const params = new URLSearchParams();
 
-            // Duyệt tất cả checkbox đã check
-            document.querySelectorAll('.filter input[type=checkbox]:checked').forEach(cb => {
-                params.append(cb.name, cb.value);
+            // Duyệt tất cả checkbox đã được check trong form
+            mainForm.querySelectorAll('input[type="checkbox"]:checked').forEach(checkedCb => {
+                params.append(checkedCb.name, checkedCb.value);
             });
 
-            // Duyệt tất cả radio đã chọn
-            document.querySelectorAll('.filter input[type=radio]:checked').forEach(rd => {
-                params.set(rd.name, rd.value);
-            });
-
-            // Reload lại trang với URL chứa filter
+            // Tạo URL mới chứa filter và chuyển trang
             window.location.search = '?' + params.toString();
->>>>>>> Stashed changes
         });
     });
+
 </script>
 
 
