@@ -1,3 +1,5 @@
+
+
 -- Bảng users
 CREATE TABLE users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,

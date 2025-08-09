@@ -45,8 +45,7 @@ class View
             $usedMemory,
             $peakMemoryFormatted
         );
-
-        error_log($logMessage, 3, BASE_PATH . '/storage/logs/view.log');
+        // error_log($logMessage, 3, BASE_PATH . '/storage/logs/view.log');
     }
 
 

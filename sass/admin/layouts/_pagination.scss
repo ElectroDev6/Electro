@@ -1,48 +1,59 @@
-// Pagination Block
 .pagination {
+   border-top: 1px solid #ccc;
+   padding: 20px 20px 10px;
+}
+.pagination__btn {
+   padding: 8px 12px;
+   border: 1px solid #ddd;
+   background-color: #f8f8f8;
+   color: #333;
+   text-decoration: none;
+   border-radius: 4px;
+   font-size: 1.2rem;
+}
+.pagination__btn--active {
+   background-color: #007bff;
+   color: white;
+   border-color: #007bff;
+}
+   
+.pagination-info {
+   padding: 0 20px 20px;
+   text-align: center;
+   color: #666;
+}
+.pagination__btn--disabled {
+   color: #aaa !important;
+   cursor: not-allowed !important;
+   pointer-events: none !important;
+}
+.pagination__btn:hover:not(.pagination__btn--disabled) {
+   background-color: #007bff;
+   color: white;
+}
+.pagination-right {
    display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 20px 24px;
-   border-top: 1px solid #dee2e6;
-
-   &__info {
-      font-size: 14px;
-      color: #6c757d;
-   }
-
-   &__controls {
-      display: flex;
-      gap: 4px;
-   }
-
-   &__btn {
-      width: 32px;
-      height: 32px;
-      border: 1px solid #dee2e6;
-      background-color: white;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-
-      &:hover {
-         background-color: #f8f9fa;
-         border-color: #adb5bd;
-      }
-
-      &--active {
-         background-color: #4285f4;
-         color: white;
-         border-color: #4285f4;
-
-         &:hover {
-            background-color: #3367d6;
-            border-color: #3367d6;
-         }
-      }
-   }
+   justify-content: center;
+   margin-left: auto;
+   gap: 5px;
+   width: fit-content;
+}
+/* Notification Styles */
+.notification {
+   display: none;
+   position: fixed;
+   top: 20px;
+   right: 20px;
+   background-color: #28a745;
+   color: white;
+   padding: 15px 20px;
+   border-radius: 4px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+   z-index: 1000;
+   font-size: 1.3rem;
+   max-width: 300px;
+   cursor: pointer;
+}
+.notification.show {
+   display: block;
 }

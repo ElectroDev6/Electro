@@ -1,23 +1,8 @@
-// Reset and base styles
-* {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-}
-
-body {
-   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-      Ubuntu, Cantarell, sans-serif;
-   background-color: #f8f9fa;
-   color: #495057;
-}
-
-// Order Page Block
 .order-page {
    padding: 30px;
 
    &__header {
-      margin-bottom: 24px;
+      margin-bottom: 10px;
    }
 
    &__title {
@@ -37,7 +22,7 @@ body {
    &__card {
       background-color: white;
       border-radius: 8px;
-      padding: 20px;
+      padding: 13px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
    }
 
@@ -48,7 +33,7 @@ body {
    }
 
    &__value {
-      font-size: 32px;
+      font-size: 2.2rem;
       font-weight: 700;
       color: #212529;
       margin-bottom: 8px;
@@ -74,7 +59,7 @@ body {
 .order-filter {
    background-color: white;
    border-radius: 8px;
-   padding: 24px;
+   padding: 15px;
    margin-bottom: 24px;
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
    display: grid;
@@ -169,12 +154,12 @@ body {
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
    overflow: hidden;
 }
-
-// Order Table Block
 .order-table {
    width: 100%;
    border-collapse: collapse;
    font-size: 14px;
+   table-layout: fixed; // ✅ FIX: Cố định layout table
+   min-width: 1200px; // ✅ FIX: Đảm bảo có đủ không gian
 
    &__head {
       background-color: #f8f9fa;
@@ -185,12 +170,13 @@ body {
    }
 
    &__header {
-      padding: 16px 20px;
+      padding: 12px 8px; // ✅ Giảm padding để tiết kiệm không gian
       text-align: left;
       font-weight: 600;
       color: #495057;
       background-color: #f8f9fa;
       border-bottom: 1px solid #dee2e6;
+      white-space: nowrap; // ✅ Không cho phép xuống dòng
    }
 
    &__body {
@@ -210,41 +196,95 @@ body {
    }
 
    &__cell {
-      padding: 16px 20px;
+      padding: 12px 8px;
       vertical-align: middle;
+      text-overflow: ellipsis;
+      &:nth-child(1) {
+         width: 120px;
+      }
+      &:nth-child(2) {
+         width: 100px;
+      }
+      &:nth-child(3) {
+         width: 150px;
+         white-space: normal;
+         word-break: break-word;
+      }
+      &:nth-child(4) {
+         width: 130px;
+      }
+      &:nth-child(5) {
+         width: 140px;
+      }
+      &:nth-child(6) {
+         width: 120px;
+      }
+      &:nth-child(7) {
+         width: auto;
+      }
 
       &--actions {
          display: flex;
-         gap: 8px;
+         gap: 4px; // ✅ Giảm gap
          align-items: center;
-         flex-wrap: wrap;
+         flex-wrap: nowrap; // ✅ FIX: Không cho phép xuống dòng
+         justify-content: flex-start;
+         min-width: 0; // ✅ Cho phép shrink
       }
    }
 
    &__order-id {
-      padding: 4px 8px;
+      padding: 2px 6px; // ✅ Giảm padding
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 11px; // ✅ Giảm font-size
       font-weight: 600;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &--pending {
          background-color: #ffc107;
          color: white;
       }
+
+      &--paid {
+         background-color: #28a745;
+         color: white;
+      }
+
+      &--delivering {
+         background-color: #17a2b8;
+         color: white;
+      }
+
+      &--delivered {
+         background-color: #6c757d;
+         color: white;
+      }
+
+      &--canceled {
+         background-color: #dc3545;
+         color: white;
+      }
    }
 
    &__status {
-      padding: 4px 12px;
+      padding: 2px 8px; // ✅ Giảm padding
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 11px; // ✅ Giảm font-size
       font-weight: 500;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &--delivered {
          background-color: #d1fae5;
          color: #065f46;
       }
 
-      &--processing {
+      &--delivering {
          background-color: #dbeafe;
          color: #1e40af;
       }
@@ -253,13 +293,27 @@ body {
          background-color: #fef3c7;
          color: #92400e;
       }
+
+      &--paid {
+         background-color: #d1fae5;
+         color: #065f46;
+      }
+
+      &--canceled {
+         background-color: #fee2e2;
+         color: #dc2626;
+      }
    }
 
    &__payment {
-      padding: 4px 12px;
+      padding: 2px 8px; // ✅ Giảm padding
       border-radius: 12px;
-      font-size: 12px;
+      font-size: 11px; // ✅ Giảm font-size
       font-weight: 500;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &--paid {
          background-color: #d1fae5;
@@ -270,16 +324,29 @@ body {
          background-color: #fef3c7;
          color: #92400e;
       }
+
+      &--refunding {
+         background-color: #fef3c7;
+         color: #f59e0b;
+      }
+
+      &--canceled {
+         background-color: #fee2e2;
+         color: #dc2626;
+      }
    }
 
    &__action-btn {
-      padding: 4px 8px;
+      padding: 4px 6px; // ✅ Giảm padding
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 10px; // ✅ Giảm font-size
       font-weight: 500;
       cursor: pointer;
       border: none;
       transition: all 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0; // ✅ Không cho shrink
+      min-width: auto;
 
       &--view {
          background-color: #17a2b8;
@@ -307,218 +374,30 @@ body {
             background-color: #c82333;
          }
       }
-   }
-}
 
-// Pagination Block
-.pagination {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 20px 24px;
-   border-top: 1px solid #dee2e6;
-
-   &__info {
-      font-size: 14px;
-      color: #6c757d;
-   }
-
-   &__controls {
-      display: flex;
-      gap: 4px;
-   }
-
-   &__btn {
-      width: 32px;
-      height: 32px;
-      border: 1px solid #dee2e6;
-      background-color: white;
-      border-radius: 4px;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-
-      &:hover {
-         background-color: #f8f9fa;
-         border-color: #adb5bd;
-      }
-
-      &--active {
-         background-color: #4285f4;
+      &--complete {
+         background-color: #6c757d;
          color: white;
-         border-color: #4285f4;
 
          &:hover {
-            background-color: #3367d6;
-            border-color: #3367d6;
+            background-color: #5a6268;
          }
       }
    }
+
+   &__note {
+      font-size: 10px;
+      color: #6c757d;
+      font-style: italic;
+   }
 }
 
-// Responsive design
-@media (max-width: 1200px) {
-   .order-stats {
-      grid-template-columns: repeat(3, 1fr);
-   }
+// ✅ Container wrapper để scroll ngang nếu cần
+.order-table-wrapper {
+   overflow-x: auto;
+   width: 100%;
 
    .order-table {
-      font-size: 13px;
-
-      &__cell,
-      &__header {
-         padding: 12px 16px;
-      }
-   }
-}
-
-@media (max-width: 992px) {
-   .order-stats {
-      grid-template-columns: repeat(2, 1fr);
-   }
-
-   .order-filter {
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-
-      &__group:nth-child(3) {
-         grid-column: span 2;
-      }
-
-      &__actions {
-         grid-column: span 2;
-         justify-self: end;
-      }
-   }
-
-   .order-table {
-      &__header:nth-child(n + 6),
-      &__cell:nth-child(n + 6) {
-         display: none;
-      }
-   }
-}
-
-@media (max-width: 768px) {
-   .order-stats {
-      grid-template-columns: repeat(2, 1fr);
-
-      &__card {
-         padding: 16px;
-      }
-
-      &__value {
-         font-size: 24px;
-      }
-   }
-
-   .order-filter {
-      grid-template-columns: 1fr;
-      gap: 16px;
-
-      &__group:nth-child(3) {
-         grid-column: 1;
-      }
-
-      &__actions {
-         grid-column: 1;
-         justify-self: stretch;
-      }
-   }
-
-   .order-table {
-      &__head {
-         display: none;
-      }
-
-      &__row {
-         display: block;
-         border: 1px solid #dee2e6;
-         border-radius: 8px;
-         margin-bottom: 16px;
-         padding: 16px;
-         background-color: white;
-      }
-
-      &__cell {
-         display: block;
-         padding: 8px 0;
-         border-bottom: 1px solid #f1f3f4;
-
-         &:last-child {
-            border-bottom: none;
-         }
-
-         &:before {
-            content: attr(data-label);
-            font-weight: 600;
-            display: block;
-            margin-bottom: 4px;
-            color: #495057;
-         }
-
-         &:nth-child(1):before {
-            content: "Ngày mua: ";
-         }
-
-         &:nth-child(2):before {
-            content: "Mã đơn hàng: ";
-         }
-
-         &:nth-child(3):before {
-            content: "Khách hàng: ";
-         }
-
-         &:nth-child(4):before {
-            content: "Trạng thái đơn hàng: ";
-         }
-
-         &:nth-child(5):before {
-            content: "Trạng thái thanh toán: ";
-         }
-
-         &:nth-child(6):before {
-            content: "Khách phải trả: ";
-         }
-
-         &:nth-child(7):before {
-            content: "Thao tác: ";
-         }
-
-         &--actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-
-            &:before {
-               display: block;
-               width: 100%;
-            }
-         }
-      }
-   }
-
-   .pagination {
-      flex-direction: column;
-      gap: 16px;
-      align-items: center;
-
-      &__info {
-         order: 2;
-      }
-
-      &__controls {
-         order: 1;
-      }
-   }
-}
-
-@media (max-width: 480px) {
-   .order-stats {
-      grid-template-columns: 1fr;
+      margin: 0;
    }
 }
