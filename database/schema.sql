@@ -82,11 +82,19 @@ CREATE TABLE products (
 CREATE TABLE product_contents (
     content_id INT PRIMARY KEY AUTO_INCREMENT,
     product_id INT NOT NULL,
-    description_html TEXT,
-    highlights_html TEXT,
-    specs_html TEXT,
+    description TEXT,
+    image_url VARCHAR(50) null,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+CREATE TABLE product_specs (
+    spec_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT NOT NULL,
+    spec_name VARCHAR(255) NOT NULL,
+    spec_value VARCHAR(255) NOT NULL,
+    display_order INT DEFAULT 0,
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
@@ -198,6 +206,7 @@ CREATE TABLE reviews (
     ),
     -- Đánh giá sao (1-5), có thể NULL cho phản hồi
     comment_text TEXT NOT NULL,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
     review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

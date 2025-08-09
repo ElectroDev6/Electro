@@ -1,10 +1,9 @@
 <?php
+
+use Core\View;
+
 $product = $saleProduct ?? [];
 ?>
-
-<?php
-
-use Core\View; ?>
 
 <div class="product">
     <a href="/detail/<?= $product['slug'] ?>" class="product__link">
@@ -17,15 +16,15 @@ use Core\View; ?>
             <ul class="product__features">
                 <div class="product__feature">
                     <img src="/icons/NFC.svg" alt="">
-                    <li class="product__feature">Độ phân giải 3MP</li>
+                    <li class="product__feature">Camera kép xuất sắc</li>
                 </div>
                 <div class="product__feature">
                     <img src="/icons/ic_battery_charge.svg" alt="">
-                    <li class="product__feature">Độ phân giải 3MP</li>
+                    <li class="product__feature">Appel A15 Bionic</li>
                 </div>
                 <div class="product__feature">
                     <img src="/icons/ic_cam.svg" alt="">
-                    <li class="product__feature">Độ phân giải 3MP</li>
+                    <li class="product__feature">Màn hình siêu sáng</li>
                 </div>
             </ul>
         </div>

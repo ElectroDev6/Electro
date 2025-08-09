@@ -13,7 +13,7 @@ use Core\View;
             <?php foreach ($accessories as $accessory): ?>
                 <div class="accessory-item">
                     <div class="accessory-item__image-container">
-                        <img src="<?= $accessory['image'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $accessory['name'] ?>" class="accessory-item__image" />
+                        <img src="/img/accessory/<?= $accessory['image'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $accessory['name'] ?>" class="accessory-item__image" />
                     </div>
 
                     <p class="accessory-item__name"><?= $accessory['name'] ?? 'Camera giám sát IP 3MP 365 Selection C1' ?></p>
@@ -30,7 +30,7 @@ use Core\View;
             <?php foreach ($computerAccessories as $computerAcc): ?>
                 <div class="accessory-item">
                     <div class="accessory-item__image-container">
-                        <img src="<?= $computerAcc['image'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $computerAcc['name'] ?>" class="accessory-item__image" />
+                        <img src="/img/accessory/<?= $computerAcc['image'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $computerAcc['name'] ?>" class="accessory-item__image" />
                     </div>
 
                     <p class="accessory-item__name"><?= $computerAcc['name'] ?? 'Camera giám sát IP 3MP 365 Selection C1' ?></p>

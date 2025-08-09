@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ProductModel;
+use PDO;
 
 class ProductService
 {
@@ -13,6 +14,7 @@ class ProductService
     {
         $this->productModel = new ProductModel($pdo);
         $this->cartService = $cartService;
+        // $this->pdo = $pdo;
     }
 
     public function getHomeProductsByCategoryId(int $categoryId, int $limit = 8): array
@@ -39,6 +41,16 @@ class ProductService
         ]);
     }
 
+    public function relatedProducts(int $categoryId, int $excludeProductId, int $limit = 6): array
+    {
+        return $this->productModel->getProducts([
+            'category_id' => $categoryId,
+            'exclude_id'  => $excludeProductId,
+            'limit'       => $limit
+        ]);
+    }
+
+
     public function getProductService(string $slug): array
     {
         return $this->productModel->getProductDetailModel($slug);
@@ -55,4 +67,9 @@ class ProductService
         error_log("ProductService: Add to cart result for SKU $skuId: " . json_encode($result));
         return $result;
     }
+
+    // public function getPdo(): PDO
+    // {
+    //     return $this->pdo;
+    // }
 }

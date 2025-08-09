@@ -1,0 +1,98 @@
+[
+  {
+    "product_id": 1,
+    "spec_name": "Màn hình",
+    "spec_value": "Super Retina XDR OLED 6.1 inch",
+    "display_order": 1
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Độ phân giải",
+    "spec_value": "2532 x 1170 pixel",
+    "display_order": 2
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Tần số quét",
+    "spec_value": "60Hz",
+    "display_order": 3
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Chip xử lý",
+    "spec_value": "Apple A15 Bionic",
+    "display_order": 4
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Hệ điều hành",
+    "spec_value": "iOS 15 (có thể nâng cấp)",
+    "display_order": 5
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Dung lượng RAM",
+    "spec_value": "4GB",
+    "display_order": 6
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Bộ nhớ trong",
+    "spec_value": "128GB / 256GB / 512GB",
+    "display_order": 7
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Camera sau",
+    "spec_value": "Kép 12MP (Wide & Ultra Wide)",
+    "display_order": 8
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Camera trước",
+    "spec_value": "12MP TrueDepth",
+    "display_order": 9
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Quay video",
+    "spec_value": "4K@60fps / 1080p@240fps",
+    "display_order": 10
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Pin",
+    "spec_value": "3240 mAh",
+    "display_order": 11
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Sạc nhanh",
+    "spec_value": "Hỗ trợ 20W",
+    "display_order": 12
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Kháng nước/bụi",
+    "spec_value": "IP68",
+    "display_order": 13
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Kết nối",
+    "spec_value": "5G / Wi-Fi 6 / Bluetooth 5.0",
+    "display_order": 14
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Trọng lượng",
+    "spec_value": "173g",
+    "display_order": 15
+  },
+  {
+    "product_id": 1,
+    "spec_name": "Màu sắc",
+    "spec_value": "Xanh dương / Đen / Trắng / Hồng / Đỏ",
+    "display_order": 16
+  }
+]

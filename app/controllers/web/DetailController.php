@@ -20,11 +20,16 @@ class DetailController
     public function showDetail($slug)
     {
         $product = $this->productService->getProductService($slug);
+        $relatedProducts = $this->productService->relatedProducts(
+            $product['category_id'],
+            $product['product_id'],
+            5
+        );
         // echo "<pre>";
-        // print_r($product);
+        // print_r($relatedProducts);   
         // echo "</pre>";
         // exit;
-        View::render('detail', ['product' => $product]);
+        View::render('detail', ['product' => $product, 'relatedProducts' => $relatedProducts]);
     }
 
     public function showCart()

@@ -12,33 +12,49 @@ class ProductModel
     {
         $this->pdo = $pdo;
     }
-
     public function getProducts(array $options = []): array
     {
         $limit = $options['limit'] ?? 8;
         $where = [];
         $joins = [];
+        $params = [];
 
         // Lọc theo category
         if (!empty($options['category_id'])) {
             $where[] = "c.category_id = :category_id";
             $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id
-                    INNER JOIN categories c ON sc.category_id = c.category_id";
+                        INNER JOIN categories c ON sc.category_id = c.category_id";
+            $params['category_id'] = (int) $options['category_id'];
+        }
+
+        if (!empty($options['exclude_id'])) {
+            $where[] = "p.product_id != :exclude_id";
+            $params['exclude_id'] = (int) $options['exclude_id'];
         }
 
         // Lọc sản phẩm đang giảm giá
         if (!empty($options['is_sale'])) {
             $joins[] = "INNER JOIN promotions pr 
-                    ON pr.sku_code = s.sku_code
-                    AND pr.start_date <= NOW()
-                    AND pr.end_date >= NOW()
-                    AND pr.discount_percent IS NOT NULL";
+                        ON pr.sku_code = s.sku_code";
+            if (!empty($options['date'])) {
+                // Lọc theo ngày cụ thể
+                $startOfDay = $options['date'] . ' 00:00:00';
+                $endOfDay = $options['date'] . ' 23:59:59';
+                $where[] = "pr.start_date <= :endOfDay";
+                $where[] = "pr.end_date >= :startOfDay";
+                $params['startOfDay'] = $startOfDay;
+                $params['endOfDay'] = $endOfDay;
+            } else {
+                // Lọc theo thời gian hiện tại
+                $where[] = "pr.start_date <= NOW()";
+                $where[] = "pr.end_date >= NOW()";
+            }
+            $where[] = "pr.discount_percent IS NOT NULL";
         } else {
-            // Join promotions nhưng có thể null
             $joins[] = "LEFT JOIN promotions pr 
-                    ON pr.sku_code = s.sku_code
-                    AND pr.start_date <= NOW()
-                    AND pr.end_date >= NOW()";
+                        ON pr.sku_code = s.sku_code
+                        AND pr.start_date <= NOW()
+                        AND pr.end_date >= NOW()";
         }
 
         // Lọc sản phẩm nổi bật
@@ -50,51 +66,49 @@ class ProductModel
         $whereSQL = $where ? "WHERE " . implode(" AND ", $where) : "";
 
         // Order by
-        if (!empty($options['is_featured'])) {
-            $orderBy = "ORDER BY pr.discount_percent DESC, p.created_at DESC";
-        } else {
-            $orderBy = "ORDER BY p.created_at DESC";
-        }
+        $orderBy = !empty($options['is_sale']) ? "ORDER BY pr.discount_percent DESC, p.created_at DESC" : "ORDER BY p.created_at DESC";
 
         $sql = "
-        SELECT 
-            p.product_id,
-            p.name,
-            p.slug,
-            s.price AS price_original,
-            vi.image_set AS default_image,
-            CASE 
-                WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
-                ELSE s.price
-            END AS price_discount,
-            pr.discount_percent AS discount,
-            CASE 
-                WHEN pr.discount_percent IS NOT NULL THEN s.price - ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
-                ELSE 0
-            END AS discount_amount
-        FROM products p
-        INNER JOIN (
-            SELECT s1.*
-            FROM skus s1
+            SELECT 
+                p.product_id,
+                p.name,
+                p.slug,
+                s.price AS price_original,
+                vi.image_set AS default_image,
+                CASE 
+                    WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
+                    ELSE s.price
+                END AS price_discount,
+                pr.discount_percent AS discount,
+                CASE 
+                    WHEN pr.discount_percent IS NOT NULL THEN s.price - ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
+                    ELSE 0
+                END AS discount_amount
+            FROM products p
             INNER JOIN (
-                SELECT product_id, MIN(sku_id) AS min_sku_id
-                FROM skus
-                GROUP BY product_id
-            ) s2 ON s1.sku_id = s2.min_sku_id
-        ) s ON s.product_id = p.product_id
-        LEFT JOIN variant_images vi 
-            ON vi.sku_id = s.sku_id 
-            AND vi.is_default = 1
-        " . implode("\n", $joins) . "
-        $whereSQL
-        $orderBy
-        LIMIT :limit
-    ";
+                SELECT s1.*
+                FROM skus s1
+                INNER JOIN (
+                    SELECT product_id, MIN(sku_id) AS min_sku_id
+                    FROM skus
+                    GROUP BY product_id
+                ) s2 ON s1.sku_id = s2.min_sku_id
+            ) s ON s.product_id = p.product_id
+            LEFT JOIN variant_images vi 
+                ON vi.sku_id = s.sku_id 
+                AND vi.is_default = 1
+            " . implode("\n", $joins) . "
+            $whereSQL
+            $orderBy
+            LIMIT :limit
+        ";
 
         $stmt = $this->pdo->prepare($sql);
 
-        if (!empty($options['category_id'])) {
-            $stmt->bindValue(':category_id', (int) $options['category_id'], PDO::PARAM_INT);
+        // Bind parameters
+        foreach ($params as $key => $value) {
+            $paramType = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue(":$key", $value, $paramType);
         }
         $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
 
@@ -118,11 +132,18 @@ class ProductModel
         SELECT 
             p.product_id,
             p.name,
-            p.slug
+            p.slug,
+            s.subcategory_id,
+            s.category_id,
+            c.category_id,
+            c.name AS category_name
         FROM products p
+        JOIN subcategories s ON p.subcategory_id = s.subcategory_id
+        JOIN categories c ON s.category_id = c.category_id
         WHERE p.slug = :slug
         LIMIT 1
-    ";
+        ";
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':slug', $slug, \PDO::PARAM_STR);
         $stmt->execute();
@@ -164,7 +185,10 @@ class ProductModel
 
         // 3. Lấy mô tả chi tiết
         $descSql = "
-        SELECT 
+        SELECT
+            product_id,
+            description,
+            image_url
         FROM product_contents
         WHERE product_id = :product_id
     ";
@@ -172,6 +196,44 @@ class ProductModel
         $stmt->bindValue(':product_id', $product['product_id'], \PDO::PARAM_INT);
         $stmt->execute();
         $product['descriptions'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // 3.1 Thông số kỹ thuật
+        $specSql = "
+        SELECT
+            product_id,
+            spec_name,
+            spec_value
+        FROM product_specs
+        WHERE product_id = :product_id
+    ";
+        $stmt = $this->pdo->prepare($specSql);
+        $stmt->bindValue(':product_id', $product['product_id'], \PDO::PARAM_INT);
+        $stmt->execute();
+        $product['specs'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // 3.2 Lấy bình luận
+        // 3.2 Lấy bình luận kèm tên người dùng
+        $commentSql = "
+        SELECT
+            r.review_id,
+            r.user_id,
+            u.name AS user_name,
+            u.email AS user_email,
+            r.product_id,
+            r.parent_review_id,
+            r.rating,
+            r.comment_text,
+            r.status
+        FROM reviews r
+        JOIN users u ON r.user_id = u.user_id
+        WHERE r.product_id = :product_id
+        ORDER BY r.review_id ASC
+    ";
+        $stmt = $this->pdo->prepare($commentSql);
+        $stmt->bindValue(':product_id', $product['product_id'], \PDO::PARAM_INT);
+        $stmt->execute();
+        $product['comments'] = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
 
         // 4. Lấy ảnh theo SKU (ảnh default + gallery)
         $imageSql = "

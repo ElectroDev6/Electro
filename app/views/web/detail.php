@@ -64,7 +64,6 @@ Chi tiết sản phẩm
                     <div class="product-detail__highlights">
                         <div class="highlights__header">
                             <h3>Thông số nổi bật</h3>
-                            <a href="#" class="highlights__link">Xem tất cả thông số</a>
                         </div>
                         <div class="highlights__list">
                             <div class="highlight__item">
@@ -123,7 +122,6 @@ Chi tiết sản phẩm
                     </div>
                     <span class="product-detail__rating-text">234 đánh giá</span>
                     <span class="product-detail__sold">Đã bán 234</span>
-                    <a class="product-detail__link" href="#">Thông số kỹ thuật</a>
                 </div>
 
                 <div class="product-detail__price">
@@ -230,26 +228,14 @@ Chi tiết sản phẩm
                 <div class="product-detail__product-highlights">
                     <h3 class="product-detail__highlight-title">Điểm nổi bật sản phẩm:</h3>
                     <ul class="product-detail__highlight-list">
-                        <li>✓ Tấm nền QD-OLED thế hệ mới</li>
-                        <li>✓ Độ phân giải 4K Ultra HD</li>
-                        <li>✓ Smart TV với hệ điều hành Tizen</li>
-                        <li>✓ Hỗ trợ HDR10+, Dolby Vision</li>
+                        <li>✓ Màn hình Super Retina XDR 6.1 inch</li>
+                        <li>✓ Chip Apple A15 Bionic mạnh mẽ</li>
+                        <li>✓ Camera kép 12MP (Wide & Ultra Wide)</li>
+                        <li>✓ Hỗ trợ 5G và HDR Display</li>
                     </ul>
                 </div>
             </div>
         </div>
-
-        <!-- Product Description -->
-        <!-- <div class="product-detail__description">
-            <h2 class="product-detail__description-title">Mô tả sản phẩm</h2>
-            <div class="product-detail__description-content">
-                <p>Tivi OLED Samsung QE65S95D 65 inch là sản phẩm tivi cao cấp mới nhất của Samsung, được trang bị công nghệ QD-OLED tiên tiến, mang đến trải nghiệm hình ảnh vượt trội với độ tương phản vô cực và dải màu rộng.</p>
-
-                <div class="product-detail__feature-image">
-                    <img src="/img/tv-feature.webp" alt="Tính năng sản phẩm" />
-                </div>
-            </div>
-        </div> -->
 
         <div class="product-detail__tabs-section">
             <div class="product-detail__tabs-nav">
@@ -263,15 +249,17 @@ Chi tiết sản phẩm
                 <div class="product-detail__tab-panel product-detail__tab-panel--active" id="description-panel">
                     <div class="product-detail__description">
                         <div class="product-detail__description-content">
-                            <p>Tivi OLED Samsung QE65S95D 65 inch là sản phẩm tivi cao cấp mới nhất của Samsung, được trang bị công nghệ QD-OLED tiên tiến, mang đến trải nghiệm hình ảnh vượt trội với độ tương phản vô cực và dải màu rộng.</p>
+                            <?php if (!empty($product['descriptions'])): ?>
+                                <?php foreach ($product['descriptions'] as $desc): ?>
+                                    <p><?php echo htmlspecialchars($desc['description'], ENT_QUOTES, 'UTF-8'); ?></p>
 
-                            <div class="product-detail__feature-image">
-                                <img src="/img/detail/iphone-13-0.jpg" alt="Tính năng sản phẩm" />
-                            </div>
-
-                            <p>Với công nghệ QD-OLED độc quyền, sản phẩm mang đến chất lượng hình ảnh tuyệt vời với màu sắc sống động, độ tương phản cao và góc nhìn rộng. Hệ điều hành Tizen thông minh cho phép truy cập dễ dàng vào các ứng dụng giải trí phổ biến.</p>
-
-                            <p>Thiết kế mỏng nhẹ, sang trọng phù hợp với mọi không gian nội thất hiện đại. Âm thanh Dolby Atmos mang đến trải nghiệm âm thanh vòm sống động.</p>
+                                    <?php if (!empty($desc['image_url'])): ?>
+                                        <div class="product-detail__feature-image">
+                                            <img src="/img/detail/<?php echo htmlspecialchars(trim($desc['image_url']), ENT_QUOTES, 'UTF-8'); ?>" alt="Tính năng sản phẩm" />
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -280,45 +268,22 @@ Chi tiết sản phẩm
                 <div class="product-detail__tab-panel" id="specifications-panel">
                     <div class="product-detail__specifications">
                         <div class="product-detail__spec-table">
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Kích thước màn hình</div>
-                                <div class="product-detail__spec-value">65 inch</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Độ phân giải</div>
-                                <div class="product-detail__spec-value">4K Ultra HD (3840 x 2160)</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Loại màn hình</div>
-                                <div class="product-detail__spec-value">QD-OLED</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Hệ điều hành</div>
-                                <div class="product-detail__spec-value">Tizen OS</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">HDR</div>
-                                <div class="product-detail__spec-value">HDR10+, Dolby Vision</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Âm thanh</div>
-                                <div class="product-detail__spec-value">Dolby Atmos, 40W</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Kết nối</div>
-                                <div class="product-detail__spec-value">4x HDMI, 2x USB, WiFi, Bluetooth</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Kích thước</div>
-                                <div class="product-detail__spec-value">1448 x 829 x 25.4 mm</div>
-                            </div>
-                            <div class="product-detail__spec-row">
-                                <div class="product-detail__spec-label">Trọng lượng</div>
-                                <div class="product-detail__spec-value">21.6 kg</div>
-                            </div>
+                            <?php if (!empty($product['specs'])): ?>
+                                <?php foreach ($product['specs'] as $spec): ?>
+                                    <div class="product-detail__spec-row">
+                                        <div class="product-detail__spec-label">
+                                            <?php echo htmlspecialchars($spec['spec_name'], ENT_QUOTES, 'UTF-8'); ?>
+                                        </div>
+                                        <div class="product-detail__spec-value">
+                                            <?php echo htmlspecialchars($spec['spec_value'], ENT_QUOTES, 'UTF-8'); ?>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Bình luận Tab -->
                 <div class="product-detail__tab-panel" id="comments-panel">
@@ -342,59 +307,37 @@ Chi tiết sản phẩm
                             </form>
                             <h3>Bình luận từ khách hàng</h3>
                             <div class="product-detail__reviews-list">
-                                <div class="product-detail__review-item">
-                                    <div class="product-detail__reviewer-info">
-                                        <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
-                                        <div class="product-detail__reviewer-details">
-                                            <h4 class="product-detail__reviewer-name">Nguyễn Văn A</h4>
-                                            <div class="product-detail__review-rating">★★★★★</div>
-                                            <span class="product-detail__review-date">2 tháng trước</span>
+                                <?php foreach ($product['comments'] as $comment): ?>
+                                    <div class="product-detail__review-item">
+                                        <div class="product-detail__reviewer-info">
+                                            <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+                                            <div class="product-detail__reviewer-details">
+                                                <h4 class="product-detail__reviewer-name">
+                                                    <?= htmlspecialchars($comment['user_name']) ?>
+                                                </h4>
+                                                <div class="product-detail__review-rating">
+                                                    <?= str_repeat('★', (int)$comment['rating']) ?>
+                                                    <?= str_repeat('☆', 5 - (int)$comment['rating']) ?>
+                                                </div>
+                                                <!-- Ở đây bạn có thể thêm ngày tạo nếu bảng có cột created_at -->
+                                                <span class="product-detail__review-date">
+                                                    <?= isset($comment['created_at']) ? date('d/m/Y', strtotime($comment['created_at'])) : '' ?>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="product-detail__review-content">
-                                        <p>Sản phẩm rất tốt, hình ảnh sắc nét, màn hình lớn phù hợp với phòng khách. Giao hàng nhanh, đóng gói cẩn thận. Tôi rất hài lòng với sản phẩm này. Sẽ tiếp tục ủng hộ shop.</p>
-                                        <div class="product-detail__review-images">
-                                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                                        </div>
-                                    </div>
-                                </div>
+                                        <div class="product-detail__review-content">
+                                            <p><?= nl2br(htmlspecialchars($comment['comment_text'])) ?></p>
 
-                                <div class="product-detail__review-item">
-                                    <div class="product-detail__reviewer-info">
-                                        <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
-                                        <div class="product-detail__reviewer-details">
-                                            <h4 class="product-detail__reviewer-name">Trần Thị B</h4>
-                                            <div class="product-detail__review-rating">★★★★☆</div>
-                                            <span class="product-detail__review-date">1 tháng trước</span>
+                                            <?php if (!empty($comment['images'])): ?>
+                                                <div class="product-detail__review-images">
+                                                    <?php foreach ($comment['images'] as $img): ?>
+                                                        <img src="/img/reviews/<?= htmlspecialchars($img) ?>" alt="Review image" />
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
-                                    <div class="product-detail__review-content">
-                                        <p>Tivi đẹp, chất lượng tốt. Nhân viên tư vấn nhiệt tình. Giao hàng đúng hẹn. Giá cả hợp lý. Recommend!</p>
-                                        <div class="product-detail__review-images">
-                                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="product-detail__review-item">
-                                    <div class="product-detail__reviewer-info">
-                                        <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
-                                        <div class="product-detail__reviewer-details">
-                                            <h4 class="product-detail__reviewer-name">Lê Văn C</h4>
-                                            <div class="product-detail__review-rating">★★★★★</div>
-                                            <span class="product-detail__review-date">3 tuần trước</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-detail__review-content">
-                                        <p>Màn hình to, hình ảnh đẹp, âm thanh hay. Shop tư vấn nhiệt tình, giao hàng nhanh. Sẽ giới thiệu cho bạn bè.</p>
-                                        <div class="product-detail__review-images">
-                                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
@@ -529,7 +472,7 @@ Chi tiết sản phẩm
         </div>
         <!-- Related Products -->
         <div class="product-detail__related-products">
-            <?php View::partial('partials.related-container', ['audioProducts' => $audioProducts]); ?>
+            <?php View::partial('partials.related-container', ['relatedProducts' => $relatedProducts]); ?>
         </div>
     </div>
     <script>

@@ -48,7 +48,7 @@
     display: flex;
     justify-content: center;
     position: relative;
-    margin-bottom: 20px;
+    margin: 2rem 0;
 
     img {
       max-width: 37rem;
@@ -131,6 +131,10 @@
     font-size: 0.95rem;
     color: #333;
     white-space: nowrap;
+  }
+
+  &__info {
+    margin: 2rem 0;
   }
 
   .product-detail__product-highlights {
@@ -772,18 +776,6 @@
         margin-right: 0;
         margin-bottom: 0.5rem;
       }
-    }
-  }
-
-  &__feature-image {
-    width: 40%;
-    text-align: center;
-    margin: 30px 0;
-
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
     }
   }
 

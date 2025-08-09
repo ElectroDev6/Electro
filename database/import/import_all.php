@@ -100,7 +100,8 @@ importJson('categories', ['name', 'image', 'description', 'slug'], 'categories.j
 importJson('subcategories', ['subcategory_id', 'category_id', 'name'], 'subcategories.json');
 importJson('brands', ['name', 'description', 'logo_url'], 'brands.json');
 importJson('products', ['name', 'brand_id', 'subcategory_id', 'base_price', 'slug', 'is_featured'], 'products.json');
-importJson('product_contents', ['product_id', 'description_html', 'highlights_html', 'specs_html'], 'product_contents.json');
+importJson('product_contents', ['product_id', 'description', 'image_url'], 'product_contents.json');
+importJson('product_specs', ['product_id', 'spec_name', 'spec_value', 'display_order'], 'product_specs.json');
 importJson('attributes', ['name', 'display_type'], 'attributes.json');
 importJson('attribute_options', ['attribute_option_id', 'attribute_id', 'value', 'display_order'], 'attribute_options.json');
 
@@ -117,7 +118,7 @@ importJson('users', ['name', 'email', 'password_hash', 'phone_number', 'gender',
 importJson('user_address', ['user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'], 'user_address.json');
 importJson('cart', ['user_id', 'session_id'], 'cart.json');
 importJson('cart_items', ['cart_id', 'sku_id', 'quantity'], 'cart_items.json');
-importJson('reviews', ['user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text', 'review_date'], 'reviews.json');
+importJson('reviews', ['user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text', 'status'], 'reviews.json');
 importJson('wishlist', ['user_id', 'product_id', 'added_at'], 'wishlist.json');
 importJson('coupons', ['code', 'discount_percent', 'start_date', 'expires_at', 'max_usage', 'is_active'], 'coupons.json');
 importJson('orders', ['user_id', 'user_address_id', 'coupon_id', 'status', 'total_price'], 'orders.json');

@@ -21,8 +21,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="sale__list scroll-horizontal">
-            <?php foreach ($saleProducts as $saleProduct): ?>
-                <?php View::partial('components.product-card-sale', ['saleProduct' => $saleProduct]); ?>
+            <?php foreach ($saleProducts as $item): ?>
+                <?php View::partial('components.product-card-sale', ['saleProduct' => $item]); ?>
             <?php endforeach; ?>
         </div>
     </section>

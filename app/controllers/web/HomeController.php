@@ -4,63 +4,53 @@ namespace App\Controllers\Web;
 
 use App\Services\ProductService;
 use App\Services\CategoryService;
+use App\Services\PromotionService;
 use Core\View;
 
 class HomeController
 {
     private $productService;
     private $categoryService;
+    private $promotionService;
 
     public function __construct(\PDO $pdo)
     {
-        $this->productService = new ProductService($pdo); // Không cần truyền CartService ở đây
+        $this->productService = new ProductService($pdo);
         $this->categoryService = new CategoryService($pdo);
+        $this->promotionService = new PromotionService($pdo);
     }
 
     public function index()
     {
 
         $saleProducts = $this->productService->getSaleProducts(5);
-        // echo "<pre>";
-        // print_r($saleProducts);
-        // echo "</pre>";
-        // exit;
 
         $iphoneProducts = $this->productService->getHomeProductsByCategoryId(1, 15);
-        // echo "<pre>";
-        // print_r($iphoneProducts);
-        // echo "</pre>";
-        // exit;
-
         $featuredProducts = $this->productService->getFeaturedProducts(9);
 
-        // echo "<pre>";
-        // print_r($featuredProducts);
-        // echo "</pre>";
-        // exit;
         $categories = $this->categoryService->getAllCategories();
 
         // Dữ liệu tạm thời cho phụ kiện và linh kiện máy tính
         $accessories = [
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory1.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory2.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory3.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory4.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory5.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory6.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory7.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory8.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
         ];
 
         $computerAccessories = [
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer1.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer2.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer3.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer4.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer5.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer6.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer7.png'],
-            ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/computer8.png'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
+            ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
         ];
 
         $featuredProduct = $featuredProducts[0] ?? null;
@@ -75,5 +65,17 @@ class HomeController
             'accessories' => $accessories,
             'computerAccessories' => $computerAccessories
         ]);
+    }
+
+    // Xử lý yêu cầu AJAX để lấy sản phẩm sale theo ngày
+    public function getSaleProductsByDate()
+    {
+        if (isset($_GET['date'])) {
+            $selectedDate = $_GET['date'];
+            $products = $this->promotionService->getSaleProductsByDate($selectedDate);
+            header('Content-Type: application/json');
+            echo json_encode(['products' => $products]);
+            exit;
+        }
     }
 }

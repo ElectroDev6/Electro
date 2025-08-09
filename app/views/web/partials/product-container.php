@@ -1,6 +1,7 @@
 <?php
 
 use Core\View;
+
 ?>
 
 <div class="container-main">
@@ -17,7 +18,7 @@ use Core\View;
     </section>
     <section class="category-product">
         <div class="category-product__header">
-            <h2 class="category-product__title">Thế giới Gaming trong tầm tay</h2>
+            <h2 class="category-product__title">Thế giới Gaming</h2>
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
@@ -28,7 +29,7 @@ use Core\View;
     </section>
     <section class="category-product">
         <div class="category-product__header">
-            <h2 class="category-product__title">Đồng hồ mới nhất, bán chạy nhất</h2>
+            <h2 class="category-product__title">Đồng hồ</h2>
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
@@ -39,7 +40,7 @@ use Core\View;
     </section>
     <section class="category-product">
         <div class="category-product__header">
-            <h2 class="category-product__title">Kết nối thông minh</h2>
+            <h2 class="category-product__title">Đồ gia dụng</h2>
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">

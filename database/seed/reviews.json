@@ -5,7 +5,7 @@
     "parent_review_id": 1,
     "rating": 5,
     "comment_text": "Sản phẩm tuyệt vời, hiệu năng mượt mà!",
-    "review_date": "2025-08-02 10:00:00"
+    "status": "pending"
   },
   {
     "user_id": 2,
@@ -13,6 +13,6 @@
     "parent_review_id": 1,
     "rating": 1,
     "comment_text": "Đồng ý, mình cũng rất hài lòng!",
-    "review_date": "2025-08-02 11:00:00"
+    "status": "pending"
   }
 ]
