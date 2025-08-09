@@ -1,0 +1,221 @@
+.profile {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+
+  // SIDEBAR
+  &__sidebar {
+    width: 250px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  &__avatar {
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 0.25rem;
+  }
+
+  &__phone {
+    font-size: 14px;
+    color: #666;
+  }
+
+  &__menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    text-align: left;
+
+    li {
+      padding: 20px 0;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      color: #333;
+
+      &:hover {
+        color: #f6ab00;
+      }
+    }
+  }
+
+  // CONTENT
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  // ROW CHUNG
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    label {
+      flex: 0 0 150px;
+      font-weight: 500;
+    }
+
+    input,
+    select,
+    .profile__dob {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    a {
+      font-size: 14px;
+      color: #007bff;
+      text-decoration: underline;
+    }
+  }
+
+  // NHÓM ROW (Group nhiều dòng)
+  &__row--group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  // DOB
+  &__dob {
+    display: flex;
+    gap: 0.5rem;
+
+    select {
+      width: 100%;
+    }
+  }
+
+  // GENDER
+  &__group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    select,
+    input {
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  }
+
+  &__gender {
+    display: flex;
+    gap: 1rem;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
+
+  // BUTTON
+  &__btn {
+    align-self: flex-start;
+    background-color: #f6ab00;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1rem;
+
+    &:hover {
+      background-color: #e89c00;
+    }
+  }
+
+  // 📱 RESPONSIVE
+  @media (max-width: 991px) {
+    flex-direction: column;
+
+    &__sidebar {
+      width: 100%;
+    }
+
+    &__row {
+      flex-direction: column;
+      align-items: flex-start;
+
+      label {
+        flex: unset;
+        width: 100%;
+      }
+
+      input,
+      select,
+      .profile__dob {
+        width: 100%;
+      }
+    }
+
+    &__gender {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__btn {
+      align-self: stretch;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: 1rem;
+
+    &__section {
+      padding: 1.25rem;
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+
+    &__btn {
+      padding: 0.5rem 1.5rem;
+    }
+  }
+}

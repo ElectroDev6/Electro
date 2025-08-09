@@ -1,0 +1,13 @@
+{
+  "name": "electrodev6/electro",
+  "description": "Clone giao di?n Electro, code PHP thu?n",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Core\\": "core/",
+      "Config\\": "config/"
+    }
+  },
+  "require": {}
+}

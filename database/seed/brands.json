@@ -1,0 +1,162 @@
+[
+  {
+    "brand_id": 1,
+    "name": "Apple"
+  },
+  {
+    "brand_id": 2,
+    "name": "Samsung"
+  },
+  {
+    "brand_id": 3,
+    "name": "Xiaomi"
+  },
+  {
+    "brand_id": 4,
+    "name": "Oppo"
+  },
+  {
+    "brand_id": 5,
+    "name": "Vivo"
+  },
+  {
+    "brand_id": 6,
+    "name": "Asus"
+  },
+  {
+    "brand_id": 7,
+    "name": "HP"
+  },
+  {
+    "brand_id": 8,
+    "name": "Dell"
+  },
+  {
+    "brand_id": 9,
+    "name": "Lenovo"
+  },
+  {
+    "brand_id": 10,
+    "name": "MSI"
+  },
+  {
+    "brand_id": 11,
+    "name": "Acer"
+  },
+  {
+    "brand_id": 12,
+    "name": "Gigabyte"
+  },
+  {
+    "brand_id": 13,
+    "name": "Intel"
+  },
+  {
+    "brand_id": 14,
+    "name": "AMD"
+  },
+  {
+    "brand_id": 15,
+    "name": "LG"
+  },
+  {
+    "brand_id": 16,
+    "name": "Sony"
+  },
+  {
+    "brand_id": 17,
+    "name": "Panasonic"
+  },
+  {
+    "brand_id": 18,
+    "name": "Toshiba"
+  },
+  {
+    "brand_id": 19,
+    "name": "Philips"
+  },
+  {
+    "brand_id": 20,
+    "name": "JBL"
+  },
+  {
+    "brand_id": 21,
+    "name": "Logitech"
+  },
+  {
+    "brand_id": 22,
+    "name": "Razer"
+  },
+  {
+    "brand_id": 23,
+    "name": "Corsair"
+  },
+  {
+    "brand_id": 24,
+    "name": "TP-Link"
+  },
+  {
+    "brand_id": 25,
+    "name": "Anker"
+  },
+  {
+    "brand_id": 26,
+    "name": "Baseus"
+  },
+  {
+    "brand_id": 27,
+    "name": "Bose"
+  },
+  {
+    "brand_id": 28,
+    "name": "Huawei"
+  },
+  {
+    "brand_id": 29,
+    "name": "Realme"
+  },
+  {
+    "brand_id": 30,
+    "name": "Canon"
+  },
+  {
+    "brand_id": 31,
+    "name": "Nikon"
+  },
+  {
+    "brand_id": 32,
+    "name": "Sharp"
+  },
+  {
+    "brand_id": 33,
+    "name": "Electrolux"
+  },
+  {
+    "brand_id": 34,
+    "name": "Midea"
+  },
+  {
+    "brand_id": 35,
+    "name": "Sunhouse"
+  },
+  {
+    "brand_id": 36,
+    "name": "Bluestone"
+  },
+  {
+    "brand_id": 37,
+    "name": "Sanaky"
+  },
+  {
+    "brand_id": 38,
+    "name": "Lock&Lock"
+  },
+  {
+    "brand_id": 39,
+    "name": "Hafele"
+  },
+  {
+    "brand_id": 40,
+    "name": "Hitachi"
+  }
+]

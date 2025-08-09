@@ -1,0 +1,8 @@
+/vendor/
+/public/css/*
+!/public/css/.gitkeep
+node_modules/
+.env
+docker-compose.yml
+/storage/logs/*
+database/raw/*
