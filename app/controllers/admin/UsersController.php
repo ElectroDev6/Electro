@@ -10,7 +10,7 @@ class UsersController
     public function index()
     {
         $controller = new ReadUserController();
-        $controller->list();
+        $controller->list(); 
     }
 
     public function create()

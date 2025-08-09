@@ -1,8 +1,9 @@
+// Order Page
 .order-page {
    padding: 30px;
 
    &__header {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
    }
 
    &__title {
@@ -12,7 +13,7 @@
    }
 }
 
-// Order Stats Block
+// Order Statistics
 .order-stats {
    display: grid;
    grid-template-columns: repeat(6, 1fr);
@@ -22,7 +23,7 @@
    &__card {
       background-color: white;
       border-radius: 8px;
-      padding: 13px;
+      padding: 16px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
    }
 
@@ -55,17 +56,20 @@
    }
 }
 
-// Order Filter Block
+// Order Filter
 .order-filter {
    background-color: white;
    border-radius: 8px;
-   padding: 15px;
+   padding: 20px;
    margin-bottom: 24px;
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-   display: grid;
-   grid-template-columns: 1fr 1fr 2fr auto;
-   gap: 16px;
-   align-items: end;
+
+   form {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr auto;
+      gap: 16px;
+      align-items: end;
+   }
 
    &__group {
       display: flex;
@@ -79,16 +83,13 @@
       color: #495057;
    }
 
-   &__input {
+   &__input,
+   &__select {
       padding: 8px 12px;
       border: 1px solid #dee2e6;
       border-radius: 4px;
       font-size: 14px;
       background-color: white;
-
-      &::placeholder {
-         color: #6c757d;
-      }
 
       &:focus {
          outline: none;
@@ -97,19 +98,12 @@
       }
    }
 
-   &__select {
-      padding: 8px 12px;
-      border: 1px solid #dee2e6;
-      border-radius: 4px;
-      font-size: 14px;
-      background-color: white;
-      cursor: pointer;
+   &__input::placeholder {
+      color: #6c757d;
+   }
 
-      &:focus {
-         outline: none;
-         border-color: #4285f4;
-         box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
-      }
+   &__select {
+      cursor: pointer;
    }
 
    &__actions {
@@ -123,11 +117,11 @@
       font-size: 14px;
       cursor: pointer;
       transition: all 0.2s;
+      border: none;
 
       &--primary {
          background-color: #4285f4;
          color: white;
-         border: none;
 
          &:hover {
             background-color: #3367d6;
@@ -147,40 +141,36 @@
    }
 }
 
-// Order List Block
+// Order List and Table
 .order-list {
    background-color: white;
    border-radius: 8px;
    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-   overflow: hidden;
+   padding: 20px;
 }
+
+.order-table-wrapper {
+   overflow-x: auto;
+   width: 100%;
+}
+
 .order-table {
    width: 100%;
    border-collapse: collapse;
    font-size: 14px;
-   table-layout: fixed; // ✅ FIX: Cố định layout table
-   min-width: 1200px; // ✅ FIX: Đảm bảo có đủ không gian
+   min-width: 1200px;
 
    &__head {
       background-color: #f8f9fa;
    }
 
-   &__header-row {
-      border-bottom: 1px solid #dee2e6;
-   }
-
    &__header {
-      padding: 12px 8px; // ✅ Giảm padding để tiết kiệm không gian
+      padding: 12px 8px;
       text-align: left;
       font-weight: 600;
       color: #495057;
-      background-color: #f8f9fa;
       border-bottom: 1px solid #dee2e6;
-      white-space: nowrap; // ✅ Không cho phép xuống dòng
-   }
-
-   &__body {
-      background-color: white;
+      white-space: nowrap;
    }
 
    &__row {
@@ -198,88 +188,28 @@
    &__cell {
       padding: 12px 8px;
       vertical-align: middle;
-      text-overflow: ellipsis;
-      &:nth-child(1) {
-         width: 120px;
-      }
-      &:nth-child(2) {
-         width: 100px;
-      }
-      &:nth-child(3) {
-         width: 150px;
-         white-space: normal;
-         word-break: break-word;
-      }
-      &:nth-child(4) {
-         width: 130px;
-      }
-      &:nth-child(5) {
-         width: 140px;
-      }
-      &:nth-child(6) {
-         width: 120px;
-      }
-      &:nth-child(7) {
-         width: auto;
-      }
 
       &--actions {
          display: flex;
-         gap: 4px; // ✅ Giảm gap
+         gap: 6px;
          align-items: center;
-         flex-wrap: nowrap; // ✅ FIX: Không cho phép xuống dòng
-         justify-content: flex-start;
-         min-width: 0; // ✅ Cho phép shrink
-      }
-   }
-
-   &__order-id {
-      padding: 2px 6px; // ✅ Giảm padding
-      border-radius: 4px;
-      font-size: 11px; // ✅ Giảm font-size
-      font-weight: 600;
-      display: inline-block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      &--pending {
-         background-color: #ffc107;
-         color: white;
-      }
-
-      &--paid {
-         background-color: #28a745;
-         color: white;
-      }
-
-      &--delivering {
-         background-color: #17a2b8;
-         color: white;
-      }
-
-      &--delivered {
-         background-color: #6c757d;
-         color: white;
-      }
-
-      &--canceled {
-         background-color: #dc3545;
-         color: white;
+         flex-wrap: nowrap;
       }
    }
 
    &__status {
-      padding: 2px 8px; // ✅ Giảm padding
+      padding: 4px 8px;
       border-radius: 12px;
-      font-size: 11px; // ✅ Giảm font-size
+      font-size: 12px;
       font-weight: 500;
       display: inline-block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
 
-      &--delivered {
+      &--pending {
+         background-color: #fef3c7;
+         color: #92400e;
+      }
+
+      &--paid {
          background-color: #d1fae5;
          color: #065f46;
       }
@@ -289,45 +219,9 @@
          color: #1e40af;
       }
 
-      &--pending {
-         background-color: #fef3c7;
-         color: #92400e;
-      }
-
-      &--paid {
+      &--delivered {
          background-color: #d1fae5;
          color: #065f46;
-      }
-
-      &--canceled {
-         background-color: #fee2e2;
-         color: #dc2626;
-      }
-   }
-
-   &__payment {
-      padding: 2px 8px; // ✅ Giảm padding
-      border-radius: 12px;
-      font-size: 11px; // ✅ Giảm font-size
-      font-weight: 500;
-      display: inline-block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-
-      &--paid {
-         background-color: #d1fae5;
-         color: #065f46;
-      }
-
-      &--pending {
-         background-color: #fef3c7;
-         color: #92400e;
-      }
-
-      &--refunding {
-         background-color: #fef3c7;
-         color: #f59e0b;
       }
 
       &--canceled {
@@ -337,16 +231,16 @@
    }
 
    &__action-btn {
-      padding: 4px 6px; // ✅ Giảm padding
+      padding: 6px 8px;
       border-radius: 4px;
-      font-size: 10px; // ✅ Giảm font-size
+      font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       border: none;
       transition: all 0.2s;
       white-space: nowrap;
-      flex-shrink: 0; // ✅ Không cho shrink
-      min-width: auto;
+      text-decoration: none;
+      display: inline-block;
 
       &--view {
          background-color: #17a2b8;
@@ -386,18 +280,8 @@
    }
 
    &__note {
-      font-size: 10px;
+      font-size: 11px;
       color: #6c757d;
       font-style: italic;
-   }
-}
-
-// ✅ Container wrapper để scroll ngang nếu cần
-.order-table-wrapper {
-   overflow-x: auto;
-   width: 100%;
-
-   .order-table {
-      margin: 0;
    }
 }

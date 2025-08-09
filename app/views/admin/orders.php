@@ -1,7 +1,6 @@
 <?php
 include dirname(__DIR__) . '/admin/partials/sidebar.php';
 include dirname(__DIR__) . '/admin/partials/header.php';
-include dirname(__DIR__) . '/admin/partials/pagination.php';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -299,7 +298,6 @@ include dirname(__DIR__) . '/admin/partials/pagination.php';
                 </tbody>
                 </table>
             </div>
-            <?php echo $htmlPagination; ?>
         </div>
     </main>
     <script type="module" src="/admin-ui/js/pages/order-filter.js"></script>

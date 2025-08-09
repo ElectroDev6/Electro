@@ -18,6 +18,16 @@ include dirname(__DIR__) . '/partials/sidebar.php';
     echo '</pre>';
     ?> -->
     <?php echo $htmlHeader; ?>
+    <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
+    <div class="notification notification--success show" id="success-notification">
+        <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
+    </div>
+    <?php endif; ?>
+    <?php if (isset($_GET['error']) && $_GET['error'] !== ''): ?>
+    <div class="notification notification--error" id="error-notification">
+        <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
+    </div>
+    <?php endif; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
         <?php if (!empty($_GET['deleted'])): ?>
@@ -71,10 +81,14 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                             <div class="categories__card-meta">
                                 <div class="categories__card-actions">
                                     <a href="/admin/categories/detail?id=<?php echo $category['category_id']; ?>" class="categories__action-btn categories__action-btn--view">Xem</a>
-                                    <button class="categories__action-btn categories__action-btn--delete"
+                            <form method="POST" action="/admin/categories/delete" onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không không?');" style="display: inline">
+                                <input type="hidden" name="id" value="<?php echo $category['category_id']; ?>">
+                                <input type="hidden" name="name" value="<?php echo $category['name']; ?>">
+                                <button class="categories__action-btn categories__action-btn--delete"
                                             onclick="confirmDelete(<?= $category['category_id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')">
                                         Xoá
-                                    </button>
+                                </button>
+                            </form>
                                 </div>
                             </div>
                         </div>
@@ -83,6 +97,5 @@ include dirname(__DIR__) . '/partials/sidebar.php';
             </section>
         </div>
     </main>
-    <script type="module" src="/admin-ui/js/pages/category-detail.js"></script>
 </body>
 </html>

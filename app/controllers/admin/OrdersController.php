@@ -1,18 +1,25 @@
 <?php
 namespace App\Controllers\Admin;
-use App\Models\OrdersModel;
-use Container;
-use Core\View;
-    class OrdersController
+use App\Controllers\Admin\Orders\CreateOrderController;
+use App\Controllers\Admin\Orders\UpdateOrderController;
+use App\Controllers\Admin\Orders\DeleteOrderController;
+use App\Controllers\Admin\Orders\ReadOrderController;
+
+class OrdersController
+{
+    public function index()
     {
-        public function index()
-        {
-        $pdo = Container::get('pdo');
-        $orderModel = new OrdersModel($pdo);
-        $orders = $orderModel->getAllOrders();
-        // Truyền dữ liệu sang view
-        View::render('orders', [
-            'orders' => $orders
-        ]);
-        }
+        $controller = new ReadOrderController();
+        $controller->list();
     }
+    
+    
+    public function detail()
+    {
+        $controller = new ReadOrderController();
+        $controller->detail();
+    }
+    
+}
+
+?>

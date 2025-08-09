@@ -37,6 +37,23 @@ Router::post('/admin/products/update/handle', 'ProductsController@handle');
 Router::get('/admin/products/delete', 'ProductsController@delete');
 
 
+Router::get('/admin/reviews', 'ReviewsController@index'); 
+Router::get('/admin/reviews/create', 'ReviewsController@create'); 
+Router::post('/admin/reviews/handleCreate', 'ReviewsController@handleCreate');
+Router::get('/admin/reviews/detail', 'ReviewsController@detail');
+Router::post('/admin/reviews/update-status', 'ReviewsController@updateStatus');
+Router::post('/admin/reviews/update/handle', 'ReviewsController@handle');
+Router::post('/admin/reviews/delete', 'ReviewsController@delete');
+Router::post('/admin/reviews/reply', 'ReviewsController@handleRepl');
+
+
+Router::get('/admin/orders', 'OrdersController@index');
+Router::get('/admin/orders/detail', 'OrdersController@detail');
+Router::post('/admin/orders/approve', 'OrderDetailController@approve');
+Router::post('/admin/orders/cancel', 'OrderDetailController@cancel');
+Router::post('/admin/orders/complete', 'OrderDetailController@complete');
+
+
 Router::get('/admin/comments', 'CommentsController@index');
 Router::get('/admin/commentDetail', 'CommentDetailController@index');
 Router::post('/admin/comments/approve', 'CommentDetailController@approve');
@@ -48,11 +65,7 @@ Router::post('/admin/commentDetail/reply', 'CommentDetailController@reply');
 
 
 
-Router::get('/admin/orders', 'OrdersController@index');
-Router::get('/admin/orderDetail', 'OrderDetailController@index');
-Router::post('/admin/orders/approve', 'OrderDetailController@approve');
-Router::post('/admin/orders/cancel', 'OrderDetailController@cancel');
-Router::post('/admin/orders/complete', 'OrderDetailController@complete');
+
 
 Router::get('/admin/reviews', 'ReviewsController@index');
 Router::get('/admin/reviewDetail', 'ReviewDetailController@index');

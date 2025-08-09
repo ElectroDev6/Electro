@@ -23,7 +23,6 @@ class HomeController
         $saleProducts = $this->productService->getSaleProducts(5);
         $featuredProducts = $this->productService->getFeaturedProducts(9);
         $categories = $this->categoryService->getAllCategories();
-
         // Dữ liệu tạm thời cho phụ kiện và linh kiện máy tính
         $accessories = [
             ['name' => 'Phụ kiện Apple', 'image' => '/img/placeholder/accessory1.png'],
