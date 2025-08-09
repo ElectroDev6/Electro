@@ -17,11 +17,26 @@
       <a href="/cart" class="order-page__back-btn">Quay lại giỏ hàng</a>
 
       <!-- Sản phẩm trong đơn -->
-      <div class="order-section">
-        <div class="order-section__title">Sản phẩm trong đơn (<?= count($cart['products']) ?>)</div>
+      <?php if (!empty($errors)): ?>
+  <div class="alert alert-danger">
+    <ul>
+      <?php foreach ($errors as $error): ?>
+        <li><?= htmlspecialchars($error) ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+<?php endif; ?>
 
-        <?php foreach ($cart['products'] as $product): ?>
-          <div class="order-product-box">
+      <div class="order-section">
+        <div class="order-section__title">Sản phẩm trong đơn (<?= count($Items['products']) ?>)</div>
+        <!-- <?php
+          echo '<pre>';
+          print_r($Items);
+          echo '</pre>';
+          ?> -->
+
+        <?php foreach ($Items['products'] as $product): ?>
+          <div class="order-product-box" data-product-id="<?= htmlspecialchars($Items['id']) ?>">
             <div class="order-product">
               <div class="order-product__image">
                 <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
@@ -31,16 +46,17 @@
                 <div class="order-product__color">Màu: <?= htmlspecialchars($product['color'] ?? 'Không rõ') ?></div>
               </div>
               <div class="order-product__price">
-                <span class="order-product__quantity">x<?= $product['quantity'] ?></span>
-                <div class="order-product__current-price"><?= number_format($product['price'], 0, ',', '.') ?> ₫</div>
+                <span class="order-product__quantity">x<?= (int)$product['quantity'] ?></span>
+                <div class="order-product__current-price"><?= number_format($product['price_current'], 0, ',', '.') ?> ₫</div>
               </div>
             </div>
           </div>
         <?php endforeach; ?>
 
-        <div class="order-gift">
-          <span class="order-gift__icon">🎁</span> <?= count($cart['products']) ?> Quà tặng đơn hàng >
-        </div>
+
+
+
+        
       </div>
 
       <!-- Người đặt hàng -->
@@ -119,7 +135,7 @@
 
         <div class="order-payment__method">
           <label>
-            <input type="radio" name="payment_method" value="vnpay" <?= (($_POST['payment_method'] ?? '') === 'vnpay') ? 'checked' : '' ?> />
+            <input type="radio" name="payment_method" value="cod" <?= (($_POST['payment_method'] ?? '') === 'cod' || !isset($_POST['payment_method'])) ? 'checked' : '' ?> />
             <span>Thanh toán qua VNPay</span>
           </label>
         </div>
@@ -133,27 +149,22 @@
 
         <div class="order-summary__row">
           <span>Tổng tiền</span>
-          <span><?= number_format($cart['summary']['total_price'], 0, ',', '.') ?> ₫</span>
+          <span><?= number_format($Items['summary']['total_price'], 0, ',', '.') ?> ₫</span>
         </div>
 
         <div class="order-summary__row">
           <span>Tổng khuyến mãi</span>
-          <span class="order-summary__discount"><?= number_format($cart['summary']['total_discount'], 0, ',', '.') ?> ₫</span>
+          <span class="order-summary__discount"><?= number_format($Items['summary']['total_discount'], 0, ',', '.') ?> ₫</span>
         </div>
 
         <div class="order-summary__row">
           <span>Phí vận chuyển</span>
-          <span><?= number_format($cart['summary']['shipping_fee'], 0, ',', '.') ?> ₫</span>
+          <span><?= number_format($Items['summary']['shipping_fee'], 0, ',', '.') ?> ₫</span>
         </div>
 
         <div class="order-summary__row order-summary__row--total">
           <span>Cần thanh toán</span>
-          <div><?= number_format($cart['summary']['final_total'], 0, ',', '.') ?> ₫</div>
-        </div>
-
-        <div class="order-summary__row">
-          <span>Voucher FreeShip</span>
-          <span class="order-summary__points">-20.000</span>
+          <div><?= number_format($Items['summary']['final_total'], 0, ',', '.') ?> ₫</div>
         </div>
 
         <button type="submit" class="btn btn-primary">Đặt hàng</button>

@@ -5,6 +5,7 @@ namespace App\Controllers\Web;
 use Core\View;
 use Core\Redirect;
 use App\Services\CartService;
+use App\Models\CartModel;
 use App\Services\CheckoutService;
 use App\Services\ProductService;
 
@@ -29,47 +30,48 @@ class CheckoutController
     /**
      * Trang checkout
      */
-    public function index()
+   
+public function index()
     {
-        // Chỉ lấy sản phẩm đã chọn để thanh toán
-        $cartData = $this->cartService->getSelectedCartWithSummary($this->userId, $this->sessionId);
+        // Lấy danh sách sản phẩm đã chọn trong giỏ hàng cùng tổng tiền
+        $Items = $this->cartService->getCart($this->userId, $this->sessionId);
 
-        if (empty($cartData['products'])) {
-            $_SESSION['error_message'] = "Vui lòng chọn ít nhất 1 sản phẩm để thanh toán.";
-            Redirect::to('/cart');
-            return;
-        }
-
-        View::render('checkout', ['cart' => $cartData]);
+        // Truyền dữ liệu sang view checkout
+        View::render('checkout', [
+            'Items' => $Items
+        ]);
     }
+
+
+
 
     /**
-     * Xác nhận đơn hàng (COD)
+     * Xác nhận đơn hàng (COD hoặc VNPAY)
      */
     public function submit()
-    {
-        $postData = $_POST;
+{
+    error_log('Submit called');
+    $postData = $_POST;
+    error_log('POST data: ' . print_r($postData, true));
 
-        // Lấy sản phẩm đã chọn
-        $cartItems = $this->cartService->getSelectedCartItems($this->userId, $this->sessionId);
+    $cartItems = $this->cartService->getSelectedCartItems($this->userId, $this->sessionId);
+    error_log('Selected cart items: ' . print_r($cartItems, true));
 
-        if (empty($cartItems)) {
-            Redirect::to('/checkout?error=cart-empty');
-            return;
-        }
-
-        // Tạo đơn
-        $orderId = $this->checkoutService->createOrder($this->userId, $postData, $cartItems);
-
-        if ($orderId) {
-            // Xóa sản phẩm đã chọn khỏi giỏ
-            $this->cartService->clearSelectedItems($this->userId, $this->sessionId);
-
-            Redirect::to('/thank-you');
-        } else {
-            Redirect::to('/checkout?error=order-failed');
-        }
+    if (empty($cartItems)) {
+        error_log('No selected cart items');
+        Redirect::to('/cart');
+        return;
     }
+
+    $orderId = $this->checkoutService->createOrder($this->userId, $postData);
+
+    if ($orderId) {
+        $this->cartService->clearSelectedItems($this->userId, $this->sessionId);
+        Redirect::to('/thank-you');
+    } else {
+        Redirect::to('/checkout?error=order-failed');
+    }
+}
 
     /**
      * Thanh toán VNPay

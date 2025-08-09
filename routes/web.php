@@ -47,14 +47,10 @@ Router::post('/cart/delete', 'CartController@delete');
 Router::post('/cart/select-all', 'CartController@toggleSelectAll');
 Router::post('/cart/unselect-all', 'CartController@unselectAll');
 Router::post('/cart/update-color', 'CartController@updateColor');
-Router::post('/cart/checkout', 'CartController@checkout');
+
+
 Router::get('/checkout', 'CheckoutController@index');
 
-
-Router::post('/checkout', 'CheckoutController@submit');
-Router::post('/checkout/vnpay', 'CheckoutController@vnpayCheckout');
-Router::post('/checkout/submit', 'CheckoutController@submit');
-Router::get('checkout', 'CheckoutController@confirmOder');
 Router::get('/thankyou', 'ThankyouController@index');
 Router::get('/thankyou', 'CheckoutController@thankyou');
 Router::get('/delivery', 'DeliveryController@delivery');

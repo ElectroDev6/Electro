@@ -612,4 +612,43 @@ public function getColorsBySku($skuId)
             'selected_count' => count($selectedItems)
         ];
     }
+    public function placeOrder(int $userId, int $addressId, array $items, float $totalPrice): array
+{
+    try {
+        $this->pdo->beginTransaction();
+
+        // 1. Tạo order mới
+        $stmtOrder = $this->pdo->prepare("INSERT INTO orders (user_id, user_address_id, total_price, status, created_at, updated_at) VALUES (:user_id, :address_id, :total_price, 'pending', NOW(), NOW())");
+        $stmtOrder->execute([
+            ':user_id' => $userId,
+            ':address_id' => $addressId,
+            ':total_price' => $totalPrice,
+        ]);
+        $orderId = $this->pdo->lastInsertId();
+
+        // 2. Thêm từng sản phẩm vào order_items
+        $stmtItem = $this->pdo->prepare("INSERT INTO order_items (order_id, sku_id, quantity, price, created_at, updated_at) VALUES (:order_id, :sku_id, :quantity, :price, NOW(), NOW())");
+        
+        foreach ($items as $item) {
+            $stmtItem->execute([
+                ':order_id' => $orderId,
+                ':sku_id' => $item['sku_id'],
+                ':quantity' => $item['quantity'],
+                ':price' => $item['price'],
+            ]);
+        }
+
+        // 3. Xóa giỏ hàng
+        $cartId = $this->getOrCreateCart($userId, null);
+        $this->clearCart($cartId);
+
+        $this->pdo->commit();
+        return ['success' => true, 'order_id' => $orderId, 'message' => 'Đơn hàng đã được tạo thành công.'];
+    } catch (Exception $e) {
+        $this->pdo->rollBack();
+        error_log("CartModel: placeOrder error - " . $e->getMessage());
+        return ['success' => false, 'message' => 'Lỗi khi tạo đơn hàng.'];
+    }
+}
+
 }

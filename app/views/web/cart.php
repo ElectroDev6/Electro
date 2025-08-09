@@ -56,8 +56,13 @@
         <?php foreach ($cart['products'] as $product): ?>
           <div class="product <?= $product['selected'] ? 'product--selected' : '' ?>">
             <div class="product__main">
-              <input type="checkbox" class="product__checkbox" <?= $product['selected'] ? 'checked' : '' ?>>
-
+              <input 
+                  type="checkbox" 
+                  class="product__checkbox" 
+                  name="selected_skus[]" 
+                  value="<?= $product['id'] ?>" 
+                  <?= $product['selected'] ? 'checked' : '' ?>
+              >
               <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="product__image">
 
               <div class="product__info">
@@ -77,7 +82,20 @@
                       <?php endforeach; ?>
                   </select>
               </form>
+                <script>
+                document.querySelectorAll('.product__checkbox').forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        let selected = Array.from(document.querySelectorAll('.product__checkbox:checked'))
+                            .map(cb => cb.value);
 
+                        fetch('/cart/update-selected', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: new URLSearchParams({ 'selected_skus[]': selected })
+                        });
+                    });
+                });
+                </script>
 
 
               </div>
@@ -156,10 +174,8 @@
           </div>
         </div>
 
-        <form action="/cart/checkout" method="POST">
-            <!-- Có thể kèm theo hidden input nếu cần gửi dữ liệu bổ sung -->
-            <button type="submit" class="order-summary__checkout-btn">Xác nhận đơn</button>
-        </form>
+        
+            <a href="/checkout">Xác nhận đơn hàng</a>        
       </div>
     <?php endif; ?>
   </div>

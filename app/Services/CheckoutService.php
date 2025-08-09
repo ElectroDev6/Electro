@@ -21,7 +21,14 @@ class CheckoutService
         $this->cartService = new CartService($pdo, $productService);
     }
 
-   public function createOrder(int $userId, array $postData): ?int
+    /**
+     * Tạo đơn hàng mới
+     * @param int $userId
+     * @param array $postData
+     * @param array $cartItems Mảng sản phẩm đã chọn trong giỏ
+     * @return int|null
+     */
+   public function createOrder(int $userId, array $postData, array $cartItems): ?int
 {
     $name = trim($postData['name'] ?? '');
     $phone = trim($postData['phone'] ?? '');
@@ -32,9 +39,16 @@ class CheckoutService
         return null;
     }
 
-    $cartItems = $this->cartService->getCartItems($userId);
+    // 🔹 Lấy danh sách sku_id đã chọn từ session
+    $selectedItems = $_SESSION['selected_cart_items'] ?? [];
+
+    // 🔹 Lọc lại chỉ những sản phẩm được chọn
+    $cartItems = array_filter($cartItems, function($item) use ($selectedItems) {
+        return in_array($item['sku_id'], $selectedItems);
+    });
+
     if (empty($cartItems)) {
-        return null;
+        return null; // Không có sản phẩm được chọn
     }
 
     $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cartItems));
@@ -55,7 +69,7 @@ class CheckoutService
         foreach ($cartItems as $item) {
             $this->checkoutModel->addOrderItem([
                 'order_id' => $orderId,
-                'sku_id' => $item['sku_id'], // dùng sku_id để khớp DB
+                'sku_id' => $item['sku_id'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
             ]);
@@ -73,7 +87,6 @@ class CheckoutService
     }
 }
 
-
     public function createVNPayUrl(int $userId): string
     {
         $txnId = uniqid('vnp_');
@@ -90,4 +103,3 @@ class CheckoutService
         $_SESSION['orders'] = [];
     }
 }
-

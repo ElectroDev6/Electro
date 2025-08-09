@@ -7,6 +7,7 @@ use Core\View;
 
 class CartController
 {
+    
     private $cartService;
 
     public function __construct(\PDO $pdo)
@@ -64,6 +65,7 @@ class CartController
             }
             header('Location: /cart');
             exit;
+            
         }
     }
 
@@ -152,7 +154,7 @@ class CartController
     $isSelected = isset($_POST['selected']) ? (bool)$_POST['selected'] : false;
 
     $userId = $_SESSION['user_id'] ?? $_SESSION['user']['id'] ?? null;
-    $sessionId = $_COOKIE['session_id'] ?? session_id();
+    $sessionId = session_id();
 
     // Lấy danh sách sản phẩm trong giỏ
     $cartItems = $this->cartService->getCartItems($userId, $sessionId);
@@ -172,13 +174,43 @@ class CartController
 
     if ($this->isAjaxRequest()) {
         echo json_encode($result);
-        return;
     } else {
         $_SESSION['success_message'] = $message;
         header('Location: /cart');
         exit;
     }
 }
+public function toggleSelectItem()
+{
+    $skuId = $_POST['sku_id'] ?? null;
+    $selected = $_POST['selected'] ?? false;
+
+    if (!$skuId) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Missing sku_id']);
+        return;
+    }
+
+    if (!isset($_SESSION['selected_cart_items'])) {
+        $_SESSION['selected_cart_items'] = [];
+    }
+
+    if ($selected) {
+        // Thêm vào danh sách
+        if (!in_array($skuId, $_SESSION['selected_cart_items'])) {
+            $_SESSION['selected_cart_items'][] = $skuId;
+        }
+    } else {
+        // Bỏ khỏi danh sách
+        $_SESSION['selected_cart_items'] = array_diff(
+            $_SESSION['selected_cart_items'],
+            [$skuId]
+        );
+    }
+
+    echo json_encode(['success' => true]);
+}
+
 
 
     public function updateSelection()
@@ -212,6 +244,15 @@ class CartController
             exit;
         }
     }
+public function updateSelectedItems()
+{
+    if (isset($_POST['selected_skus']) && is_array($_POST['selected_skus'])) {
+        $_SESSION['selected_cart_items'] = $_POST['selected_skus'];
+    } else {
+        $_SESSION['selected_cart_items'] = [];
+    }
+    echo json_encode(['status' => 'success']);
+}
 
     public function updateColor()
     {
@@ -297,51 +338,47 @@ class CartController
         echo json_encode(['count' => $count]);
     }
 
-    public function confirmOrder()
-    {
-        $userId = $_SESSION['user_id'] ?? $_SESSION['user']['id'] ?? null;
-        $sessionId = $_COOKIE['session_id'] ?? session_id();
+    public function confirmOrder(Request $request) {
+    $userId = $request->user()->id; // Lấy ID người dùng từ session
+    $cart = Cart::where('user_id', $userId)->first(); // Lấy giỏ hàng của người dùng
 
-        // Lấy danh sách sản phẩm được chọn từ giỏ hàng
-        $selectedProducts = $this->cartService->getSelectedCartItems($userId, $sessionId);
-
-        if (empty($selectedProducts)) {
-            $response = ['success' => false, 'message' => 'Không có sản phẩm nào được chọn.'];
-            
-            if ($this->isAjaxRequest()) {
-                echo json_encode($response);
-                return;
-            } else {
-                $_SESSION['error_message'] = $response['message'];
-                header('Location: /cart');
-                exit;
-            }
-        }
-
-        // Tính tổng tiền
-        $totalPrice = 0;
-        foreach ($selectedProducts as $item) {
-            $totalPrice += $item['price'] * $item['quantity'];
-        }
-
-        // Lưu thông tin đơn hàng tạm vào SESSION
-        $_SESSION['checkout'] = [
-            'products' => $selectedProducts,
-            'total_price' => $totalPrice,
-            'created_at' => time()
-        ];
-
-        if ($this->isAjaxRequest()) {
-            echo json_encode([
-                'success' => true, 
-                'message' => 'Đã chuẩn bị đơn hàng.', 
-                'redirect' => '/checkout'
-            ]);
-        } else {
-            header('Location: /checkout');
-            exit;
-        }
+    if (!$cart) {
+        return response()->json(['message' => 'Giỏ hàng trống'], 400);
     }
+
+    // Tính tổng giá trị đơn hàng
+    $totalPrice = 0;
+    $cartItems = CartItem::where('cart_id', $cart->cart_id)->get();
+    foreach ($cartItems as $item) {
+        $totalPrice += $item->quantity * $item->sku->price; // Giả sử bạn có phương thức sku để lấy giá
+    }
+
+    // Tạo đơn hàng
+    $order = Order::create([
+        'user_id' => $userId,
+        'user_address_id' => $request->input('user_address_id'), // Lấy địa chỉ từ request
+        'total_price' => $totalPrice,
+        'status' => 'pending',
+    ]);
+
+    // Thêm các mục vào đơn hàng
+    foreach ($cartItems as $item) {
+        OrderItem::create([
+            'order_id' => $order->order_id,
+            'sku_id' => $item->sku_id,
+            'quantity' => $item->quantity,
+            'price' => $item->sku->price,
+        ]);
+    }
+
+    // Xóa giỏ hàng
+    CartItem::where('cart_id', $cart->cart_id)->delete();
+    $cart->delete();
+
+    return response()->json(['message' => 'Đơn hàng đã được xác nhận', 'order_id' => $order->order_id], 201);
+}
+
+
 
     // =============================================================================
     // USER LOGIN CART MERGE
@@ -361,7 +398,7 @@ class CartController
             }
         }
 
-        header('Location: /cart');
+        header('Location: /checkout');
         exit;
     }
 
@@ -457,6 +494,59 @@ class CartController
 
     header("Location: /checkout");
     exit;
+}
+public function placeOrder($userId, $userAddressId, $couponId = null) {
+    $cartId = $this->cartService->cartModel->getOrCreateCart($userId, null);
+    if (!$cartId) {
+        return ['success' => false, 'message' => 'Không tìm thấy giỏ hàng.'];
+    }
+
+    $items = $this->cartService->cartModel->getCartItemsWithDetails($cartId);
+    if (empty($items)) {
+        return ['success' => false, 'message' => 'Giỏ hàng trống.'];
+    }
+
+    // Tính tổng tiền
+    $totalPrice = 0;
+    foreach ($items as $item) {
+        $totalPrice += $item['price'] * $item['quantity'];
+    }
+
+    // TODO: Xử lý coupon giảm giá nếu có
+    $discount = 0;
+    $finalPrice = $totalPrice - $discount;
+
+    try {
+        $pdo = $this->cartService->cartModel->getPDO(); // Nếu bạn có method lấy PDO
+        $pdo->beginTransaction();
+
+        // Thêm orders
+        $stmt = $pdo->prepare("INSERT INTO orders (user_id, user_address_id, coupon_id, status, total_price) VALUES (?, ?, ?, 'pending', ?)");
+        $stmt->execute([$userId, $userAddressId, $couponId, $finalPrice]);
+        $orderId = $pdo->lastInsertId();
+
+        // Thêm order_items
+        $stmtItem = $pdo->prepare("INSERT INTO order_items (order_id, sku_id, quantity, price) VALUES (?, ?, ?, ?)");
+        foreach ($items as $item) {
+            $stmtItem->execute([$orderId, $item['sku_id'], $item['quantity'], $item['price']]);
+        }
+
+        // Xóa cart_items và cart
+        $stmt = $pdo->prepare("DELETE FROM cart_items WHERE cart_id = ?");
+        $stmt->execute([$cartId]);
+        $stmt = $pdo->prepare("DELETE FROM cart WHERE cart_id = ?");
+        $stmt->execute([$cartId]);
+
+        $pdo->commit();
+
+        return ['success' => true, 'message' => 'Đơn hàng đã được tạo.', 'order_id' => $orderId];
+
+    } catch (\PDOException $e) {
+        $pdo->rollBack();
+        error_log("Place order failed: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Đã có lỗi khi tạo đơn hàng.'];
+        
+    }
 }
 
 }

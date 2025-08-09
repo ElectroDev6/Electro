@@ -64,7 +64,7 @@ class CartService
                 'price_current' => $item['price'],
                 'price_original' => $item['price'],
                 'quantity' => $item['quantity'],
-                'selected' => false,
+                'selected' => in_array($item['sku_id'], $_SESSION['selected_cart_items'] ?? []),
                 'available_colors' => $availableColors,
                 'color_id' => $availableColors[0]['attribute_option_id'] ?? null,
                 'warranty' => [
@@ -90,6 +90,19 @@ class CartService
         return [
             'products' => $products,
             'summary' => $summary
+        ];
+    }
+
+    private function getEmptyCartResponse()
+    {
+        return [
+            'products' => [],
+            'summary' => [
+                'total_price' => 0,
+                'total_discount' => 0,
+                'shipping_fee' => 0,
+                'final_total' => 0
+            ]
         ];
     }
 
@@ -157,55 +170,181 @@ class CartService
         }
     }
 
-    public function getCartItems($userId = null, $sessionId = null)
-{
-    $cartId = $this->cartModel->getOrCreateCart($userId, $sessionId);
-    if (!$cartId) {
-        return [];
+    /**
+     * Get cart items by user ID (for authenticated users) or session ID (for guests)
+     * This method now properly uses the cart service pattern
+     */
+    public function getCartItems($userId = null, $sessionId = null) 
+    {
+        $cartId = $this->cartModel->getOrCreateCart($userId, $sessionId);
+        if (!$cartId) {
+            return [];
+        }
+
+        return $this->cartModel->getCartItemsWithDetails($cartId);
     }
-    return $this->cartModel->getCartItems($cartId);
+
+    /**
+     * Calculate total price from cart items array
+     */
+    public function calculateTotalPrice($cartItems) 
+    {
+        $totalPrice = 0;
+        
+        foreach ($cartItems as $item) {
+            // Handle both array and object formats
+            if (is_array($item)) {
+                $totalPrice += $item['quantity'] * $item['price'];
+            } elseif (is_object($item)) {
+                $totalPrice += $item->quantity * $item->price;
+            }
+        }
+
+        return $totalPrice;
+    }
+
+    /**
+     * Get selected cart items based on session storage
+     */
+    public function getSelectedCartItems($userId = null, $sessionId = null)
+{
+    // Lấy nguyên mảng products và summary từ getCart
+    $cartData = $this->getCart($userId, $sessionId);
+
+    // Lấy danh sách tất cả sản phẩm trong giỏ
+    $allItems = $cartData['products'];
+
+    // Lấy mảng các id sản phẩm đã chọn từ session
+    $selectedIds = $_SESSION['selected_cart_items'] ?? [];
+
+    // Lọc lấy những sản phẩm có id nằm trong selectedIds
+    $filteredItems = array_filter($allItems, function ($item) use ($selectedIds) {
+        return in_array($item['id'], $selectedIds);
+    });
+
+    // Đảm bảo key mảng liền mạch
+    return array_values($filteredItems);
 }
 
 
-    // ==== Phần sửa chính ở đây: ======
 
-    public function getSelectedCartItems($userId, $sessionId)
-    {
-        // Gọi đúng hàm getCartItems nhận cartId, qua service
-        $allItems = $this->getCartItems($userId, $sessionId);
+    /**
+     * Get selected cart items with summary calculation
+     */
+   public function getSelectedCartWithSummary($userId, $sessionId)
+{
+    $cart = $this->getCart($userId, $sessionId);
 
-        $selectedIds = $_SESSION['selected_cart_items'] ?? [];
+    $selectedItems = $_SESSION['selected_cart_items'] ?? [];
 
-        return array_filter($allItems, function ($item) use ($selectedIds) {
-            return in_array($item['sku_id'], $selectedIds);
-        });
+    $selectedProducts = array_filter($cart['products'], function ($p) use ($selectedItems) {
+        return in_array($p['id'], $selectedItems);
+    });
+
+    $totalPrice = array_sum(array_map(function ($p) {
+        return $p['price_current'] * $p['quantity'];
+    }, $selectedProducts));
+
+    return [
+        'products' => array_values($selectedProducts),
+        'summary' => [
+            'total_price' => $totalPrice,
+            'total_discount' => 0,
+            'shipping_fee' => 30000,
+            'final_total' => $totalPrice + 30000,
+        ]
+    ];
+}
+
+
+
+public function placeOrder(int $userId, int $addressId)
+{
+    // Lấy các sản phẩm được chọn trong cart
+    $cartId = $this->cartModel->getOrCreateCart($userId, null);
+    if (!$cartId) {
+        return ['success' => false, 'message' => 'Không tìm thấy giỏ hàng.'];
     }
 
-    public function getSelectedCartWithSummary($userId, $sessionId)
-    {
-        $items = $this->getSelectedCartItems($userId, $sessionId);
+    $selectedItems = $this->cartModel->getSelectedItems($cartId);
+    if (empty($selectedItems)) {
+        return ['success' => false, 'message' => 'Không có sản phẩm nào được chọn để đặt hàng.'];
+    }
 
-        $total = array_sum(array_map(function ($item) {
-            return $item['price'] * $item['quantity'];
-        }, $items));
-
-        return [
-            'products' => $items,
-            'total' => $total
+    // Tính tổng tiền đơn hàng
+    $totalPrice = 0;
+    $itemsForOrder = [];
+    foreach ($selectedItems as $item) {
+        $totalPrice += $item['price'] * $item['quantity'];
+        $itemsForOrder[] = [
+            'sku_id' => $item['sku_id'],
+            'quantity' => $item['quantity'],
+            'price' => $item['price']
         ];
     }
 
-    public function clearSelectedItems($userId, $sessionId)
-    {
-        $selectedIds = $_SESSION['selected_cart_items'] ?? [];
-        if (empty($selectedIds)) return;
+    // Gọi model để tạo order
+    $result = $this->cartModel->placeOrder($userId, $addressId, $itemsForOrder, $totalPrice);
 
-        foreach ($selectedIds as $skuId) {
-            $this->cartModel->removeFromCart($this->cartModel->getOrCreateCart($userId, $sessionId), $skuId);
-        }
+    if ($result['success']) {
+        return ['success' => true, 'message' => 'Đặt hàng thành công!', 'order_id' => $result['order_id']];
+    } else {
+        return ['success' => false, 'message' => $result['message']];
+    }
+}
+public function mergeSessionCartToUserCart(string $sessionId, int $userId): bool
+{
+    // Lấy cart của session
+    $sessionCartId = $this->cartModel->getOrCreateCart(null, $sessionId);
+    // Lấy cart của user
+    $userCartId = $this->cartModel->getOrCreateCart($userId, null);
 
-        unset($_SESSION['selected_cart_items']);
+    if (!$sessionCartId || !$userCartId) {
+        return false;
     }
 
-    // Các hàm còn lại giữ nguyên...
+    // Lấy tất cả sản phẩm của giỏ session
+    $sessionItems = $this->cartModel->getCartItems($sessionCartId);
+
+    foreach ($sessionItems as $item) {
+        // Thêm hoặc cập nhật sản phẩm vào giỏ user
+        $this->cartModel->addOrUpdateCartItem($userCartId, $item['sku_id'], $item['quantity']);
+    }
+
+    // Xóa giỏ session
+    $this->cartModel->clearCart($sessionCartId);
+
+    return true;
+}
+
+    /**
+     * Clear selected items from cart
+     */
+    public function clearSelectedItems($userId = null, $sessionId = null)
+    {
+        $selectedIds = $_SESSION['selected_cart_items'] ?? [];
+        if (empty($selectedIds)) {
+            return ['success' => true, 'message' => 'Không có sản phẩm nào được chọn.'];
+        }
+
+        $cartId = $this->cartModel->getOrCreateCart($userId, $sessionId);
+        if (!$cartId) {
+            return ['success' => false, 'message' => 'Không tìm thấy giỏ hàng.'];
+        }
+
+        $success = true;
+        foreach ($selectedIds as $skuId) {
+            $result = $this->cartModel->removeFromCart($cartId, $skuId);
+            if (!$result) {
+                $success = false;
+            }
+        }
+
+        if ($success) {
+            unset($_SESSION['selected_cart_items']);
+            return ['success' => true, 'message' => 'Xóa các sản phẩm đã chọn thành công.'];
+        } else {
+            return ['success' => false, 'message' => 'Có lỗi xảy ra khi xóa một số sản phẩm.'];
+        }
+    }
 }
