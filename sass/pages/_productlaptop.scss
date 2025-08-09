@@ -15,6 +15,57 @@ body {
         margin: auto;
     }
 }
+.use-needs {
+    margin: 30px 70px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+
+    &__title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    &__list {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-radius: 16px;
+        padding: 15px;
+        width: 140px;
+        text-decoration: none;
+        color: #000;
+        transition: transform 0.2s ease;
+
+        img {
+            width: 100px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
 .container {
     display: flex;
     max-width: 2000px;
@@ -32,6 +83,25 @@ body {
     height: auto;
     max-height: 800px;
     overflow-y: auto;
+    position: sticky; // Phần có định menu khi kéo trang
+    top: 5px;
+
+&::-webkit-scrollbar {
+        // chỉnh kích thước thanh cuộn
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        // chỉnh thanh cuộn
+        background-color: #ccc;
+        border-radius: 10px; // ← Bo chính phần "nút cuộn"
+    }
+
+    &__heading {
+        // thẻ h3 
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
 
     &__heading {
         // Lồng .filter__heading vào trong .filter (trước đây là h3)
@@ -154,18 +224,24 @@ body {
     &__promo {
         // Lồng .product-card__promo vào trong .product-card (trước đây là p)
         font-size: 12px;
-        border-radius: 5px;
+        border-radius: 10px;
         color: #fff;
         background-color: #333;
-        margin-right: 163px;
+        padding: 5px;
+        margin: 0; // loại bỏ căn phải cứng
+        align-self: flex-start; // căn trái trong flex container
+        text-align: left; // chữ căn trái
     }
 
     &__name {
-        // Lồng .product-card__name vào trong .product-card (trước đây là h4)
         font-size: 14px;
+        display: block; // không cần flex ở đây
         color: #333;
         padding: 5px;
-        margin-right: 78px;
+        margin: 0; // loại bỏ căn phải cứng
+        align-self: flex-start; // căn trái trong flex container
+        text-align: left; // chữ căn trái
+        width: 100%; // nếu muốn chiếm toàn bộ chiều ngang container con
     }
 
     &__button {
@@ -188,11 +264,14 @@ body {
 
     // Phần giá sản phẩm
     &__price-box {
-        // Lồng .product-card__price-box vào trong .product-card (trước đây là .price-box)
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-right: 106px;
+         // Lồng .product-card__price-box vào trong .product-card (trước đây là .price-box)
+        font-size: 14px;
+        display: block; // không cần flex ở đây
+        color: #333;
+        padding: 5px;
+        margin: 0; // loại bỏ căn phải cứng
+        align-self: flex-start; // căn trái trong flex container
+        text-align: left; // chữ căn trái
 
         .product-card__old-price {
             // Giữ nguyên tên class con
@@ -383,5 +462,32 @@ body {
             border-color: #007bff;
             background-color: #e6f2ff;
         }
+    }
+}
+.pagination {
+    // phần phân trang
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 20px;
+
+    &__link,
+    &__next {
+        padding: 8px 12px;
+        background-color: #f0f0f0;
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    &__link:hover,
+    &__next:hover {
+        background-color: #d9d9d9;
+    }
+
+    &__ellipsis {
+        padding: 8px 12px;
+        color: #888;
     }
 }

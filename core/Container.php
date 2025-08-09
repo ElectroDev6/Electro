@@ -32,4 +32,4 @@ class Container
 Container::bind('pdo', function () {
     $config = require BASE_PATH . '/config/db.php';
     return createPDO();
-});
+}); 
