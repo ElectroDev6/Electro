@@ -10,108 +10,106 @@ Sản phẩm
 
 <?php View::section('content'); ?>
 
-<body>
-    <?php echo '<pre>';
-    print_r($products);
-    echo '</pre>';
-    ?>
-    Phần dung lươợng
-    <?php echo '<pre>';
-    print_r($storage);
-    echo '</pre>';
-    ?>
+<div class="container-main">
     <div class="navigation">
-        <a href="/">Trang chủ</a> / <a class="active" href="/products/iphone">Điện thoại</a>
+        <a href="/">Trang chủ</a> / <a class="active" href="/products/iphone">iPhone</a>
     </div>
+
     <div class="banner">
-        <img src="/img/Slide2Laptop.jpg" alt="Banner">
+        <img src="/img/Slide2Laptop.jpg" alt="Banner iPhone">
     </div>
+
     <div class="use-needs">
-        <h3 class="use-needs__title">Nhu cầu sử dụng</h3>
+        <h3 class="use-needs__title">Nhu cầu sử dụng iPhone</h3>
         <div class="use-needs__list">
-            <a href="/laptop-ai" class="use-needs__item" style="background-color: #ffe5e5;">
-                <img src="/img/UN_Laptop_AI.png" alt="Laptop AI">
-                <p>Laptop AI</p>
+            <a href="/iphone-pro-max" class="use-needs__item" style="background: linear-gradient(135deg, #ffe5e5, #ffcccc);">
+                <img src="/img/UN_Laptop_AI.png" alt="iPhone Pro Max">
+                <p>iPhone Pro Max</p>
             </a>
-            <a href="/gaming-do-hoa" class="use-needs__item" style="background-color: #fff2cc;">
-                <img src="/img/UN_Gaming.png" alt="Gaming đồ họa">
-                <p>Gaming đồ họa</p>
+            <a href="/iphone-pro" class="use-needs__item" style="background: linear-gradient(135deg, #fff2cc, #ffe066);">
+                <img src="/img/UN_Gaming.png" alt="iPhone Pro">
+                <p>iPhone Pro</p>
             </a>
-            <a href="/van-phong" class="use-needs__item" style="background-color: #ccf2ff;">
-                <img src="/img/UN_Sinhvien.png" alt="Sinh viên - Văn phòng">
-                <p>Sinh viên - Văn phòng</p>
+            <a href="/iphone-standard" class="use-needs__item" style="background: linear-gradient(135deg, #ccf2ff, #66d9ff);">
+                <img src="/img/UN_Sinhvien.png" alt="iPhone Standard">
+                <p>iPhone Standard</p>
             </a>
-            <a href="/mong-nhe" class="use-needs__item" style="background-color: #ede9ff;">
-                <img src="/img/UN_Mongnhe.jpg" alt="Mỏng nhẹ">
-                <p>Mỏng nhẹ</p>
+            <a href="/iphone-mini" class="use-needs__item" style="background: linear-gradient(135deg, #ede9ff, #d6ccff);">
+                <img src="/img/UN_Mongnhe.jpg" alt="iPhone Mini">
+                <p>iPhone Mini</p>
             </a>
-            <a href="/doanh-nhan" class="use-needs__item" style="background-color: #d9fbe4;">
-                <img src="/img/UN_Doanhnhan.jpg" alt="Doanh nhân">
-                <p>Doanh nhân</p>
+            <a href="/iphone-se" class="use-needs__item" style="background: linear-gradient(135deg, #d9fbe4, #99f5b3);">
+                <img src="/img/UN_Doanhnhan.jpg" alt="iPhone SE">
+                <p>iPhone SE</p>
             </a>
         </div>
     </div>
-    <div class="container">
+
+    <div class="content-layout">
         <aside class="filter">
-            <h3 class="filter__heading">Bộ lọc tìm kiếm</h3>
-            <div class="filter-group">
-                <h4 class="filter-group__heading">Hãng sản xuất</h4>
-                <div class="brand-logos" id="brand-logos">
-                    <a href="/products/iphone?brand=Oppo" class="brand-logos__link">
-                        <div class="brand-logo-card">
-                            <img src="/img/Menu_DT_oppo.jpg" alt="Oppo" class="brand-logo-card__image">
-                        </div>
-                    </a>
-                    <a href="/products/iphone?brand=Apple" class="brand-logos__link">
-                        <div class="brand-logo-card" data-brand="Apple">
-                            <img src="/img/Menu_LT_apple.jpg" alt="Apple" class="brand-logo-card__image">
-                        </div>
-                    </a>
-                    <a href="/products/iphone?brand=Vivo" class="brand-logos__link">
-                        <div class="brand-logo-card" data-brand="Dell">
-                            <img src="/img/Menu_DT_vivo.jpg" alt="Dell" class="brand-logo-card__image">
-                        </div>
-                    </a>
-                    <!-- Các hãng khác -->
-                </div>
-            </div>
+            <h3 class="filter__heading">🔍 Bộ lọc tìm kiếm</h3>
 
-            <form method="GET" action="/product" id="mainFilter">
+            <form method="GET" action="/products/iphone" id="mainFilter">
                 <div class="filter-group">
-                    <h4 class="filter-group__heading">Mức giá</h4>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="all"
-                            class="filter-group__radio"> Tất cả </label>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="25-30"
-                            class="filter-group__radio"> Từ 25 đến 30 triệu
-                    </label>
-                    <label class="filter-group__label">
-                        <input type="checkbox" name="price" value="20-25" class="filter-group__radio"> Từ 20 đến 25
-                        triệu
-                    </label>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="15-20"
-                            class="filter-group__radio"> Từ 15 đến 20 triệu </label>
-                    <label class="filter-group__label">
-                        <input type="checkbox" name="price" value="10-15" class="filter-group__radio"> Từ 10 đến 15
-                        triệu
-                    </label>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="duoi10"
-                            class="filter-group__radio"> Dưới 10 triệu </label>
+                    <h4 class="filter-group__heading">📱 Dòng iPhone</h4>
+                    <div class="brand-logos" id="brand-logos">
+                        <a href="/products/iphone?series=iPhone15" class="brand-logos__link">
+                            <div class="brand-logo-card">
+                                <img src="/img/Menu_DT_oppo.jpg" alt="iPhone 15">
+                                <p style="font-size: 11px; margin-top: 5px;">iPhone 15</p>
+                            </div>
+                        </a>
+                        <a href="/products/iphone?series=iPhone14" class="brand-logos__link">
+                            <div class="brand-logo-card">
+                                <img src="/img/Menu_LT_apple.jpg" alt="iPhone 14">
+                                <p style="font-size: 11px; margin-top: 5px;">iPhone 14</p>
+                            </div>
+                        </a>
+                        <a href="/products/iphone?series=iPhone13" class="brand-logos__link">
+                            <div class="brand-logo-card">
+                                <img src="/img/Menu_DT_vivo.jpg" alt="iPhone 13">
+                                <p style="font-size: 11px; margin-top: 5px;">iPhone 13</p>
+                            </div>
+                        </a>
+                        <a href="/products/iphone?series=iPhoneSE" class="brand-logos__link">
+                            <div class="brand-logo-card">
+                                <img src="/img/Menu_LT_apple.jpg" alt="iPhone SE">
+                                <p style="font-size: 11px; margin-top: 5px;">iPhone SE</p>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="filter-group">
-                    <h4 class="filter-group__heading">Hệ điều hành</h4>
+                    <h4 class="filter-group__heading">💰 Mức giá</h4>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="operating_system[]" value="IOS" class="filter-group__checkbox"> IOS
+                        <input type="checkbox" name="price" value="all" class="filter-group__radio">
+                        Tất cả
                     </label>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="operating_system[]" value="Android" class="filter-group__checkbox">
-                        Android
+                        <input type="checkbox" name="price" value="30-40" class="filter-group__radio">
+                        Từ 30 - 40 triệu
                     </label>
-
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="price" value="25-30" class="filter-group__radio">
+                        Từ 25 - 30 triệu
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="price" value="20-25" class="filter-group__radio">
+                        Từ 20 - 25 triệu
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="price" value="15-20" class="filter-group__radio">
+                        Từ 15 - 20 triệu
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="price" value="duoi15" class="filter-group__radio">
+                        Dưới 15 triệu
+                    </label>
                 </div>
 
                 <div class="filter-group filter-group--ram">
-                    <h4 class="filter-group__heading">Dung lượng</h4>
+                    <h4 class="filter-group__heading">💾 Dung lượng</h4>
                     <div class="ram-options">
                         <a href="/products/iphone?storage=128GB" class="ram-options__link">
                             <div class="ram-option-card">
@@ -119,123 +117,74 @@ Sản phẩm
                             </div>
                         </a>
                         <a href="/products/iphone?storage=256GB" class="ram-options__link">
-                            <div class="ram-option-card" data-brand="Apple">
+                            <div class="ram-option-card">
                                 <p class="ram-option-card__text">256GB</p>
                             </div>
                         </a>
                         <a href="/products/iphone?storage=512GB" class="ram-options__link">
-                            <div class="ram-option-card" data-brand="Dell">
+                            <div class="ram-option-card">
                                 <p class="ram-option-card__text">512GB</p>
                             </div>
                         </a>
                         <a href="/products/iphone?storage=1TB" class="ram-options__link">
-                            <div class="ram-option-card" data-brand="HP">
+                            <div class="ram-option-card">
                                 <p class="ram-option-card__text">1TB</p>
                             </div>
                         </a>
                     </div>
-
                 </div>
-
-                <!-- <div class="filter-group">
-
-                    <h4 class="filter-group__heading">Hiệu năng và Pin</h4>
-                    <label class="filter-group__label"><input type="checkbox" name="battery" value="0-3000"
-                            class="filter-group__checkbox"> Dưới 3000 mah</label>
-                    <label class="filter-group__label"><input type="checkbox" name="battery" value="3000-4000"
-                            class="filter-group__checkbox"> Từ 3000 - 4000 mah</label>
-                    <label class="filter-group__label"><input type="checkbox" name="battery" value="4000-5000"
-                            class="filter-group__checkbox"> Từ 4000 - 5000 mah </label>
-                    <label class="filter-group__label"><input type="checkbox" name="battery" value="5500-6000"
-                            class="filter-group__checkbox"> Trên 5000 mah </label>
-
-                </div>
-            
-                <div class="filter-group filter-group--ram">
-                    <h4 class="filter-group__heading">Dung lượng RAM</h4>
-                    <div class="ram-options">
-                        <a href="/product?ram=4GB" class="ram-options__link">
-                            <div class="ram-option-card">
-                                <p class="ram-option-card__text">4GB</p>
-                            </div>
-                        </a>
-                        <a href="/product?ram=6GB" class="ram-options__link">
-                            <div class="ram-option-card" data-brand="Apple">
-                                <p class="ram-option-card__text">6GB</p>
-                            </div>
-                        </a>
-                        <a href="/product?ram=8GB" class="ram-options__link">
-                            <div class="ram-option-card" data-brand="Dell">
-                                <p class="ram-option-card__text">8GB</p>
-                            </div>
-                        </a>
-                        <a href="/product?ram=16GB" class="ram-options__link">
-                            <div class="ram-option-card" data-brand="HP">
-                                <p class="ram-option-card__text">16GB</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-          
-                </div> -->
-
-                <!-- <div class="filter-group filter-group--ram">
-                        <h4 class="filter-group__heading">Dung lượng RAM</h4>
-                        <div class="ram-options">
-                            <a href="/products/iphone?ram=4GB" class="ram-options__link">
-                                <div class="ram-option-card">
-                                    <p class="ram-option-card__text">4GB</p>
-                                </div>
-                            </a>
-                            <a href="/products/iphone?ram=6GB" class="ram-options__link">
-                                <div class="ram-option-card" data-brand="Apple">
-                                    <p class="ram-option-card__text">6GB</p>
-                                </div>
-                            </a>
-                            <a href="/products/iphone?ram=8GB" class="ram-options__link">
-                                <div class="ram-option-card" data-brand="Dell">
-                                    <p class="ram-option-card__text">8GB</p>
-                                </div>
-                            </a>
-                            <a href="/products/iphone?ram=16GB" class="ram-options__link">
-                                <div class="ram-option-card" data-brand="HP">
-                                    <p class="ram-option-card__text">16GB</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div> -->
 
                 <div class="filter-group">
-                    <h4 class="filter-group__heading">Kích thước màn hình</h4>
-                    <label class="filter-group__label"><input type="checkbox" name="screen" value="5-6.5"
-                            class="filter-group__checkbox"> Từ 5 - 6.5 inch</label>
-                    <label class="filter-group__label"><input type="checkbox" name="screen" value="6.5-6.8"
-                            class="filter-group__checkbox"> Từ 6.5 - 6.8 inch</label>
-                    <label class="filter-group__label"><input type="checkbox" name="screen" value="6.8-"
-                            class="filter-group__checkbox"> Trên 6.8 inch</label>
+                    <h4 class="filter-group__heading">🎨 Màu sắc</h4>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="color[]" value="black" class="filter-group__checkbox">
+                        Đen
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="color[]" value="white" class="filter-group__checkbox">
+                        Trắng
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="color[]" value="blue" class="filter-group__checkbox">
+                        Xanh dương
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="color[]" value="purple" class="filter-group__checkbox">
+                        Tím
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="color[]" value="gold" class="filter-group__checkbox">
+                        Vàng
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <h4 class="filter-group__heading">📱 Kích thước màn hình</h4>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="screen" value="5.4" class="filter-group__checkbox">
+                        5.4 inch (Mini)
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="screen" value="6.1" class="filter-group__checkbox">
+                        6.1 inch (Standard)
+                    </label>
+                    <label class="filter-group__label">
+                        <input type="checkbox" name="screen" value="6.7" class="filter-group__checkbox">
+                        6.7 inch (Plus/Pro Max)
+                    </label>
                 </div>
 
                 <div class="filter-group filter-group--refresh-rate">
-                    <h4 class="filter-group__heading">Tần số quét</h4>
+                    <h4 class="filter-group__heading">⚡ Tần số quét</h4>
                     <div class="refresh-rate-options">
                         <a href="/products/iphone?hz=60" class="refresh-rate-options__link">
                             <div class="refresh-rate-option-card">
                                 <p class="refresh-rate-option-card__text">60Hz</p>
                             </div>
                         </a>
-                        <a href="/products/iphone?hz=90" class="refresh-rate-options__link">
-                            <div class="refresh-rate-option-card" data-brand="Apple">
-                                <p class="refresh-rate-option-card__text">90Hz</p>
-                            </div>
-                        </a>
                         <a href="/products/iphone?hz=120" class="refresh-rate-options__link">
-                            <div class="refresh-rate-option-card" data-brand="Dell">
+                            <div class="refresh-rate-option-card">
                                 <p class="refresh-rate-option-card__text">120Hz</p>
-                            </div>
-                        </a>
-                        <a href="/products/iphone?hz=144" class="refresh-rate-options__link">
-                            <div class="refresh-rate-option-card" data-brand="HP">
-                                <p class="refresh-rate-option-card__text">144Hz</p>
                             </div>
                         </a>
                     </div>
@@ -243,71 +192,21 @@ Sản phẩm
             </form>
         </aside>
 
-        <!-- Phần sản phẩm -->
-        <!-- <main class="products" id="product-list">
-            <?php foreach ($products as $product): ?>
-                <div class="product-card">
-
-                    <div class="product-card__feature">
-                        <div class="product-card__feature-icon">
-                            <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
-                        </div>
-                        <div class="product-card__feature-text">Màn hình cực lớn<br> inch</div>
-                        <div class="product-card__feature-icon">
-                            <img src="/img/DT_nutcamera.svg" alt="">
-                        </div>
-                        <div class="product-card__feature-text">Camera siêu nét</div>
-                        <div class="product-card__feature-icon">
-                            <img src="/img/DT_vienmanhinh.svg" alt="">
-                        </div>
-                        <div class="product-card__feature-text">Viền màn hình<br>siêu mỏng</div>
-                    </div>
-
-                    <img src="<?= $product['default_url'] ?>" alt="<?= $product['name'] ?>" class="product-card__image">
-                    <p class="product-card__promo">Trả góp 0%</p>
-                    <h4 class="product-card__name"><?= $product['name']; ?></h4>
-                    <div class="product-card__price-box">
-                        <span class="product-card__old-price"><?= number_format($product['price_original'], 0, ',', '.') ?>
-                            ₫</span>
-                        <div class="product-card__new-price"><?= number_format($product['price_discount'], 0, ',', '.') ?> ₫
-                        </div>
-                        <div class="product-card__save-price">Giảm
-                            <?= number_format($product['price_original'] - $product['price_discount'], 0, ',', '.') ?> ₫
-                        </div>
-                    </div>
-
-                    <!-- <div class="product-card__storage-options">
-                        <div class="product-card__storage-card">
-                            <span><?= htmlspecialchars($product['storage']) ?></span>
-                        </div>
-                    </div>
-
-
-                    <div class="product-card__color-options">
-                        <div class="product-card__color-swatch" style="background-color: #e0e0e0;"></div>
-                        <div class="product-card__color-swatch" style="background-color: #c0c0c0;"></div>
-                        <div class="product-card__color-swatch" style="background-color: #d2b48c;"></div>
-                        <div class="product-card__color-swatch" style="background-color: #000000;"></div>
-                    </div> -->
-
-                    <button class="product-card__button">Xem chi tiết</button>
-                </div>
-            <?php endforeach; ?>
-        </main> -->
-        <?php View::partial('partials.product-container', ['iphoneProducts' => $iphoneProducts]); ?>
-
-
+        <main class="products" id="product-list">
+            <!-- Sample product cards -->
+        </main>
     </div>
+
     <div class="pagination">
         <a href="?page=1" class="pagination__link">1</a>
-        <a href="/products/laptops" class="pagination__link">2</a>
+        <a href="?page=2" class="pagination__link">2</a>
         <a href="?page=3" class="pagination__link">3</a>
         <span class="pagination__ellipsis">...</span>
         <a href="?page=10" class="pagination__link">10</a>
         <a href="?page=2" class="pagination__next">Trang sau</a>
     </div>
+</div>
 
-</body>
 <script>
     const mainForm = document.getElementById('mainFilter');
     const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
@@ -326,8 +225,28 @@ Sản phẩm
         });
     });
 
+    // Animation cho product cards khi scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Apply animation to product cards
+    document.querySelectorAll('.product-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        observer.observe(card);
+    });
 </script>
-
-
 
 <?php View::endSection(); ?>

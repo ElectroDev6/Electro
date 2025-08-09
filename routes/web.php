@@ -6,8 +6,7 @@ use Core\Router;
 Router::get('/', 'HomeController@index');
 
 // Products
-Router::get('/products/iphone', 'ProductController@showAll');
-Router::get('/products/laptops', 'ProductLaptopController@showAllLaptops');
+Router::get('/products', 'ProductController@showAll');
 
 // Search
 Router::get('/search/products', 'SearchProductController@searchProducts');

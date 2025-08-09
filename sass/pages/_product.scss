@@ -1,606 +1,321 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Inter, sans-serif;
-}
-
-body {
-  background: #f7f7f7;
-}
-
+/* Navigation */
 .navigation {
-  font-size: 14px;
-  padding: 5px 70px 5px 70px;
-  color: #333;
-  background-color: #f7f7f7;
-
-  a {
-    color: #007bff;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .active {
-    font-weight: bold;
-    color: black;
-  }
-}
-
-.banner {
-  img {
-    width: 1440px;
-    display: block;
-    margin: auto;
-  }
-}
-
-.use-needs {
-  margin: 30px 70px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-
-  &__title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
-
-  &__list {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-
-  &__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border-radius: 16px;
-    padding: 15px;
-    width: 140px;
-    text-decoration: none;
-    color: #000;
-    transition: transform 0.2s ease;
-
-    img {
-      width: 100px;
-      height: 80px;
-      object-fit: contain;
-      margin-bottom: 8px;
-    }
-
-    p {
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    &:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-  }
-}
-
-.container {
   display: flex;
-  max-width: 2000px;
-  margin: 20px auto;
-  gap: 30px;
-  padding: 0px 70px 0px 70px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 15px 0;
+  font-size: 14px;
+  color: #666;
 }
 
+.navigation a {
+  text-decoration: none;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.navigation a:hover,
+.navigation a.active {
+  color: #007aff;
+}
+
+/* Banner */
+.banner {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.banner img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Use needs section */
+.use-needs {
+  margin-bottom: 40px;
+}
+
+.use-needs__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #1d1d1f;
+  text-align: center;
+}
+
+.use-needs__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.use-needs__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 15px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.use-needs__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.use-needs__item img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+
+.use-needs__item p {
+  font-weight: 600;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Main content layout */
+.content-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+/* Filter sidebar */
 .filter {
-  // Phần menu bên trái
-  background: #fff;
-  padding: 15px;
-  width: 250px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  height: auto;
-  max-height: 800px;
-  overflow-y: auto;
-  position: sticky; // Phần có định menu khi kéo trang
-  top: 5px;
-
-  &::-webkit-scrollbar {
-    // chỉnh kích thước thanh cuộn
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    // chỉnh thanh cuộn
-    background-color: #ccc;
-    border-radius: 10px; // ← Bo chính phần "nút cuộn"
-  }
-
-  &__heading {
-    // thẻ h3
-    margin-bottom: 15px;
-    font-weight: bold;
-  }
-
-  .filter-group {
-    margin-bottom: 20px;
-
-    &__heading {
-      margin-bottom: 8px;
-      font-size: 15px;
-      color: #333;
-      font-weight: bold;
-    }
-
-    &__label {
-      // Lồng .filter-group__label vào trong .filter-group (trước đây là label)
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-      &__radio,
-      &__checkbox {
-         margin-right: 5px;
-         text-decoration: none;
-      }
-
-      &__price-prompt {
-         margin-top: 8px;
-         font-size: 13px;
-      }
-
-      &__price-input {
-         width: 90px;
-         padding: 5px;
-         border: 1px solid #ccc;
-         border-radius: 4px;
-         font-size: 14px;
-      }
-   }
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 30px;
+  border-radius: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-.brand-logos {
-   display: grid;
-   grid-template-columns: repeat(2, 1fr);
-   gap: 10px;
+.filter__heading {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #1d1d1f;
+  text-align: center;
+  border-bottom: 2px solid #007aff;
+  padding-bottom: 10px;
+}
 
-   &__link {
-      // Lồng .brand-logos__link vào trong .brand-logos
-      text-decoration: none;
-      color: inherit;
-   }
+.filter-group {
+  margin-bottom: 30px;
+}
+
+.filter-group__heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group__heading::before {
+  content: "";
+  width: 4px;
+  height: 16px;
+  background: linear-gradient(135deg, #007aff, #5856d6);
+  border-radius: 2px;
+}
+
+/* Brand logos */
+.brand-logos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .brand-logo-card {
-   border: 1px solid #ccc;
-   border-radius: 10px;
-   padding: 5px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 42px;
-   overflow: hidden;
-   transition: all 0.2s ease-in-out;
-   cursor: pointer;
-
-   &__image {
-      // Lồng .brand-logo-card__image vào trong .brand-logo-card (trước đây là img)
-      max-width: 80%;
-      max-height: 100%;
-      object-fit: contain;
-   }
-
-   &:hover {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-   }
-
-   &.selected {
-      border-color: #007bff;
-      background-color: #e6f2ff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-   }
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
 }
 
-// phần sản phẩm !!
-.products {
-   flex: 1;
-   display: grid;
-   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-   gap: 30px;
+.brand-logo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 122, 255, 0.2);
+  border-color: #007aff;
 }
 
-.product-card {
-   background: #fff;
-   border-radius: 8px;
-   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-   padding: 10px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   max-height: 400px;
-   position: relative;
-
-   &__image {
-      // Lồng .product-card__image vào trong .product-card (trước đây là img)
-      max-width: 100%;
-      height: 150px;
-      object-fit: contain;
-      margin-bottom: 10px;
-      margin-right: 120px;
-   }
-
-  &__promo {
-    // Lồng .product-card__promo vào trong .product-card (trước đây là p)
-    font-size: 12px;
-    border-radius: 10px;
-    color: #fff;
-    background-color: #333;
-    padding: 5px;
-    margin: 0; // loại bỏ căn phải cứng
-    align-self: flex-start; // căn trái trong flex container
-    text-align: left; // chữ căn trái
-  }
-
-  &__name {
-    font-size: 14px;
-    display: block; // không cần flex ở đây
-    color: #333;
-    padding: 5px;
-    margin: 0; // loại bỏ căn phải cứng
-    align-self: flex-start; // căn trái trong flex container
-    text-align: left; // chữ căn trái
-    width: 100%; // nếu muốn chiếm toàn bộ chiều ngang container con
-  }
-
-   &__button {
-      // Lồng .product-card__button vào trong .product-card (trước đây là button)
-      background: #ffcc00;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.3s;
-      align-self: center;
-
-      &:hover {
-         background: #333e48;
-         color: #fff;
-      }
-   }
-
-  // Phần giá sản phẩm
-  &__price-box {
-    // Lồng .product-card__price-box vào trong .product-card (trước đây là .price-box)
-    font-size: 14px;
-    display: block; // không cần flex ở đây
-    color: #333;
-    padding: 5px;
-    margin: 0; // loại bỏ căn phải cứng
-    align-self: flex-start; // căn trái trong flex container
-    text-align: left; // chữ căn trái
-
-    .product-card__old-price {
-      // Giữ nguyên tên class con
-      text-decoration: line-through;
-      color: #888;
-      font-size: 14px;
-    }
-
-    .product-card__new-price {
-      // Giữ nguyên tên class con
-      font-size: 20px;
-      font-weight: bold;
-      color: #cb1c22;
-    }
-
-      .product-card__save-price {
-         // Giữ nguyên tên class con
-         font-size: 13px;
-         color: #008000;
-      }
-   }
-
-  // Phần dung lượng Điện Thoại trong product-card
-  &__storage-options {
-    // Lồng .product-card__storage-options vào trong .product-card
-    display: flex;
-    gap: 10px;
-    margin: 10px 0;
-
-      &__link {
-         text-decoration: none;
-         color: inherit;
-      }
-   }
-
-   &__storage-card {
-      // Lồng .product-card__storage-card vào trong .product-card
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 5px 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 27px;
-      transition: all 0.2s ease-in-out;
-      cursor: pointer;
-
-      .product-card__storage-text {
-         // Lồng .product-card__storage-text vào trong .product-card__storage-card (trước đây là p)
-         margin: 0;
-         font-size: 14px;
-         font-weight: 500;
-         text-decoration: un;
-      }
-
-      &:hover {
-         border-color: #007bff;
-         box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-      }
-
-      &.selected {
-         border-color: #007bff;
-         background-color: #e6f2ff;
-      }
-   }
-
-   // Phần màu sắc sản phẩm trong product-card
-   &__color-options {
-      // Lồng .product-card__color-options vào trong .product-card
-      display: flex;
-      gap: 8px;
-      margin: 8px 0;
-      margin-right: 140px;
-   }
-
-   &__color-swatch {
-      // Lồng .product-card__color-swatch vào trong .product-card
-      width: 15px;
-      height: 15px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-
-      &:hover {
-         border-color: #007bff;
-         box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-      }
-
-    &.selected {
-      border: 2px solid #007bff;
-    }
-  }
-
-  //Phần Icons bên phải sản phẩm
-  &__feature {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    z-index: 5;
-  }
-
-   &__feature-icon {
-      background-color: #f5f5f5;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img {
-         width: 20px;
-         height: 20px;
-      }
-   }
-
-  &__feature-text {
-    font-size: 11px;
-    color: #333;
-    text-align: center;
-    line-height: 1.2;
-  }
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+.brand-logo-card__image {
+  width: 50px;
+  height: 40px;
+  object-fit: contain;
 }
 
-// Phần dung lượng Điện Thoại (filter)
-.filter-Dungluong {
-   // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-   display: flex;
-   gap: 10px;
-   margin: 10px 0;
-   margin-right: 15px;
+.brand-logos__link {
+  text-decoration: none;
 }
 
-.brand-logo-Dungluong {
-   // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-   border: 1px solid;
-   border-radius: 10px;
-   padding: 5px 10px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 27px;
-
-   p {
-      margin: 0;
-      font-size: 14px;
-      font-weight: 500;
-   }
-
-   &:hover {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-   }
-
-   &.selected {
-      border-color: #007bff;
-      background-color: #e6f2ff;
-   }
+/* Filter labels */
+.filter-group__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 8px;
+  border-radius: 8px;
 }
 
-// Phần màu sắc sản phẩm (filter)
-.filter-Mausac {
-   // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-   display: flex;
-   gap: 8px;
-   margin: 8px 0;
-   margin-right: 140px;
+.filter-group__label:hover {
+  background: rgba(0, 122, 255, 0.05);
+  color: #007aff;
 }
 
-.brand-logo-Mausac {
-   // Giữ nguyên class này nếu nó chỉ được dùng cho phần filter
-   width: 15px;
-   height: 15px;
-   border-radius: 10px;
-   border: 1px solid #ccc;
-   cursor: pointer;
-   transition: all 0.2s ease-in-out;
-
-   &:hover {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-   }
-
-   &.selected {
-      border: 2px solid #007bff;
-   }
+.filter-group__checkbox,
+.filter-group__radio {
+  width: 18px;
+  height: 18px;
+  accent-color: #007aff;
 }
 
-// phần RAM trong filter
-.filter-group--ram {
-   // Sử dụng class của filter-group
-   .ram-options {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-
-      &__link {
-         text-decoration: none;
-         color: inherit;
-      }
-   }
-
-   .ram-option-card {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 5px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 42px;
-      overflow: hidden;
-      transition: all 0.2s ease-in-out;
-      cursor: pointer;
-
-      &__text {
-         margin: 0;
-         font-size: 14px;
-         font-weight: 500;
-         text-decoration: none;
-      }
-
-      &:hover {
-         border-color: #007bff;
-         box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-      }
-
-      &.selected {
-         border-color: #007bff;
-         background-color: #e6f2ff;
-      }
-   }
+/* Storage and refresh rate options */
+.ram-options,
+.refresh-rate-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
 }
 
-// phần Tần số quét (Hz) trong filter
-.filter-group--refresh-rate {
-   // Sử dụng class của filter-group
-   .refresh-rate-options {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-
-      &__link {
-         text-decoration: none;
-         color: inherit;
-      }
-   }
-
-   .refresh-rate-option-card {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 5px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 42px;
-      overflow: hidden;
-      transition: all 0.2s ease-in-out;
-      cursor: pointer;
-
-      &__text {
-         margin: 0;
-         font-size: 14px;
-         font-weight: 500;
-         text-decoration: none;
-      }
-
-    &:hover {
-      border-color: #007bff;
-      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-
-      &.selected {
-         border-color: #007bff;
-         background-color: #e6f2ff;
-      }
-   }
+.ram-option-card,
+.refresh-rate-option-card {
+  background: white;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 2px solid transparent;
 }
 
+.ram-option-card:hover,
+.refresh-rate-option-card:hover {
+  border-color: #007aff;
+  background: linear-gradient(135deg, #007aff, #5856d6);
+  color: white;
+}
+
+.ram-option-card__text,
+.refresh-rate-option-card__text {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.ram-options__link,
+.refresh-rate-options__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Pagination */
 .pagination {
-  // phần phân trang
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin: 20px;
+  gap: 10px;
+  margin-top: 50px;
+  padding-top: 30px;
+}
 
-  &__link,
-  &__next {
-    padding: 8px 12px;
-    background-color: #f0f0f0;
-    color: #333;
-    text-decoration: none;
-    border-radius: 4px;
+.pagination__link,
+.pagination__next {
+  padding: 10px 15px;
+  background: white;
+  color: #007aff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e5e5;
+}
+
+.pagination__link:hover,
+.pagination__next:hover {
+  background: #007aff;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+}
+
+.pagination__ellipsis {
+  color: #999;
+  padding: 0 10px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .content-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 
-  &__link:hover,
-  &__next:hover {
-    background-color: #d9d9d9;
+  .filter {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-main {
+    padding: 15px;
+    margin: 10px;
+    border-radius: 15px;
   }
 
-  &__ellipsis {
-    padding: 8px 12px;
-    color: #888;
+  .use-needs__list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+  }
+
+  .products {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .brand-logos,
+  .ram-options,
+  .refresh-rate-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .use-needs__list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card__feature {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 }
