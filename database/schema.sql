@@ -185,12 +185,17 @@ CREATE TABLE cart_items (
     cart_id INT NOT NULL,
     sku_id INT NOT NULL,
     quantity INT NOT NULL CHECK (quantity > 0),
+    selected TINYINT(1) DEFAULT 1,
+    -- Đổi thành DEFAULT 1 để đồng bộ với INSERT
+    color VARCHAR(50),
+    warranty_enabled TINYINT(1) DEFAULT 0,
+    voucher_code VARCHAR(50),
+    image_url VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (cart_id) REFERENCES cart(cart_id) ON DELETE CASCADE,
     FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE,
-    UNIQUE (cart_id, sku_id),
-    INDEX idx_cart_items_sku_id (sku_id)
+    UNIQUE KEY cart_id_sku_id_color (cart_id, sku_id, color)
 );
 
 -- Bảng reviews

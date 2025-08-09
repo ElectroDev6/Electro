@@ -13,7 +13,7 @@ export default class ProductVariantManager {
     this.cacheDom();
     this.bindEvents();
     this.selectDefaultVariant();
-    this.updateCapacityButtons(); // Cập nhật hiển thị nút dung lượng ngay khi khởi tạo
+    this.updateCapacityButtons();
   }
 
   cacheDom() {
@@ -37,6 +37,7 @@ export default class ProductVariantManager {
     this.thumbnailContainer?.addEventListener("click", (e) => {
       const img = e.target.closest("img");
       if (img && img.dataset.galleryUrl) {
+        console.log("Thumbnail clicked - Setting main image to:", img.dataset.galleryUrl);
         this.mainImage.src = img.dataset.galleryUrl;
         this.thumbnailContainer.querySelectorAll(".product-detail__thumbnail").forEach((el) => el.classList.remove("product-detail__thumbnail--active"));
         img.parentElement.classList.add("product-detail__thumbnail--active");
@@ -47,6 +48,7 @@ export default class ProductVariantManager {
       btn.addEventListener("click", () => {
         const optionType = btn.dataset.optionId === "1" ? "Color" : "Capacity";
         const value = btn.dataset.value.toLowerCase();
+        console.log(`Option selected - Type: ${optionType}, Value: ${value}`);
 
         this.selectedOptions[optionType] = value;
 
@@ -54,7 +56,8 @@ export default class ProductVariantManager {
         btn.classList.add(`product-detail__${optionType.toLowerCase()}-btn--active`);
 
         if (optionType === "Color") {
-          this.updateCapacityButtons(); // Cập nhật hiển thị nút dung lượng khi thay đổi màu
+          console.log("Color changed, updating capacity buttons");
+          this.updateCapacityButtons();
         }
 
         const matchedVariant = this.variants.find((variant) => {
@@ -76,6 +79,9 @@ export default class ProductVariantManager {
       const variant = this.variants.find((v) => v.sku_id === this.selectedSkuId);
       if (variant && currentQty < variant.stock_quantity) {
         this.qtyInput.value = currentQty + 1;
+        console.log("Quantity increased to:", this.qtyInput.value);
+      } else {
+        console.warn("Cannot increase quantity - Stock limit or variant not found:", { stock: variant?.stock_quantity, currentQty });
       }
     });
 
@@ -83,11 +89,23 @@ export default class ProductVariantManager {
       const currentQty = parseInt(this.qtyInput.value) || 1;
       if (currentQty > 1) {
         this.qtyInput.value = currentQty - 1;
+        console.log("Quantity decreased to:", this.qtyInput.value);
+      } else {
+        console.log("Cannot decrease quantity - Already at minimum");
       }
     });
 
     this.addToCartBtn?.addEventListener("click", () => {
       const quantity = parseInt(this.qtyInput.value) || 1;
+      const color = this.selectedOptions.Color || this.variants[0]?.attributes.find((attr) => attr.attribute_name === "Color")?.option_value.toLowerCase() || "";
+      const imageUrl = this.getImageUrl(color);
+      console.log("Adding to cart - Data:", {
+        sku_id: this.selectedSkuId,
+        quantity: quantity,
+        color: color,
+        image_url: imageUrl,
+      });
+
       fetch("/detail/add-to-cart", {
         method: "POST",
         headers: {
@@ -97,24 +115,85 @@ export default class ProductVariantManager {
         body: JSON.stringify({
           sku_id: this.selectedSkuId,
           quantity: quantity,
+          color: color,
+          warranty_enabled: false,
+          image_url: imageUrl,
         }),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          console.log("Add to cart response status:", response.status);
+          return response.json();
+        })
         .then((data) => {
+          console.log("Add to cart response data:", data);
           if (data.success) {
             alert(data.message);
+            console.log("Add to cart successful, updating cart count");
+            this.updateCartCount();
             if (data.redirect) {
+              console.log("Redirecting to:", data.redirect);
               window.location.href = data.redirect;
             }
           } else {
+            console.error("Add to cart failed:", data.message || "Unknown error");
             alert(data.message || "Đã xảy ra lỗi khi thêm vào giỏ hàng.");
           }
         })
         .catch((error) => {
-          console.error("Lỗi khi thêm vào giỏ hàng:", error);
+          console.error("Add to cart error:", error);
           alert("Đã xảy ra lỗi khi thêm vào giỏ hàng.");
         });
     });
+  }
+
+  getImageUrl(color) {
+    const selectedColor = color || this.selectedOptions.Color || this.variants[0]?.attributes.find((attr) => attr.attribute_name === "Color")?.option_value.toLowerCase() || "";
+    let imagesForVariant = this.images[this.selectedSkuId] || {};
+    console.log("Getting image for SKU:", this.selectedSkuId, "Color:", selectedColor);
+
+    if (!imagesForVariant.thumbnail_url || !imagesForVariant.gallery_urls) {
+      const fallbackVariant = this.variants.find((v) => {
+        if (!v.attributes) return false;
+        return v.attributes.some((attr) => attr.attribute_name === "Color" && attr.option_value.toLowerCase() === selectedColor);
+      });
+      console.log("No images for SKU, using fallback variant:", fallbackVariant?.sku_id);
+      imagesForVariant = this.images[fallbackVariant?.sku_id] || {};
+    }
+
+    const imageUrl = imagesForVariant.thumbnail_url ? `${imagesForVariant.thumbnail_url[0]}` : "/img/placeholder.jpg";
+    console.log("Selected image URL:", imageUrl);
+    return imageUrl;
+  }
+
+  updateCartCount() {
+    console.log("Fetching cart item count from /cart/item-count");
+    fetch("/cart/item-count", {
+      method: "GET",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => {
+        console.log("Cart count response status:", response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Cart count response data:", data);
+        if (data.success) {
+          const countElement = document.querySelector(".header__count");
+          console.log("Cart count element:", countElement, "Count:", data.count);
+          if (countElement) {
+            countElement.textContent = data.count;
+          } else {
+            console.warn("Cart count element not found");
+          }
+        } else {
+          console.error("Failed to fetch cart count:", data.message || "Unknown error");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cart count:", error);
+      });
   }
 
   selectDefaultVariant() {
@@ -127,13 +206,11 @@ export default class ProductVariantManager {
     }
     console.log("Default SKU:", this.selectedSkuId, "Options:", this.selectedOptions);
     this.updateVariantDisplay();
-    this.updateCapacityButtons(); // Cập nhật nút dung lượng khi khởi tạo
+    this.updateCapacityButtons();
   }
 
   updateCapacityButtons() {
     const selectedColor = this.selectedOptions.Color;
-    // console.log(this.capacityButtons);
-
     this.capacityButtons.forEach((btn) => {
       const capacity = btn.dataset.value.toLowerCase();
       const isValid = this.variants.some((variant) => {

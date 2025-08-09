@@ -26,7 +26,7 @@ class DetailController
             5
         );
         // echo "<pre>";
-        // print_r($relatedProducts);   
+        // print_r($product);
         // echo "</pre>";
         // exit;
         View::render('detail', ['product' => $product, 'relatedProducts' => $relatedProducts]);
@@ -52,9 +52,12 @@ class DetailController
         }
 
         $skuId = $input['sku_id'] ?? null;
-        $quantity = $input['quantity'] ?? 1;
+        $quantity = (int)($input['quantity'] ?? 1);
+        $color = $input['color'] ?? null;
+        $warrantyEnabled = isset($input['warranty_enabled']) ? (bool)$input['warranty_enabled'] : false;
+        $imageUrl = $input['image_url'] ?? null;
 
-        error_log("DetailController: Received SKU ID: " . ($skuId ?? 'null') . ", Quantity: " . $quantity);
+        error_log("DetailController: Parsed - SKU: " . ($skuId ?? 'null') . ", Quantity: $quantity, Color: " . ($color ?? 'null') . ", Warranty: " . ($warrantyEnabled ? 'true' : 'false') . ", Image: " . ($imageUrl ?? 'null'));
 
         if (!$skuId) {
             error_log("DetailController: SKU is invalid or null, Input: " . json_encode($input));
@@ -66,19 +69,10 @@ class DetailController
         $sessionId = session_id();
         error_log("DetailController: User ID: " . ($userId ?? 'null') . ", Session ID: " . ($sessionId ?? 'null'));
 
-        $result = $this->productService->addToCart($skuId, $quantity, $userId, $sessionId);
+        $result = $this->productService->addToCart($skuId, $quantity, $userId, $sessionId, $color, $warrantyEnabled, $imageUrl);
         error_log("DetailController: Add to cart result: " . json_encode($result));
 
-        if ($result['success']) {
-            // Trả về redirect thay vì chỉ JSON
-            header('Content-Type: application/json');
-            echo json_encode([
-                'success' => true,
-                'message' => $result['message'],
-                'redirect' => '/cart'
-            ]);
-        } else {
-            echo json_encode($result);
-        }
+        header('Content-Type: application/json');
+        echo json_encode($result);
     }
 }

@@ -146,7 +146,7 @@ process_flat_table('promotions', 'promotions.csv', ['sku_code', 'discount_percen
 process_flat_table('users', 'users.csv', ['name', 'email', 'password_hash', 'phone_number', 'gender', 'birth_date', 'role', 'is_active', 'avatar_url'])
 process_flat_table('user_address', 'user_address.csv', ['user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'])
 process_flat_table('cart', 'cart.csv', ['user_id', 'session_id'])
-process_flat_table('cart_items', 'cart_items.csv', ['cart_id', 'sku_id', 'quantity'])
+process_flat_table('cart_items', 'cart_items.csv', ['cart_id', 'sku_id', 'quantity', 'selected', 'color', 'warranty_enabled', 'voucher_code'])
 process_flat_table('reviews', 'reviews.csv', ['user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text','status'])
 process_flat_table('wishlist', 'wishlist.csv', ['user_id', 'product_id', 'added_at'])
 process_flat_table('coupons', 'coupons.csv', ['code', 'discount_percent', 'start_date', 'expires_at', 'max_usage', 'is_active'])

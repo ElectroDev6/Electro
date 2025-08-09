@@ -15,7 +15,16 @@ Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
 
 // Cart & Order
 Router::get('/cart', 'CartController@showCart');
+Router::post('/detail/add-to-cart', 'CartController@addToCart');
+Router::post('/cart/select-all', 'CartController@selectAll');
+Router::post('/cart/select-product', 'CartController@selectProduct');
+Router::post('/cart/update-color', 'CartController@updateColor');
+Router::post('/cart/update-quantity', 'CartController@updateQuantity');
+Router::post('/cart/update-warranty', 'CartController@updateWarranty');
 Router::post('/cart/delete', 'CartController@delete');
+Router::post('/cart/apply-voucher', 'CartController@applyVoucher');
+Router::post('/cart/confirm', 'CartController@confirmOrder');
+Router::get('/cart/item-count', 'CartController@getCartItemCount');
 
 // Router::get('/checkout', 'CheckoutController@showCheckoutForm');
 Router::get('/thank-you', 'ThankyouController@showConfirmation');
@@ -41,15 +50,6 @@ Router::get('/refund-policy', 'RefundController@showRefundPolicy');
 Router::get('/clients', 'ClientController@showClients');
 Router::get('/unboxing', 'UnboxingController@showUnboxing');
 Router::get('/repair', 'RepairController@showRepair');
-
-
-Router::post('/cart/add', 'CartController@add');
-Router::post('/cart/update-quantity', 'CartController@updateProductQuantity');
-Router::post('/cart/delete', 'CartController@delete');
-Router::post('/cart/select-all', 'CartController@toggleSelectAll');
-Router::post('/cart/unselect-all', 'CartController@unselectAll');
-Router::post('/cart/update-color', 'CartController@updateColor');
-
 
 Router::get('/checkout', 'CheckoutController@index');
 

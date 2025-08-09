@@ -501,7 +501,4 @@ Chi tiết sản phẩm
                         ) ?>
         };
     </script>
-
-
-
     <?php View::endSection(); ?>

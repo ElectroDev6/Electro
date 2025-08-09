@@ -117,7 +117,7 @@ $skuCodeMap = importJson('promotions', ['sku_code', 'discount_percent', 'start_d
 importJson('users', ['name', 'email', 'password_hash', 'phone_number', 'gender', 'birth_date', 'role', 'is_active', 'avatar_url'], 'users.json');
 importJson('user_address', ['user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'], 'user_address.json');
 importJson('cart', ['user_id', 'session_id'], 'cart.json');
-importJson('cart_items', ['cart_id', 'sku_id', 'quantity'], 'cart_items.json');
+importJson('cart_items', ['cart_id', 'sku_id', 'quantity', 'selected', 'color', 'warranty_enabled', 'voucher_code'], 'cart_items.json');
 importJson('reviews', ['user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text', 'status'], 'reviews.json');
 importJson('wishlist', ['user_id', 'product_id', 'added_at'], 'wishlist.json');
 importJson('coupons', ['code', 'discount_percent', 'start_date', 'expires_at', 'max_usage', 'is_active'], 'coupons.json');
