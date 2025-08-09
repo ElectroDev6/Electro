@@ -35,7 +35,6 @@ class UsersModel
                   $whereClause 
                   ORDER BY created_at DESC 
                   LIMIT :limit OFFSET :offset";
-        
         $stmt = $this->pdo->prepare($query);
         
         // Bind filter parameters
@@ -50,6 +49,7 @@ class UsersModel
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
     public function getTotalUsers($filters = []) {
         $whereConditions = [];
         $params = [];

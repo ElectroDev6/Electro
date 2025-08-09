@@ -1,8 +1,8 @@
-// Reviews Block
+// Reviews Management Page
 .reviews {
    padding: 30px;
 
-   // Header Element
+   // Header Section
    &__header {
       display: flex;
       justify-content: space-between;
@@ -39,7 +39,7 @@
       }
    }
 
-   // Stats Section
+   // Stats Cards
    &__stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -90,7 +90,7 @@
    &__search-group {
       flex: 1;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 8px;
    }
 
@@ -121,6 +121,7 @@
       border-radius: 4px;
       font-size: 14px;
       background-color: white;
+      flex: 1;
 
       &:focus {
          outline: none;
@@ -133,6 +134,20 @@
       }
    }
 
+   &__clear-btn {
+      padding: 10px 16px;
+      background-color: #6c757d;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+         background-color: #5a6268;
+      }
+   }
+
    // Table Section
    &__table-container {
       background: white;
@@ -140,15 +155,12 @@
       border: 1px solid #e9ecef;
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 20px;
    }
 
    &__table {
       width: 100%;
       border-collapse: collapse;
-   }
-
-   &__table-head {
-      background-color: #f8f9fa;
    }
 
    &__table-header {
@@ -157,6 +169,7 @@
       font-weight: 600;
       font-size: 14px;
       color: #495057;
+      background-color: #f8f9fa;
       border-bottom: 2px solid #e9ecef;
    }
 
@@ -175,7 +188,7 @@
       vertical-align: middle;
    }
 
-   // User Element
+   // User Info
    &__user {
       display: flex;
       align-items: center;
@@ -183,27 +196,10 @@
    }
 
    &__user-avatar {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 600;
-      font-size: 14px;
-
-      &--blue {
-         background-color: #007bff;
-      }
-
-      &--purple {
-         background-color: #6f42c1;
-      }
-
-      &--green {
-         background-color: #28a745;
-      }
+      object-fit: cover;
    }
 
    &__user-name {
@@ -211,7 +207,7 @@
       color: #1a1a1a;
    }
 
-   // Rating Element
+   // Rating Stars
    &__rating {
       display: flex;
       align-items: center;
@@ -237,15 +233,16 @@
       font-weight: 500;
    }
 
-   // Status Element
+   // Status Badge
    &__status {
+      display: inline-block;
       padding: 4px 12px;
       border-radius: 16px;
       font-size: 12px;
       font-weight: 500;
       text-transform: capitalize;
 
-      &--approved {
+      &--active {
          background-color: #d4edda;
          color: #155724;
       }
@@ -255,13 +252,13 @@
          color: #856404;
       }
 
-      &--rejected {
+      &--inactive {
          background-color: #f8d7da;
          color: #721c24;
       }
    }
 
-   // Date Element
+   // Date Display
    &__date {
       font-weight: 500;
       color: #1a1a1a;
@@ -274,7 +271,7 @@
       margin-top: 2px;
    }
 
-   // Actions Element
+   // Action Buttons
    &__actions {
       display: flex;
       gap: 8px;
@@ -292,6 +289,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.2s ease;
+      text-decoration: none;
 
       &:hover {
          background-color: #e9ecef;
@@ -301,5 +299,12 @@
       i {
          font-size: 14px;
       }
+   }
+
+   // Pagination
+   &__pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: end;
    }
 }

@@ -29,7 +29,6 @@ class HomeController
         $featuredProducts = $this->productService->getFeaturedProducts(9);
 
         $categories = $this->categoryService->getAllCategories();
-
         // Dữ liệu tạm thời cho phụ kiện và linh kiện máy tính
         $accessories = [
             ['name' => 'Phụ kiện Apple', 'image' => 'cap-sac-hub.webp'],
