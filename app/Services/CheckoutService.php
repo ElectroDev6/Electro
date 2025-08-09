@@ -2,78 +2,102 @@
 
 namespace App\Services;
 
-use App\Services\CartService;
-use App\Models\Order;
+use App\Models\CartModel;
+use App\Models\CheckoutModel;
+use App\Services\ProductService;
 
 class CheckoutService
 {
+    protected CartModel $cartModel;
+    protected CheckoutModel $checkoutModel;
+    protected ?ProductService $productService;
     protected CartService $cartService;
 
-    public function __construct()
+    public function __construct(\PDO $pdo, ?ProductService $productService = null)
     {
-        $this->cartService = new CartService();
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        $this->cartModel = new CartModel($pdo);
+        $this->checkoutModel = new CheckoutModel($pdo); // ✅ thiếu dòng này gây lỗi
+        $this->productService = $productService;
+        $this->cartService = new CartService($pdo, $productService);
     }
 
     /**
-     * Tạo đơn hàng mới từ giỏ hàng
+     * Tạo đơn hàng mới
+     * @param int $userId
+     * @param array $postData
+     * @param array $cartItems Mảng sản phẩm đã chọn trong giỏ
+     * @return int|null
      */
-    public function createOrder(int $userId, array $data): string
-    {
-        $cart = $this->cartService->getCartWithSummary($userId);
+   public function createOrder(int $userId, array $postData, array $cartItems): ?int
+{
+    $name = trim($postData['name'] ?? '');
+    $phone = trim($postData['phone'] ?? '');
+    $address = trim($postData['address'] ?? '');
+    $payment = $postData['payment_method'] ?? 'cod';
 
-        if (empty($cart['products'])) {
-            return '';
-        }
+    if (!$name || !$phone || !$address) {
+        return null;
+    }
 
-        $orderId = uniqid('order_');
+    // 🔹 Lấy danh sách sku_id đã chọn từ session
+    $selectedItems = $_SESSION['selected_cart_items'] ?? [];
 
-        $order = [
-            'id' => $orderId,
+    // 🔹 Lọc lại chỉ những sản phẩm được chọn
+    $cartItems = array_filter($cartItems, function($item) use ($selectedItems) {
+        return in_array($item['sku_id'], $selectedItems);
+    });
+
+    if (empty($cartItems)) {
+        return null; // Không có sản phẩm được chọn
+    }
+
+    $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cartItems));
+
+    $pdo = $this->checkoutModel->getPdo();
+    $pdo->beginTransaction();
+
+    try {
+        $orderId = $this->checkoutModel->createOrder([
             'user_id' => $userId,
-            'products' => $cart['products'],
-            'summary' => $cart['summary'],
-            'info' => [
-                'fullname' => $data['fullname'] ?? '',
-                'phone' => $data['phone'] ?? '',
-                'email' => $data['email'] ?? '',
-                'address' => $data['address'] ?? '',
-                'note' => $data['note'] ?? '',
-            ],
-            'payment_method' => $data['payment_method'] ?? 'cod',
-            'created_at' => date('Y-m-d H:i:s')
-        ];
+            'name' => $name,
+            'phone' => $phone,
+            'address' => $address,
+            'payment_method' => $payment,
+            'total_price' => $total
+        ]);
 
-        // Lưu vào session (giả lập DB)
-        $_SESSION['orders'][] = $order;
+        foreach ($cartItems as $item) {
+            $this->checkoutModel->addOrderItem([
+                'order_id' => $orderId,
+                'sku_id' => $item['sku_id'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+            ]);
+        }
 
-        // Nếu có model lưu DB: Order::create($order);
+        $this->cartService->clearCart($userId);
 
+        $pdo->commit();
         return $orderId;
-    }
 
-    /**
-     * Lấy URL thanh toán VNPay (giả lập)
-     */
+    } catch (\Exception $e) {
+        $pdo->rollBack();
+        error_log("CheckoutService: " . $e->getMessage());
+        return null;
+    }
+}
+
     public function createVNPayUrl(int $userId): string
     {
         $txnId = uniqid('vnp_');
         return "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_TxnRef=$txnId";
     }
 
-    /**
-     * Lấy tất cả đơn hàng trong session
-     */
     public function getOrders(): array
     {
         return $_SESSION['orders'] ?? [];
     }
 
-    /**
-     * Xóa tất cả đơn hàng
-     */
     public function clearOrders(): void
     {
         $_SESSION['orders'] = [];

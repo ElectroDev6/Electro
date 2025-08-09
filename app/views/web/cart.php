@@ -13,6 +13,12 @@ use Core\View; ?>
       </div>
       <h1 class="cart-page__title">Đây là trang thanh toán</h1>
     </div>
+   <div class="cart-page__header">
+    <div class="cart-page__breadcrumb">
+      <a href="/">Trang chủ</a> / Giỏ hàng
+    </div>
+    <h1 class="cart-page__title">Giỏ hàng của bạn</h1>
+  </div>
 
     <div class="container">
       <div class="main-content">
@@ -46,13 +52,55 @@ use Core\View; ?>
                 </form>
               </div>
             </div>
+    <!-- Left: Cart Section -->
+    <div class="cart">
+      <?php if (!isset($cart['products']) || count($cart['products']) === 0): ?>
+        <div class="cart__empty">
+          <p>🛒 Giỏ hàng của bạn chưa có sản phẩm nào!</p>
+        </div>
+      <?php else: ?>
+        <?php
+          $allSelected = true;
+          foreach ($cart['products'] as $product) {
+            if (empty($product['selected'])) {
+              $allSelected = false;
+              break;
+            }
+          }
+        ?>
+        <div class="cart__header">
+          <div class="cart__select-all">
+            <form method="POST" action="/cart/select-all" id="select-all-form">
+    <input
+        type="hidden"
+        name="selected"
+        value="<?= $allSelected ? '0' : '1' ?>"
+    >
+    <input
+        type="checkbox"
+        id="select-all"
+        <?= $allSelected ? 'checked' : '' ?>
+        onchange="document.getElementById('select-all-form').submit();"
+    >
+    <label for="select-all">
+        Chọn tất cả (<?= count($cart['products']) ?>)
+    </label>
+</form>
 
-            <?php foreach ($cart['products'] as $product): ?>
-              <div class="product <?= $product['selected'] ? 'product--selected' : '' ?>">
-                <div class="product__main">
-                  <input type="checkbox" class="product__checkbox" <?= $product['selected'] ? 'checked' : '' ?>>
+          </div>
+        </div>
 
-                  <img src="/img/products/thumbnails/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="product__image">
+        <?php foreach ($cart['products'] as $product): ?>
+          <div class="product <?= $product['selected'] ? 'product--selected' : '' ?>">
+            <div class="product__main">
+              <input 
+                  type="checkbox" 
+                  class="product__checkbox" 
+                  name="selected_skus[]" 
+                  value="<?= $product['id'] ?>" 
+                  <?= $product['selected'] ? 'checked' : '' ?>
+              >
+              <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="product__image">
 
                   <div class="product__info">
                     <div class="product__name"><?= htmlspecialchars($product['name']) ?></div>
@@ -69,6 +117,37 @@ use Core\View; ?>
                       </select>
                     </form>
                   </div>
+                <form method="POST" action="/cart/update-color" class="product__variant">
+                  <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                  <input type="hidden" name="sku_id" value="<?= $product['id'] ?>">
+                  
+                  <label for="color-select-<?= $product['id'] ?>">Màu:</label>
+                  <select name="color" id="color-select-<?= $product['id'] ?>" onchange="this.form.submit()">
+                      <?php foreach ($product['available_colors'] as $color): ?>
+                          <option value="<?= htmlspecialchars($color) ?>"
+                              <?= isset($_POST['selected_color']) && $_POST['selected_color'] === $color ? 'selected' : '' ?>>
+                              <?= htmlspecialchars($color) ?>
+                          </option>
+                      <?php endforeach; ?>
+                  </select>
+              </form>
+                <script>
+                document.querySelectorAll('.product__checkbox').forEach(cb => {
+                    cb.addEventListener('change', () => {
+                        let selected = Array.from(document.querySelectorAll('.product__checkbox:checked'))
+                            .map(cb => cb.value);
+
+                        fetch('/cart/update-selected', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: new URLSearchParams({ 'selected_skus[]': selected })
+                        });
+                    });
+                });
+                </script>
+
+
+              </div>
 
                   <div class="product__price">
                     <span class="product__price--current"><?= number_format($product['price_current'], 0, ',', '.') ?> đ</span>
@@ -89,6 +168,18 @@ use Core\View; ?>
                     <button type="submit" class="product__delete-btn">🗑</button>
                   </form>
                 </div>
+              <!-- Xoá sản phẩm -->
+               <?php if (isset($_SESSION['message'])): ?>
+                  <div class="alert">
+                      <?= $_SESSION['message'] ?>
+                  </div>
+                  <?php unset($_SESSION['message']); ?>
+              <?php endif; ?>
+              <form method="POST" action="/cart/delete" onsubmit="return confirm('Bạn có chắc muốn xoá sản phẩm này?');" style="display:inline;">
+                <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                <button type="submit" class="product__delete-btn">🗑</button>
+              </form>
+            </div>
 
                 <div class="warranty">
                   <div class="warranty__text">
@@ -113,6 +204,17 @@ use Core\View; ?>
                 <button>Xem ngay</button>
               </div>
             </div>
+    <!-- Right: Order Summary -->
+    <?php if (!empty($cart['products'])): ?>
+      <div class="order-summary">
+        <div class="order-summary__promos">
+          <div class="promo">
+            <div class="promo__icon">🎁</div>
+            <span class="promo__text">Voucher</span>
+            <input type="nhập voucher" name=" " value="">
+            <button>Xác nhận voucher</button>
+          </div>
+        </div>
 
             <div class="order-summary__info">
               <h3 class="order-summary__title">Thông tin đơn hàng</h3>
@@ -137,12 +239,12 @@ use Core\View; ?>
               </div>
             </div>
 
-            <!-- <button class="order-summary__checkout-btn">Xác nhận đơn</button> -->
-            <a href="/checkout">Xác nhận đơn</a>
-          </div>
-        <?php endif; ?>
+        
+            <a href="/checkout">Xác nhận đơn hàng</a>        
       </div>
-    </div>
+    <?php endif; ?>
+  </div>
+</div>
 
   </section>
 </div>
