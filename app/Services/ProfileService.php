@@ -30,4 +30,13 @@ class ProfileService
             ]
         ]);
     }
+public function updateUserProfile(int $userId, array $data): bool
+{
+    return $this->profileModel->updateUserProfile($userId, $data);
+}
+
+public function updateUserAddress(int $userId, array $data): bool
+{
+    return $this->profileModel->updateUserAddress($userId, $data);
+}
 }

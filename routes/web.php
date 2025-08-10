@@ -34,6 +34,14 @@ Router::get('/thank-you', 'ThankyouController@showConfirmation');
 Router::get('/login', 'AuthController@showAuthForm');
 Router::post('/handle-auth', 'AuthController@handleAuth');
 
+Router::get('/forgot-password', 'AuthController@showForgotPasswordForm');
+Router::post('/handle-forgot-password', 'AuthController@handleForgotPassword');
+
+Router::get('/reset-password', 'AuthController@showResetPasswordForm');
+Router::post('/handle-reset-password', 'AuthController@handleResetPassword');
+
+
+
 // Product Detail
 Router::get('/detail/:slug', 'DetailController@showDetail');
 Router::post('/detail/add-to-cart', 'DetailController@addToCart');
@@ -46,6 +54,7 @@ Router::get('/logout', 'InforController@logout');
 Router::get('/history', 'HistoryController@showHistory');
 Router::get('/policy-mobile', 'PolicyController@showMobilePolicy');
 Router::get('/refund-policy', 'RefundController@showRefundPolicy');
+Router::post('/profile/save', 'InforController@saveProfile');
 
 // Other Features
 Router::get('/clients', 'ClientController@showClients');
