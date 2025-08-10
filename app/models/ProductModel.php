@@ -19,25 +19,33 @@ class ProductModel
         $joins = [];
         $params = [];
 
-        // Lọc theo category
-        if (!empty($options['category_id'])) {
+        if (!empty($options['subcategory_slug'])) {
+            $where[] = "sc.slug = :subcategory_slug";
+            $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
+            $params['subcategory_slug'] = $options['subcategory_slug'];
+        } elseif (!empty($options['category_id'])) {
             $where[] = "c.category_id = :category_id";
             $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id
                         INNER JOIN categories c ON sc.category_id = c.category_id";
             $params['category_id'] = (int) $options['category_id'];
         }
 
-        if (!empty($options['exclude_id'])) {
-            $where[] = "p.product_id != :exclude_id";
-            $params['exclude_id'] = (int) $options['exclude_id'];
+        if (!empty($options['brand'])) {
+            $brands = is_array($options['brand']) ? $options['brand'] : [$options['brand']];
+            $placeholders = [];
+            foreach ($brands as $index => $brand) {
+                $key = ":brand_$index";
+                $placeholders[] = $key;
+                $params["brand_$index"] = $brand;
+            }
+            $where[] = "b.name IN (" . implode(',', $placeholders) . ")";
+            $joins[] = "INNER JOIN brands b ON p.brand_id = b.brand_id";
         }
 
-        // Lọc sản phẩm đang giảm giá
         if (!empty($options['is_sale'])) {
             $joins[] = "INNER JOIN promotions pr 
                         ON pr.sku_code = s.sku_code";
             if (!empty($options['date'])) {
-                // Lọc theo ngày cụ thể
                 $startOfDay = $options['date'] . ' 00:00:00';
                 $endOfDay = $options['date'] . ' 23:59:59';
                 $where[] = "pr.start_date <= :endOfDay";
@@ -45,7 +53,6 @@ class ProductModel
                 $params['startOfDay'] = $startOfDay;
                 $params['endOfDay'] = $endOfDay;
             } else {
-                // Lọc theo thời gian hiện tại
                 $where[] = "pr.start_date <= NOW()";
                 $where[] = "pr.end_date >= NOW()";
             }
@@ -57,15 +64,11 @@ class ProductModel
                         AND pr.end_date >= NOW()";
         }
 
-        // Lọc sản phẩm nổi bật
         if (!empty($options['is_featured'])) {
             $where[] = "p.is_featured = 1";
         }
 
-        // Ghép điều kiện WHERE
         $whereSQL = $where ? "WHERE " . implode(" AND ", $where) : "";
-
-        // Order by
         $orderBy = !empty($options['is_sale']) ? "ORDER BY pr.discount_percent DESC, p.created_at DESC" : "ORDER BY p.created_at DESC";
 
         $sql = "
@@ -103,9 +106,9 @@ class ProductModel
             LIMIT :limit
         ";
 
+        error_log("ProductModel: getProducts Query: $sql, Params: " . json_encode($params));
         $stmt = $this->pdo->prepare($sql);
 
-        // Bind parameters
         foreach ($params as $key => $value) {
             $paramType = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
             $stmt->bindValue(":$key", $value, $paramType);
@@ -113,9 +116,65 @@ class ProductModel
         $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
 
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        error_log("ProductModel: getProducts Result: " . json_encode($result));
+        return $result;
     }
 
+    public function getBrands(array $options = []): array
+    {
+        $where = [];
+        $joins = [];
+        $params = [];
+
+        if (!empty($options['subcategory_slug'])) {
+            $where[] = "sc.slug = :subcategory_slug";
+            $joins[] = "INNER JOIN products p ON p.brand_id = b.brand_id";
+            $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
+            $params['subcategory_slug'] = $options['subcategory_slug'];
+        } elseif (!empty($options['category_id'])) {
+            $where[] = "c.category_id = :category_id";
+            $joins[] = "INNER JOIN products p ON p.brand_id = b.brand_id";
+            $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
+            $joins[] = "INNER JOIN categories c ON sc.category_id = c.category_id";
+            $params['category_id'] = (int) $options['category_id'];
+        } else {
+            $joins[] = "INNER JOIN products p ON p.brand_id = b.brand_id";
+        }
+
+        $whereSQL = $where ? "WHERE " . implode(" AND ", $where) : "";
+
+        $sql = "
+            SELECT DISTINCT b.name
+            FROM brands b
+            " . implode("\n", $joins) . "
+            $whereSQL
+            ORDER BY b.name
+        ";
+
+        error_log("ProductModel: getBrands Query: $sql, Params: " . json_encode($params));
+        $stmt = $this->pdo->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $paramType = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue(":$key", $value, $paramType);
+        }
+
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        error_log("ProductModel: getBrands Result: " . json_encode($result));
+        return $result;
+    }
+
+    public function getCategoryBySlug(string $slug): ?array
+    {
+        $sql = "SELECT * FROM categories WHERE slug = :slug LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':slug' => $slug]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("ProductModel: getCategoryBySlug Result: " . json_encode($result));
+        return $result ?: null;
+    }
 
     public function getSkuById($skuId): ?array
     {

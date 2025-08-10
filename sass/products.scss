@@ -1,0 +1,8 @@
+@use "./pages/product";
+@use "./partials/product-container";
+@use "./components/product-card";
+
+.category-change-layout {
+  flex-wrap: wrap;
+  gap: 1rem;
+}

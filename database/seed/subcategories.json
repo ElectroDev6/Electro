@@ -2,571 +2,685 @@
   {
     "subcategory_id": 101,
     "category_id": 1,
-    "name": "iPhone"
+    "name": "iPhone",
+    "subcategory_slug": "iphone"
   },
   {
     "subcategory_id": 102,
     "category_id": 1,
-    "name": "Samsung"
+    "name": "Samsung",
+    "subcategory_slug": "samsung"
   },
   {
     "subcategory_id": 103,
     "category_id": 1,
-    "name": "OPPO"
+    "name": "OPPO",
+    "subcategory_slug": "oppo"
   },
   {
     "subcategory_id": 104,
     "category_id": 1,
-    "name": "Xiaomi"
+    "name": "Xiaomi",
+    "subcategory_slug": "xiaomi"
   },
   {
     "subcategory_id": 105,
     "category_id": 1,
-    "name": "Tecno"
+    "name": "Tecno",
+    "subcategory_slug": "tecno"
   },
   {
     "subcategory_id": 106,
     "category_id": 1,
-    "name": "Realme"
+    "name": "Realme",
+    "subcategory_slug": "realme"
   },
   {
     "subcategory_id": 107,
     "category_id": 1,
-    "name": "Vivo"
+    "name": "Vivo",
+    "subcategory_slug": "vivo"
   },
   {
     "subcategory_id": 108,
     "category_id": 1,
-    "name": "Inoi"
+    "name": "Inoi",
+    "subcategory_slug": "inoi"
   },
   {
     "subcategory_id": 109,
     "category_id": 1,
-    "name": "Benco"
+    "name": "Benco",
+    "subcategory_slug": "benco"
   },
   {
     "subcategory_id": 110,
     "category_id": 1,
-    "name": "TCL"
+    "name": "TCL",
+    "subcategory_slug": "tcl"
   },
   {
     "subcategory_id": 201,
     "category_id": 2,
-    "name": "iPad"
+    "name": "iPad",
+    "subcategory_slug": "ipad"
   },
   {
     "subcategory_id": 202,
     "category_id": 2,
-    "name": "Samsung"
+    "name": "Samsung",
+    "subcategory_slug": "samsung"
   },
   {
     "subcategory_id": 203,
     "category_id": 2,
-    "name": "Xiaomi"
+    "name": "Xiaomi",
+    "subcategory_slug": "xiaomi"
   },
   {
     "subcategory_id": 204,
     "category_id": 2,
-    "name": "Lenovo"
+    "name": "Lenovo",
+    "subcategory_slug": "lenovo"
   },
   {
     "subcategory_id": 205,
     "category_id": 2,
-    "name": "TCL"
+    "name": "TCL",
+    "subcategory_slug": "tcl"
   },
   {
     "subcategory_id": 206,
     "category_id": 2,
-    "name": "Huawei"
+    "name": "Huawei",
+    "subcategory_slug": "huawei"
   },
   {
     "subcategory_id": 207,
     "category_id": 2,
-    "name": "OPPO"
+    "name": "OPPO",
+    "subcategory_slug": "oppo"
   },
   {
     "subcategory_id": 208,
     "category_id": 2,
-    "name": "Xiaomi"
+    "name": "Xiaomi",
+    "subcategory_slug": "xiaomi"
   },
   {
     "subcategory_id": 301,
     "category_id": 3,
-    "name": "MacBook"
+    "name": "MacBook",
+    "subcategory_slug": "macbook"
   },
   {
     "subcategory_id": 302,
     "category_id": 3,
-    "name": "Asus"
+    "name": "Asus",
+    "subcategory_slug": "asus"
   },
   {
     "subcategory_id": 303,
     "category_id": 3,
-    "name": "Acer"
+    "name": "Acer",
+    "subcategory_slug": "acer"
   },
   {
     "subcategory_id": 304,
     "category_id": 3,
-    "name": "HP"
+    "name": "HP",
+    "subcategory_slug": "hp"
   },
   {
     "subcategory_id": 305,
     "category_id": 3,
-    "name": "Dell"
+    "name": "Dell",
+    "subcategory_slug": "dell"
   },
   {
     "subcategory_id": 306,
     "category_id": 3,
-    "name": "Lenovo"
+    "name": "Lenovo",
+    "subcategory_slug": "lenovo"
   },
   {
     "subcategory_id": 307,
     "category_id": 3,
-    "name": "MSI"
+    "name": "MSI",
+    "subcategory_slug": "msi"
   },
   {
     "subcategory_id": 308,
     "category_id": 3,
-    "name": "LG"
+    "name": "LG",
+    "subcategory_slug": "lg"
   },
   {
     "subcategory_id": 309,
     "category_id": 3,
-    "name": "Gigabyte"
+    "name": "Gigabyte",
+    "subcategory_slug": "gigabyte"
   },
   {
     "subcategory_id": 401,
     "category_id": 4,
-    "name": "Máy tính để bàn"
+    "name": "Máy tính để bàn",
+    "subcategory_slug": "desktop"
   },
   {
     "subcategory_id": 402,
     "category_id": 4,
-    "name": "Màn hình"
+    "name": "Màn hình",
+    "subcategory_slug": "monitor"
   },
   {
     "subcategory_id": 403,
     "category_id": 4,
-    "name": "CPU"
+    "name": "CPU",
+    "subcategory_slug": "cpu"
   },
   {
     "subcategory_id": 404,
     "category_id": 4,
-    "name": "Mainboard"
+    "name": "Mainboard",
+    "subcategory_slug": "mainboard"
   },
   {
     "subcategory_id": 405,
     "category_id": 4,
-    "name": "RAM"
+    "name": "RAM",
+    "subcategory_slug": "ram"
   },
   {
     "subcategory_id": 406,
     "category_id": 4,
-    "name": "Ổ cứng SSD/HDD"
+    "name": "Ổ cứng SSD/HDD",
+    "subcategory_slug": "storage"
   },
   {
     "subcategory_id": 407,
     "category_id": 4,
-    "name": "Nguồn (PSU)"
+    "name": "Nguồn (PSU)",
+    "subcategory_slug": "psu"
   },
   {
     "subcategory_id": 408,
     "category_id": 4,
-    "name": "Case"
+    "name": "Case",
+    "subcategory_slug": "case"
   },
   {
     "subcategory_id": 409,
     "category_id": 4,
-    "name": "Card màn hình (GPU)"
+    "name": "Card màn hình (GPU)",
+    "subcategory_slug": "gpu"
   },
   {
     "subcategory_id": 501,
     "category_id": 5,
-    "name": "Smart TV"
+    "name": "Smart TV",
+    "subcategory_slug": "smart-tv"
   },
   {
     "subcategory_id": 502,
     "category_id": 5,
-    "name": "Google TV"
+    "name": "Google TV",
+    "subcategory_slug": "google-tv"
   },
   {
     "subcategory_id": 503,
     "category_id": 5,
-    "name": "Android TV"
+    "name": "Android TV",
+    "subcategory_slug": "android-tv"
   },
   {
     "subcategory_id": 504,
     "category_id": 5,
-    "name": "Tivi LG"
+    "name": "Tivi LG",
+    "subcategory_slug": "lg-tv"
   },
   {
     "subcategory_id": 505,
     "category_id": 5,
-    "name": "Tivi Samsung"
+    "name": "Tivi Samsung",
+    "subcategory_slug": "samsung-tv"
   },
   {
     "subcategory_id": 506,
     "category_id": 5,
-    "name": "Tivi Sony"
+    "name": "Tivi Sony",
+    "subcategory_slug": "sony-tv"
   },
   {
     "subcategory_id": 507,
     "category_id": 5,
-    "name": "Tivi Casper"
+    "name": "Tivi Casper",
+    "subcategory_slug": "casper-tv"
   },
   {
     "subcategory_id": 508,
     "category_id": 5,
-    "name": "Tivi Coocaa"
+    "name": "Tivi Coocaa",
+    "subcategory_slug": "coocaa-tv"
   },
   {
     "subcategory_id": 601,
     "category_id": 6,
-    "name": "Màn hình máy tính"
+    "name": "Màn hình máy tính",
+    "subcategory_slug": "computer-monitor"
   },
   {
     "subcategory_id": 602,
     "category_id": 6,
-    "name": "Camera an ninh"
+    "name": "Camera an ninh",
+    "subcategory_slug": "security-camera"
   },
   {
     "subcategory_id": 603,
     "category_id": 6,
-    "name": "Webcam"
+    "name": "Webcam",
+    "subcategory_slug": "webcam"
   },
   {
     "subcategory_id": 604,
     "category_id": 6,
-    "name": "Camera hành trình"
+    "name": "Camera hành trình",
+    "subcategory_slug": "dashcam"
   },
   {
     "subcategory_id": 605,
     "category_id": 6,
-    "name": "Camera 360°"
+    "name": "Camera 360°",
+    "subcategory_slug": "camera-360"
   },
   {
     "subcategory_id": 606,
     "category_id": 6,
-    "name": "Chuông cửa thông minh"
+    "name": "Chuông cửa thông minh",
+    "subcategory_slug": "smart-doorbell"
   },
   {
     "subcategory_id": 607,
     "category_id": 6,
-    "name": "Lưu trữ NAS"
+    "name": "Lưu trữ NAS",
+    "subcategory_slug": "nas-storage"
   },
   {
     "subcategory_id": 701,
     "category_id": 7,
-    "name": "Nồi chiên không dầu"
+    "name": "Nồi chiên không dầu",
+    "subcategory_slug": "air-fryer"
   },
   {
     "subcategory_id": 702,
     "category_id": 7,
-    "name": "Lò vi sóng"
+    "name": "Lò vi sóng",
+    "subcategory_slug": "microwave"
   },
   {
     "subcategory_id": 703,
     "category_id": 7,
-    "name": "Lò nướng"
+    "name": "Lò nướng",
+    "subcategory_slug": "oven"
   },
   {
     "subcategory_id": 704,
     "category_id": 7,
-    "name": "Máy xay sinh tố"
+    "name": "Máy xay sinh tố",
+    "subcategory_slug": "blender"
   },
   {
     "subcategory_id": 705,
     "category_id": 7,
-    "name": "Nồi cơm điện"
+    "name": "Nồi cơm điện",
+    "subcategory_slug": "rice-cooker"
   },
   {
     "subcategory_id": 706,
     "category_id": 7,
-    "name": "Máy pha cà phê"
+    "name": "Máy pha cà phê",
+    "subcategory_slug": "coffee-machine"
   },
   {
     "subcategory_id": 707,
     "category_id": 7,
-    "name": "Bếp điện từ"
+    "name": "Bếp điện từ",
+    "subcategory_slug": "induction-cooker"
   },
   {
     "subcategory_id": 801,
     "category_id": 8,
-    "name": "Máy hút bụi"
+    "name": "Máy hút bụi",
+    "subcategory_slug": "vacuum-cleaner"
   },
   {
     "subcategory_id": 802,
     "category_id": 8,
-    "name": "Máy lọc không khí"
+    "name": "Máy lọc không khí",
+    "subcategory_slug": "air-purifier"
   },
   {
     "subcategory_id": 803,
     "category_id": 8,
-    "name": "Quạt điều hòa"
+    "name": "Quạt điều hòa",
+    "subcategory_slug": "air-cooler"
   },
   {
     "subcategory_id": 804,
     "category_id": 8,
-    "name": "Máy giặt mini"
+    "name": "Máy giặt mini",
+    "subcategory_slug": "mini-washer"
   },
   {
     "subcategory_id": 805,
     "category_id": 8,
-    "name": "Đèn thông minh"
+    "name": "Đèn thông minh",
+    "subcategory_slug": "smart-light"
   },
   {
     "subcategory_id": 806,
     "category_id": 8,
-    "name": "Thiết bị sưởi ấm"
+    "name": "Thiết bị sưởi ấm",
+    "subcategory_slug": "heater"
   },
   {
     "subcategory_id": 807,
     "category_id": 8,
-    "name": "Khử mùi phòng"
+    "name": "Khử mùi phòng",
+    "subcategory_slug": "air-freshener"
   },
   {
     "subcategory_id": 901,
     "category_id": 9,
-    "name": "Bàn phím cơ"
+    "name": "Bàn phím cơ",
+    "subcategory_slug": "mechanical-keyboard"
   },
   {
     "subcategory_id": 902,
     "category_id": 9,
-    "name": "Chuột gaming"
+    "name": "Chuột gaming",
+    "subcategory_slug": "gaming-mouse"
   },
   {
     "subcategory_id": 903,
     "category_id": 9,
-    "name": "Tai nghe gaming"
+    "name": "Tai nghe gaming",
+    "subcategory_slug": "gaming-headset"
   },
   {
     "subcategory_id": 904,
     "category_id": 9,
-    "name": "Lót chuột"
+    "name": "Lót chuột",
+    "subcategory_slug": "mousepad"
   },
   {
     "subcategory_id": 905,
     "category_id": 9,
-    "name": "Tay cầm chơi game"
+    "name": "Tay cầm chơi game",
+    "subcategory_slug": "game-controller"
   },
   {
     "subcategory_id": 906,
     "category_id": 9,
-    "name": "Webcam stream"
+    "name": "Webcam stream",
+    "subcategory_slug": "stream-webcam"
   },
   {
     "subcategory_id": 1001,
     "category_id": 10,
-    "name": "Màn hình gaming"
+    "name": "Màn hình gaming",
+    "subcategory_slug": "gaming-monitor"
   },
   {
     "subcategory_id": 1002,
     "category_id": 10,
-    "name": "Ghế gaming"
+    "name": "Ghế gaming",
+    "subcategory_slug": "gaming-chair"
   },
   {
     "subcategory_id": 1003,
     "category_id": 10,
-    "name": "Bàn gaming"
+    "name": "Bàn gaming",
+    "subcategory_slug": "gaming-desk"
   },
   {
     "subcategory_id": 1004,
     "category_id": 10,
-    "name": "Tản nhiệt"
+    "name": "Tản nhiệt",
+    "subcategory_slug": "cooling"
   },
   {
     "subcategory_id": 1005,
     "category_id": 10,
-    "name": "Card đồ họa"
+    "name": "Card đồ họa",
+    "subcategory_slug": "graphics-card"
   },
   {
     "subcategory_id": 1006,
     "category_id": 10,
-    "name": "Bộ stream livestream"
+    "name": "Bộ stream livestream",
+    "subcategory_slug": "streaming-kit"
   },
   {
     "subcategory_id": 1101,
     "category_id": 11,
-    "name": "Bếp điện"
+    "name": "Bếp điện",
+    "subcategory_slug": "electric-stove"
   },
   {
     "subcategory_id": 1102,
     "category_id": 11,
-    "name": "Bếp từ"
+    "name": "Bếp từ",
+    "subcategory_slug": "induction-stove"
   },
   {
     "subcategory_id": 1103,
     "category_id": 11,
-    "name": "Nồi chiên không dầu"
+    "name": "Nồi chiên không dầu",
+    "subcategory_slug": "air-fryer"
   },
   {
     "subcategory_id": 1104,
     "category_id": 11,
-    "name": "Nồi cơm điện"
+    "name": "Nồi cơm điện",
+    "subcategory_slug": "rice-cooker"
   },
   {
     "subcategory_id": 1105,
     "category_id": 11,
-    "name": "Nồi áp suất"
+    "name": "Nồi áp suất",
+    "subcategory_slug": "pressure-cooker"
   },
   {
     "subcategory_id": 1106,
     "category_id": 11,
-    "name": "Lò vi sóng"
+    "name": "Lò vi sóng",
+    "subcategory_slug": "microwave"
   },
   {
     "subcategory_id": 1107,
     "category_id": 11,
-    "name": "Lò nướng"
+    "name": "Lò nướng",
+    "subcategory_slug": "oven"
   },
   {
     "subcategory_id": 1201,
     "category_id": 12,
-    "name": "Máy xay sinh tố"
+    "name": "Máy xay sinh tố",
+    "subcategory_slug": "blender"
   },
   {
     "subcategory_id": 1202,
     "category_id": 12,
-    "name": "Máy ép chậm"
+    "name": "Máy ép chậm",
+    "subcategory_slug": "slow-juicer"
   },
   {
     "subcategory_id": 1203,
     "category_id": 12,
-    "name": "Máy pha cà phê"
+    "name": "Máy pha cà phê",
+    "subcategory_slug": "coffee-machine"
   },
   {
     "subcategory_id": 1204,
     "category_id": 12,
-    "name": "Máy rửa chén"
+    "name": "Máy rửa chén",
+    "subcategory_slug": "dishwasher"
   },
   {
     "subcategory_id": 1205,
     "category_id": 12,
-    "name": "Máy hút mùi"
+    "name": "Máy hút mùi",
+    "subcategory_slug": "range-hood"
   },
   {
     "subcategory_id": 1206,
     "category_id": 12,
-    "name": "Tủ lạnh mini"
+    "name": "Tủ lạnh mini",
+    "subcategory_slug": "mini-fridge"
   },
   {
     "subcategory_id": 1301,
     "category_id": 13,
-    "name": "Máy sấy tóc"
+    "name": "Máy sấy tóc",
+    "subcategory_slug": "hair-dryer"
   },
   {
     "subcategory_id": 1302,
     "category_id": 13,
-    "name": "Máy uốn/duỗi tóc"
+    "name": "Máy uốn/duỗi tóc",
+    "subcategory_slug": "hair-styler"
   },
   {
     "subcategory_id": 1303,
     "category_id": 13,
-    "name": "Máy cạo râu"
+    "name": "Máy cạo râu",
+    "subcategory_slug": "shaver"
   },
   {
     "subcategory_id": 1304,
     "category_id": 13,
-    "name": "Máy tỉa lông mũi"
+    "name": "Máy tỉa lông mũi",
+    "subcategory_slug": "nose-trimmer"
   },
   {
     "subcategory_id": 1305,
     "category_id": 13,
-    "name": "Bàn chải điện"
+    "name": "Bàn chải điện",
+    "subcategory_slug": "electric-toothbrush"
   },
   {
     "subcategory_id": 1306,
     "category_id": 13,
-    "name": "Máy massage mặt"
+    "name": "Máy massage mặt",
+    "subcategory_slug": "facial-massager"
   },
   {
     "subcategory_id": 1401,
     "category_id": 14,
-    "name": "Máy đo huyết áp"
+    "name": "Máy đo huyết áp",
+    "subcategory_slug": "blood-pressure-monitor"
   },
   {
     "subcategory_id": 1402,
     "category_id": 14,
-    "name": "Máy đo đường huyết"
+    "name": "Máy đo đường huyết",
+    "subcategory_slug": "blood-glucose-meter"
   },
   {
     "subcategory_id": 1403,
     "category_id": 14,
-    "name": "Máy massage"
+    "name": "Máy massage",
+    "subcategory_slug": "massager"
   },
   {
     "subcategory_id": 1404,
     "category_id": 14,
-    "name": "Máy xông tinh dầu"
+    "name": "Máy xông tinh dầu",
+    "subcategory_slug": "essential-oil-diffuser"
   },
   {
     "subcategory_id": 1405,
     "category_id": 14,
-    "name": "Máy lọc không khí"
+    "name": "Máy lọc không khí",
+    "subcategory_slug": "air-purifier"
   },
   {
     "subcategory_id": 1406,
     "category_id": 14,
-    "name": "Nhiệt kế điện tử"
+    "name": "Nhiệt kế điện tử",
+    "subcategory_slug": "digital-thermometer"
   },
   {
     "subcategory_id": 1501,
     "category_id": 15,
-    "name": "Ốp lưng"
+    "name": "Ốp lưng",
+    "subcategory_slug": "phone-case"
   },
   {
     "subcategory_id": 1502,
     "category_id": 15,
-    "name": "Miếng dán màn hình"
+    "name": "Miếng dán màn hình",
+    "subcategory_slug": "screen-protector"
   },
   {
     "subcategory_id": 1503,
     "category_id": 15,
-    "name": "Sạc dự phòng"
+    "name": "Sạc dự phòng",
+    "subcategory_slug": "power-bank"
   },
   {
     "subcategory_id": 1504,
     "category_id": 15,
-    "name": "Cáp sạc"
+    "name": "Cáp sạc",
+    "subcategory_slug": "charging-cable"
   },
   {
     "subcategory_id": 1505,
     "category_id": 15,
-    "name": "Tai nghe"
+    "name": "Tai nghe",
+    "subcategory_slug": "earphones"
   },
   {
     "subcategory_id": 1506,
     "category_id": 15,
-    "name": "Giá đỡ điện thoại"
+    "name": "Giá đỡ điện thoại",
+    "subcategory_slug": "phone-stand"
   },
   {
     "subcategory_id": 1601,
     "category_id": 16,
-    "name": "Chuột & Bàn phím"
+    "name": "Chuột & Bàn phím",
+    "subcategory_slug": "mouse-keyboard"
   },
   {
     "subcategory_id": 1602,
     "category_id": 16,
-    "name": "USB & Ổ cứng"
+    "name": "USB & Ổ cứng",
+    "subcategory_slug": "usb-storage"
   },
   {
     "subcategory_id": 1603,
     "category_id": 16,
-    "name": "Thẻ nhớ"
+    "name": "Thẻ nhớ",
+    "subcategory_slug": "memory-card"
   },
   {
     "subcategory_id": 1604,
     "category_id": 16,
-    "name": "Hub & Dock chuyển đổi"
+    "name": "Hub & Dock chuyển đổi",
+    "subcategory_slug": "hub-dock"
   },
   {
     "subcategory_id": 1605,
     "category_id": 16,
-    "name": "Phụ kiện laptop"
+    "name": "Phụ kiện laptop",
+    "subcategory_slug": "laptop-accessories"
   },
   {
     "subcategory_id": 1606,
     "category_id": 16,
-    "name": "Balo"
+    "name": "Balo",
+    "subcategory_slug": "backpack"
   }
 ]

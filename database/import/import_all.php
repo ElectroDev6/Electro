@@ -97,7 +97,7 @@ $skuCodeMap = [];
 
 // Nhập các bảng không phụ thuộc
 importJson('categories', ['name', 'image', 'description', 'slug'], 'categories.json');
-importJson('subcategories', ['subcategory_id', 'category_id', 'name'], 'subcategories.json');
+importJson('subcategories', ['subcategory_id', 'category_id', 'name', 'subcategory_slug'], 'subcategories.json');
 importJson('brands', ['name', 'description', 'logo_url'], 'brands.json');
 importJson('products', ['name', 'brand_id', 'subcategory_id', 'base_price', 'slug', 'is_featured'], 'products.json');
 importJson('product_contents', ['product_id', 'description', 'image_url'], 'product_contents.json');

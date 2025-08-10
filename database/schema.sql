@@ -46,6 +46,7 @@ CREATE TABLE subcategories (
     subcategory_id INT PRIMARY KEY AUTO_INCREMENT,
     category_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
+    subcategory_slug VARCHAR(255) NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE -- UNIQUE (category_id, name)

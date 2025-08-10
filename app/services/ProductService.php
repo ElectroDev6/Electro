@@ -67,4 +67,20 @@ class ProductService
     {
         return $this->productModel->getAllProducts();
     }
+
+
+    public function getFilteredProducts(array $filters = []): array
+    {
+        return $this->productModel->getProducts($filters);
+    }
+
+    public function getBrands(array $filters = []): array
+    {
+        return $this->productModel->getBrands($filters);
+    }
+
+    public function getCategoryBySlug(string $slug): ?array
+    {
+        return $this->productModel->getCategoryBySlug($slug);
+    }
 }

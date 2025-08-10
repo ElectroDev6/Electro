@@ -135,7 +135,7 @@ def process_attribute_option_sku():
 
 # Xử lý bảng không phân cấp
 process_flat_table('categories', 'categories.csv', ['name', 'image', 'description', 'slug'])
-process_flat_table('subcategories', 'subcategories.csv', ['subcategory_id','category_id', 'name'])
+process_flat_table('subcategories', 'subcategories.csv', ['subcategory_id','category_id', 'name', 'subcategory_slug'])
 process_flat_table('brands', 'brands.csv', ['name', 'description', 'logo_url'])
 process_flat_table('products', 'products.csv', ['name', 'brand_id', 'subcategory_id', 'base_price', 'slug', 'is_featured'])
 process_flat_table('product_contents', 'product_contents.csv', ['product_id', 'description', 'image_url'])

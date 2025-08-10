@@ -98,8 +98,9 @@ class View
         require self::viewFile($viewPath);
     }
 
-    public static function component($viewPath)
+    public static function component($viewPath, $data = [])
     {
+        extract($data);
         require self::viewFile($viewPath);
     }
 

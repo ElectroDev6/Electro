@@ -3,13 +3,13 @@
     "name": "Điện thoại",
     "image": "/img/category/phone_cate.webp",
     "description": "Các loại điện thoại di động đến từ nhiều thương hiệu nổi tiếng.",
-    "slug": "dien-thoai"
+    "slug": "phone"
   },
   {
     "name": "Máy tính bảng",
     "image": "/img/category/may_tinh_bang_cate.webp",
     "description": "Máy tính bảng hỗ trợ học tập, làm việc và giải trí.",
-    "slug": "may-tinh-bang"
+    "slug": "tablet"
   },
   {
     "name": "Laptop",
@@ -21,25 +21,25 @@
     "name": "Phụ kiện",
     "image": "/img/category/phu_kien_cate.webp",
     "description": "Các loại phụ kiện điện tử như ốp lưng, tai nghe, sạc.",
-    "slug": "phu-kien"
+    "slug": "accessories"
   },
   {
     "name": "Tivi",
     "image": "/img/category/tivi_cate.webp",
     "description": "Tivi thông minh, LED, OLED từ nhiều hãng lớn.",
-    "slug": "tivi"
+    "slug": "tv"
   },
   {
     "name": "Tủ lạnh",
     "image": "/img/category/tu_lanh_cate.webp",
     "description": "Tủ lạnh tiết kiệm điện, đa dạng dung tích và kiểu dáng.",
-    "slug": "tu-lanh"
+    "slug": "refrigerator"
   },
   {
     "name": "Điện gia dụng",
     "image": "/img/category/dien_gia_dung_cate.webp",
     "description": "Các thiết bị gia dụng như máy giặt, máy hút bụi.",
-    "slug": "dien-gia-dung"
+    "slug": "home-appliances"
   },
   {
     "name": "SIM",
@@ -51,13 +51,13 @@
     "name": "Quạt điều hòa",
     "image": "/img/category/dieu_hoa_cate.webp",
     "description": "Quạt điều hòa làm mát hiệu quả, tiết kiệm năng lượng.",
-    "slug": "quat-dieu-hoa"
+    "slug": "air-cooler"
   },
   {
     "name": "Màn hình",
     "image": "/img/category/phone_cate.webp",
     "description": "Màn hình máy tính chất lượng cao cho công việc và giải trí.",
-    "slug": "man-hinh"
+    "slug": "monitor"
   },
   {
     "name": "Camera",
@@ -69,13 +69,13 @@
     "name": "Thiết bị nhà bếp",
     "image": "/img/category/laptop_cate.webp",
     "description": "Đồ điện gia dụng như lò vi sóng, nồi chiên không dầu.",
-    "slug": "thiet-bi-nha-bep"
+    "slug": "kitchen-appliances"
   },
   {
     "name": "Thiết bị sinh hoạt",
     "image": "/img/category/phu_kien_cate.webp",
     "description": "Máy lọc không khí, quạt, máy hút bụi và các thiết bị khác.",
-    "slug": "thiet-bi-sinh-hoat"
+    "slug": "living-appliances"
   },
   {
     "name": "Gaming",
@@ -87,36 +87,36 @@
     "name": "Chăm sóc cá nhân",
     "image": "/img/category/tu_lanh_cate.webp",
     "description": "Máy sấy tóc, máy cạo râu, và các thiết bị cá nhân khác.",
-    "slug": "cham-soc-ca-nhan"
+    "slug": "personal-care"
   },
   {
     "name": "Card đồ họa",
     "image": "/img/category/dieu_hoa_cate.webp",
     "description": "Card đồ họa hiệu năng cao cho chơi game và thiết kế.",
-    "slug": "card-do-hoa"
+    "slug": "graphics-card"
   },
   {
     "name": "PC & Linh kiện",
     "image": "/img/category/dieu_hoa_cate.webp",
     "description": "Máy tính để bàn và các linh kiện như CPU, RAM, SSD.",
-    "slug": "pc-linh-kien"
+    "slug": "pc-components"
   },
   {
     "name": "Nấu Nướng",
     "image": "/img/category/dieu_hoa_cate.webp",
     "description": "Các thiết bị hỗ trợ nấu ăn như bếp điện, nồi cơm, lò nướng.",
-    "slug": "nau-nuong"
+    "slug": "cooking"
   },
   {
     "name": "Chuẩn Bị & Dọn Dẹp",
     "image": "/img/category/dieu_hoa_cate.webp",
     "description": "Thiết bị hỗ trợ dọn dẹp và chuẩn bị bữa ăn tiện lợi.",
-    "slug": "chuan-bi-don-dep"
+    "slug": "cleaning"
   },
   {
     "name": "Sức Khỏe",
     "image": "/img/category/dieu_hoa_cate.webp",
     "description": "Máy đo huyết áp, nhiệt kế điện tử và thiết bị chăm sóc sức khỏe.",
-    "slug": "suc-khoe"
+    "slug": "health"
   }
 ]

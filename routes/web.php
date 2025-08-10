@@ -5,8 +5,10 @@ use Core\Router;
 // Home
 Router::get('/', 'HomeController@index');
 
-// Products
+// Product
 Router::get('/products', 'ProductController@showAll');
+Router::get('/products/:categorySlug', 'ProductController@showAll');
+Router::get('/products/:categorySlug/:subcategorySlug', 'ProductController@showAll');
 
 // Search
 Router::get('/search/products', 'SearchProductController@searchProducts');
