@@ -18,8 +18,8 @@ class AuthController
     public function showAuthForm()
     {
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
         // Nếu đã login rồi redirect sang trang chính
         if (!empty($_SESSION['user_id'])) {
             header('Location: /');
@@ -32,8 +32,8 @@ class AuthController
     public function handleAuth()
     {
         if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+            session_start();
+        }
 
         $action = $_POST['action'] ?? '';
 
@@ -96,6 +96,7 @@ class AuthController
     {
         $name = trim($_POST['reg_username'] ?? '');
         $phone = trim($_POST['reg_phone'] ?? '');
+        $email = trim($_POST['reg_email'] ?? '');
         $password = $_POST['reg_password'] ?? '';
         $rePassword = $_POST['reg_repassword'] ?? '';
 
@@ -117,7 +118,7 @@ class AuthController
         // Validate số điện thoại: bắt đầu bằng 0, tối đa 11 số, chỉ số
         if (!preg_match('/^0\d{8,10}$/', $phone)) {
             View::render('auth', [
-                'error' => 'Số điện thoại không hợp lệ. Bắt đầu bằng 0, tối đa 11 chữ số.',
+                'error' => 'Số điện thoại không hợp lệ',
                 'old' => $old,
                 'formType' => 'register'
             ]);
@@ -134,24 +135,38 @@ class AuthController
             return;
         }
 
-        // Gọi service đăng ký (đặt email = username để tạm)
-        $email = $name . '@example.com'; // Bạn cần bổ sung email thật hoặc form thêm email
+        // Email validate
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            View::render('auth', [
+                'error' => 'Email không hợp lệ hoặc đã được sử dụng',
+                'old' => $old,
+                'formType' => 'register'
+            ]);
+            return;
+        }
 
         $user = $this->authService->register($name, $email, $phone, $password);
 
-        if ($user) {
-    // Hiển thị popup thành công trên form đăng ký
-    View::render('auth', [
-        'success' => 'Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.',
-        'old' => [],
-        'formType' => 'register' // giữ lại register để popup hiện
-    ]);
-    return;
-}
+        if (is_array($user) && isset($user['error'])) {
+            View::render('auth', [
+                'error' => $user['error'],
+                'old' => $old,
+                'formType' => 'register'
+            ]);
+            return;
+        }
 
-        // Đăng ký thất bại (email trùng hoặc lỗi)
+        if ($user) {
+            View::render('auth', [
+                'success' => 'Đăng ký thành công! Vui lòng đăng nhập để tiếp tục',
+                'old' => [],
+                'formType' => 'register'
+            ]);
+            return;
+        }
+
         View::render('auth', [
-            'error' => 'Đăng ký thất bại. Tên đăng nhập đã tồn tại hoặc lỗi hệ thống.',
+            'error' => 'Đăng ký thất bại hoặc lỗi hệ thống',
             'old' => $old,
             'formType' => 'register'
         ]);
@@ -159,63 +174,64 @@ class AuthController
 
     // Hiển thị form quên mật khẩu
     public function showForgotPasswordForm()
-{
-    View::render('forgot-password', ['error' => null, 'success' => null]);
+    {
+        View::render('forgot-password', ['error' => null, 'success' => null]);
+    }
+
+    // Xử lý form gửi email quên mật khẩu
+    public function handleForgotPassword()
+    {
+        $email = trim($_POST['email'] ?? '');
+
+        if ($email === '') {
+            View::render('forgot-password', ['error' => 'Vui lòng nhập email', 'success' => null]);
+            return;
+        }
+
+        $result = $this->authService->sendPasswordResetLink($email);
+
+        if ($result) {
+            View::render('forgot-password', ['error' => null, 'success' => 'Vui lòng kiểm tra email để đặt lại mật khẩu']);
+        } else {
+            View::render('forgot-password', ['error' => 'Email không tồn tại hoặc lỗi hệ thống', 'success' => null]);
+        }
+    }
+
+    // Hiển thị form đặt lại mật khẩu mới
+    public function showResetPasswordForm()
+    {
+        $token = $_GET['token'] ?? '';
+
+        if (!$token || !$this->authService->validateResetToken($token)) {
+            echo "Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.";
+            exit;
+        }
+
+        View::render('reset-password', ['error' => null, 'token' => $token]);
+    }
+
+    // Xử lý đặt lại mật khẩu mới
+    public function handleResetPassword()
+    {
+        $token = $_POST['token'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $rePassword = $_POST['re_password'] ?? '';
+
+        if ($password === '' || $rePassword === '') {
+            View::render('reset-password', ['error' => 'Vui lòng nhập đầy đủ mật khẩu', 'token' => $token]);
+            return;
+        }
+
+        if ($password !== $rePassword) {
+            View::render('reset-password', ['error' => 'Mật khẩu nhập lại không khớp', 'token' => $token]);
+            return;
+        }
+
+        if ($this->authService->resetPassword($token, $password)) {
+            header('Location: /login?reset=success');
+            exit;
+        } else {
+            View::render('reset-password', ['error' => 'Link không hợp lệ hoặc đã hết hạn', 'token' => $token]);
+        }
+    }
 }
-
-// Xử lý form gửi email quên mật khẩu
-public function handleForgotPassword()
-{
-    $email = trim($_POST['email'] ?? '');
-
-    if ($email === '') {
-        View::render('forgot-password', ['error' => 'Vui lòng nhập email', 'success' => null]);
-        return;
-    }
-
-    $result = $this->authService->sendPasswordResetLink($email);
-
-    if ($result) {
-        View::render('forgot-password', ['error' => null, 'success' => 'Vui lòng kiểm tra email để đặt lại mật khẩu']);
-    } else {
-        View::render('forgot-password', ['error' => 'Email không tồn tại hoặc lỗi hệ thống', 'success' => null]);
-    }
-}
-
-// Hiển thị form đặt lại mật khẩu mới
-public function showResetPasswordForm()
-{
-    $token = $_GET['token'] ?? '';
-
-    if (!$token || !$this->authService->validateResetToken($token)) {
-        echo "Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.";
-        exit;
-    }
-
-    View::render('reset-password', ['error' => null, 'token' => $token]);
-}
-
-// Xử lý đặt lại mật khẩu mới
-public function handleResetPassword()
-{
-    $token = $_POST['token'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $rePassword = $_POST['re_password'] ?? '';
-
-    if ($password === '' || $rePassword === '') {
-        View::render('reset-password', ['error' => 'Vui lòng nhập đầy đủ mật khẩu', 'token' => $token]);
-        return;
-    }
-
-    if ($password !== $rePassword) {
-        View::render('reset-password', ['error' => 'Mật khẩu nhập lại không khớp', 'token' => $token]);
-        return;
-    }
-
-    if ($this->authService->resetPassword($token, $password)) {
-        header('Location: /login?reset=success');
-        exit;
-    } else {
-        View::render('reset-password', ['error' => 'Link không hợp lệ hoặc đã hết hạn', 'token' => $token]);
-    }
-}}

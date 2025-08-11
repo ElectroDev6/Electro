@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Models\admin;
 
 use PDO;
+use PDOException;
 
 class UsersModel
 {
@@ -10,19 +12,20 @@ class UsersModel
     {
         $this->pdo = $pdo;
     }
-    public function getAllUsers($filters = [], $limit = 8, $offset = 0) {
+    public function getAllUsers($filters = [], $limit = 8, $offset = 0)
+    {
         $whereConditions = [];
         $params = [];
         if (!empty($filters['search'])) {
             $whereConditions[] = "(name LIKE :search OR email LIKE :search)";
             $params[':search'] = '%' . $filters['search'] . '%';
         }
-        
+
         if (!empty($filters['role'])) {
             $whereConditions[] = "role = :role";
             $params[':role'] = $filters['role'];
         }
-        
+
         if (!empty($filters['gender'])) {
             $whereConditions[] = "gender = :gender";
             $params[':gender'] = $filters['gender'];
@@ -36,21 +39,22 @@ class UsersModel
                   ORDER BY created_at DESC 
                   LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($query);
-        
+
         // Bind filter parameters
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
-        
+
         // Bind pagination parameters
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        
+
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTotalUsers($filters = []) {
+    public function getTotalUsers($filters = [])
+    {
         $whereConditions = [];
         $params = [];
         if (!empty($filters['search'])) {
@@ -71,11 +75,11 @@ class UsersModel
         }
         $query = "SELECT COUNT(*) as total FROM users $whereClause";
         $stmt = $this->pdo->prepare($query);
-        
+
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
-        
+
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int)$result['total'];
@@ -175,7 +179,7 @@ class UsersModel
             ':role' => $data['role'],
             ':is_active' => $data['is_active'],
             ':avatar_url' => $data['avatar_url'] ?? null,
-        ]); 
+        ]);
     }
     public function updateAddress($user_id, $data)
     {
@@ -206,4 +210,3 @@ class UsersModel
         ]);
     }
 }
-?>

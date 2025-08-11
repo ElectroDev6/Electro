@@ -25,19 +25,13 @@ class DetailController
             $product['product_id'],
             5
         );
-        // echo "<pre>";
-        // print_r($product);
-        // echo "</pre>";
-        // exit;
-        View::render('detail', ['product' => $product, 'relatedProducts' => $relatedProducts]);
-    }
+        $reviews = $this->productService->getReviews($product['product_id']);
 
-    public function showCart()
-    {
-        $userId = $_SESSION['user_id'] ?? null;
-        $sessionId = session_id();
-        $cart = $this->cartService->getCart($userId, $sessionId);
-        View::render('cart', ['cart' => $cart]);
+        View::render('detail', [
+            'product' => $product,
+            'relatedProducts' => $relatedProducts,
+            'reviews' => $reviews
+        ]);
     }
 
     public function addToCart($input = [], $matches = [])
@@ -74,5 +68,46 @@ class DetailController
 
         header('Content-Type: application/json');
         echo json_encode($result);
+    }
+
+    public function addComment($input)
+    {
+        $product_id = $input['product_id'] ?? null;
+        $parent_review_id = $input['parent_review_id'] ? (int)$input['parent_review_id'] : null; // Chuyển chuỗi rỗng thành null
+        $comment_text = $input['comment_text'] ?? '';
+        $rating = $input['rating'] ? (int)$input['rating'] : null; // Chuyển rating thành int
+        $user_name = $input['user_name'] ?? null;
+        $email = $input['email'] ?? null;
+
+        $user_id = $_SESSION['user_id'] ?? null;
+
+        if (!$product_id || !$comment_text) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Missing required fields']);
+            return;
+        }
+
+        if (!$user_id && (!$user_name || !$email)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Name and email required for guests']);
+            return;
+        }
+
+        $result = $this->productService->addReview(
+            $product_id,
+            $user_id,
+            $parent_review_id,
+            $comment_text,
+            $rating,
+            $user_name,
+            $email
+        );
+
+        if ($result) {
+            echo json_encode(['success' => true]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Failed to add comment']);
+        }
     }
 }

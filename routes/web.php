@@ -9,7 +9,7 @@ Router::get('/', 'HomeController@index');
 Router::get('/products', 'ProductController@showAll');
 Router::get('/products/:categorySlug', 'ProductController@showAll');
 Router::get('/products/:categorySlug/:subcategorySlug', 'ProductController@showAll');
-
+Router::post('/comment/add', 'DetailController@addComment');
 // Search
 Router::get('/search/products', 'SearchProductController@searchProducts');
 Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
@@ -39,8 +39,6 @@ Router::post('/handle-forgot-password', 'AuthController@handleForgotPassword');
 
 Router::get('/reset-password', 'AuthController@showResetPasswordForm');
 Router::post('/handle-reset-password', 'AuthController@handleResetPassword');
-
-
 
 // Product Detail
 Router::get('/detail/:slug', 'DetailController@showDetail');

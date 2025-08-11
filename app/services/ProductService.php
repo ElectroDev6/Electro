@@ -17,10 +17,10 @@ class ProductService
         // $this->pdo = $pdo;
     }
 
-    public function getHomeProductsByCategoryId(int $categoryId, int $limit = 8): array
+    public function getHomeProductsByCategoryId(int $subcategoryId, int $limit = 8): array
     {
         return $this->productModel->getProducts([
-            'category_id' => 1,
+            'subcategory_id' => $subcategoryId,
             'limit' => 8
         ]);
     }
@@ -68,7 +68,6 @@ class ProductService
         return $this->productModel->getAllProducts();
     }
 
-
     public function getFilteredProducts(array $filters = []): array
     {
         return $this->productModel->getProducts($filters);
@@ -82,5 +81,20 @@ class ProductService
     public function getCategoryBySlug(string $slug): ?array
     {
         return $this->productModel->getCategoryBySlug($slug);
+    }
+
+    public function getSubcategories(int $category_id): array
+    {
+        return $this->productModel->getSubcategories($category_id);
+    }
+
+    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text, int $rating = null, ?string $user_name = null, ?string $email = null): bool
+    {
+        return $this->productModel->addReview($product_id, $user_id, $parent_review_id, $comment_text, $rating, $user_name, $email);
+    }
+
+    public function getReviews(int $product_id): array
+    {
+        return $this->productModel->getReviewsByProductId($product_id);
     }
 }

@@ -290,215 +290,282 @@ Chi tiết sản phẩm
                     <div class="product-detail__comments">
                         <div class="product-detail__comment-form">
                             <h3>Để lại bình luận</h3>
-                            <form class="product-detail__form">
-                                <!-- <div class="product-detail__form-group">
-                                    <label for="comment-name">Họ và tên *</label>
-                                    <input type="text" id="comment-name" required />
-                                </div>
+                            <form class="product-detail__form" id="comment-form" data-product-id="<?= htmlspecialchars($product['product_id']) ?>">
+                                <?php if (!isset($_SESSION['user_id'])): ?>
+                                    <div class="product-detail__form-group">
+                                        <label for="comment-name">Họ và tên *</label>
+                                        <input type="text" id="comment-name" name="user_name" required />
+                                    </div>
+                                    <div class="product-detail__form-group">
+                                        <label for="comment-email">Email *</label>
+                                        <input type="email" id="comment-email" name="email" required />
+                                    </div>
+                                <?php endif; ?>
                                 <div class="product-detail__form-group">
-                                    <label for="comment-email">Email *</label>
-                                    <input type="email" id="comment-email" required />
-                                </div> -->
+                                    <label for="comment-rating">Đánh giá</label>
+                                    <select id="comment-rating" name="rating">
+                                        <option value="">Chọn số sao</option>
+                                        <option value="1">1 sao</option>
+                                        <option value="2">2 sao</option>
+                                        <option value="3">3 sao</option>
+                                        <option value="4">4 sao</option>
+                                        <option value="5">5 sao</option>
+                                    </select>
+                                </div>
                                 <div class="product-detail__form-group">
                                     <label for="comment-content">Nội dung bình luận *</label>
-                                    <textarea id="comment-content" rows="4" required></textarea>
+                                    <textarea id="comment-content" name="comment_text" rows="4" required></textarea>
                                 </div>
+                                <input type="hidden" name="parent_review_id" id="parent-review-id" value="">
                                 <button type="submit" class="product-detail__comment-submit">Gửi bình luận</button>
                             </form>
                             <h3>Bình luận từ khách hàng</h3>
                             <div class="product-detail__reviews-list">
-                                <?php foreach ($product['comments'] as $comment): ?>
+                                <?php foreach ($reviews as $review): ?>
                                     <div class="product-detail__review-item">
                                         <div class="product-detail__reviewer-info">
-                                            <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+                                            <img src="<?= htmlspecialchars($review['avatar_url'] ?? '/img/avatars/avatar.png') ?>" alt="User avatar" class="product-detail__reviewer-avatar" />
                                             <div class="product-detail__reviewer-details">
                                                 <h4 class="product-detail__reviewer-name">
-                                                    <?= htmlspecialchars($comment['user_name']) ?>
+                                                    <?= htmlspecialchars($review['user_name']) ?>
                                                 </h4>
-                                                <div class="product-detail__review-rating">
-                                                    <?= str_repeat('★', (int)$comment['rating']) ?>
-                                                    <?= str_repeat('☆', 5 - (int)$comment['rating']) ?>
-                                                </div>
-                                                <!-- Ở đây bạn có thể thêm ngày tạo nếu bảng có cột created_at -->
+                                                <?php if ($review['rating']): ?>
+                                                    <div class="product-detail__review-rating">
+                                                        <?= str_repeat('★', (int)$review['rating']) ?>
+                                                        <?= str_repeat('☆', 5 - (int)$review['rating']) ?>
+                                                    </div>
+                                                <?php endif; ?>
                                                 <span class="product-detail__review-date">
-                                                    <?= isset($comment['created_at']) ? date('d/m/Y', strtotime($comment['created_at'])) : '' ?>
+                                                    <?= date('d/m/Y', strtotime($review['review_date'])) ?>
                                                 </span>
+                                                <button class="product-detail__reply-btn" data-review-id="<?= $review['review_id'] ?>">Trả lời</button>
                                             </div>
                                         </div>
                                         <div class="product-detail__review-content">
-                                            <p><?= nl2br(htmlspecialchars($comment['comment_text'])) ?></p>
-
-                                            <?php if (!empty($comment['images'])): ?>
-                                                <div class="product-detail__review-images">
-                                                    <?php foreach ($comment['images'] as $img): ?>
-                                                        <img src="/img/reviews/<?= htmlspecialchars($img) ?>" alt="Review image" />
-                                                    <?php endforeach; ?>
-                                                </div>
-                                            <?php endif; ?>
+                                            <p><?= nl2br(htmlspecialchars($review['comment_text'])) ?></p>
                                         </div>
+                                        <?php if (!empty($review['replies'])): ?>
+                                            <div class="product-detail__replies">
+                                                <?php foreach ($review['replies'] as $reply): ?>
+                                                    <div class="product-detail__review-item product-detail__reply">
+                                                        <div class="product-detail__reviewer-info">
+                                                            <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+                                                            <div class="product-detail__reviewer-details">
+                                                                <h4 class="product-detail__reviewer-name">
+                                                                    <?= htmlspecialchars($reply['user_name']) ?>
+                                                                </h4>
+                                                                <span class="product-detail__review-date">
+                                                                    <?= date('d/m/Y', strtotime($reply['review_date'])) ?>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-detail__review-content">
+                                                            <p><?= nl2br(htmlspecialchars($reply['comment_text'])) ?></p>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-
-        </div>
-        <div class="product-detail__comments-list">
-            <!-- FAQ Section -->
-            <div class="product-detail__faq-section">
-                <h2 class="product-detail__faq-title">Câu hỏi thường gặp</h2>
-                <div class="product-detail__faq-list">
-                    <div class="product-detail__faq-item">
-                        <div class="product-detail__faq-question">
-                            <span class="product-detail__faq-question-text">Sản phẩm này có bảo hành bao lâu?</span>
-                            <span class="product-detail__faq-toggle">+</span>
-                        </div>
-                        <div class="product-detail__faq-answer">
-                            <p>Sản phẩm được bảo hành chính hãng 24 tháng.</p>
-                        </div>
-                    </div>
-
-                    <div class="product-detail__faq-item">
-                        <div class="product-detail__faq-question">
-                            <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ tiếng Việt không?</span>
-                            <span class="product-detail__faq-toggle">+</span>
-                        </div>
-                        <div class="product-detail__faq-answer">
-                            <p>Có, sản phẩm hỗ trợ đầy đủ tiếng Việt trong menu và các ứng dụng.</p>
-                        </div>
-                    </div>
-
-                    <div class="product-detail__faq-item">
-                        <div class="product-detail__faq-question">
-                            <span class="product-detail__faq-question-text">Tivi này có kết nối internet không?</span>
-                            <span class="product-detail__faq-toggle">+</span>
-                        </div>
-                        <div class="product-detail__faq-answer">
-                            <p>Có, sản phẩm hỗ trợ kết nối WiFi và cổng LAN.</p>
-                        </div>
-                    </div>
-
-                    <div class="product-detail__faq-item">
-                        <div class="product-detail__faq-question">
-                            <span class="product-detail__faq-question-text">Sản phẩm này có remote điều khiển không?</span>
-                            <span class="product-detail__faq-toggle">+</span>
-                        </div>
-                        <div class="product-detail__faq-answer">
-                            <p>Có, sản phẩm đi kèm remote điều khiển thông minh.</p>
-                        </div>
-                    </div>
-
-                    <div class="product-detail__faq-item">
-                        <div class="product-detail__faq-question">
-                            <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ lắp đặt không?</span>
-                            <span class="product-detail__faq-toggle">+</span>
-                        </div>
-                        <div class="product-detail__faq-answer">
-                            <p>Có, chúng tôi hỗ trợ lắp đặt miễn phí tại nhà.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product Reviews -->
-            <div class="product-detail__reviews-section">
-                <h2 class="product-detail__reviews-title">Đánh giá sản phẩm</h2>
-                <div class="product-detail__review-summary">
-                    <div class="product-detail__rating-overview">
-                        <span class="product-detail__rating-score">4 trên 5</span>
-                        <div class="product-detail__rating-bars">
-                            <div class="product-detail__rating-bar">
-                                <span class="product-detail__rating-label">5 sao</span>
-                                <div class="product-detail__bar">
-                                    <div class="product-detail__fill" style="width: 60%"></div>
-                                </div>
-                                <span class="product-detail__rating-count">3 đánh giá</span>
+            <div class="product-detail__comments-list">
+                <!-- FAQ Section -->
+                <div class="product-detail__faq-section">
+                    <h2 class="product-detail__faq-title">Câu hỏi thường gặp</h2>
+                    <div class="product-detail__faq-list">
+                        <div class="product-detail__faq-item">
+                            <div class="product-detail__faq-question">
+                                <span class="product-detail__faq-question-text">Sản phẩm này có bảo hành bao lâu?</span>
+                                <span class="product-detail__faq-toggle">+</span>
                             </div>
-                            <div class="product-detail__rating-bar">
-                                <span class="product-detail__rating-label">4 sao</span>
-                                <div class="product-detail__bar">
-                                    <div class="product-detail__fill" style="width: 40%"></div>
-                                </div>
-                                <span class="product-detail__rating-count">2 đánh giá</span>
+                            <div class="product-detail__faq-answer">
+                                <p>Sản phẩm được bảo hành chính hãng 24 tháng.</p>
                             </div>
-                            <div class="product-detail__rating-bar">
-                                <span class="product-detail__rating-label">3 sao</span>
-                                <div class="product-detail__bar">
-                                    <div class="product-detail__fill" style="width: 0%"></div>
-                                </div>
-                                <span class="product-detail__rating-count">0 đánh giá</span>
+                        </div>
+
+                        <div class="product-detail__faq-item">
+                            <div class="product-detail__faq-question">
+                                <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ tiếng Việt không?</span>
+                                <span class="product-detail__faq-toggle">+</span>
                             </div>
-                            <div class="product-detail__rating-bar">
-                                <span class="product-detail__rating-label">2 sao</span>
-                                <div class="product-detail__bar">
-                                    <div class="product-detail__fill" style="width: 0%"></div>
-                                </div>
-                                <span class="product-detail__rating-count">0 đánh giá</span>
+                            <div class="product-detail__faq-answer">
+                                <p>Có, sản phẩm hỗ trợ đầy đủ tiếng Việt trong menu và các ứng dụng.</p>
                             </div>
-                            <div class="product-detail__rating-bar">
-                                <span class="product-detail__rating-label">1 sao</span>
-                                <div class="product-detail__bar">
-                                    <div class="product-detail__fill" style="width: 0%"></div>
-                                </div>
-                                <span class="product-detail__rating-count">0 đánh giá</span>
+                        </div>
+
+                        <div class="product-detail__faq-item">
+                            <div class="product-detail__faq-question">
+                                <span class="product-detail__faq-question-text">Tivi này có kết nối internet không?</span>
+                                <span class="product-detail__faq-toggle">+</span>
+                            </div>
+                            <div class="product-detail__faq-answer">
+                                <p>Có, sản phẩm hỗ trợ kết nối WiFi và cổng LAN.</p>
+                            </div>
+                        </div>
+
+                        <div class="product-detail__faq-item">
+                            <div class="product-detail__faq-question">
+                                <span class="product-detail__faq-question-text">Sản phẩm này có remote điều khiển không?</span>
+                                <span class="product-detail__faq-toggle">+</span>
+                            </div>
+                            <div class="product-detail__faq-answer">
+                                <p>Có, sản phẩm đi kèm remote điều khiển thông minh.</p>
+                            </div>
+                        </div>
+
+                        <div class="product-detail__faq-item">
+                            <div class="product-detail__faq-question">
+                                <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ lắp đặt không?</span>
+                                <span class="product-detail__faq-toggle">+</span>
+                            </div>
+                            <div class="product-detail__faq-answer">
+                                <p>Có, chúng tôi hỗ trợ lắp đặt miễn phí tại nhà.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="product-detail__review-item">
-                    <div class="product-detail__reviewer-info">
-                        <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
-                        <div class="product-detail__reviewer-details">
-                            <h4 class="product-detail__reviewer-name">Phạm Thị D</h4>
-                            <div class="product-detail__review-rating">★★★★☆</div>
-                            <span class="product-detail__review-date">2 tuần trước</span>
+
+                <!-- Product Reviews -->
+                <div class="product-detail__reviews-section">
+                    <h2 class="product-detail__reviews-title">Đánh giá sản phẩm</h2>
+                    <div class="product-detail__review-summary">
+                        <div class="product-detail__rating-overview">
+                            <span class="product-detail__rating-score">4 trên 5</span>
+                            <div class="product-detail__rating-bars">
+                                <div class="product-detail__rating-bar">
+                                    <span class="product-detail__rating-label">5 sao</span>
+                                    <div class="product-detail__bar">
+                                        <div class="product-detail__fill" style="width: 60%"></div>
+                                    </div>
+                                    <span class="product-detail__rating-count">3 đánh giá</span>
+                                </div>
+                                <div class="product-detail__rating-bar">
+                                    <span class="product-detail__rating-label">4 sao</span>
+                                    <div class="product-detail__bar">
+                                        <div class="product-detail__fill" style="width: 40%"></div>
+                                    </div>
+                                    <span class="product-detail__rating-count">2 đánh giá</span>
+                                </div>
+                                <div class="product-detail__rating-bar">
+                                    <span class="product-detail__rating-label">3 sao</span>
+                                    <div class="product-detail__bar">
+                                        <div class="product-detail__fill" style="width: 0%"></div>
+                                    </div>
+                                    <span class="product-detail__rating-count">0 đánh giá</span>
+                                </div>
+                                <div class="product-detail__rating-bar">
+                                    <span class="product-detail__rating-label">2 sao</span>
+                                    <div class="product-detail__bar">
+                                        <div class="product-detail__fill" style="width: 0%"></div>
+                                    </div>
+                                    <span class="product-detail__rating-count">0 đánh giá</span>
+                                </div>
+                                <div class="product-detail__rating-bar">
+                                    <span class="product-detail__rating-label">1 sao</span>
+                                    <div class="product-detail__bar">
+                                        <div class="product-detail__fill" style="width: 0%"></div>
+                                    </div>
+                                    <span class="product-detail__rating-count">0 đánh giá</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="product-detail__review-content">
-                        <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn shop!</p>
-                        <div class="product-detail__review-images">
-                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                            <img src="/img/reviews/review-1.jpg" alt="Review image" />
+                    <div class="product-detail__review-item">
+                        <div class="product-detail__reviewer-info">
+                            <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+                            <div class="product-detail__reviewer-details">
+                                <h4 class="product-detail__reviewer-name">Phạm Thị D</h4>
+                                <div class="product-detail__review-rating">★★★★☆</div>
+                                <span class="product-detail__review-date">2 tuần trước</span>
+                            </div>
+                        </div>
+                        <div class="product-detail__review-content">
+                            <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn shop!</p>
+                            <div class="product-detail__review-images">
+                                <img src="/img/reviews/review-1.jpg" alt="Review image" />
+                                <img src="/img/reviews/review-1.jpg" alt="Review image" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="product-detail__load-more">
-                <button class="product-detail__btn-load-more">Xem thêm đánh giá</button>
+                <div class="product-detail__load-more">
+                    <button class="product-detail__btn-load-more">Xem thêm đánh giá</button>
+                </div>
+            </div>
+            <!-- Related Products -->
+            <div class="product-detail__related-products">
+                <?php View::partial('partials.related-container', ['relatedProducts' => $relatedProducts]); ?>
             </div>
         </div>
-        <!-- Related Products -->
-        <div class="product-detail__related-products">
-            <?php View::partial('partials.related-container', ['relatedProducts' => $relatedProducts]); ?>
-        </div>
-    </div>
-    <script>
-        window.productData = {
-            images: <?= json_encode($product['images']) ?>,
-            variants: <?= json_encode(
-                            array_map(function ($variant) use ($product) {
-                                $skuId = $variant['sku_id'];
-                                $attributes = array_map(function ($attr) {
+        <script>
+            window.productData = {
+                images: <?= json_encode($product['images']) ?>,
+                variants: <?= json_encode(
+                                array_map(function ($variant) use ($product) {
+                                    $skuId = $variant['sku_id'];
+                                    $attributes = array_map(function ($attr) {
+                                        return [
+                                            'attribute_name' => $attr['option_name'],
+                                            'option_value' => strtolower($attr['option_value']),
+                                        ];
+                                    }, $product['attributes'][$skuId] ?? []);
                                     return [
-                                        'attribute_name' => $attr['option_name'],
-                                        'option_value' => strtolower($attr['option_value']),
+                                        'sku_id' => $skuId,
+                                        'sku_code' => $variant['sku_code'],
+                                        'price_original' => $variant['price_original'],
+                                        'price_discount' => $variant['price_discount'],
+                                        'discount_percent' => $variant['discount_percent'],
+                                        'discount_amount' => $variant['discount_amount'],
+                                        'stock_quantity' => $variant['stock_quantity'],
+                                        'attributes' => $attributes,
                                     ];
-                                }, $product['attributes'][$skuId] ?? []);
-                                return [
-                                    'sku_id' => $skuId,
-                                    'sku_code' => $variant['sku_code'],
-                                    'price_original' => $variant['price_original'],
-                                    'price_discount' => $variant['price_discount'],
-                                    'discount_percent' => $variant['discount_percent'],
-                                    'discount_amount' => $variant['discount_amount'],
-                                    'stock_quantity' => $variant['stock_quantity'],
-                                    'attributes' => $attributes,
-                                ];
-                            }, $product['variants'])
-                        ) ?>
-        };
-    </script>
-    <?php View::endSection(); ?>
+                                }, $product['variants'])
+                            ) ?>
+            };
+        </script>
+
+
+        <script>
+            document.getElementById('comment-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                data.product_id = form.dataset.productId;
+
+                try {
+                    const response = await fetch('/comment/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Bình luận đã được gửi, đang chờ duyệt.');
+                        form.reset();
+                        document.getElementById('parent-review-id').value = '';
+                    } else {
+                        alert(result.error || 'Có lỗi xảy ra.');
+                    }
+                } catch (error) {
+                    alert('Lỗi kết nối: ' + error.message);
+                }
+            });
+
+            document.querySelectorAll('.product-detail__reply-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('parent-review-id').value = btn.dataset.reviewId;
+                    document.getElementById('comment-content').focus();
+                });
+            });
+        </script>
+        <?php View::endSection(); ?>

@@ -78,7 +78,15 @@ Trang chủ
     'featuredProduct' => $featuredProduct,
 ]); ?>
 
-<?php View::partial('partials.product-container', ['iphoneProducts' => $iphoneProducts]); ?>
+<?php View::partial('partials.product-container', [
+    'iphoneProducts' => $iphoneProducts,
+    'pcProducts' => $pcProducts,
+    'watchProducts' => $watchProducts,
+    'tefalProducts' => $tefalProducts,
+    'massagerProducts' => $massagerProducts,
+    'airCoolerProducts' => $airCoolerProducts,
+    'vacuumCleanerProducts' => $vacuumCleanerProducts
+]); ?>
 
 <?php View::partial('partials.accessory-container', [
     'accessories' => $accessories,

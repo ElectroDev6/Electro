@@ -198,5 +198,10 @@
     "name": "Hitachi",
     "description": "Hitachi, Ltd. là một tập đoàn đa quốc gia của Nhật Bản. Công ty cung cấp nhiều loại sản phẩm và dịch vụ, bao gồm điện tử, hệ thống điện và thiết bị công nghiệp.",
     "logo_url": "/img/products/default/iphone-13.webp"
+  },
+  {
+    "name": "Daikiosan",
+    "description": "Daikiosan là",
+    "logo_url": "/img/products/default/iphone-13.webp"
   }
 ]

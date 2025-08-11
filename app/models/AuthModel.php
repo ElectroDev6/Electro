@@ -28,6 +28,7 @@ class AuthModel
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
+
     public function createUser(array $data): bool
     {
         try {
@@ -49,35 +50,34 @@ class AuthModel
         }
     }
     public function savePasswordResetToken(string $email, string $token, string $expiresAt): bool
-{
-    $stmt = $this->pdo->prepare("REPLACE INTO password_resets (email, token, expires_at) VALUES (:email, :token, :expires_at)");
-    return $stmt->execute([
-        ':email' => $email,
-        ':token' => $token,
-        ':expires_at' => $expiresAt
-    ]);
-}
+    {
+        $stmt = $this->pdo->prepare("REPLACE INTO password_resets (email, token, expires_at) VALUES (:email, :token, :expires_at)");
+        return $stmt->execute([
+            ':email' => $email,
+            ':token' => $token,
+            ':expires_at' => $expiresAt
+        ]);
+    }
 
-public function getPasswordResetByToken(string $token): ?array
-{
-    $stmt = $this->pdo->prepare("SELECT * FROM password_resets WHERE token = :token LIMIT 1");
-    $stmt->execute([':token' => $token]);
-    return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-}
+    public function getPasswordResetByToken(string $token): ?array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM password_resets WHERE token = :token LIMIT 1");
+        $stmt->execute([':token' => $token]);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
 
-public function deletePasswordResetToken(string $email): bool
-{
-    $stmt = $this->pdo->prepare("DELETE FROM password_resets WHERE email = :email");
-    return $stmt->execute([':email' => $email]);
-}
+    public function deletePasswordResetToken(string $email): bool
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM password_resets WHERE email = :email");
+        return $stmt->execute([':email' => $email]);
+    }
 
-public function updateUserPassword(string $email, string $passwordHash): bool
-{
-    $stmt = $this->pdo->prepare("UPDATE users SET password_hash = :password_hash WHERE email = :email");
-    return $stmt->execute([
-        ':password_hash' => $passwordHash,
-        ':email' => $email
-    ]);
-}
-
+    public function updateUserPassword(string $email, string $passwordHash): bool
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET password_hash = :password_hash WHERE email = :email");
+        return $stmt->execute([
+            ':password_hash' => $passwordHash,
+            ':email' => $email
+        ]);
+    }
 }

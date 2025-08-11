@@ -88,11 +88,323 @@
     "is_featured": 0
   },
   {
-    "name": "iPhone 16e",
-    "brand_id": 1,
-    "subcategory_id": 101,
+    "name": "PC Gaming E-Power N3050 Core i5 12400F / RAM 16GB / SSD 512GB / 650W / RTX 3050 6GB",
+    "brand_id": 13,
+    "subcategory_id": 401,
     "base_price": 16990000.0,
-    "slug": "iphone-16e",
+    "slug": "pc-gaming0",
+    "is_featured": 0
+  },
+  {
+    "name": "PC Gaming E-Power N3050 Ryzen 5 5500 / RAM 16GB / SSD 512GB / 650W / RTX 3050 6GB",
+    "brand_id": 13,
+    "subcategory_id": 401,
+    "base_price": 16990000.0,
+    "slug": "pc-gaming1",
+    "is_featured": 0
+  },
+  {
+    "name": "PC Gaming E-Power N4060 AMD Ryzen7 5700X/B550/RAM 16GB/SSD 500GB/PSU 750W/RTX 4060 Đen",
+    "brand_id": 13,
+    "subcategory_id": 401,
+    "base_price": 16990000.0,
+    "slug": "pc-gaming2",
+    "is_featured": 0
+  },
+  {
+    "name": "PC Gaming E-Power N3060 B760 Core i5 12400F/16GB/500GB/650W/Geforce RTX 3060 12GB",
+    "brand_id": 13,
+    "subcategory_id": 401,
+    "base_price": 16990000.0,
+    "slug": "pc-gaming3",
+    "is_featured": 0
+  },
+  {
+    "name": "PC E-Power Office 30 AMD Ryzen 3 3200G / RAM 16GB / SSD 256GB / 450W",
+    "brand_id": 13,
+    "subcategory_id": 401,
+    "base_price": 16990000.0,
+    "slug": "pc-gaming4",
+    "is_featured": 0
+  },
+  {
+    "name": "PC E-Power Office 31 AMD Ryzen 5 4600G / RAM 16GB / SSD 512GB / 450W",
+    "brand_id": 13,
+    "subcategory_id": 401,
+    "base_price": 16990000.0,
+    "slug": "pc-gaming5",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Watch8 Classic Bluetooth 46mm",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": "samsung-galaxy-watch8-classic",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Watch8 44mm",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": "samsung-galaxy-watch8",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Fit3",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": "samsung-galaxy-fit3",
+    "is_featured": 0
+  },
+  {
+    "name": "Dây đeo đồng hồ Samsung Galaxy Watch6 40 & 43mm Sport Band",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": "samsung-galaxy-watch6",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Watch8 Classic Bluetooth 46mm",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": " samsung-galaxy-watch8-classic",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Watch Ultra 2025",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": " samsung-galaxy-watch-ultra",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Watch8 LTE 40mm",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": " samsung-galaxy-watch8-lte",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Watch7 44mm",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": " samsung-galaxy-watch7",
+    "is_featured": 0
+  },
+  {
+    "name": "Samsung Galaxy Watch Ultra LTE 47mm",
+    "brand_id": 2,
+    "subcategory_id": 1607,
+    "base_price": 14990000.0,
+    "slug": " samsung-galaxy-watch-ultra-lte",
+    "is_featured": 0
+  },
+  {
+    "name": "Nồi chiên không dầu Tefal EY505D15",
+    "brand_id": 35,
+    "subcategory_id": 701,
+    "base_price": 14990000.0,
+    "slug": "tefal-ey505d19",
+    "is_featured": 0
+  },
+  {
+    "name": "Nồi chiên không dầu Tefal 4.2 lít EY505D15",
+    "brand_id": 35,
+    "subcategory_id": 701,
+    "base_price": 14990000.0,
+    "slug": "tefal-ey505d15",
+    "is_featured": 0
+  },
+  {
+    "name": "Nồi chiên không dầu Tefal 4.2 lít EY401D15",
+    "brand_id": 35,
+    "subcategory_id": 701,
+    "base_price": 14990000.0,
+    "slug": "tefal-ey401d16",
+    "is_featured": 0
+  },
+  {
+    "name": "Nồi chiên không dầu Tefal 4.2 lít EY201D15",
+    "brand_id": 35,
+    "subcategory_id": 701,
+    "base_price": 14990000.0,
+    "slug": "tefal-ey201d17",
+    "is_featured": 0
+  },
+  {
+    "name": "Nồi chiên không dầu Hotwell 7.5 lít AF75H1",
+    "brand_id": 35,
+    "subcategory_id": 701,
+    "base_price": 14990000.0,
+    "slug": "hotwell-af75h1",
+    "is_featured": 0
+  },
+  {
+    "name": "Máy sấy tóc Sunhouse SHD2305",
+    "brand_id": 15,
+    "subcategory_id": 1403,
+    "base_price": 14990000.0,
+    "slug": "sunhouse-shd2305",
+    "is_featured": 0
+  },
+  {
+    "name": "Máy sấy tóc Sunhouse SHD2306",
+    "brand_id": 15,
+    "subcategory_id": 1403,
+    "base_price": 14990000.0,
+    "slug": "sunhouse-shd2306",
+    "is_featured": 0
+  },
+  {
+    "name": "Máy sấy tóc Sunhouse SHD2307",
+    "brand_id": 15,
+    "subcategory_id": 1403,
+    "base_price": 14990000.0,
+    "slug": "sunhouse-shd2307",
+    "is_featured": 0
+  },
+  {
+    "name": "Máy sấy tóc Sunhouse SHD2308",
+    "brand_id": 15,
+    "subcategory_id": 1403,
+    "base_price": 14990000.0,
+    "slug": "sunhouse-shd2308",
+    "is_featured": 0
+  },
+  {
+    "name": "Máy sấy tóc Sunhouse SHD2309",
+    "brand_id": 15,
+    "subcategory_id": 1403,
+    "base_price": 14990000.0,
+    "slug": "sunhouse-shd2309",
+    "is_featured": 0
+  },
+  {
+    "name": "Máy sấy tóc Sunhouse SHD2310",
+    "brand_id": 15,
+    "subcategory_id": 1403,
+    "base_price": 14990000.0,
+    "slug": "sunhouse-shd2310",
+    "is_featured": 0
+  },
+  {
+    "name": "Máy sấy tóc Sunhouse SHD2311",
+    "brand_id": 15,
+    "subcategory_id": 1403,
+    "base_price": 14990000.0,
+    "slug": "sunhouse-shd2311",
+    "is_featured": 0
+  },
+  {
+    "name": "Quạt điều hòa Daikiosan DM208 270W",
+    "brand_id": 41,
+    "subcategory_id": 803,
+    "base_price": 14990000.0,
+    "slug": "daikiosan-dm208",
+    "is_featured": 0
+  },
+  {
+    "name": "Quạt điều hòa Daikiosan DM116 200W",
+    "brand_id": 41,
+    "subcategory_id": 803,
+    "base_price": 14990000.0,
+    "slug": "daikiosan-dm116",
+    "is_featured": 0
+  },
+  {
+    "name": "Quạt điều hòa Daikiosan DM115 180W",
+    "brand_id": 41,
+    "subcategory_id": 803,
+    "base_price": 14990000.0,
+    "slug": "daikiosan-dm115",
+    "is_featured": 0
+  },
+  {
+    "name": "Quạt điều hòa Daikiosan DM114 160W",
+    "brand_id": 41,
+    "subcategory_id": 803,
+    "base_price": 14990000.0,
+    "slug": "daikiosan-dm114",
+    "is_featured": 0
+  },
+  {
+    "name": "Quạt điều hòa Daikiosan DM113 150W",
+    "brand_id": 41,
+    "subcategory_id": 803,
+    "base_price": 14990000.0,
+    "slug": "daikiosan-dm113",
+    "is_featured": 0
+  },
+  {
+    "name": "Quạt điều hòa Daikiosan DM112 140W",
+    "brand_id": 41,
+    "subcategory_id": 803,
+    "base_price": 14990000.0,
+    "slug": "daikiosan-dm112",
+    "is_featured": 0
+  },
+  {
+    "name": "Quạt điều hòa Daikiosan DM111 130W",
+    "brand_id": 41,
+    "subcategory_id": 803,
+    "base_price": 14990000.0,
+    "slug": "daikiosan-dm111",
+    "is_featured": 0
+  },
+  {
+    "name": "Robot hút bụi lau nhà Ecovacs Deebot Mini",
+    "brand_id": 7,
+    "subcategory_id": 801,
+    "base_price": 14990000.0,
+    "slug": "ecovacs-deebot-mini",
+    "is_featured": 0
+  },
+  {
+    "name": "Robot hút bụi lau nhà Ecovacs Deebot T30C",
+    "brand_id": 7,
+    "subcategory_id": 801,
+    "base_price": 14990000.0,
+    "slug": "ecovacs-deebot-t30c",
+    "is_featured": 0
+  },
+  {
+    "name": "Robot hút bụi lau nhà Ecovacs N30 Pro Omni",
+    "brand_id": 7,
+    "subcategory_id": 801,
+    "base_price": 14990000.0,
+    "slug": "ecovacs-n30-pro-omni",
+    "is_featured": 0
+  },
+  {
+    "name": "Robot hút bụi lau nhà Ecovacs Vacuum E5",
+    "brand_id": 7,
+    "subcategory_id": 801,
+    "base_price": 14990000.0,
+    "slug": "xiaomi-vacuum-e5",
+    "is_featured": 0
+  },
+  {
+    "name": "Robot hút bụi lau nhà Ecovacs Deebot Y1 Pro",
+    "brand_id": 7,
+    "subcategory_id": 801,
+    "base_price": 14990000.0,
+    "slug": "ecovacs-deebot-y1-pro",
+    "is_featured": 0
+  },
+  {
+    "name": "Robot hút bụi lau nhà Ecovacs Vacuum X20",
+    "brand_id": 7,
+    "subcategory_id": 801,
+    "base_price": 14990000.0,
+    "slug": "xiaomi-vacuum-x20",
     "is_featured": 0
   }
 ]

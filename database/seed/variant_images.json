@@ -581,5 +581,445 @@
         "sort_order": 4
       }
     ]
+  },
+  {
+    "product_id": 12,
+    "images": [
+      {
+        "sku_code": "12400F-6GB-BLACK",
+        "image_set": "pc/pc-12400F-6GB-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 13,
+    "images": [
+      {
+        "sku_code": "5500-6GB-BLACK",
+        "image_set": "pc/pc-5500-6GB-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 14,
+    "images": [
+      {
+        "sku_code": "5700X-6GB-BLACK",
+        "image_set": "pc/pc-5700X-6GB-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 15,
+    "images": [
+      {
+        "sku_code": "12400F-12GB-BLACK",
+        "image_set": "pc/pc-12400F-12GB-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 16,
+    "images": [
+      {
+        "sku_code": "3200G-4GB-BLACK",
+        "image_set": "pc/pc-3200G-4GB-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 17,
+    "images": [
+      {
+        "sku_code": "4600G-6GB-BLACK",
+        "image_set": "pc/pc-4600G-6GB-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 18,
+    "images": [
+      {
+        "sku_code": "46mm-40mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch8-classic-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 19,
+    "images": [
+      {
+        "sku_code": "44mm-41mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch8-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 20,
+    "images": [
+      {
+        "sku_code": "44mm-42mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-fit3-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 21,
+    "images": [
+      {
+        "sku_code": "40mm-43mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch6-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 22,
+    "images": [
+      {
+        "sku_code": "46mm-44mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch2-classic-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 23,
+    "images": [
+      {
+        "sku_code": "47mm-45mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch-ultra-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 24,
+    "images": [
+      {
+        "sku_code": "40mm-46mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch1-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 25,
+    "images": [
+      {
+        "sku_code": "44mm-47mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch7-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 26,
+    "images": [
+      {
+        "sku_code": "47mm-48mm-BLACK",
+        "image_set": "samsung/samsung-galaxy-watch-ultra1-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 27,
+    "images": [
+      {
+        "sku_code": "4lit-40lit-BLACK",
+        "image_set": "tefal/tefal-ey505d15-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 28,
+    "images": [
+      {
+        "sku_code": "4lit-41lit-BLACK",
+        "image_set": "tefal/tefal-ey505d11-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 29,
+    "images": [
+      {
+        "sku_code": "4lit-44lit-BLACK",
+        "image_set": "tefal/tefal-ey401d12-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 30,
+    "images": [
+      {
+        "sku_code": "4lit-24lit-BLACK",
+        "image_set": "tefal/tefal-ey201d13-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 31,
+    "images": [
+      {
+        "sku_code": "75l-75l-BLACK",
+        "image_set": "tefal/tefal-af75h12-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 33,
+    "images": [
+      {
+        "sku_code": "SHD2305-SHD2305-BLACK",
+        "image_set": "massage/sunhouse-shd2305-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 34,
+    "images": [
+      {
+        "sku_code": "SHD2306-SHD2306-BLACK",
+        "image_set": "massage/sunhouse-shd2306-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 35,
+    "images": [
+      {
+        "sku_code": "SHD2307-SHD2307-BLACK",
+        "image_set": "massage/sunhouse-shd2307-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 36,
+    "images": [
+      {
+        "sku_code": "SHD2308-SHD2308-BLACK",
+        "image_set": "massage/sunhouse-shd2308-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 37,
+    "images": [
+      {
+        "sku_code": "SHD2309-SHD2309-BLACK",
+        "image_set": "massage/sunhouse-shd2309-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 38,
+    "images": [
+      {
+        "sku_code": "SHD2310-SHD2310-BLACK",
+        "image_set": "massage/sunhouse-shd2310-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 39,
+    "images": [
+      {
+        "sku_code": "SHD2311-SHD2311-BLACK",
+        "image_set": "massage/sunhouse-shd2311-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 40,
+    "images": [
+      {
+        "sku_code": "DM208-DM208-BLACK",
+        "image_set": "daikiosan/daikiosan-dm208-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 41,
+    "images": [
+      {
+        "sku_code": "DM116-DM116-BLACK",
+        "image_set": "daikiosan/daikiosan-dm116-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 42,
+    "images": [
+      {
+        "sku_code": "DM115-DM115-BLACK",
+        "image_set": "daikiosan/daikiosan-dm115-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 43,
+    "images": [
+      {
+        "sku_code": "DM114-DM114-BLACK",
+        "image_set": "daikiosan/daikiosan-dm114-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 44,
+    "images": [
+      {
+        "sku_code": "DM113-DM113-BLACK",
+        "image_set": "daikiosan/daikiosan-dm113-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 45,
+    "images": [
+      {
+        "sku_code": "DM112-DM112-BLACK",
+        "image_set": "daikiosan/daikiosan-dm112-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 46,
+    "images": [
+      {
+        "sku_code": "DM111-DM111-BLACK",
+        "image_set": "daikiosan/daikiosan-dm111-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 47,
+    "images": [
+      {
+        "sku_code": "ecovacs-deebot-BLACK",
+        "image_set": "ecovacs/ecovacs-deebot-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 48,
+    "images": [
+      {
+        "sku_code": "ecovacs-T30C-BLACK",
+        "image_set": "ecovacs/ecovacs-T30C-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 49,
+    "images": [
+      {
+        "sku_code": "ecovacs-N30-BLACK",
+        "image_set": "ecovacs/ecovacs-N30-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 50,
+    "images": [
+      {
+        "sku_code": "Vacuum-E5-BLACK",
+        "image_set": "ecovacs/ecovacs-vacuum-e5-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 51,
+    "images": [
+      {
+        "sku_code": "ecovacs-Y1-BLACK",
+        "image_set": "ecovacs/ecovacs-Y1-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "product_id": 52,
+    "images": [
+      {
+        "sku_code": "Vacuum-X20-BLACK",
+        "image_set": "ecovacs/ecovacs-vacuum-x20-den-0.webp",
+        "is_default": 1,
+        "sort_order": 1
+      }
+    ]
   }
 ]

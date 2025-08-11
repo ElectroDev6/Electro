@@ -23,11 +23,9 @@ class ProductModel
             $where[] = "sc.slug = :subcategory_slug";
             $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
             $params['subcategory_slug'] = $options['subcategory_slug'];
-        } elseif (!empty($options['category_id'])) {
-            $where[] = "c.category_id = :category_id";
-            $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id
-                        INNER JOIN categories c ON sc.category_id = c.category_id";
-            $params['category_id'] = (int) $options['category_id'];
+        } elseif (!empty($options['subcategory_id'])) {
+            $where[] = "p.subcategory_id = :subcategory_id";
+            $params['subcategory_id'] = (int) $options['subcategory_id'];
         }
 
         if (!empty($options['brand'])) {
@@ -123,6 +121,11 @@ class ProductModel
 
     public function getBrands(array $options = []): array
     {
+        // If subcategory_slug is iPhone, return fixed brand Apple
+        if (!empty($options['subcategory_slug']) && $options['subcategory_slug'] === 'iphone') {
+            return [['name' => 'Apple']];
+        }
+
         $where = [];
         $joins = [];
         $params = [];
@@ -174,6 +177,16 @@ class ProductModel
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         error_log("ProductModel: getCategoryBySlug Result: " . json_encode($result));
         return $result ?: null;
+    }
+
+    public function getSubcategories(int $category_id): array
+    {
+        $sql = "SELECT subcategory_id, name, subcategory_slug FROM subcategories WHERE category_id = :category_id ORDER BY name";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':category_id' => $category_id]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        error_log("ProductModel: getSubcategories Result: " . json_encode($result));
+        return $result;
     }
 
     public function getSkuById($skuId): ?array
@@ -425,5 +438,61 @@ class ProductModel
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text, int $rating = null, ?string $user_name = null, ?string $email = null): bool
+    {
+        // Nếu không có user_id (khách), vẫn cho phép lưu với user_name và email
+        $sql = "INSERT INTO reviews (product_id, user_id, parent_review_id, comment_text, rating, user_name, email, status) 
+            VALUES (:product_id, :user_id, :parent_review_id, :comment_text, :rating, :user_name, :email, 'pending')";
+        $stmt = $this->pdo->prepare($sql);
+        $params = [
+            ':product_id' => $product_id,
+            ':user_id' => $user_id, // NULL được phép sau khi sửa DB
+            ':parent_review_id' => $parent_review_id ?? null,
+            ':comment_text' => $comment_text,
+            ':rating' => $rating ?? null,
+            ':user_name' => $user_name ?? null,
+            ':email' => $email ?? null
+        ];
+        error_log("ProductModel: addReview Query: $sql, Params: " . json_encode($params));
+        $result = $stmt->execute($params);
+        error_log("ProductModel: addReview Result: " . ($result ? 'success' : 'failed'));
+        return $result;
+    }
+
+    public function getReviewsByProductId(int $product_id): array
+    {
+        $sql = "
+        SELECT r.review_id, r.user_id, r.parent_review_id, r.comment_text, r.rating, r.review_date, 
+               COALESCE(r.user_name, u.name) as user_name, COALESCE(u.avatar_url, '/img/avatars/avatar.png') as avatar_url, COALESCE(r.email, u.email) as email
+        FROM reviews r
+        LEFT JOIN users u ON r.user_id = u.user_id
+        WHERE r.product_id = :product_id
+        ORDER BY r.review_date DESC
+    ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':product_id' => $product_id]);
+        $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Build comment tree
+        $comment_tree = [];
+        $child_comments = [];
+        foreach ($reviews as $review) {
+            $review['replies'] = [];
+            if ($review['parent_review_id']) {
+                $child_comments[$review['parent_review_id']][] = $review;
+            } else {
+                $comment_tree[$review['review_id']] = $review;
+            }
+        }
+        foreach ($child_comments as $parent_id => $replies) {
+            if (isset($comment_tree[$parent_id])) {
+                $comment_tree[$parent_id]['replies'] = $replies;
+            }
+        }
+
+        error_log("ProductModel: getReviewsByProductId Result: " . json_encode($comment_tree));
+        return array_values($comment_tree);
     }
 }

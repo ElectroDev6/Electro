@@ -1,4 +1,5 @@
 <?php
+
 use Core\View;
 ?>
 
@@ -15,7 +16,7 @@ use Core\View;
             <p class="auth__subtitle">Chào mừng bạn đã trở lại.</p>
 
             <?php if (!empty($error) && isset($formType) && $formType === 'login'): ?>
-            <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
+                <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
 
             <input name="username" type="text" placeholder="Tên đăng nhập" class="auth__input"
@@ -41,7 +42,7 @@ use Core\View;
             <p class="auth__subtitle">Tạo tài khoản mới để có trải nghiệm tốt nhất.</p>
 
             <?php if (!empty($error) && isset($formType) && $formType === 'register'): ?>
-            <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
+                <p class="auth__error" style="color: red;"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
 
             <input name="reg_username" type="text" placeholder="Tên đăng ký" class="auth__input"
@@ -49,6 +50,8 @@ use Core\View;
             <input name="reg_phone" type="text" placeholder="Số điện thoại" class="auth__input"
                 value="<?= isset($old['reg_phone']) ? htmlspecialchars($old['reg_phone']) : '' ?>" required
                 maxlength="11" />
+            <input name="reg_email" type="email" placeholder="Email" class="auth__input"
+                value="<?= isset($old['reg_email']) ? htmlspecialchars($old['reg_email']) : '' ?>" required />
             <input name="reg_password" type="password" placeholder="Mật khẩu" class="auth__input" required />
             <input name="reg_repassword" type="password" placeholder="Nhập lại mật khẩu" class="auth__input" required />
 
@@ -60,25 +63,23 @@ use Core\View;
 
         <!-- Popup thành công đăng kí -->
         <?php if (isset($success) && $formType === 'register'): ?>
-        <div id="registerSuccessPopup" class="popup"
-            style="display: block; position: fixed; top: 50%; left: 50%; 
-               transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000; border-radius: 8px;">
-            <p><?= htmlspecialchars($success) ?></p>
-            <button onclick="closeRegisterPopup()" class="auth__btn">
-                Đóng và tiếp tục Đăng nhập
-            </button>
-        </div>
-        <div class="popup-overlay" style="display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-             background: rgba(0,0,0,0.5); z-index: 999;"></div>
+            <div id="registerSuccessPopup" class="popup"
+                style="display: block; position: fixed; top: 50%; left: 50%; 
+        transform: translate(-50%, -50%); background: #4CAF50; color: white;
+        padding: 20px; border-radius: 8px; z-index: 1000; text-align: center; font-size: 16px;">
+                <p><?= htmlspecialchars($success) ?></p>
+            </div>
+            <div class="popup-overlay" style="display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.3); z-index: 999;"></div>
 
-        <script>
-        function closeRegisterPopup() {
-            document.getElementById('registerSuccessPopup').style.display = 'none';
-            document.querySelector('.popup-overlay').style.display = 'none';
-            // Chuyển sang trang đăng nhập
-            window.location.href = '/login';
-        }
-        </script>
+            <script>
+                setTimeout(function() {
+                    document.getElementById('registerSuccessPopup').style.display = 'none';
+                    document.querySelector('.popup-overlay').style.display = 'none';
+                    // Chuyển sang trang đăng nhập sau khi tắt popup
+                    window.location.href = '/login';
+                }, 2000);
+            </script>
         <?php endif; ?>
 
 

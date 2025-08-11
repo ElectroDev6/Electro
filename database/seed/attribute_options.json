@@ -23,5 +23,20 @@
     "attribute_id": 2,
     "value": "1TB",
     "display_order": 3
+  },
+  {
+    "attribute_id": 2,
+    "value": "6GB",
+    "display_order": 4
+  },
+  {
+    "attribute_id": 2,
+    "value": "8GB",
+    "display_order": 5
+  },
+  {
+    "attribute_id": 2,
+    "value": "12GB",
+    "display_order": 6
   }
 ]

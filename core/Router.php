@@ -16,6 +16,7 @@ class Router
     self::$routes['POST'][$uri] = $controllerAction;
   }
 
+  // File: core/Router.php
   public static function dispatch(string $uri, string $method)
   {
     $path = parse_url($uri, PHP_URL_PATH);
@@ -24,8 +25,10 @@ class Router
     error_log("Router: Dispatching URI: $uri, Method: $method, Path: $path");
 
     foreach (self::$routes[$method] as $route => $handler) {
-      $pattern = str_replace(':slug', '([^/]+)', $route);
+      // Thay tất cả tham số động (:param) bằng ([^/]+)
+      $pattern = preg_replace('#:[\w]+#', '([^/]+)', $route);
       $pattern = '#^' . $pattern . '$#';
+      // error_log("Router: Trying pattern: $pattern for route: $route");
       if (preg_match($pattern, $path, $matches)) {
         array_shift($matches);
         error_log("Router: Matched route: $route, Handler: $handler, Matches: " . json_encode($matches));
@@ -49,7 +52,7 @@ class Router
           exit;
         }
 
-        $instance = new $controllerClass($pdo); // Truyền $pdo từ Container
+        $instance = new $controllerClass($pdo);
         if (!method_exists($instance, $action)) {
           error_log("Router: Method $action not found in $controllerClass");
           echo "Method $action not found in $controllerClass";
@@ -71,6 +74,8 @@ class Router
     }
 
     error_log("Router: No route matched for $path");
+    error_log("Router: Dispatching URI: $uri, Method: $method, Path: $path");
+    error_log("Router: Registered routes: " . json_encode(self::$routes));
     return false;
   }
 }

@@ -403,5 +403,485 @@
         "is_active": 1
       }
     ]
+  },
+  {
+    "product_id": 12,
+    "skus": [
+      {
+        "sku_code": "12400F-6GB-BLACK",
+        "product_id": 12,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 13,
+    "skus": [
+      {
+        "sku_code": "5500-6GB-BLACK",
+        "product_id": 13,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 14,
+    "skus": [
+      {
+        "sku_code": "5700X-6GB-BLACK",
+        "product_id": 14,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 15,
+    "skus": [
+      {
+        "sku_code": "12400F-12GB-BLACK",
+        "product_id": 15,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 16,
+    "skus": [
+      {
+        "sku_code": "3200G-4GB-BLACK",
+        "product_id": 16,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 17,
+    "skus": [
+      {
+        "sku_code": "4600G-6GB-BLACK",
+        "product_id": 17,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 18,
+    "skus": [
+      {
+        "sku_code": "46mm-40mm-BLACK",
+        "product_id": 18,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 19,
+    "skus": [
+      {
+        "sku_code": "44mm-41mm-BLACK",
+        "product_id": 19,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 20,
+    "skus": [
+      {
+        "sku_code": "44mm-42mm-BLACK",
+        "product_id": 20,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 21,
+    "skus": [
+      {
+        "sku_code": "40mm-43mm-BLACK",
+        "product_id": 21,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 22,
+    "skus": [
+      {
+        "sku_code": "46mm-44mm-BLACK",
+        "product_id": 22,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 23,
+    "skus": [
+      {
+        "sku_code": "47mm-45mm-BLACK",
+        "product_id": 23,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 24,
+    "skus": [
+      {
+        "sku_code": "40mm-46mm-BLACK",
+        "product_id": 24,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 25,
+    "skus": [
+      {
+        "sku_code": "44mm-47mm-BLACK",
+        "product_id": 25,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 26,
+    "skus": [
+      {
+        "sku_code": "47mm-48mm-BLACK",
+        "product_id": 26,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 27,
+    "skus": [
+      {
+        "sku_code": "4lit-40lit-BLACK",
+        "product_id": 27,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 28,
+    "skus": [
+      {
+        "sku_code": "4lit-41lit-BLACK",
+        "product_id": 28,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 29,
+    "skus": [
+      {
+        "sku_code": "4lit-44lit-BLACK",
+        "product_id": 29,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 30,
+    "skus": [
+      {
+        "sku_code": "4lit-24lit-BLACK",
+        "product_id": 30,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 31,
+    "skus": [
+      {
+        "sku_code": "75l-75l-BLACK",
+        "product_id": 31,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 32,
+    "skus": [
+      {
+        "sku_code": "SHD2305-SHD2305-BLACK",
+        "product_id": 32,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 33,
+    "skus": [
+      {
+        "sku_code": "SHD2306-SHD2306-BLACK",
+        "product_id": 33,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 34,
+    "skus": [
+      {
+        "sku_code": "SHD2307-SHD2307-BLACK",
+        "product_id": 34,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 35,
+    "skus": [
+      {
+        "sku_code": "SHD2308-SHD2308-BLACK",
+        "product_id": 35,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 36,
+    "skus": [
+      {
+        "sku_code": "SHD2309-SHD2309-BLACK",
+        "product_id": 36,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 37,
+    "skus": [
+      {
+        "sku_code": "SHD2310-SHD2310-BLACK",
+        "product_id": 37,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 38,
+    "skus": [
+      {
+        "sku_code": "SHD2311-SHD2311-BLACK",
+        "product_id": 38,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 39,
+    "skus": [
+      {
+        "sku_code": "DM208-DM208-BLACK",
+        "product_id": 39,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 40,
+    "skus": [
+      {
+        "sku_code": "DM116-DM116-BLACK",
+        "product_id": 40,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 41,
+    "skus": [
+      {
+        "sku_code": "DM115-DM115-BLACK",
+        "product_id": 41,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 42,
+    "skus": [
+      {
+        "sku_code": "DM114-DM114-BLACK",
+        "product_id": 42,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 43,
+    "skus": [
+      {
+        "sku_code": "DM113-DM113-BLACK",
+        "product_id": 43,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 44,
+    "skus": [
+      {
+        "sku_code": "DM112-DM112-BLACK",
+        "product_id": 44,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 45,
+    "skus": [
+      {
+        "sku_code": "DM111-DM111-BLACK",
+        "product_id": 45,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 46,
+    "skus": [
+      {
+        "sku_code": "ecovacs-deebot-BLACK",
+        "product_id": 46,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 47,
+    "skus": [
+      {
+        "sku_code": "ecovacs-T30C-BLACK",
+        "product_id": 47,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 48,
+    "skus": [
+      {
+        "sku_code": "ecovacs-N30-BLACK",
+        "product_id": 48,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 49,
+    "skus": [
+      {
+        "sku_code": "Vacuum-E5-BLACK",
+        "product_id": 49,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 50,
+    "skus": [
+      {
+        "sku_code": "ecovacs-Y1-BLACK",
+        "product_id": 50,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
+  },
+  {
+    "product_id": 51,
+    "skus": [
+      {
+        "sku_code": "Vacuum-X20-BLACK",
+        "product_id": 51,
+        "price": 19100000.0,
+        "stock_quantity": 17,
+        "is_active": 1
+      }
+    ]
   }
 ]

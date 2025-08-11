@@ -13,49 +13,48 @@ Sản phẩm
 <div class="container-main">
     <div class="navigation">
         <a href="/">Trang chủ</a> /
-        <a class="active" href="/products/<?php echo htmlspecialchars($categorySlug ?? 'phone'); ?>">
-            <?php echo htmlspecialchars($categorySlug ? ucfirst(str_replace('-', ' ', $categorySlug)) : 'Phone'); ?>
+        <a class="active" href="/products/<?php echo htmlspecialchars($categorySlug ?? ''); ?>">
+            <?php echo htmlspecialchars($categorySlug ? ucfirst(str_replace('-', ' ', $categorySlug)) : 'Sản phẩm'); ?>
         </a>
+        <?php if ($subcategorySlug): ?>
+            / <span><?php echo htmlspecialchars(ucfirst(str_replace('-', ' ', $subcategorySlug))); ?></span>
+        <?php endif; ?>
     </div>
 
     <div class="banner">
         <img class="banner__image" src="/img/sliders/slider-1.jpg" alt="Banner Phone">
     </div>
-
-    <div class="use-needs">
-        <h3 class="use-needs__title">Nhu cầu sử dụng</h3>
-        <div class="use-needs__list">
-            <a href="/products/iphone-pro-max" class="use-needs__item" style="background: linear-gradient(135deg, #ffe5e5, #ffcccc);">
-                <img src="/img/products/thumbnails/iphone/iphone-13-den-0.webp" alt="iPhone Pro Max">
-                <p>iPhone Pro Max</p>
-            </a>
-            <a href="/products/iphone-pro" class="use-needs__item" style="background: linear-gradient(135deg, #fff2cc, #ffe066);">
-                <img src="/img/products/thumbnails/iphone/iphone-13-den-0.webp" alt="iPhone Pro">
-                <p>iPhone Pro</p>
-            </a>
-            <a href="/products/iphone-standard" class="use-needs__item" style="background: linear-gradient(135deg, #ccf2ff, #66d9ff);">
-                <img src="/img/products/thumbnails/iphone/iphone-13-den-0.webp" alt="iPhone Standard">
-                <p>iPhone Standard</p>
-            </a>
-            <a href="/products/iphone-mini" class="use-needs__item" style="background: linear-gradient(135deg, #ede9ff, #d6ccff);">
-                <img src="/img/products/thumbnails/iphone/iphone-13-den-0.webp" alt="iPhone Mini">
-                <p>iPhone Mini</p>
-            </a>
-            <a href="/products/iphone-se" class="use-needs__item" style="background: linear-gradient(135deg, #d9fbe4, #99f5b3);">
-                <img src="/img/products/thumbnails/iphone/iphone-13-den-0.webp" alt="iPhone SE">
-                <p>iPhone SE</p>
-            </a>
+    <?php if (!empty($subcategories)): ?>
+        <div class="use-needs">
+            <h3 class="use-needs__title">Nhu cầu sử dụng</h3>
+            <div class="use-needs__list">
+                <?php foreach ($subcategories as $sub): ?>
+                    <a href="/products/<?php echo htmlspecialchars($categorySlug); ?>/<?php echo htmlspecialchars($sub['subcategory_slug']); ?>" class="use-needs__item" style="background: linear-gradient(135deg, #<?php echo dechex(rand(0xcccccc, 0xffffff)); ?>, #<?php echo dechex(rand(0xaaaaaa, 0xeeeeee)); ?>);">
+                        <img src="/img/products/thumbnails/<?php echo htmlspecialchars($sub['subcategory_slug']); ?>/thumbnail.webp" alt="<?php echo htmlspecialchars($sub['name']); ?>">
+                        <p><?php echo htmlspecialchars($sub['name']); ?></p>
+                    </a>
+                <?php endforeach; ?>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 
     <div class="content-layout">
-        <?php
-        error_log("Products View: Brands before component: " . json_encode($brands));
-        View::component('components.filter-phone', ['brands' => $brands, 'selectedBrands' => $selectedBrands]);
-        ?>
+        <?php if (!$subcategorySlug): ?>
+            <?php
+            error_log("Products View: Brands before component: " . json_encode($brands));
+            View::component('components.filter-phone', ['brands' => $brands, 'selectedBrands' => $selectedBrands]);
+            ?>
+        <?php endif; ?>
         <main class="products" id="product-list">
-            <?php View::partial('partials.product-category', ['products' => $products]); ?>
+            <?php
+            if (empty($products)) {
+                echo '<p style="text-align:center; font-size:18px; color:#666; margin-top:200px;">Không có sản phẩm</p>';
+            } else {
+                View::partial('partials.product-category', ['products' => $products]);
+            }
+            ?>
         </main>
+
     </div>
 
     <div class="pagination">
@@ -70,18 +69,19 @@ Sản phẩm
 
 <script>
     const mainForm = document.getElementById('mainFilter');
-    const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
-
-    allCheckboxes.forEach(cb => {
-        cb.addEventListener('change', () => {
-            const params = new URLSearchParams();
-            mainForm.querySelectorAll('input[type="checkbox"]:checked').forEach(checkedCb => {
-                params.append(checkedCb.name, checkedCb.value);
+    if (mainForm) {
+        const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
+        allCheckboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const params = new URLSearchParams();
+                mainForm.querySelectorAll('input[type="checkbox"]:checked').forEach(checkedCb => {
+                    params.append(checkedCb.name, checkedCb.value);
+                });
+                console.log("Filter applied: " + params.toString());
+                window.location.search = '?' + params.toString();
             });
-            console.log("Filter applied: " + params.toString());
-            window.location.search = '?' + params.toString();
         });
-    });
+    }
 
     const observerOptions = {
         threshold: 0.1,

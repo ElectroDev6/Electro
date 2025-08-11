@@ -1,6 +1,6 @@
 [
   {
-    "name": "Nguyen",
+    "name": "admim",
     "email": "lukiluna23803@gmail.com",
     "password_hash": "$2y$10$E9Bf1T0LEm3q1PfLg6PXtOCypx9C5xY6b5D1Kj6JX9P9xI0zQmJ1K",
     "phone_number": 1234567890,
@@ -11,7 +11,7 @@
     "avatar_url": "/img/avatar/avatar.jpg"
   },
   {
-    "name": "Khanh",
+    "name": "duc",
     "email": "electrodev6@gmail.com",
     "password_hash": "$2y$10$dZ4sm/nymvQk.qbQPBbS0OgTuZGEzA0umVuZ8t/fj0u4wKZc7P6eW",
     "phone_number": 815934934,
@@ -22,7 +22,7 @@
     "avatar_url": "/img/avatar/avatar.png"
   },
   {
-    "name": "Hello",
+    "name": "trong",
     "email": "electrodev7@gmail.com",
     "password_hash": "$2y$10$dZ4sm/nymvQk.qbQPBbS0OgTuZGEzA0umVuZ8t/fj0u4wKZc7P6eW",
     "phone_number": 815934934,

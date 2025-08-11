@@ -68,8 +68,8 @@ def process_nested_table(table, csv_file, nested_field, nested_columns):
                     items.append(sku_item)
                 elif table == 'variant_images':
                     # Tạo sku_code từ sku_code_prefix, capacity, và color
-                    sku_code = f"{row['sku_code_prefix']}-{row['capacity']}-{row['color'].upper()}"
-                    if sku_code in available_skus:
+                    sku_code = f"{row['sku_code_prefix'].strip()}-{row['capacity'].strip()}-{row['color'].strip().upper()}"
+                    if sku_code.upper() in {sku.upper() for sku in available_skus}:
                         # Tạo image_set đầy đủ với image_index
                         base_image_set = row['image_set']
                         image_index = row['image_index'] if pd.notna(row['image_index']) else ''

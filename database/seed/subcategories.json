@@ -163,55 +163,55 @@
   },
   {
     "subcategory_id": 401,
-    "category_id": 4,
+    "category_id": 14,
     "name": "Máy tính để bàn",
     "subcategory_slug": "desktop"
   },
   {
     "subcategory_id": 402,
-    "category_id": 4,
+    "category_id": 14,
     "name": "Màn hình",
     "subcategory_slug": "monitor"
   },
   {
     "subcategory_id": 403,
-    "category_id": 4,
+    "category_id": 14,
     "name": "CPU",
     "subcategory_slug": "cpu"
   },
   {
     "subcategory_id": 404,
-    "category_id": 4,
+    "category_id": 14,
     "name": "Mainboard",
     "subcategory_slug": "mainboard"
   },
   {
     "subcategory_id": 405,
-    "category_id": 4,
+    "category_id": 14,
     "name": "RAM",
     "subcategory_slug": "ram"
   },
   {
     "subcategory_id": 406,
-    "category_id": 4,
+    "category_id": 14,
     "name": "Ổ cứng SSD/HDD",
     "subcategory_slug": "storage"
   },
   {
     "subcategory_id": 407,
-    "category_id": 4,
+    "category_id": 14,
     "name": "Nguồn (PSU)",
     "subcategory_slug": "psu"
   },
   {
     "subcategory_id": 408,
-    "category_id": 4,
+    "category_id": 14,
     "name": "Case",
     "subcategory_slug": "case"
   },
   {
     "subcategory_id": 409,
-    "category_id": 4,
+    "category_id": 14,
     "name": "Card màn hình (GPU)",
     "subcategory_slug": "gpu"
   },
@@ -349,43 +349,43 @@
   },
   {
     "subcategory_id": 801,
-    "category_id": 8,
+    "category_id": 7,
     "name": "Máy hút bụi",
     "subcategory_slug": "vacuum-cleaner"
   },
   {
     "subcategory_id": 802,
-    "category_id": 8,
+    "category_id": 7,
     "name": "Máy lọc không khí",
     "subcategory_slug": "air-purifier"
   },
   {
     "subcategory_id": 803,
-    "category_id": 8,
+    "category_id": 7,
     "name": "Quạt điều hòa",
     "subcategory_slug": "air-cooler"
   },
   {
     "subcategory_id": 804,
-    "category_id": 8,
+    "category_id": 7,
     "name": "Máy giặt mini",
     "subcategory_slug": "mini-washer"
   },
   {
     "subcategory_id": 805,
-    "category_id": 8,
+    "category_id": 7,
     "name": "Đèn thông minh",
     "subcategory_slug": "smart-light"
   },
   {
     "subcategory_id": 806,
-    "category_id": 8,
+    "category_id": 7,
     "name": "Thiết bị sưởi ấm",
     "subcategory_slug": "heater"
   },
   {
     "subcategory_id": 807,
-    "category_id": 8,
+    "category_id": 7,
     "name": "Khử mùi phòng",
     "subcategory_slug": "air-freshener"
   },
@@ -589,25 +589,25 @@
   },
   {
     "subcategory_id": 1403,
-    "category_id": 14,
+    "category_id": 15,
     "name": "Máy massage",
     "subcategory_slug": "massager"
   },
   {
     "subcategory_id": 1404,
-    "category_id": 14,
+    "category_id": 15,
     "name": "Máy xông tinh dầu",
     "subcategory_slug": "essential-oil-diffuser"
   },
   {
     "subcategory_id": 1405,
-    "category_id": 14,
+    "category_id": 15,
     "name": "Máy lọc không khí",
     "subcategory_slug": "air-purifier"
   },
   {
     "subcategory_id": 1406,
-    "category_id": 14,
+    "category_id": 15,
     "name": "Nhiệt kế điện tử",
     "subcategory_slug": "digital-thermometer"
   },
@@ -649,38 +649,44 @@
   },
   {
     "subcategory_id": 1601,
-    "category_id": 16,
+    "category_id": 4,
     "name": "Chuột & Bàn phím",
     "subcategory_slug": "mouse-keyboard"
   },
   {
     "subcategory_id": 1602,
-    "category_id": 16,
+    "category_id": 4,
     "name": "USB & Ổ cứng",
     "subcategory_slug": "usb-storage"
   },
   {
     "subcategory_id": 1603,
-    "category_id": 16,
+    "category_id": 4,
     "name": "Thẻ nhớ",
     "subcategory_slug": "memory-card"
   },
   {
     "subcategory_id": 1604,
-    "category_id": 16,
+    "category_id": 4,
     "name": "Hub & Dock chuyển đổi",
     "subcategory_slug": "hub-dock"
   },
   {
     "subcategory_id": 1605,
-    "category_id": 16,
+    "category_id": 4,
     "name": "Phụ kiện laptop",
     "subcategory_slug": "laptop-accessories"
   },
   {
     "subcategory_id": 1606,
-    "category_id": 16,
+    "category_id": 4,
     "name": "Balo",
     "subcategory_slug": "backpack"
+  },
+  {
+    "subcategory_id": 1607,
+    "category_id": 4,
+    "name": "Đồng hồ",
+    "subcategory_slug": " watch"
   }
 ]
