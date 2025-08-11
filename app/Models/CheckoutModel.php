@@ -8,6 +8,8 @@ class CheckoutModel
 {
     private PDO $pdo;
 
+    private string $sessionKey = 'pending_order'; // tạm thời
+
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
@@ -29,23 +31,23 @@ class CheckoutModel
     public function createOrder(array $orderData): int
 {
     $stmt = $this->pdo->prepare("
-        INSERT INTO orders (user_id, name, phone, address, payment_method, total_price, created_at)
-        VALUES (:user_id, :name, :phone, :address, :payment_method, :total_price, NOW())
+        INSERT INTO orders (user_id, user_address_id, coupon_id, status, total_price, created_at)
+        VALUES (:user_id, :user_address_id, :coupon_id, :status, :total_price, NOW())
     ");
 
     if (!$stmt->execute([
-        ':user_id' => $orderData['user_id'],
-        ':name' => $orderData['name'],
-        ':phone' => $orderData['phone'],
-        ':address' => $orderData['address'],
-        ':payment_method' => $orderData['payment_method'],
-        ':total_price' => $orderData['total_price'],
+        ':user_id'          => $orderData['user_id'],
+        ':user_address_id'  => $orderData['user_address_id'],  // bắt buộc
+        ':coupon_id'        => $orderData['coupon_id'] ?? null,
+        ':status'           => $orderData['status'] ?? 'pending',
+        ':total_price'      => $orderData['total_price'],
     ])) {
         throw new \RuntimeException('Failed to create order');
     }
 
     return (int)$this->pdo->lastInsertId();
 }
+
 
 public function addOrderItem(array $itemData): bool
 {
@@ -74,7 +76,7 @@ public function getOrdersByUserId(int $userId): array
      */
     public function getOrderById(int $orderId): ?array
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM orders WHERE id = :id");
+        $stmt = $this->pdo->prepare("SELECT * FROM orders WHERE order_id = :id");
         $stmt->execute([':id' => $orderId]);
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
@@ -88,4 +90,5 @@ public function getOrdersByUserId(int $userId): array
         $stmt->execute([':order_id' => $orderId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 }

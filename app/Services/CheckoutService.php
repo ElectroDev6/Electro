@@ -13,12 +13,17 @@ class CheckoutService
     protected ?ProductService $productService;
     protected CartService $cartService;
 
+    
+
     public function __construct(\PDO $pdo, ?ProductService $productService = null)
     {
         $this->cartModel = new CartModel($pdo);
         $this->checkoutModel = new CheckoutModel($pdo); // ✅ thiếu dòng này gây lỗi
         $this->productService = $productService;
         $this->cartService = new CartService($pdo, $productService);
+
+        
+
     }
 
     /**
@@ -28,64 +33,86 @@ class CheckoutService
      * @param array $cartItems Mảng sản phẩm đã chọn trong giỏ
      * @return int|null
      */
-   public function createOrder(int $userId, array $postData, array $cartItems): ?int
+   public function createOrder(int $userId, int $userAddressId, ?int $couponId, array $postData, array $cartItems): ?int
 {
-    $name = trim($postData['name'] ?? '');
-    $phone = trim($postData['phone'] ?? '');
-    $address = trim($postData['address'] ?? '');
-    $payment = $postData['payment_method'] ?? 'cod';
+    $paymentMethod = $postData['payment_method'] ?? 'cod';
 
-    if (!$name || !$phone || !$address) {
+    if (empty($cartItems['products']) || !is_array($cartItems['products'])) {
         return null;
     }
 
-    // 🔹 Lấy danh sách sku_id đã chọn từ session
-    $selectedItems = $_SESSION['selected_cart_items'] ?? [];
-
-    // 🔹 Lọc lại chỉ những sản phẩm được chọn
-    $cartItems = array_filter($cartItems, function($item) use ($selectedItems) {
-        return in_array($item['sku_id'], $selectedItems);
-    });
-
-    if (empty($cartItems)) {
-        return null; // Không có sản phẩm được chọn
+    // Tính tổng tiền
+    $total = 0;
+    foreach ($cartItems['products'] as $item) {
+        $price = (float)($item['price_current'] ?? 0);
+        $quantity = max(0, (int)($item['quantity'] ?? 0));
+        if ($quantity <= 0) continue;
+        $total += $price * $quantity;
     }
 
-    $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $cartItems));
+    if ($total <= 0) {
+        return null;
+    }
 
     $pdo = $this->checkoutModel->getPdo();
     $pdo->beginTransaction();
 
     try {
+        // Tạo đơn hàng theo schema mới
         $orderId = $this->checkoutModel->createOrder([
             'user_id' => $userId,
-            'name' => $name,
-            'phone' => $phone,
-            'address' => $address,
-            'payment_method' => $payment,
+            'user_address_id' => $userAddressId,
+            'coupon_id' => $couponId,
+            'status' => 'pending',
             'total_price' => $total
         ]);
 
-        foreach ($cartItems as $item) {
+        if (!$orderId) {
+            throw new \Exception("Failed to create order");
+        }
+
+        // Thêm sản phẩm vào order_items
+        foreach ($cartItems['products'] as $item) {
+            $quantity = max(0, (int)($item['quantity'] ?? 0));
+            if ($quantity <= 0) continue;
+
             $this->checkoutModel->addOrderItem([
                 'order_id' => $orderId,
                 'sku_id' => $item['sku_id'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
+                'quantity' => $quantity,
+                'price' => (float)($item['price_current'] ?? 0)
             ]);
         }
 
+        // Tạo record thanh toán trong bảng payments
+        $stmt = $pdo->prepare("
+            INSERT INTO payments (order_id, payment_method, amount, payment_date, status)
+            VALUES (:order_id, :payment_method, :amount, NOW(), :status)
+        ");
+
+        if (!$stmt->execute([
+            ':order_id' => $orderId,
+            ':payment_method' => $paymentMethod,
+            ':amount' => $total,
+            ':status' => 'pending'
+        ])) {
+            throw new \Exception("Failed to create payment record");
+        }
+
+        // Xóa giỏ hàng
         $this->cartService->clearCart($userId);
 
         $pdo->commit();
         return $orderId;
-
     } catch (\Exception $e) {
         $pdo->rollBack();
-        error_log("CheckoutService: " . $e->getMessage());
+        error_log("CheckoutService::createOrder - " . $e->getMessage());
         return null;
     }
 }
+
+
+
 
     public function createVNPayUrl(int $userId): string
     {
@@ -102,4 +129,8 @@ class CheckoutService
     {
         $_SESSION['orders'] = [];
     }
+
+
+
+    
 }

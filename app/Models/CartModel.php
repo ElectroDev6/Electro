@@ -56,10 +56,41 @@ class CartModel
         return $stmt->fetchColumn();
     }
 
-    public function getCartId($userId, $sessionId)
-    {
-        return $userId ? $this->getCartIdByUserId($userId) : $this->getCartIdBySessionId($sessionId);
+     public function getCartId(?int $userId, string $sessionId): ?int
+{
+    error_log("CartModel::getCartId - User ID: " . ($userId ?? 'null') . ", Session ID: $sessionId");
+    try {
+        // Kiểm tra cả user_id và session_id
+        $sql = "SELECT cart_id FROM cart WHERE user_id = :user_id OR session_id = :session_id LIMIT 1";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            'user_id' => $userId ?? null,
+            'session_id' => $sessionId
+        ]);
+        $cartId = $stmt->fetchColumn();
+        error_log("CartModel::getCartId - Fetched cart_id: " . ($cartId ?: 'null'));
+
+        if ($cartId) {
+            return (int)$cartId;
+        }
+
+        // Tạo giỏ hàng mới
+        error_log("CartModel::getCartId - Creating new cart");
+        $sqlInsert = "INSERT INTO cart (user_id, session_id, created_at) VALUES (:user_id, :session_id, NOW())";
+        $stmt = $this->pdo->prepare($sqlInsert);
+        $stmt->execute([
+            'user_id' => $userId ?? null,
+            'session_id' => $sessionId
+        ]);
+        $newCartId = (int)$this->pdo->lastInsertId();
+        error_log("CartModel::getCartId - Created cart_id: $newCartId");
+        return $newCartId;
+    } catch (\PDOException $e) {
+        error_log("CartModel::getCartId - SQL Error: " . $e->getMessage());
+        throw new \Exception('Lỗi khi lấy hoặc tạo giỏ hàng: ' . $e->getMessage());
     }
+}
+
 
     public function addToCart($cartId, $skuId, $quantity, $color = null, $warrantyEnabled = false, $imageUrl = null)
     {
@@ -158,4 +189,171 @@ class CartModel
         $stmt = $this->pdo->prepare("UPDATE cart_items SET voucher_code = :voucher_code WHERE cart_id = :cart_id");
         $stmt->execute([':voucher_code' => $voucherCode, ':cart_id' => $cartId]);
     }
+public function executeQuery(string $sql, array $params = []): ?\PDOStatement
+{
+    try {
+        error_log("CartModel::executeQuery - SQL: $sql, Params: " . json_encode($params));
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    } catch (\PDOException $e) {
+        error_log("CartModel::executeQuery - SQL Error: $sql, Error: " . $e->getMessage());
+        return null;
+    }
+}
+
+
+    public function getSelectedCartItems(?int $userId, string $sessionId): array
+{
+    error_log("CartService::getSelectedCartItems - User ID: " . ($userId ?? 'null') . ", Session ID: $sessionId");
+    $cartId = $this->cartModel->getCartId($userId, $sessionId);
+    if (!$cartId) {
+        error_log("CartService::getSelectedCartItems - No cart_id found");
+        return [
+            'products' => [],
+            'summary' => [
+                'total_price' => 0,
+                'total_discount' => 0,
+                'shipping_fee' => 0,
+                'final_total' => 0
+            ]
+        ];
+    }
+    error_log("CartService::getSelectedCartItems - Cart ID: $cartId");
+
+    try {
+        $sql = "
+            SELECT ci.cart_item_id, ci.cart_id, ci.sku_id, ci.quantity, ci.color, ci.warranty_enabled, ci.image_url,
+                   p.name, s.price as price_current, s.discount_price
+            FROM cart_items ci
+            JOIN skus s ON ci.sku_id = s.sku_id
+            JOIN products p ON s.product_id = p.product_id
+            WHERE ci.cart_id = :cart_id AND ci.selected = 1
+        ";
+        $stmt = $this->cartModel->executeQuery($sql, ['cart_id' => $cartId]);
+        $products = $stmt ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : [];
+        error_log("CartService::getSelectedCartItems - Fetched products: " . print_r($products, true));
+
+        $total_price = 0;
+        $total_discount = 0;
+        $shipping_fee = 30000;
+
+        foreach ($products as $product) {
+            if (!isset($product['price_current'], $product['quantity'])) {
+                error_log("CartService::getSelectedCartItems - Invalid product data: " . print_r($product, true));
+                continue;
+            }
+            $price = (float)$product['price_current'];
+            $quantity = max(1, (int)$product['quantity']);
+            $discount_price = isset($product['discount_price']) ? (float)$product['discount_price'] : null;
+
+            $line_price = $price * $quantity;
+            $total_price += $line_price;
+
+            if ($discount_price !== null && $discount_price < $price) {
+                $line_discount = ($price - $discount_price) * $quantity;
+                $total_discount += max(0, $line_discount);
+            }
+        }
+
+        $final_total = $total_price - $total_discount + $shipping_fee;
+
+        return [
+            'products' => $products,
+            'summary' => [
+                'total_price' => $total_price,
+                'total_discount' => $total_discount,
+                'shipping_fee' => $shipping_fee,
+                'final_total' => $final_total
+            ]
+        ];
+    } catch (\PDOException $e) {
+        error_log("CartService::getSelectedCartItems - SQL Error: " . $e->getMessage());
+        throw new \Exception('Lỗi khi lấy sản phẩm: ' . $e->getMessage());
+    }
+}
+
+
+    public function clearSelected($userId, $sessionId): void
+{
+    $sql = "UPDATE cart SET selected = 0 WHERE ";
+    $params = [];
+
+    if ($userId) {
+        $sql .= "user_id = :user_id";
+        $params['user_id'] = $userId;
+    } else {
+        $sql .= "session_id = :session_id";
+        $params['session_id'] = $sessionId;
+    }
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+}
+
+public function setSelected($userId, $sessionId, $skuId, int $status): void
+{
+    $sql = "UPDATE cart SET selected = :status WHERE sku_id = :sku_id AND ";
+    $params = [
+        'status' => $status,
+        'sku_id' => $skuId
+    ];
+
+    if ($userId) {
+        $sql .= "user_id = :user_id";
+        $params['user_id'] = $userId;
+    } else {
+        $sql .= "session_id = :session_id";
+        $params['session_id'] = $sessionId;
+    }
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+}
+public function clearSelectedStatus(?int $userId = null, ?string $sessionId = null): void
+{
+    $sql = "UPDATE cart_items SET selected = 0 WHERE cart_id = (
+        SELECT cart_id FROM cart WHERE 1=1";
+    $params = [];
+
+    if ($userId) {
+        $sql .= " AND user_id = :user_id";
+        $params['user_id'] = $userId;
+    } else {
+        $sql .= " AND session_id = :session_id";
+        $params['session_id'] = $sessionId;
+    }
+
+    $sql .= ")";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+}
+
+public function setSelectedStatus(?int $userId = null, ?string $sessionId = null, array $skuIds = []): void
+{
+    if (empty($skuIds)) {
+        return;
+    }
+
+    $placeholders = implode(',', array_fill(0, count($skuIds), '?'));
+
+    $sql = "UPDATE cart_items SET selected = 1 WHERE sku_id IN ($placeholders) AND cart_id = (
+        SELECT cart_id FROM cart WHERE 1=1";
+    $params = $skuIds;
+
+    if ($userId) {
+        $sql .= " AND user_id = ?";
+        $params[] = $userId;
+    } else {
+        $sql .= " AND session_id = ?";
+        $params[] = $sessionId;
+    }
+
+    $sql .= ")";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+}
+
 }

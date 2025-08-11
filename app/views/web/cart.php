@@ -31,8 +31,9 @@ use Core\View;
                 <label for="select-all">Chọn tất cả (<?= count($cart['products']) ?>)</label>
               </form>
             </div>
-
+            
             <?php foreach ($cart['products'] as $product): ?>
+      
               <div class="product <?= $product['selected'] ? 'product--selected' : '' ?>">
                 <div class="product__main">
                   <form method="POST" action="/cart/select-product">
@@ -126,9 +127,23 @@ use Core\View;
               </div>
             </div>
 
-            <form method="POST" action="/cart/confirm" id="confirm-order-form">
-              <button type="submit" class="order-summary__checkout-btn">Xác nhận đơn</button>
-            </form>
+      <form method="POST" action="/cart/confirm" id="confirm-order-form">
+    <?php 
+    $hasSelectedProducts = false; 
+    $products = isset($cart['products']) && is_array($cart['products']) ? $cart['products'] : [];
+    ?>
+    
+    <?php foreach ($products as $product): ?>
+        <?php if (!empty($product['selected']) && isset($product['id'], $product['quantity'])): ?>
+            <?php $hasSelectedProducts = true; ?>
+            <input type="hidden" name="items[<?= htmlspecialchars($product['id']) ?>][sku_id]" value="<?= htmlspecialchars($product['id']) ?>">
+            <input type="hidden" name="items[<?= htmlspecialchars($product['id']) ?>][quantity]" value="<?= htmlspecialchars($product['quantity']) ?>">
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <button type="submit" class="order-summary__checkout-btn" <?= $hasSelectedProducts ? '' : 'disabled' ?>>Xác nhận đơn</button>
+</form>
+
+
           </div>
         <?php endif; ?>
       </div>
@@ -157,36 +172,55 @@ use Core\View;
     e.preventDefault();
     const form = e.target;
     fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form)
-      })
-      .then(response => response.json())
-      .then(data => {
-        const messageDiv = document.getElementById('voucher-message');
-        messageDiv.textContent = data.message;
-        messageDiv.style.color = data.success ? 'green' : 'red';
-        if (data.success) {
-          setTimeout(() => window.location.reload(), 1000);
-        }
-      });
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(response => response.json())
+    .then(data => {
+      const messageDiv = document.getElementById('voucher-message');
+      messageDiv.textContent = data.message;
+      messageDiv.style.color = data.success ? 'green' : 'red';
+      if (data.success) {
+        setTimeout(() => window.location.reload(), 1000);
+      }
+    });
   });
 
-  document.getElementById('confirm-order-form')?.addEventListener('submit', (e) => {
+ 
+document.getElementById('confirm-order-form').addEventListener('submit', function (e) {
     e.preventDefault();
-    const form = e.target;
+    const hasItems = document.querySelectorAll('input[name^="items"]').length > 0;
+    if (!hasItems) {
+        alert('Vui lòng chọn ít nhất một sản phẩm để thanh toán.');
+        return;
+    }
+    const form = this;
     fetch(form.action, {
         method: 'POST',
-        body: new FormData(form)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = '/checkout';
-        } else {
-          alert(data.message);
+        body: new FormData(form),
+        headers: {
+            'Accept': 'application/json'
         }
-      });
-  });
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            } else {
+                alert(data.message);
+            }
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Cart AJAX Error:', error);
+        alert('Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại.');
+    });
+});
 </script>
+    
+
 
 <?php View::endSection(); ?>

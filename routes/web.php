@@ -12,7 +12,7 @@ Router::get('/products', 'ProductController@showAll');
 Router::get('/search/products', 'SearchProductController@searchProducts');
 Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
 
-// Cart & Order
+// 🛒 Giỏ hàng
 Router::get('/cart', 'CartController@showCart');
 Router::post('/detail/add-to-cart', 'CartController@addToCart');
 Router::post('/cart/select-all', 'CartController@selectAll');
@@ -22,8 +22,14 @@ Router::post('/cart/update-quantity', 'CartController@updateQuantity');
 Router::post('/cart/update-warranty', 'CartController@updateWarranty');
 Router::post('/cart/delete', 'CartController@delete');
 Router::post('/cart/apply-voucher', 'CartController@applyVoucher');
-Router::post('/cart/confirm', 'CartController@confirmOrder');
+Router::post('/cart/confirm', 'CartController@confirm');
+
 Router::get('/cart/item-count', 'CartController@getCartItemCount');
+
+// 💳 Checkout
+Router::get('/checkout', 'CheckoutController@index');        // Hiển thị trang checkout
+Router::post('/checkout/submit', 'CheckoutController@submit'); // Xác nhận đặt hàng
+Router::get('/checkout/vnpay', 'CheckoutController@vnpayCheckout'); // Thanh toán VNPay
 
 // Router::get('/checkout', 'CheckoutController@showCheckoutForm');
 Router::get('/thank-you', 'ThankyouController@showConfirmation');

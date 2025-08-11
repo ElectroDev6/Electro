@@ -72,11 +72,68 @@
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-  &__title {
-    font-size: 16px;
+   &__title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #222;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      margin-bottom: 12px;
+
+      img.product__image {
+        width: 60px;
+        height: 60px;
+        border-radius: 6px;
+        object-fit: cover;
+        border: 1px solid #ccc;
+      }
+
+      span {
+        font-size: 14px;
+        color: #444;
+        white-space: nowrap;
+
+        &:first-of-type {
+          flex: 1 1 auto;
+          font-weight: 600;
+          color: #222;
+        }
+      }
+    }
+  }
+
+  
+
+  .alert {
+    padding: 15px 20px;
+    background-color: #ffe5e5;
+    border: 1px solid #f5c2c2;
+    color: #d8000c;
+    border-radius: 6px;
     font-weight: 600;
-    margin-bottom: 15px;
-    color: #333;
+
+    a {
+      color: #a00;
+      text-decoration: underline;
+
+      &:hover {
+        color: #700;
+      }
+    }
   }
 
   .order-form__group {
@@ -369,8 +426,8 @@
     margin-top: 15px;
 
     &:hover {
-      background: #989898;
-    }
+        background: #989898;
+  }
   }
 
   &__terms {
@@ -407,7 +464,7 @@
     flex-direction: column;
     background: white;
     padding: 20px;
-    border-radius: 20px; // ✅ Thêm dòng này
+    border-radius: 20px; 
 
   }
 

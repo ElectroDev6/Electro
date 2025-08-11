@@ -219,12 +219,21 @@ class CartService
         }
     }
 
-    public function updateProductSelection($userId, $sessionId, $skuId, $selected)
+   public function updateProductSelection(?int $userId, string $sessionId, string $skuId, bool $selected): void
     {
         $cartId = $this->cartModel->getCartId($userId, $sessionId);
-        if ($cartId) {
-            $this->cartModel->updateProductSelection($cartId, $skuId, $selected);
+        if (!$cartId) {
+            error_log("CartService::updateProductSelection - No cart_id found for user_id=$userId, session_id=$sessionId");
+            return;
         }
+
+        $sql = "UPDATE cart_items SET selected = :selected WHERE cart_id = :cart_id AND sku_id = :sku_id";
+        $this->cartModel->executeQuery($sql, [
+            'selected' => $selected ? 1 : 0,
+            'cart_id' => $cartId,
+            'sku_id' => $skuId
+        ]);
+        error_log("CartService::updateProductSelection - SQL: $sql, Params: " . print_r(['selected' => $selected ? 1 : 0, 'cart_id' => $cartId, 'sku_id' => $skuId], true));
     }
 
     public function updateProductColor($userId, $sessionId, $skuId, $color)
@@ -281,8 +290,36 @@ class CartService
         }
         return ['success' => false, 'message' => 'Failed to apply voucher.'];
     }
+public function mergeSessionCartToUserCart(string $sessionId, int $userId): void
+{
+    if (!$sessionId || !$userId) {
+        return;
+    }
 
-    public function confirmOrder($userId, $sessionId)
+    $sessionCartId = $this->cartModel->getCartId(null, $sessionId);
+    $userCartId = $this->cartModel->getOrCreateCart($userId, null);
+
+    if (!$sessionCartId || !$userCartId) {
+        return;
+    }
+
+    $sessionItems = $this->cartModel->getCartItems($sessionCartId);
+
+    foreach ($sessionItems as $item) {
+        $existingItem = $this->cartModel->getCartItemBySku($userCartId, $item['sku_id'], $item['color'] ?? null);
+        if ($existingItem) {
+            $newQuantity = $existingItem['quantity'] + $item['quantity'];
+            $this->cartModel->updateQuantity($userCartId, $item['sku_id'], $newQuantity);
+        } else {
+            $this->cartModel->addToCart($userCartId, $item['sku_id'], $item['quantity'], $item['color'] ?? null, $item['warranty_enabled'] ?? 0, $item['image_url'] ?? null);
+        }
+    }
+
+    // Xóa giỏ hàng session và các item của nó
+    $this->cartModel->clearCartBySessionId($sessionId);
+}
+
+    public function confirm($userId, $sessionId)
     {
         $cartId = $this->cartModel->getCartId($userId, $sessionId);
         if ($cartId) {
@@ -304,4 +341,198 @@ class CartService
         }
         return $this->cartModel->getCartItemCount($cartId);
     }
+  
+
+    public function clearSelectedItems($userId = null, $sessionId = null)
+    {
+        return $this->cartModel->clearSelectedFromCart($userId, $sessionId);
+    }
+ public function updateSelectedStatus(?int $userId, string $sessionId, array $selectedSkuIds): void
+{
+    $cartId = $this->cartModel->getCartId($userId, $sessionId);
+    if (!$cartId) {
+        error_log("CartService::updateSelectedStatus - No cart_id");
+        throw new \Exception('Không tìm thấy giỏ hàng.');
+    }
+
+    try {
+        // Reset tất cả selected = 0
+        $sqlReset = "UPDATE cart_items SET selected = 0 WHERE cart_id = ?";
+        $this->cartModel->executeQuery($sqlReset, [$cartId]);
+
+        // Cập nhật các sản phẩm được chọn
+        if (!empty($selectedSkuIds)) {
+            $placeholders = implode(',', array_fill(0, count($selectedSkuIds), '?'));
+            $sqlSelect = "UPDATE cart_items SET selected = 1 WHERE cart_id = ? AND sku_id IN ($placeholders)";
+            $params = array_merge([$cartId], $selectedSkuIds);
+            $this->cartModel->executeQuery($sqlSelect, $params);
+        }
+
+        // Lấy toàn bộ sản phẩm trong cart, đánh dấu selected theo $selectedSkuIds
+        $sqlGetCartItems = "
+            SELECT 
+                ci.cart_item_id,
+                ci.cart_id,
+                ci.sku_id,
+                ci.quantity,
+                ci.color,
+                ci.warranty_enabled,
+                ci.image_url,
+                p.name AS product_name,
+                s.price AS sku_price,
+                p.base_price AS product_base_price,
+                pr.discount_percent,
+                CASE WHEN ci.sku_id IN (" . (empty($selectedSkuIds) ? 'NULL' : implode(',', array_map('intval', $selectedSkuIds))) . ") THEN 1 ELSE 0 END AS selected
+            FROM cart_items ci
+            INNER JOIN skus s  ON ci.sku_id = s.sku_id
+            INNER JOIN products p ON s.product_id = p.product_id
+            LEFT JOIN promotions pr ON s.sku_code = pr.sku_code
+                AND NOW() BETWEEN pr.start_date AND pr.end_date
+            WHERE ci.cart_id = :cart_id
+        ";
+
+        $stmt = $this->cartModel->executeQuery($sqlGetCartItems, ['cart_id' => $cartId]);
+        $cartProducts = $stmt ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : [];
+
+        // Tính tổng tạm (bạn có thể tùy chỉnh hoặc tính ở nơi khác)
+        $total_price = 0;
+        $total_discount = 0;
+        $shipping_fee = 30000; // giả sử cố định
+
+        foreach ($cartProducts as &$product) {
+            $skuPrice = (float)$product['sku_price'];
+            $quantity = max(1, (int)$product['quantity']);
+            $discountPercent = (int)($product['discount_percent'] ?? 0);
+
+            if ($discountPercent > 0) {
+                $discountAmount = $skuPrice * $discountPercent / 100;
+                $finalPrice = $skuPrice - $discountAmount;
+            } else {
+                $finalPrice = $skuPrice;
+            }
+
+            $lineTotal = $finalPrice * $quantity;
+            $total_price += $lineTotal;
+
+            $lineDiscount = ($skuPrice - $finalPrice) * $quantity;
+            if ($lineDiscount > 0) {
+                $total_discount += $lineDiscount;
+            }
+        }
+        unset($product);
+
+        $final_total = $total_price + $shipping_fee;
+
+        $summary = [
+            'total_price' => $total_price,
+            'total_discount' => $total_discount,
+            'shipping_fee' => $shipping_fee,
+            'final_total' => $final_total,
+        ];
+
+        // Lưu vào session toàn bộ cart data (products + summary)
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+        $sessionKey = $userId ? "cart_data_{$userId}" : "cart_data_{$sessionId}";
+        $_SESSION[$sessionKey] = [
+            'products' => $cartProducts,
+            'summary' => $summary
+        ];
+
+        error_log("CartService::updateSelectedStatus - Updated selected products and saved full cart data to session key: $sessionKey");
+
+    } catch (\Throwable $e) {
+        error_log("CartService::updateSelectedStatus - DB Error: " . $e->getMessage());
+        throw new \Exception('Lỗi khi cập nhật trạng thái sản phẩm: ' . $e->getMessage());
+    }
+}
+
+
+
+
+
+public function getSelectedCartItems(?int $userId, string $sessionId): array
+{
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
+
+    // Key session lưu dữ liệu cart (bạn lưu theo userId hoặc sessionId)
+    $sessionKey = $userId ? "cart_data_{$userId}" : "cart_data_{$sessionId}";
+
+    // Lấy dữ liệu cart đã lưu trong session
+    $cartData = $_SESSION[$sessionKey] ?? null;
+
+    if (!$cartData || empty($cartData['products'])) {
+        // Nếu không có dữ liệu, trả về mảng rỗng
+        return [
+            'products' => [],
+            'summary' => [
+                'total_price' => 0,
+                'total_discount' => 0,
+                'shipping_fee' => 0,
+                'final_total' => 0
+            ]
+        ];
+    }
+
+    // Tính toán tổng (nếu bạn muốn, hoặc để nguyên summary đã lưu)
+    $products = $cartData['products'];
+    $summary = $cartData['summary'] ?? [
+        'total_price' => 0,
+        'total_discount' => 0,
+        'shipping_fee' => 30000,
+        'final_total' => 0
+    ];
+
+    $total_price = 0;
+    $total_discount = 0;
+    $shipping_fee = $summary['shipping_fee'] ?? 30000;
+
+    foreach ($products as $product) {
+        $priceCurrent = $product['sku_price'] ?? null;
+        $quantity = $product['quantity'] ?? 1;
+        $discountPercent = $product['discount_percent'] ?? 0;
+
+        if ($priceCurrent === null) {
+            continue;
+        }
+
+        $priceCurrent = (float)$priceCurrent;
+        $quantity = max(1, (int)$quantity);
+        $discountPercent = (int)$discountPercent;
+
+        if ($discountPercent > 0) {
+            $discountAmount = $priceCurrent * $discountPercent / 100;
+            $finalPrice = $priceCurrent - $discountAmount;
+        } else {
+            $finalPrice = $priceCurrent;
+        }
+
+        $lineTotal = $finalPrice * $quantity;
+        $total_price += $lineTotal;
+
+        $lineDiscount = ($priceCurrent - $finalPrice) * $quantity;
+        if ($lineDiscount > 0) {
+            $total_discount += $lineDiscount;
+        }
+    }
+
+    $final_total = $total_price + $shipping_fee;
+
+    $summary['total_price'] = $total_price;
+    $summary['total_discount'] = $total_discount;
+    $summary['final_total'] = $final_total;
+
+    return [
+        'products' => $products,
+        'summary' => $summary
+    ];
+}
+
+
+
+
+
 }
