@@ -1,6 +1,10 @@
 <?php
 
+
 namespace App\Controllers\Web;
+
+
+
 
 
 
@@ -13,3 +17,4 @@ class ThankyouController
         View::render('thankyou');
     }
 }
+
