@@ -11,7 +11,7 @@ Sản phẩm
 <?php View::section('content'); ?>
 
 <body>
-    <?php echo '<pre>';
+    <!-- <?php echo '<pre>';
     print_r($products);
     echo '</pre>';
     ?>
@@ -19,7 +19,7 @@ Sản phẩm
     <?php echo '<pre>';
     print_r($storage);
     echo '</pre>';
-    ?>
+    ?> -->
     <div class="navigation">
         <a href="/">Trang chủ</a> / <a class="active" href="/products/iphone">Điện thoại</a>
     </div>
@@ -57,22 +57,21 @@ Sản phẩm
             <div class="filter-group">
                 <h4 class="filter-group__heading">Hãng sản xuất</h4>
                 <div class="brand-logos" id="brand-logos">
-                    <a href="/products/iphone?brand=Oppo" class="brand-logos__link">
+                    <a href="/products/iphone?brand=Oppo" class="brand-logos__link" data-brand="Oppo">
                         <div class="brand-logo-card">
                             <img src="/img/Menu_DT_oppo.jpg" alt="Oppo" class="brand-logo-card__image">
                         </div>
                     </a>
-                    <a href="/products/iphone?brand=Apple" class="brand-logos__link">
-                        <div class="brand-logo-card" data-brand="Apple">
+                    <a href="/products/iphone?brand=Apple" class="brand-logos__link" data-brand="Apple">
+                        <div class="brand-logo-card" >
                             <img src="/img/Menu_LT_apple.jpg" alt="Apple" class="brand-logo-card__image">
                         </div>
                     </a>
-                    <a href="/products/iphone?brand=Vivo" class="brand-logos__link">
-                        <div class="brand-logo-card" data-brand="Dell">
-                            <img src="/img/Menu_DT_vivo.jpg" alt="Dell" class="brand-logo-card__image">
+                    <a href="/products/iphone?brand=Vivo" class="brand-logos__link" data-brand="Vivo">
+                        <div class="brand-logo-card" >
+                            <img src="/img/Menu_DT_vivo.jpg" alt="Vivo" class="brand-logo-card__image">
                         </div>
                     </a>
-                    <!-- Các hãng khác -->
                 </div>
             </div>
 
@@ -325,7 +324,4 @@ Sản phẩm
     });
 
 </script>
-
-
-
 <?php View::endSection(); ?>

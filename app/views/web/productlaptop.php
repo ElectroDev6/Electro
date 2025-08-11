@@ -77,7 +77,7 @@ Sản phẩm Laptop
                     </a>
                 </div>
             </div>
-            <form method="GET" action="/productlaptop" id="priceFilter">
+            <form method="GET" action="/productlaptop" id="mainFilter">
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Mức giá</h4>
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="all"
@@ -98,8 +98,7 @@ Sản phẩm Laptop
                     <label class="filter-group__label"> <input type="checkbox" name="price" value="duoi10"
                             class="filter-group__radio"> Dưới 10 triệu </label>
                 </div>
-            </form>
-            <form method="GET" action="/productlaptop" id="cpuFilter">
+
                 <div class="filter-group">
                     <h4 class="filter-group__heading">CPU</h4>
                     <label class="filter-group__label"><input type="checkbox" value="Apple M4 series" name="cpu"
@@ -114,8 +113,7 @@ Sản phẩm Laptop
                             class="filter-group__checkbox"> Intel Celeron</label>
 
                 </div>
-            </form>
-            <form method="GEt" action="/productlaptop" id="ramFilter">
+
                 <div class="filter-group filter-group--ram">
                     <h4 class="filter-group__heading">RAM</h4>
                     <div class="ram-options">
@@ -156,8 +154,7 @@ Sản phẩm Laptop
                         </a>
                     </div>
                 </div>
-            </form>
-            <form method="GET" action="/productlaptop" id="cardFilter">
+
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Card đồ họa</h4>
                     <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce Series" name="card"
@@ -169,8 +166,7 @@ Sản phẩm Laptop
                     <label class="filter-group__label"><input type="checkbox" value="Apple M4 GPU" name="card"
                             class="filter-group__checkbox"> Apple M4 GPU</label>
                 </div>
-            </form>
-            <form method="GET" action="/productlaptop" id="hdFilter">
+
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Ổ cứng</h4>
                     <label class="filter-group__label"><input type="checkbox" value="SSD 1TB" name="hard_drive"
@@ -184,8 +180,7 @@ Sản phẩm Laptop
                     <label class="filter-group__label"><input type="checkbox" value="SSD 128GB" name="hard_drive"
                             class="filter-group__checkbox"> SSD 128GB</label>
                 </div>
-            </form>
-            <form method="GET" action="/productlaptop" id="screenFilter">
+
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Kích thước màn hình</h4>
                     <label class="filter-group__label"><input type="checkbox" value="14" name="screen"
@@ -195,8 +190,7 @@ Sản phẩm Laptop
                     <label class="filter-group__label"><input type="checkbox" value="15-17" name="screen"
                             class="filter-group__checkbox"> 15 - 17 inch</label>
                 </div>
-            </form>
-            <form method="GET" action="/product">
+
                 <div class="filter-group filter-group--refresh-rate">
                     <h4 class="filter-group__heading">Tần số quét</h4>
                     <div class="refresh-rate-options">
@@ -206,7 +200,7 @@ Sản phẩm Laptop
                             </div>
                         </a>
                         <a href="/productlaptop?hz=75" class="refresh-rate-options__link">
-                            <div class="refresh-rate-option-card" >
+                            <div class="refresh-rate-option-card">
                                 <p class="refresh-rate-option-card__text">75Hz</p>
                             </div>
                         </a>
@@ -221,7 +215,7 @@ Sản phẩm Laptop
                             </div>
                         </a>
                         <a href="/productlaptop?hz=360" class="refresh-rate-options__link">
-                            <div class="refresh-rate-option-card" >
+                            <div class="refresh-rate-option-card">
                                 <p class="refresh-rate-option-card__text">360Hz</p>
                             </div>
                         </a>
@@ -232,38 +226,37 @@ Sản phẩm Laptop
         <!-- Phần sản phẩm -->
         <main class="products" id="product-list">
             <?php foreach ($products as $product): ?>
-                <div class="product-card" data-brand="<?= $product['brand'] ?>" data-price="<?= $product['price'] ?>"
-                    data-ram="<?= $product['ram'] ?>" data-os="<?= $product['os'] ?>"
-                    data-battery="<?= $product['battery'] ?>" data-screen="<?= $product['screen'] ?>">
-                    <!-- Icon bên phải sản phẩm -->
+                <div class="product-card">
+
                     <div class="product-card__feature">
                         <div class="product-card__feature-icon">
-                            <img src="/img/LT_nutgatcamera.svg" alt="Nút gạt tắt camera" />
+                            <img src="https://cdn2.fptshop.com.vn/svg/screen_6_9_0bc42d6b8c.svg" alt="6.9 inch" />
                         </div>
-                        <div class="product-card__feature-text">Nút gạt tắt<br> camera</div>
+                        <div class="product-card__feature-text">Màn hình cực lớn<br> inch</div>
                         <div class="product-card__feature-icon">
-                            <img src="/img/LT_mattroi.svg" alt="">
+                            <img src="/img/DT_nutcamera.svg" alt="">
                         </div>
-                        <div class="product-card__feature-text">Màn hình chống chói</div>
+                        <div class="product-card__feature-text">Camera siêu nét</div>
                         <div class="product-card__feature-icon">
                             <img src="/img/DT_vienmanhinh.svg" alt="">
                         </div>
                         <div class="product-card__feature-text">Viền màn hình<br>siêu mỏng</div>
                     </div>
-                    <img src="<?= $product['image'] ?>" alt="<?= $product['name'] ?>" class="product-card__image">
+
+                    <img src="<?= $product['default_url'] ?>" alt="<?= $product['name'] ?>" class="product-card__image">
                     <p class="product-card__promo">Trả góp 0%</p>
                     <h4 class="product-card__name"><?= $product['name']; ?></h4>
                     <div class="product-card__price-box">
-                        <span class="product-card__old-price"><?= number_format($product['old_price'], 0, ',', '.') ?>
+                        <span class="product-card__old-price"><?= number_format($product['price_original'], 0, ',', '.') ?>
                             ₫</span>
-                        <div class="product-card__new-price"><?= number_format($product['price'], 0, ',', '.') ?> ₫</div>
+                        <div class="product-card__new-price"><?= number_format($product['price_discount'], 0, ',', '.') ?> ₫
+                        </div>
                         <div class="product-card__save-price">Giảm
-                            <?= number_format($product['old_price'] - $product['price'], 0, ',', '.') ?> ₫
+                            <?= number_format($product['price_original'] - $product['price_discount'], 0, ',', '.') ?> ₫
                         </div>
                     </div>
                     <button class="product-card__button">Xem chi tiết</button>
                 </div>
-
             <?php endforeach; ?>
         </main>
     </div>
@@ -277,60 +270,23 @@ Sản phẩm Laptop
     </div>
 </body>
 <script>
-    // Tự động gửi form khi thay đổi
-    const cpuForm = document.getElementById('cpuFilter');
-    const cpuCheckboxes = cpuForm.querySelectorAll('input[type="checkbox"]');
+    const mainForm = document.getElementById('mainFilter');
+    const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
 
-    const priceForm = document.getElementById('priceFilter');//Mức giá
-    const radios = priceForm.querySelectorAll('input[type="checkbox"]');
-
-    const ramForm = document.getElementById('ramFilter');//Ram
-    const ramCheckboxes = ramForm.querySelectorAll('input[type="checkbox"]');
-
-    const cardForm = document.getElementById('cardFilter');//Card đồ họa
-    const cardCheckboxes = cardForm.querySelectorAll('input[type="checkbox"]');
-
-    const hdForm = document.getElementById('hdFilter');// ổ cứng
-    const hdCheckboxes = hdForm.querySelectorAll('input[type="checkbox"]');
-
-    const screenForm = document.getElementById('screenFilter');//Kích thước màn hình
-    const screenCheckboxes = screenForm.querySelectorAll('input[type="checkbox"]');
-
-    radios.forEach(radio => {//Mức giá
-        radio.addEventListener('change', () => {
-            priceForm.submit();
-        });
-    });
-
-    cpuCheckboxes.forEach(cb => {
+    allCheckboxes.forEach(cb => {
         cb.addEventListener('change', () => {
-            console.log('Đã chọn CPU:', cb.value); // ← kiểm tra có log không
-            cpuForm.submit();
+            const params = new URLSearchParams();
+
+            // Duyệt tất cả checkbox đã được check trong form
+            mainForm.querySelectorAll('input[type="checkbox"]:checked').forEach(checkedCb => {
+                params.append(checkedCb.name, checkedCb.value);
+            });
+
+            // Tạo URL mới chứa filter và chuyển trang
+            window.location.search = '?' + params.toString();
         });
     });
-    ramCheckboxes.forEach(cb => {
-        cb.addEventListener('change', () => {
-            console.log('Đã chọn RAM:', cb.value); // ← kiểm tra có log không
-            ramForm.submit();
-        });
-    });
-    cardCheckboxes.forEach(cb => {
-        cb.addEventListener('change', () => {
-            console.log('Đã chọn Card:', cb.value); // ← kiểm tra có log không
-            cardForm.submit();
-        });
-    });
-    hdCheckboxes.forEach(cb => {
-        cb.addEventListener('change', () => {
-            console.log('Đã chọn Card:', cb.value); // ← kiểm tra có log không
-            hdForm.submit();
-        });
-    });
-    screenCheckboxes.forEach(screen => {//Kích thước màn hình
-        screen.addEventListener('change', () => {
-            screenForm.submit();
-        });
-    });
+
 </script>
 
 <?php View::endSection(); ?>
