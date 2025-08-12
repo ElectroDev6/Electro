@@ -31,6 +31,18 @@
     <body>
         <?php echo $htmlHeader; ?>
         <main class="wrapper">
+            <div class="create-user-page">
+            <?php if (!empty($error)): ?>
+                <div class="category-detail__alert category-detail__alert--danger">
+                    <p><?= htmlspecialchars($error) ?></p>
+                </div>
+            <?php endif; ?>
+        </div>
+         <!-- Header Section -->
+            <div class="user-page__header">
+                <h1 class="user-page__title">Trang người dùng</h1>
+                <a href="/admin/users/create" class="user-page__add-btn">+ Thêm người dùng</a>
+            </div>
             <?php echo $contentSidebar; ?>
             <div class="user-page">
                     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
@@ -124,16 +136,15 @@
                             <tr class="users-table__row">
                                 <td class="user-table__cell user-table__cell--name">
                                     <?php if (!empty($user['avatar_url'])): ?>
-                                    <img src="<?php echo htmlspecialchars($user['avatar_url']); ?>" alt="Avatar"
-                                        class="user-table__avatar-img">
+                                        <img src="<?php echo htmlspecialchars($user['avatar_url']); ?>" alt="Avatar"
+                                            class="user-table__avatar-img">
                                     <?php else: ?>
-                                    <div class="user-table__avatar user-table__avatar--purple">
-                                        <?php echo strtoupper(substr($user['name'], 0, 1)); ?>
-                                    </div>
+                                        <img src="/img/avatars/default-avatar.jpg" alt="Default Avatar"
+                                            class="user-table__avatar-img">
                                     <?php endif; ?>
-                                    <span
-                                        class="user-table__username"><?php echo htmlspecialchars($user['name']); ?></span>
+                                    <span class="user-table__username"><?php echo htmlspecialchars($user['name']); ?></span>
                                 </td>
+
                                 <td class="user-table__cell"><?php echo htmlspecialchars($user['email']); ?></td>
                                 <td class="user-table__cell">
                                     <?php 

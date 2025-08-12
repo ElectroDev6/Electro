@@ -36,16 +36,11 @@ class UsersModel
                   ORDER BY created_at DESC 
                   LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($query);
-        
-        // Bind filter parameters
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
-        
-        // Bind pagination parameters
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

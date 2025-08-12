@@ -27,7 +27,7 @@ class DashboardController
     {
         $data = [];
 
-        // Doanh thu theo danh mục
+        // Doanh thu theo danh mục (dựa trên tất cả orders, không chỉ paid)
         $stmt = $this->db->query("
             SELECT c.name AS category, 
                    COALESCE(SUM(oi.quantity * oi.price), 0) AS revenue, 
@@ -38,29 +38,25 @@ class DashboardController
             LEFT JOIN skus s ON p.product_id = s.product_id
             LEFT JOIN order_items oi ON s.sku_id = oi.sku_id
             LEFT JOIN orders o ON oi.order_id = o.order_id
-            WHERE o.status = 'paid' OR o.order_id IS NULL
             GROUP BY c.category_id, c.name, DATE_FORMAT(o.created_at, '%Y-%m-%d')
             ORDER BY created_at DESC
         ");
         $data['categoryRevenue'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Xu hướng đơn hàng - Lấy 7 ngày gần nhất cho gọn
+        // Xu hướng đơn hàng - 7 ngày gần nhất (dựa trên tất cả orders)
         $stmt = $this->db->query("
             SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS date, 
                    COUNT(*) AS order_count, 
                    COALESCE(SUM(total_price), 0) AS total_revenue
             FROM orders
-            WHERE status = 'paid' 
-            AND created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+            WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
             GROUP BY DATE_FORMAT(created_at, '%Y-%m-%d')
             ORDER BY date ASC
         ");
         $orderTrendData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        // Đảm bảo có dữ liệu cho 7 ngày gần nhất
         $data['orderTrend'] = $this->fillMissingDates($orderTrendData, 7);
 
-        // Phương thức thanh toán - Query đơn giản để test
+        // Phương thức thanh toán (dựa trên tất cả payments)
         $stmt = $this->db->query("
             SELECT payment_method, COUNT(*) AS count
             FROM payments
@@ -68,11 +64,9 @@ class DashboardController
             ORDER BY count DESC
         ");
         $data['paymentMethods'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Debug: In ra dữ liệu payment methods để kiểm tra
         error_log("Payment Methods Data: " . print_r($data['paymentMethods'], true));
 
-        // Tăng trưởng người dùng - Lấy 7 ngày gần nhất
+        // Tăng trưởng người dùng - 7 ngày gần nhất
         $stmt = $this->db->query("
             SELECT DATE_FORMAT(created_at, '%Y-%m-%d') AS date, 
                    COUNT(*) AS user_count
@@ -82,11 +76,9 @@ class DashboardController
             ORDER BY date ASC
         ");
         $userGrowthData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        // Đảm bảo có dữ liệu cho 7 ngày gần nhất
         $data['userGrowth'] = $this->fillMissingDates($userGrowthData, 7);
 
-        // Top sản phẩm bán chạy - Sửa query để lấy nhiều dữ liệu hơn
+        // Top sản phẩm bán chạy (dựa trên tất cả orders)
         $stmt = $this->db->query("
             SELECT 
                 p.name AS product_name, 
@@ -99,14 +91,14 @@ class DashboardController
             LEFT JOIN categories c ON sc.category_id = c.category_id
             LEFT JOIN skus s ON p.product_id = s.product_id
             LEFT JOIN order_items oi ON s.sku_id = oi.sku_id
-            LEFT JOIN orders o ON oi.order_id = o.order_id AND o.status = 'paid'
+            LEFT JOIN orders o ON oi.order_id = o.order_id
             GROUP BY p.product_id, p.name, c.name
             ORDER BY sold DESC, p.product_id DESC
             LIMIT 10
         ");
         $data['topProducts'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Danh sách đơn hàng gần đây - Lấy nhiều hơn và không chỉ paid
+        // Danh sách đơn hàng gần đây (tất cả orders)
         $stmt = $this->db->query("
             SELECT 
                 o.order_id, 
@@ -121,14 +113,14 @@ class DashboardController
         ");
         $data['recentOrders'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Thống kê tổng quan
-        $stmt = $this->db->query("SELECT COALESCE(SUM(total_price), 0) FROM orders WHERE status = 'paid'");
+        // Thống kê tổng quan (dựa trên tất cả orders)
+        $stmt = $this->db->query("SELECT COALESCE(SUM(total_price), 0) FROM orders");
         $data['totalRevenue'] = $stmt->fetchColumn();
         $stmt = $this->db->query("SELECT COUNT(*) FROM users");
         $data['newCustomers'] = $stmt->fetchColumn();
         $stmt = $this->db->query("SELECT COUNT(*) FROM products");
         $data['activeProducts'] = $stmt->fetchColumn();
-        $stmt = $this->db->query("SELECT COUNT(*) FROM orders WHERE DATE(created_at) = CURDATE() AND status = 'paid'");
+        $stmt = $this->db->query("SELECT COUNT(*) FROM orders WHERE DATE(created_at) = CURDATE()");
         $data['todaySales'] = $stmt->fetchColumn();
 
         // Danh sách tháng cho dropdown
@@ -202,7 +194,6 @@ class DashboardController
             SELECT DISTINCT p.payment_method, COUNT(*) as total_count
             FROM payments p
             JOIN orders o ON p.order_id = o.order_id
-            WHERE o.status = 'paid'
             GROUP BY p.payment_method
         ");
         $methods = $stmt->fetchAll(PDO::FETCH_ASSOC);

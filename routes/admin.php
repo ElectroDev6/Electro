@@ -49,9 +49,7 @@ Router::post('/admin/reviews/reply', 'ReviewsController@handleRepl');
 
 Router::get('/admin/orders', 'OrdersController@index');
 Router::get('/admin/orders/detail', 'OrdersController@detail');
-Router::post('/admin/orders/approve', 'OrderDetailController@approve');
-Router::post('/admin/orders/cancel', 'OrderDetailController@cancel');
-Router::post('/admin/orders/complete', 'OrderDetailController@complete');
+Router::post('/admin/orders/status', 'OrdersController@status');
 
 
 Router::get('/admin/comments', 'CommentsController@index');

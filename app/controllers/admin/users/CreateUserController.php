@@ -22,7 +22,6 @@ class CreateUserController
     }
     public function handleCreate()
     {
-        // Retrieve form data
         $name = trim($_POST['name'] ?? '');
         $email = trim($_POST['email'] ?? '');
         $phone_number = trim($_POST['phone_number'] ?? '');
@@ -30,12 +29,9 @@ class CreateUserController
         $birth_date = $_POST['birth_date'] ?? '';
         $role = $_POST['role'] ?? '';
         $is_active = $_POST['is_active'] ?? '';
-        $password = trim($_POST['password'] ?? ''); // Raw password from form
+        $password = trim($_POST['password'] ?? '');
         $avatar_url = $_FILES['avatar_url'] ?? null;
-
         $errors = [];
-
-        // Validation
         if (empty($name)) {
             $errors['name'] = 'Vui lòng nhập họ và tên.';
         }
@@ -85,7 +81,7 @@ class CreateUserController
         $avatarPathForDB = null;
         if ($avatar_url && $avatar_url['error'] === UPLOAD_ERR_OK) {
             $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-            $maxSize = 5 * 1024 * 1024; // 5MB
+            $maxSize = 5 * 1024 * 1024;
             if (!in_array($avatar_url['type'], $allowedTypes) || $avatar_url['size'] > $maxSize) {
                 $errors['avatar_url'] = 'Định dạng ảnh không hợp lệ hoặc kích thước vượt quá 5MB';
                 View::render('users/create', [

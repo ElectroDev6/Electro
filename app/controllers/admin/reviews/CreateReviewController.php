@@ -26,7 +26,7 @@ class CreateReviewController
     {
         $reviewId = $_POST['review_id'] ?? null;
         $parentId = $_POST['parent_id'] ?? null;
-        $userId = 32;
+        $userId = 1;
         $comment_text = $_POST['comment_text'] ?? '';
         $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : null;
         // echo "Parent ID: $parentId, User ID: $userId, Comment: $comment_text, Product ID: $productId";

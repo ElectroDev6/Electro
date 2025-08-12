@@ -234,7 +234,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                 <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
                                     <input type="hidden" name="review_id"
                                         value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                    <input type="hidden" name="status" value="active">
+                                    <input type="hidden" name="status" value="approved">
                                     <button type="submit"
                                         class="review-detail__action-btn review-detail__action-btn--accept"
                                         onclick="return confirm('Bạn có chắc chắn chấp nhận đánh giá này không?');">
@@ -245,7 +245,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                 <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
                                     <input type="hidden" name="review_id"
                                         value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                    <input type="hidden" name="status" value="inactive">
+                                    <input type="hidden" name="status" value="rejected">
                                     <button type="submit"
                                         class="review-detail__action-btn review-detail__action-btn--reject"
                                         onclick="return confirm('Bạn có chắc chắn từ chối đánh giá này không?');">

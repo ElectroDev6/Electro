@@ -12,11 +12,10 @@ include dirname(__DIR__) . '/partials/pagination.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-    <?php
-        echo '<pre>';
+    <!-- <?php echo '<pre>';
         print_r($products);
-        echo '</pre>';
-        ?>
+        echo '</pre>'; // For debugging purposes, remove in production
+    ?> -->
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -40,7 +39,9 @@ include dirname(__DIR__) . '/partials/pagination.php';
                         <?php
                         $uniqueCategories = array_unique(array_column($products, 'category_name'));
                         foreach ($uniqueCategories as $category) {
-                            echo "<option value='" . htmlspecialchars($category) . "'>" . htmlspecialchars($category) . "</option>";
+                            if (!empty($category)) {
+                                echo "<option value='" . htmlspecialchars($category) . "'>" . htmlspecialchars($category) . "</option>";
+                            }
                         }
                         ?>
                     </select>
@@ -78,39 +79,44 @@ include dirname(__DIR__) . '/partials/pagination.php';
                         <div class="product-table__cell product-table__cell--header">Số lượng</div>
                         <div class="product-table__cell product-table__cell--header">Action</div>
                     </div>
-                    <?php foreach ($products as $product): ?>
-                        <?php
-                            $productName = htmlspecialchars($product['product_name']);
-                            $category = htmlspecialchars($product['category_name']);
-                            $price = number_format($product['sku_price'], 0, ',', '.') . ' VNĐ'; // Định dạng giá tiền
-                            $stock = htmlspecialchars($product['stock_quantity']);
-                            $mediaUrl = htmlspecialchars($product['default_url'] ?? '/img/default.png'); // Sử dụng default_url làm media_url
-                            $mediaAlt = htmlspecialchars($product['product_name']);
-                            $productId = htmlspecialchars($product['product_id']);
-                        ?>
-                        <div class="products-table__row productRows" data-product-id="<?= $productId ?>" data-brand="<?= htmlspecialchars($product['brand_name']) ?>">
-                            <div class="product-table__cell product-table__cell--name">
-                                <img src="<?= $mediaUrl ?>" alt="<?= $mediaAlt ?>" class="product-table__image">
-                                <span class="product-table__name"><?= $productName ?></span>
+                    <?php if (!empty($products)): ?>
+                        <?php foreach ($products as $product): ?>
+                            <?php
+                            $productName = htmlspecialchars($product['product_name'] ?? 'Chưa đặt tên');
+                            $category = htmlspecialchars($product['category_name'] ?? 'Chưa phân loại');
+                            $price = number_format($product['sku_price'] ?? 0, 0, ',', '.') . ' VNĐ';
+                            $stock = htmlspecialchars($product['stock_quantity'] ?? 0);
+                            $mediaUrl = htmlspecialchars($product['default_url'] ?? '/img/default.png');
+                            $mediaAlt = htmlspecialchars($product['product_name'] ?? 'Hình ảnh sản phẩm');
+                            $productId = htmlspecialchars($product['product_id'] ?? '');
+                            $brandName = htmlspecialchars($product['brand_name'] ?? '');
+                            ?>
+                            <div class="products-table__row productRows" data-product-id="<?= $productId ?>" data-brand="<?= $brandName ?>">
+                                <div class="product-table__cell product-table__cell--name">
+                                    <img src="<?= $mediaUrl ?>" alt="<?= $mediaAlt ?>" class="product-table__image">
+                                    <span class="product-table__name"><?= $productName ?></span>
+                                </div>
+                                <div class="product-table__cell"><?= $category ?></div>
+                                <div class="product-table__cell"><?= $price ?></div>
+                                <div class="product-table__cell"><?= $stock ?></div>
+                                <div class="product-table__cell product-table__cell--actions">
+                                    <a href="/admin/products/detail?id=<?= $productId ?>" class="product-table__action-btn">
+                                        <img src="/icons/view_icon.svg" alt="Xem">
+                                    </a>
+                                    <button class="product-table__action-btn"><img src="/icons/edit_icon.svg" alt="Sửa"></button>
+                                    <button class="product-table__action-btn"><img src="/icons/trash_icon.svg" alt="Xoá"></button>
+                                </div>
                             </div>
-                            <div class="product-table__cell"><?= $category ?></div>
-                            <div class="product-table__cell"><?= $price ?></div>
-                            <div class="product-table__cell"><?= $stock ?></div>
-                            <div class="product-table__cell product-table__cell--actions">
-                                <a href="/admin/products/detail?id=<?= $productId ?>" class="product-table__action-btn">
-                                    <img src="/icons/view_icon.svg" alt="Xem">
-                                </a>
-                                <button class="product-table__action-btn"><img src="/icons/edit_icon.svg" alt="Sửa"></button>
-                                <button class="product-table__action-btn"><img src="/icons/trash_icon.svg" alt="Xoá"></button>
-                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="products-table__row">
+                            <div class="product-table__cell" colspan="5">Không có sản phẩm nào</div>
                         </div>
-                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
                 <?php echo $htmlPagination; ?>
             </div>
         </div>
     </main>
-    <script type="module" src="/admin-ui/js/common/pagination.js"></script>
-    <script type="module" src="/admin-ui/js/pages/productsFilter.js"></script>
 </body>
 </html>
