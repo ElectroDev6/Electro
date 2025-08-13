@@ -34,33 +34,31 @@ class CheckoutController
         session_start();
     }
 
-    $userId = $_SESSION['user_id'] ?? null;
-    $user = null;
-
-    if ($userId) {
-        // Giả sử bạn có UserModel để lấy thông tin user
-        $userModel = new UserModel();
-        $user = $userModel->getUserById($userId); // trả về array user info
+    if (!$this->userId) {
+        $_SESSION['errors'] = ['Bạn phải đăng nhập để tiếp tục.'];
+        header("Location: /login");
+        exit;
     }
 
-    // Lấy cart data từ session hoặc service như bạn đang làm
-    $cartData = $_SESSION['cart_data_' . ($userId ?? session_id())] ?? null;
+    $cartData = $_SESSION['cart_data_' . ($this->userId ?? $this->sessionId)] ?? null;
 
     if (!$cartData || empty($cartData['products'])) {
-        // lấy cart từ service nếu session chưa có hoặc rỗng
-        $cartData = $this->cartService->getSelectedCartItems($userId, session_id());
+        $cartData = $this->cartService->getSelectedCartItems($this->userId, $this->sessionId);
         if (empty($cartData['products'])) {
-            header("Location: /cart?error=no-selected-products");
+            $_SESSION['errors'] = ['Không có sản phẩm nào được chọn để thanh toán.'];
+            header("Location: /cart");
             exit;
         }
-        $_SESSION['cart_data_' . ($userId ?? session_id())] = $cartData;
+        $_SESSION['cart_data_' . ($this->userId ?? $this->sessionId)] = $cartData;
     }
 
-    // Truyền user và cart data vào view
+    $data = $this->checkoutService->getCheckoutData($this->userId, $cartData);
+
     View::render('checkout', [
-        'user' => $user,
-        'cartData' => $cartData,
-        'errors' => $_SESSION['errors'] ?? []
+        'user' => $data['user'],
+        'user_address' => $data['user_address'],
+        'cart_data' => $data['cart_data'],
+        'errors' => $data['errors'] ?: ($_SESSION['errors'] ?? [])
     ]);
 
     unset($_SESSION['errors']);
@@ -69,72 +67,56 @@ class CheckoutController
 
 
 
-    public function submit()
+ public function submit()
 {
-    session_start();
+    if (session_status() !== PHP_SESSION_ACTIVE) {
+        session_start();
+    }
 
-    $userId = $_SESSION['user_id'] ?? null;
-    if (!$userId) {
+    if (!$this->userId) {
         $_SESSION['errors'] = ['Bạn phải đăng nhập để đặt hàng.'];
-        header("Location: /checkout");
+        header("Location: /login");
         exit;
     }
 
-    // Lấy dữ liệu form
-    $name = trim($_POST['name'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $address = trim($_POST['address'] ?? '');
-    $note = trim($_POST['note'] ?? '');
-    $paymentMethod = $_POST['payment_method'] ?? 'cod';
-
-    $errors = [];
-
-    if (!$name) $errors[] = "Tên người đặt hàng là bắt buộc.";
-    if (!$phone) $errors[] = "Số điện thoại là bắt buộc.";
-    if (!$address) $errors[] = "Địa chỉ nhận hàng là bắt buộc.";
-
-    if ($errors) {
-        $_SESSION['errors'] = $errors;
-        header("Location: /checkout");
-        exit;
-    }
-
-    // Lấy cart từ session
-    $cartData = $_SESSION['cart_data_' . $userId] ?? null;
+    $cartData = $_SESSION['cart_data_' . $this->userId] ?? null;
     if (!$cartData || empty($cartData['products'])) {
-        $_SESSION['errors'] = ["Giỏ hàng trống."];
+        $_SESSION['errors'] = ['Giỏ hàng trống hoặc không có sản phẩm được chọn.'];
         header("Location: /cart");
         exit;
     }
 
-    // Tạo đơn hàng mới trong session (chưa lưu DB)
-    $orders = $_SESSION['orders'] ?? [];
+    $data = $this->checkoutService->getCheckoutData($this->userId, $cartData);
+    $userAddressId = $data['user_address']['user_address_id'] ?? null;
+    if (!$userAddressId) {
+        $_SESSION['errors'] = ['Không tìm thấy địa chỉ mặc định.'];
+        header("Location: /checkout");
+        exit;
+    }
 
-    $newOrder = [
-        'order_id' => uniqid('order_'), // id tạm thời trong session
-        'user_id' => $userId,
-        'name' => $name,
-        'phone' => $phone,
-        'email' => $email,
-        'address' => $address,
-        'note' => $note,
-        'payment_method' => $paymentMethod,
-        'products' => $cartData['products'],
-        'summary' => $cartData['summary'],
-        'status' => 'pending',
-        'created_at' => date('Y-m-d H:i:s'),
-    ];
+    $orderId = $this->checkoutService->createOrder(
+        $this->userId,
+        $userAddressId,
+        null, // coupon_id, thêm logic nếu cần
+        $_POST,
+        $cartData
+    );
 
-    $orders[] = $newOrder;
-    $_SESSION['orders'] = $orders;
-
-    // Xóa giỏ hàng sau khi đặt
-    unset($_SESSION['cart_data_' . $userId]);
-
-    // Chuyển sang trang lịch sử đơn hàng
-    header("Location: /history");
-    exit;
+    if ($orderId) {
+        if ($_POST['payment_method'] === 'vnpay') {
+            $total = array_sum(array_map(fn($p) => ($p['price_current'] ?? 0) * ($p['quantity'] ?? 1), $cartData['products']));
+            $vnpayUrl = $this->checkoutService->createVNPayUrl($orderId, $total);
+            header("Location: $vnpayUrl");
+            exit;
+        }
+        unset($_SESSION['cart_data_' . $this->userId]);
+        header("Location: /order/success?order_id=" . $orderId);
+        exit;
+    } else {
+        $_SESSION['errors'] = ['Lỗi khi tạo đơn hàng. Vui lòng thử lại.'];
+        header("Location: /checkout");
+        exit;
+    }
 }
 public function history()
 {

@@ -8,10 +8,11 @@
       <div class="cart-page__breadcrumb">
         <a href="/">Trang chủ</a> / Thanh Toán
       </div>
-      <h1 class="cart-page__title">Đây là trang thanh toán</h1>
+      <h1 class="cart-page__title">Thanh toán</h1>
     </div>
 
     <!-- Form thanh toán -->
+
     <form class="order-page" action="/checkout/submit" method="POST">
       <div class="order-page__main">
         <a href="/cart" class="order-page__back-btn">Quay lại giỏ hàng</a>
@@ -77,63 +78,75 @@ $summary['final_total'] = $summary['total_price'] + $summary['shipping_fee'] - $
         </li>
     
 
+        
         <!-- Người đặt hàng -->
-        <div class="order-section">
-          <div class="order-section__title">Người đặt hàng</div>
-          <div class="order-form__group">
-            <input
-              type="text"
-              class="order-form__input"
-              name="name"
-              placeholder="Họ và tên"
-              value="<?= htmlspecialchars($_POST['name'] ?? $user['name'] ?? '') ?>"
-              required
-            />
-          </div>
-          <div class="order-form__group">
-            <input
-              type="tel"
-              class="order-form__input"
-              name="phone"
-              placeholder="Số điện thoại"
-              value="<?= htmlspecialchars($_POST['phone'] ?? $user['phone'] ?? '') ?>"
-              required
-            />
-          </div>
-          <div class="order-form__group">
-            <input
-              type="email"
-              class="order-form__input"
-              name="email"
-              placeholder="Email (Không bắt buộc)"
-              value="<?= htmlspecialchars($_POST['email'] ?? $user['email'] ?? '') ?>"
-            />
-          </div>
-        </div>
+<div class="order-section">
+    <div class="order-section__title">Người đặt hàng</div>
+    <div class="order-form__group">
+        <input
+            type="text"
+            class="order-form__input"
+            name="name"
+            placeholder="Họ và tên"
+            value="<?= htmlspecialchars($_POST['name'] ?? ($user['name'] ?? '')) ?>"
+            required
+        />
+    </div>
+    <div class="order-form__group">
+        <input
+            type="tel"
+            class="order-form__input"
+            name="phone"
+            placeholder="Số điện thoại"
+            value="<?= htmlspecialchars($_POST['phone'] ?? ($user['phone_number'] ?? '')) ?>"
+            required
+        />
+    </div>
+    <div class="order-form__group">
+        <input
+            type="email"
+            class="order-form__input"
+            name="email"
+            placeholder="Email (Không bắt buộc)"
+            value="<?= htmlspecialchars($_POST['email'] ?? ($user['email'] ?? '')) ?>"
+        />
+    </div>
+</div>
 
-        <!-- Hình thức nhận hàng -->
-        <div class="order-section">
-          <div class="order-section__title">Hình thức nhận hàng</div>
-          <div class="order-form__group">
-            <input
-              type="text"
-              class="order-form__input"
-              name="address"
-              placeholder="Tỉnh/Thành Phố, Quận/Huyện, Phường/Xã"
-              value="<?= htmlspecialchars($_POST['address'] ?? '') ?>"
-              required
-            />
-          </div>
-          <div class="order-form__group">
-            <input
-              type="text"
-              class="order-form__input"
-              name="note"
-              placeholder="Ghi chú đơn hàng của bạn"
-              value="<?= htmlspecialchars($_POST['note'] ?? '') ?>"
-            />
-          </div>
-        </div>
+<!-- Hình thức nhận hàng -->
+<div class="order-section">
+    <div class="order-section__title">Hình thức nhận hàng</div>
+    <div class="order-form__group">
+        <?php
+        $full_address = '';
+        if (!empty($user_address)) {
+            $full_address = implode(', ', [
+                $user_address['address_line1'],
+                $user_address['ward_commune'],
+                $user_address['district'],
+                $user_address['province_city']
+            ]);
+        }
+        ?>
+        <input
+            type="text"
+            class="order-form__input"
+            name="address"
+            placeholder="Tỉnh/Thành Phố, Quận/Huyện, Phường/Xã"
+            value="<?= htmlspecialchars($_POST['address'] ?? $full_address) ?>"
+            required
+        />
+    </div>
+    <div class="order-form__group">
+        <input
+            type="text"
+            class="order-form__input"
+            name="note"
+            placeholder="Ghi chú đơn hàng của bạn"
+            value="<?= htmlspecialchars($_POST['note'] ?? '') ?>"
+        />
+    </div>
+</div>
 
         <!-- Phương thức thanh toán -->
         <div class="order-section">

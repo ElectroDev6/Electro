@@ -113,7 +113,6 @@ class CheckoutService
 
 
 
-
     public function createVNPayUrl(int $userId): string
     {
         $txnId = uniqid('vnp_');
@@ -130,7 +129,34 @@ class CheckoutService
         $_SESSION['orders'] = [];
     }
 
+public function getCheckoutData(int $user_id, array $cart): array
+{
+    $data = [
+        'user' => null,
+        'user_address' => null,
+        'cart_data' => $cart,
+        'errors' => [],
+    ];
 
+    if ($user_id) {
+        $data['user'] = $this->userModel->getUserById($user_id);
+        $data['user_address'] = $this->userAddressModel->getDefaultByUserId($user_id);
+        if (!$data['user']) {
+            $data['errors'][] = "Không tìm thấy thông tin người dùng.";
+        }
+        if (!$data['user_address']) {
+            $data['errors'][] = "Vui lòng thêm địa chỉ mặc định trong tài khoản của bạn.";
+        }
+    } else {
+        $data['errors'][] = "Bạn phải đăng nhập để tiếp tục.";
+    }
+
+    if (empty($cart['products'])) {
+        $data['errors'][] = "Giỏ hàng trống hoặc không có sản phẩm được chọn.";
+    }
+
+    return $data;
+}
 
     
 }
