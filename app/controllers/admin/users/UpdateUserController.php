@@ -14,6 +14,7 @@ class UpdateUserController
         $pdo = Container::get('pdo');
         $this->model = new UsersModel($pdo);
     }
+
     public function index()
     {   
         $id = $_GET['id'];
@@ -118,6 +119,21 @@ class UpdateUserController
         $this->model->updateUser($user_id, $userData);
         $this->model->updateAddress($user_id, $addressData);
         header('Location: /admin/users/detail?id=' . urlencode($user_id) . '&success=' . urlencode('Sửa người dùng thành công'));
+        exit;
+    }
+
+    // update users lock and unlock
+    public function toggleLock()
+    {
+        $user_id = (int) ($_POST['user_id'] ?? 0);
+        if (!$user_id) {
+            header('Location: /admin/users?error=' . urlencode('ID người dùng không hợp lệ.'));
+            exit;
+        }
+
+        $this->model->toggleUserLock($user_id);
+
+        header('Location: /admin/users?success=' . urlencode('Đã cập nhật trạng thái người dùng thành công.'));
         exit;
     }
 

@@ -43,10 +43,18 @@ class UsersController
         $controller->handle();
     }
 
+    public function toggleUserLock()
+    {
+        $controller = new UpdateUserController();
+        $controller->toggleLock();
+    }
+
     public function delete()
     {
-        DeleteUserController::handle();
+        $controller = new DeleteUserController();
+        $controller->handle();
     }
+    
 }
 
 ?>

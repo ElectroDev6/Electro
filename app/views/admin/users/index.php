@@ -5,15 +5,12 @@
     function buildPaginationUrl($pageNum) {
         $params = $_GET; // Lấy tất cả tham số hiện tại
         $params['page'] = $pageNum; // Chỉ thay đổi page
-        
         if ($pageNum == 1) {
             unset($params['page']); // Xóa page=1 cho URL sạch
         }
         $query = http_build_query($params);
         return '/admin/users' . ($query ? '?' . $query : '');
     }
-
-    // Calculate pagination info - giữ nguyên
     $startItem = ($page - 1) * $usersPerPage + 1;
     $endItem = min($page * $usersPerPage, $totalUsers);
     $startPage = max(1, $page - 2);
@@ -31,20 +28,28 @@
     <body>
         <?php echo $htmlHeader; ?>
         <main class="wrapper">
-            <div class="create-user-page">
-            <?php if (!empty($error)): ?>
-                <div class="category-detail__alert category-detail__alert--danger">
-                    <p><?= htmlspecialchars($error) ?></p>
-                </div>
-            <?php endif; ?>
-        </div>
-         <!-- Header Section -->
-            <div class="user-page__header">
-                <h1 class="user-page__title">Trang người dùng</h1>
-                <a href="/admin/users/create" class="user-page__add-btn">+ Thêm người dùng</a>
-            </div>
             <?php echo $contentSidebar; ?>
+            <?php if (!empty($_SESSION['error'])): ?>
+                <div class="notification notification--error show">
+                    <p><?= htmlspecialchars($_SESSION['error']) ?></p>
+                    <form action="/admin/users/toggle-lock" method="post" style="display:inline;">
+                        <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['error_user_id']) ?>">
+                            <button type="submit" class="notification__btn-danger">Khóa</button>
+                            <button type="button" class="notification__btn-neutral"
+                                onclick="document.querySelector('.notification').classList.remove('show')">
+                                Đóng
+                            </button>
+                    </form>
+                </div>
+                <?php unset($_SESSION['error'], $_SESSION['error_user_id']); ?>
+            <?php endif; ?>
+
             <div class="user-page">
+                         <!-- Header Section -->
+                <div class="user-page__header">
+                    <h1 class="user-page__title">Trang người dùng</h1>
+                    <a href="/admin/users/create" class="user-page__add-btn">+ Thêm người dùng</a>
+                </div>
                     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
                     <div class="notification notification--success show" id="success-notification">
                         <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>

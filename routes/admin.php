@@ -17,6 +17,7 @@ Router::post('/admin/categories/update', 'CategoriesController@handleUpdate');
 
 
 Router::get('/admin/users', 'UsersController@index');
+Router::post('/admin/users/toggle-lock', 'UsersController@toggleUserLock');
 Router::get('/admin/users/create', 'UsersController@create');
 Router::post('/admin/users/handleCreate', 'UsersController@handleCreate');
 Router::post('/admin/users/delete', 'UsersController@delete');
@@ -29,9 +30,9 @@ Router::post('/admin/users/update', 'UsersController@handleUpdate');
 
 
 Router::get('/admin/products', 'ProductsController@index'); 
+Router::get('/admin/products/detail', 'ProductsController@detail');
 Router::get('/admin/products/create', 'ProductsController@create'); 
 Router::post('/admin/products/handleCreate', 'ProductsController@handleCreate');
-Router::get('/admin/products/detail', 'ProductsController@detail');
 Router::get('/admin/products/update', 'ProductsController@update');
 Router::post('/admin/products/update/handle', 'ProductsController@handle');
 Router::get('/admin/products/delete', 'ProductsController@delete');

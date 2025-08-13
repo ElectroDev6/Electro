@@ -200,5 +200,31 @@ class UsersModel
             ':province_city' => $data['province_city'] ?? null,
         ]);
     }
+
+    public function getUserActiveOrders($userId)
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT COUNT(*) 
+            FROM orders 
+            WHERE user_id = :id 
+            AND status IN ('pending', 'paid', 'shipped', 'delivering')
+        ");
+        $stmt->execute(['id' => $userId]);
+        return $stmt->fetchColumn();
+    }
+
+
+    public function toggleUserLock($userId)
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE users 
+            SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END 
+            WHERE user_id = :user_id
+        ");
+        return $stmt->execute([':user_id' => $userId]);
+    }
+
+
+
 }
 ?>
