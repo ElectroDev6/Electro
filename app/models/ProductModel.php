@@ -14,18 +14,26 @@ class ProductModel
     }
     public function getProducts(array $options = []): array
     {
-        $limit = $options['limit'] ?? 8;
+        $limit = $options['limit'] ?? 6;
         $where = [];
         $joins = [];
         $params = [];
 
-        if (!empty($options['subcategory_slug'])) {
-            $where[] = "sc.slug = :subcategory_slug";
-            $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
-            $params['subcategory_slug'] = $options['subcategory_slug'];
+        if (!empty($options['subcategory_ids'])) {
+            $placeholders = [];
+            foreach ($options['subcategory_ids'] as $index => $id) {
+                $key = ":subcategory_id_$index";
+                $placeholders[] = $key;
+                $params["subcategory_id_$index"] = (int) $id;
+            }
+            $where[] = "p.subcategory_id IN (" . implode(',', $placeholders) . ")";
         } elseif (!empty($options['subcategory_id'])) {
             $where[] = "p.subcategory_id = :subcategory_id";
             $params['subcategory_id'] = (int) $options['subcategory_id'];
+        } elseif (!empty($options['subcategory_slug'])) {
+            $where[] = "sc.slug = :subcategory_slug";
+            $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
+            $params['subcategory_slug'] = $options['subcategory_slug'];
         }
 
         if (!empty($options['brand'])) {
@@ -66,43 +74,41 @@ class ProductModel
             $where[] = "p.is_featured = 1";
         }
 
+        if (!empty($options['exclude_id'])) {
+            $where[] = "p.product_id != :exclude_id";
+            $params['exclude_id'] = (int) $options['exclude_id'];
+        }
+
         $whereSQL = $where ? "WHERE " . implode(" AND ", $where) : "";
         $orderBy = !empty($options['is_sale']) ? "ORDER BY pr.discount_percent DESC, p.created_at DESC" : "ORDER BY p.created_at DESC";
 
         $sql = "
-            SELECT 
-                p.product_id,
-                p.name,
-                p.slug,
-                s.price AS price_original,
-                vi.image_set AS default_image,
-                CASE 
-                    WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
-                    ELSE s.price
-                END AS price_discount,
-                pr.discount_percent AS discount,
-                CASE 
-                    WHEN pr.discount_percent IS NOT NULL THEN s.price - ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
-                    ELSE 0
-                END AS discount_amount
-            FROM products p
-            INNER JOIN (
-                SELECT s1.*
-                FROM skus s1
-                INNER JOIN (
-                    SELECT product_id, MIN(sku_id) AS min_sku_id
-                    FROM skus
-                    GROUP BY product_id
-                ) s2 ON s1.sku_id = s2.min_sku_id
-            ) s ON s.product_id = p.product_id
-            LEFT JOIN variant_images vi 
-                ON vi.sku_id = s.sku_id 
-                AND vi.is_default = 1
-            " . implode("\n", $joins) . "
-            $whereSQL
-            $orderBy
-            LIMIT :limit
-        ";
+        SELECT 
+            p.product_id,
+            p.name,
+            p.slug,
+            p.subcategory_id,
+            s.price AS price_original,
+            vi.image_set AS default_image,
+            CASE 
+                WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
+                ELSE s.price
+            END AS price_discount,
+            pr.discount_percent AS discount,
+            CASE 
+                WHEN pr.discount_percent IS NOT NULL THEN s.price - ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
+                ELSE 0
+            END AS discount_amount
+        FROM products p
+        INNER JOIN skus s ON s.product_id = p.product_id AND s.is_default = 1
+        LEFT JOIN variant_images vi 
+            ON vi.sku_id = s.sku_id 
+            AND vi.is_default = 1
+        " . implode("\n", $joins) . "
+        $whereSQL
+        $orderBy
+        LIMIT :limit
+    ";
 
         error_log("ProductModel: getProducts Query: $sql, Params: " . json_encode($params));
         $stmt = $this->pdo->prepare($sql);
@@ -199,7 +205,6 @@ class ProductModel
 
     public function getProductDetailModel(string $slug): array
     {
-        // 1. Lấy thông tin sản phẩm
         $sql = "
         SELECT 
             p.product_id,
@@ -293,7 +298,6 @@ class ProductModel
             u.email AS user_email,
             r.product_id,
             r.parent_review_id,
-            r.rating,
             r.comment_text,
             r.status
         FROM reviews r
@@ -370,88 +374,17 @@ class ProductModel
 
         return $product;
     }
-    public function getAllProducts(): array
+
+    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text, ?string $user_name = null, ?string $email = null): bool
     {
-        $sql = "
-    SELECT 
-        p.product_id,
-        p.name,
-        p.slug,
-        s.price AS price_original,
-        CASE 
-            WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
-            ELSE s.price
-        END AS price_discount,
-        pr.discount_percent AS discount,
-        CASE 
-            WHEN pr.discount_percent IS NOT NULL THEN s.price - ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
-            ELSE 0
-        END AS discount_amount,
-        vi.default_url,
-
-        -- Dung lượng
-        SUBSTRING_INDEX(SUBSTRING_INDEX(s.sku_code, '-', 2), '-', -1) AS storage,
-
-        -- Thương hiệu
-        b.name AS brand_name,
-
-        --  Hệ điều hành
-        os.name AS operating_system
-
-    FROM products p
-
-    -- SKU chính
-    INNER JOIN (
-        SELECT s1.*
-        FROM skus s1
-        INNER JOIN (
-            SELECT product_id, MIN(sku_id) AS min_sku_id
-            FROM skus
-            GROUP BY product_id
-        ) s2 ON s1.sku_id = s2.min_sku_id
-    ) s ON s.product_id = p.product_id
-
-    -- Ảnh
-    LEFT JOIN variant_images vi ON vi.sku_id = s.sku_id AND vi.is_default = 1
-
-    -- Khuyến mãi
-    LEFT JOIN promotions pr 
-        ON pr.sku_id = s.sku_id 
-        AND pr.start_date <= NOW() 
-        AND pr.end_date >= NOW()
-
-    -- Thương hiệu
-    LEFT JOIN brands b ON b.brand_id = p.brand_id
-
-    --  Hệ điều hành
-    LEFT JOIN operating_systems os ON os.id = p.operating_system_id
-
-    -- Bộ lọc thương hiệu
-    WHERE b.name IN ('Apple', 'Oppo', 'Vivo')
-
-    -- (Tùy chọn) Bộ lọc hệ điều hành:
-    -- AND os.slug = 'android'  -- hoặc 'ios'
-
-    ORDER BY p.created_at DESC
-";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text, int $rating = null, ?string $user_name = null, ?string $email = null): bool
-    {
-        // Nếu không có user_id (khách), vẫn cho phép lưu với user_name và email
-        $sql = "INSERT INTO reviews (product_id, user_id, parent_review_id, comment_text, rating, user_name, email, status) 
-            VALUES (:product_id, :user_id, :parent_review_id, :comment_text, :rating, :user_name, :email, 'pending')";
+        $sql = "INSERT INTO reviews (product_id, user_id, parent_review_id, comment_text, user_name, email, status) 
+            VALUES (:product_id, :user_id, :parent_review_id, :comment_text, :user_name, :email, 'approved')";
         $stmt = $this->pdo->prepare($sql);
         $params = [
             ':product_id' => $product_id,
-            ':user_id' => $user_id, // NULL được phép sau khi sửa DB
+            ':user_id' => $user_id,
             ':parent_review_id' => $parent_review_id ?? null,
             ':comment_text' => $comment_text,
-            ':rating' => $rating ?? null,
             ':user_name' => $user_name ?? null,
             ':email' => $email ?? null
         ];
@@ -464,16 +397,18 @@ class ProductModel
     public function getReviewsByProductId(int $product_id): array
     {
         $sql = "
-        SELECT r.review_id, r.user_id, r.parent_review_id, r.comment_text, r.rating, r.review_date, 
+        SELECT r.review_id, r.user_id, r.parent_review_id, r.comment_text, r.review_date, 
                COALESCE(r.user_name, u.name) as user_name, COALESCE(u.avatar_url, '/img/avatars/avatar.png') as avatar_url, COALESCE(r.email, u.email) as email
         FROM reviews r
         LEFT JOIN users u ON r.user_id = u.user_id
-        WHERE r.product_id = :product_id
+        WHERE r.product_id = :product_id AND r.status = 'approved'
         ORDER BY r.review_date DESC
     ";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':product_id' => $product_id]);
         $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // error_log(json_encode($reviews));
 
         // Build comment tree
         $comment_tree = [];
@@ -492,7 +427,7 @@ class ProductModel
             }
         }
 
-        error_log("ProductModel: getReviewsByProductId Result: " . json_encode($comment_tree));
+        // error_log("ProductModel: getReviewsByProductId Result: " . json_encode($comment_tree));
         return array_values($comment_tree);
     }
 }

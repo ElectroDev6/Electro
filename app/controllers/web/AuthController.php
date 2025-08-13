@@ -22,7 +22,7 @@ class AuthController
         }
         // Nếu đã login rồi redirect sang trang chính
         if (!empty($_SESSION['user_id'])) {
-            header('Location: /');
+            header('Location: /login');
             exit;
         }
 

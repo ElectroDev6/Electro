@@ -7,6 +7,7 @@
         "product_id": 1,
         "price": 14490000.0,
         "stock_quantity": 32,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -14,6 +15,7 @@
         "product_id": 1,
         "price": 14590000.0,
         "stock_quantity": 18,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -21,6 +23,7 @@
         "product_id": 1,
         "price": 15990000.0,
         "stock_quantity": 25,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -28,6 +31,7 @@
         "product_id": 1,
         "price": 15800000.0,
         "stock_quantity": 15,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -40,6 +44,7 @@
         "product_id": 2,
         "price": 17490000.0,
         "stock_quantity": 40,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -47,6 +52,7 @@
         "product_id": 2,
         "price": 17550000.0,
         "stock_quantity": 22,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -54,6 +60,7 @@
         "product_id": 2,
         "price": 18990000.0,
         "stock_quantity": 20,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -61,6 +68,7 @@
         "product_id": 2,
         "price": 19100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -73,6 +81,7 @@
         "product_id": 3,
         "price": 19490000.0,
         "stock_quantity": 26,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -80,6 +89,7 @@
         "product_id": 3,
         "price": 19600000.0,
         "stock_quantity": 21,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -87,6 +97,7 @@
         "product_id": 3,
         "price": 21490000.0,
         "stock_quantity": 19,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -94,6 +105,7 @@
         "product_id": 3,
         "price": 21650000.0,
         "stock_quantity": 15,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -106,6 +118,7 @@
         "product_id": 4,
         "price": 21990000.0,
         "stock_quantity": 38,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -113,6 +126,7 @@
         "product_id": 4,
         "price": 22100000.0,
         "stock_quantity": 30,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -120,6 +134,7 @@
         "product_id": 4,
         "price": 23990000.0,
         "stock_quantity": 25,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -127,6 +142,7 @@
         "product_id": 4,
         "price": 24100000.0,
         "stock_quantity": 20,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -139,6 +155,7 @@
         "product_id": 5,
         "price": 32990000.0,
         "stock_quantity": 22,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -146,20 +163,23 @@
         "product_id": 5,
         "price": 33100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       },
       {
         "sku_code": "IP15PROMAX-256GB-BLACK",
         "product_id": 5,
-        "price": 32990000.0,
+        "price": 34990000.0,
         "stock_quantity": 22,
+        "is_default": 0,
         "is_active": 1
       },
       {
         "sku_code": "IP15PROMAX-256GB-WHITE",
         "product_id": 5,
-        "price": 33100000.0,
+        "price": 35100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -167,6 +187,7 @@
         "product_id": 5,
         "price": 42990000.0,
         "stock_quantity": 10,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -174,6 +195,7 @@
         "product_id": 5,
         "price": 43200000.0,
         "stock_quantity": 8,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -186,6 +208,7 @@
         "product_id": 6,
         "price": 20490000.0,
         "stock_quantity": 34,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -193,6 +216,7 @@
         "product_id": 6,
         "price": 20590000.0,
         "stock_quantity": 30,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -200,6 +224,7 @@
         "product_id": 6,
         "price": 22490000.0,
         "stock_quantity": 22,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -207,6 +232,7 @@
         "product_id": 6,
         "price": 22600000.0,
         "stock_quantity": 18,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -219,6 +245,7 @@
         "product_id": 7,
         "price": 29990000.0,
         "stock_quantity": 28,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -226,20 +253,23 @@
         "product_id": 7,
         "price": 30100000.0,
         "stock_quantity": 20,
+        "is_default": 0,
         "is_active": 1
       },
       {
         "sku_code": "IP15PRO-256GB-BLACK",
         "product_id": 7,
-        "price": 29990000.0,
+        "price": 31990000.0,
         "stock_quantity": 28,
+        "is_default": 0,
         "is_active": 1
       },
       {
         "sku_code": "IP15PRO-256GB-WHITE",
         "product_id": 7,
-        "price": 30100000.0,
+        "price": 32100000.0,
         "stock_quantity": 20,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -247,6 +277,7 @@
         "product_id": 7,
         "price": 40990000.0,
         "stock_quantity": 12,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -254,6 +285,7 @@
         "product_id": 7,
         "price": 41200000.0,
         "stock_quantity": 10,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -266,6 +298,7 @@
         "product_id": 8,
         "price": 17490000.0,
         "stock_quantity": 40,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -273,6 +306,7 @@
         "product_id": 8,
         "price": 17550000.0,
         "stock_quantity": 22,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -280,6 +314,7 @@
         "product_id": 8,
         "price": 18990000.0,
         "stock_quantity": 20,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -287,6 +322,7 @@
         "product_id": 8,
         "price": 19100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -299,6 +335,7 @@
         "product_id": 9,
         "price": 32990000.0,
         "stock_quantity": 22,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -306,20 +343,23 @@
         "product_id": 9,
         "price": 33100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       },
       {
         "sku_code": "IP16PROMAX-256GB-BLACK",
         "product_id": 9,
-        "price": 42990000.0,
+        "price": 44990000.0,
         "stock_quantity": 22,
+        "is_default": 0,
         "is_active": 1
       },
       {
         "sku_code": "IP16PROMAX-256GB-WHITE",
         "product_id": 9,
-        "price": 43100000.0,
+        "price": 45100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -327,6 +367,7 @@
         "product_id": 9,
         "price": 52990000.0,
         "stock_quantity": 10,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -334,6 +375,7 @@
         "product_id": 9,
         "price": 53200000.0,
         "stock_quantity": 8,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -346,6 +388,7 @@
         "product_id": 10,
         "price": 18490000.0,
         "stock_quantity": 40,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -353,6 +396,7 @@
         "product_id": 10,
         "price": 18550000.0,
         "stock_quantity": 22,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -360,6 +404,7 @@
         "product_id": 10,
         "price": 19990000.0,
         "stock_quantity": 20,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -367,6 +412,7 @@
         "product_id": 10,
         "price": 20100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -379,6 +425,7 @@
         "product_id": 11,
         "price": 17490000.0,
         "stock_quantity": 40,
+        "is_default": 1,
         "is_active": 1
       },
       {
@@ -386,6 +433,7 @@
         "product_id": 11,
         "price": 17550000.0,
         "stock_quantity": 22,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -393,6 +441,7 @@
         "product_id": 11,
         "price": 18990000.0,
         "stock_quantity": 20,
+        "is_default": 0,
         "is_active": 1
       },
       {
@@ -400,6 +449,7 @@
         "product_id": 11,
         "price": 19100000.0,
         "stock_quantity": 17,
+        "is_default": 0,
         "is_active": 1
       }
     ]
@@ -410,8 +460,9 @@
       {
         "sku_code": "12400F-6GB-BLACK",
         "product_id": 12,
-        "price": 19100000.0,
+        "price": 26500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -422,8 +473,9 @@
       {
         "sku_code": "5500-6GB-BLACK",
         "product_id": 13,
-        "price": 19100000.0,
+        "price": 21500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -434,8 +486,9 @@
       {
         "sku_code": "5700X-6GB-BLACK",
         "product_id": 14,
-        "price": 19100000.0,
+        "price": 27500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -446,8 +499,9 @@
       {
         "sku_code": "12400F-12GB-BLACK",
         "product_id": 15,
-        "price": 19100000.0,
+        "price": 23500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -458,8 +512,9 @@
       {
         "sku_code": "3200G-4GB-BLACK",
         "product_id": 16,
-        "price": 19100000.0,
+        "price": 8200000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -470,8 +525,9 @@
       {
         "sku_code": "4600G-6GB-BLACK",
         "product_id": 17,
-        "price": 19100000.0,
+        "price": 12500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -482,8 +538,9 @@
       {
         "sku_code": "46mm-40mm-BLACK",
         "product_id": 18,
-        "price": 19100000.0,
+        "price": 10900000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -494,8 +551,9 @@
       {
         "sku_code": "44mm-41mm-BLACK",
         "product_id": 19,
-        "price": 19100000.0,
+        "price": 9500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -506,8 +564,9 @@
       {
         "sku_code": "44mm-42mm-BLACK",
         "product_id": 20,
-        "price": 19100000.0,
+        "price": 2500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -518,8 +577,9 @@
       {
         "sku_code": "40mm-43mm-BLACK",
         "product_id": 21,
-        "price": 19100000.0,
+        "price": 500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -530,8 +590,9 @@
       {
         "sku_code": "46mm-44mm-BLACK",
         "product_id": 22,
-        "price": 19100000.0,
+        "price": 11900000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -542,8 +603,9 @@
       {
         "sku_code": "47mm-45mm-BLACK",
         "product_id": 23,
-        "price": 19100000.0,
+        "price": 12900000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -554,8 +616,9 @@
       {
         "sku_code": "40mm-46mm-BLACK",
         "product_id": 24,
-        "price": 19100000.0,
+        "price": 7500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -566,8 +629,9 @@
       {
         "sku_code": "44mm-47mm-BLACK",
         "product_id": 25,
-        "price": 19100000.0,
+        "price": 10500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -578,8 +642,9 @@
       {
         "sku_code": "47mm-48mm-BLACK",
         "product_id": 26,
-        "price": 19100000.0,
+        "price": 11500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -590,8 +655,9 @@
       {
         "sku_code": "4lit-40lit-BLACK",
         "product_id": 27,
-        "price": 19100000.0,
+        "price": 2500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -602,8 +668,9 @@
       {
         "sku_code": "4lit-41lit-BLACK",
         "product_id": 28,
-        "price": 19100000.0,
+        "price": 2300000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -614,8 +681,9 @@
       {
         "sku_code": "4lit-44lit-BLACK",
         "product_id": 29,
-        "price": 19100000.0,
+        "price": 2100000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -626,8 +694,9 @@
       {
         "sku_code": "4lit-24lit-BLACK",
         "product_id": 30,
-        "price": 19100000.0,
+        "price": 1900000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -638,8 +707,9 @@
       {
         "sku_code": "75l-75l-BLACK",
         "product_id": 31,
-        "price": 19100000.0,
+        "price": 3200000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -650,8 +720,9 @@
       {
         "sku_code": "SHD2305-SHD2305-BLACK",
         "product_id": 32,
-        "price": 19100000.0,
+        "price": 250000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -662,8 +733,9 @@
       {
         "sku_code": "SHD2306-SHD2306-BLACK",
         "product_id": 33,
-        "price": 19100000.0,
+        "price": 300000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -674,8 +746,9 @@
       {
         "sku_code": "SHD2307-SHD2307-BLACK",
         "product_id": 34,
-        "price": 19100000.0,
+        "price": 350000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -686,8 +759,9 @@
       {
         "sku_code": "SHD2308-SHD2308-BLACK",
         "product_id": 35,
-        "price": 19100000.0,
+        "price": 400000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -698,8 +772,9 @@
       {
         "sku_code": "SHD2309-SHD2309-BLACK",
         "product_id": 36,
-        "price": 19100000.0,
+        "price": 450000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -710,8 +785,9 @@
       {
         "sku_code": "SHD2310-SHD2310-BLACK",
         "product_id": 37,
-        "price": 19100000.0,
+        "price": 500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -722,8 +798,9 @@
       {
         "sku_code": "SHD2311-SHD2311-BLACK",
         "product_id": 38,
-        "price": 19100000.0,
+        "price": 300000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -734,8 +811,9 @@
       {
         "sku_code": "DM208-DM208-BLACK",
         "product_id": 39,
-        "price": 19100000.0,
+        "price": 6900000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -746,8 +824,9 @@
       {
         "sku_code": "DM116-DM116-BLACK",
         "product_id": 40,
-        "price": 19100000.0,
+        "price": 6200000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -758,8 +837,9 @@
       {
         "sku_code": "DM115-DM115-BLACK",
         "product_id": 41,
-        "price": 19100000.0,
+        "price": 5700000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -770,8 +850,9 @@
       {
         "sku_code": "DM114-DM114-BLACK",
         "product_id": 42,
-        "price": 19100000.0,
+        "price": 5200000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -782,8 +863,9 @@
       {
         "sku_code": "DM113-DM113-BLACK",
         "product_id": 43,
-        "price": 19100000.0,
+        "price": 4800000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -794,8 +876,9 @@
       {
         "sku_code": "DM112-DM112-BLACK",
         "product_id": 44,
-        "price": 19100000.0,
+        "price": 4200000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -806,8 +889,9 @@
       {
         "sku_code": "DM111-DM111-BLACK",
         "product_id": 45,
-        "price": 19100000.0,
+        "price": 3800000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -818,8 +902,9 @@
       {
         "sku_code": "ecovacs-deebot-BLACK",
         "product_id": 46,
-        "price": 19100000.0,
+        "price": 3500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -830,8 +915,9 @@
       {
         "sku_code": "ecovacs-T30C-BLACK",
         "product_id": 47,
-        "price": 19100000.0,
+        "price": 9800000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -842,8 +928,9 @@
       {
         "sku_code": "ecovacs-N30-BLACK",
         "product_id": 48,
-        "price": 19100000.0,
+        "price": 12500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -854,8 +941,9 @@
       {
         "sku_code": "Vacuum-E5-BLACK",
         "product_id": 49,
-        "price": 19100000.0,
+        "price": 4500000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -866,8 +954,9 @@
       {
         "sku_code": "ecovacs-Y1-BLACK",
         "product_id": 50,
-        "price": 19100000.0,
+        "price": 8900000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]
@@ -878,8 +967,9 @@
       {
         "sku_code": "Vacuum-X20-BLACK",
         "product_id": 51,
-        "price": 19100000.0,
+        "price": 14900000.0,
         "stock_quantity": 17,
+        "is_default": 1,
         "is_active": 1
       }
     ]

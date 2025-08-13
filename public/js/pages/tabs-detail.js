@@ -102,7 +102,7 @@ export default class ProductDetailTabs {
 
     newComment.innerHTML = `
             <div class="product-detail__reviewer-info">
-                <img src="/img/avatar.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
+                <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
                 <div class="product-detail__reviewer-details">
                     <h4 class="product-detail__reviewer-name">${this.escapeHtml(name)}</h4>
                     <div class="product-detail__review-rating">★★★★★</div>

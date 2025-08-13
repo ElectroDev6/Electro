@@ -3,17 +3,18 @@ include dirname(__DIR__) . '/partials/sidebar.php';
 include dirname(__DIR__) . '/partials/header.php';
 ?>
 <?php
-function buildPaginationUrl($pageNum, $reviewsPerPage, $search = '', $rating = '', $status = '', $date_range = '') {
+function buildPaginationUrl($pageNum, $reviewsPerPage, $search = '', $rating = '', $status = '', $date_range = '')
+{
     $params = [
         'page' => $pageNum,
         'limit' => $reviewsPerPage
     ];
-    
+
     if (!empty($search)) $params['search'] = $search;
     if (!empty($rating)) $params['rating'] = $rating;
     if (!empty($status)) $params['status'] = $status;
     if (!empty($date_range)) $params['date_range'] = $date_range;
-    
+
     // Get current path without query string
     $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     return $currentPath . '?' . http_build_query($params);
@@ -44,18 +45,19 @@ $endPage = min($totalPages, $page + 2);
 <body>
     <!-- Debug code (commented out) -->
     <!--
-    <?php // echo '<pre'; print_r($reviews); echo '</pre>'; ?>
+    <?php // echo '<pre'; print_r($reviews); echo '</pre>'; 
+    ?>
     -->
     <?php echo $htmlHeader; ?>
     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
-    <div class="notification notification--success show" id="success-notification">
-        <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
-    </div>
+        <div class="notification notification--success show" id="success-notification">
+            <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
+        </div>
     <?php endif; ?>
     <?php if (isset($_GET['error']) && $_GET['error'] !== ''): ?>
-    <div class="notification notification--error" id="error-notification">
-        <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
-    </div>
+        <div class="notification notification--error" id="error-notification">
+            <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
+        </div>
     <?php endif; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -115,10 +117,10 @@ $endPage = min($totalPages, $page + 2);
                         <select id="rating" class="reviews__filter-select" name="rating">
                             <option value="">Tất cả</option>
                             <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <option value="<?php echo $i; ?>"
-                                <?php echo isset($_GET['rating']) && $_GET['rating'] == $i ? 'selected' : ''; ?>>
-                                <?php echo $i; ?> sao
-                            </option>
+                                <option value="<?php echo $i; ?>"
+                                    <?php echo isset($_GET['rating']) && $_GET['rating'] == $i ? 'selected' : ''; ?>>
+                                    <?php echo $i; ?> sao
+                                </option>
                             <?php endfor; ?>
                         </select>
                     </div>
@@ -190,64 +192,64 @@ $endPage = min($totalPages, $page + 2);
                     </thead>
                     <tbody class="reviews__table-body">
                         <?php foreach ($reviews as $review): ?>
-                        <tr class="reviews__table-row">
-                            <td class="reviews__table-cell"><?php echo '#' . sprintf('%03d', $review['review_id']); ?>
-                            </td>
-                            <td class="reviews__table-cell">
-                                <div class="reviews__user">
-                                    <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.jpg'); ?>"
-                                        alt="Avatar" class="reviews__user-avatar">
-                                    <span
-                                        class="reviews__user-name"><?php echo htmlspecialchars($review['user_name']); ?></span>
-                                </div>
-                            </td>
-                            <td class="reviews__table-cell"><?php echo htmlspecialchars($review['product_name']); ?>
-                            </td>
-                            <td class="reviews__table-cell">
-                                <div class="reviews__rating">
-                                    <?php
+                            <tr class="reviews__table-row">
+                                <td class="reviews__table-cell"><?php echo '#' . sprintf('%03d', $review['review_id']); ?>
+                                </td>
+                                <td class="reviews__table-cell">
+                                    <div class="reviews__user">
+                                        <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.png'); ?>"
+                                            alt="Avatar" class="reviews__user-avatar">
+                                        <span
+                                            class="reviews__user-name"><?php echo htmlspecialchars($review['user_name']); ?></span>
+                                    </div>
+                                </td>
+                                <td class="reviews__table-cell"><?php echo htmlspecialchars($review['product_name']); ?>
+                                </td>
+                                <td class="reviews__table-cell">
+                                    <div class="reviews__rating">
+                                        <?php
                                         $rating = !empty($review['rating']) ? (int)$review['rating'] : 0;
                                         for ($i = 1; $i <= 5; $i++):
                                         ?>
-                                    <i
-                                        class="fas fa-star reviews__star <?php echo $i <= $rating ? 'reviews__star--filled' : 'reviews__star--empty'; ?>"></i>
-                                    <?php endfor; ?>
+                                            <i
+                                                class="fas fa-star reviews__star <?php echo $i <= $rating ? 'reviews__star--filled' : 'reviews__star--empty'; ?>"></i>
+                                        <?php endfor; ?>
+                                        <span
+                                            class="reviews__rating-text"><?php echo $rating ? "$rating/5" : 'N/A'; ?></span>
+                                    </div>
+                                </td>
+                                <td class="reviews__table-cell">
+                                    <?php echo htmlspecialchars(substr($review['comment_text'], 0, 50)) . '...'; ?></td>
+                                <td class="reviews__table-cell">
+                                    <div class="reviews__date">
+                                        <?php echo date('d/m/Y', strtotime($review['review_date'])); ?></div>
+                                    <div class="reviews__time"><?php echo date('H:i', strtotime($review['review_date'])); ?>
+                                    </div>
+                                </td>
+                                <td class="reviews__table-cell">
                                     <span
-                                        class="reviews__rating-text"><?php echo $rating ? "$rating/5" : 'N/A'; ?></span>
-                                </div>
-                            </td>
-                            <td class="reviews__table-cell">
-                                <?php echo htmlspecialchars(substr($review['comment_text'], 0, 50)) . '...'; ?></td>
-                            <td class="reviews__table-cell">
-                                <div class="reviews__date">
-                                    <?php echo date('d/m/Y', strtotime($review['review_date'])); ?></div>
-                                <div class="reviews__time"><?php echo date('H:i', strtotime($review['review_date'])); ?>
-                                </div>
-                            </td>
-                            <td class="reviews__table-cell">
-                                <span
-                                    class="reviews__status reviews__status--<?php echo strtolower(htmlspecialchars($review['status'])); ?>">
-                                    <?php echo htmlspecialchars(ucfirst($review['status'])); ?>
-                                </span>
-                            </td>
-                            <td class="reviews__table-cell">
-                                <div class="reviews__actions">
-                                    <a href="/admin/reviews/detail?id=<?php echo $review['review_id']; ?>"
-                                        class="reviews__action-btn" title="View">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <button class="reviews__action-btn" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <form action="/admin/reviews/delete" method="POST" class="review-detail__form" onclick="return confirm('Bạn có chắc chắn muốn xóa đánh giá này?');">
-                                    <input type="hidden" name="review_id" value="<?php echo $review['review_id']; ?>">
-                                      <button class="reviews__action-btn" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                                </div>
-                            </td>
-                        </tr>
+                                        class="reviews__status reviews__status--<?php echo strtolower(htmlspecialchars($review['status'])); ?>">
+                                        <?php echo htmlspecialchars(ucfirst($review['status'])); ?>
+                                    </span>
+                                </td>
+                                <td class="reviews__table-cell">
+                                    <div class="reviews__actions">
+                                        <a href="/admin/reviews/detail?id=<?php echo $review['review_id']; ?>"
+                                            class="reviews__action-btn" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <button class="reviews__action-btn" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <form action="/admin/reviews/delete" method="POST" class="review-detail__form" onclick="return confirm('Bạn có chắc chắn muốn xóa đánh giá này?');">
+                                            <input type="hidden" name="review_id" value="<?php echo $review['review_id']; ?>">
+                                            <button class="reviews__action-btn" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -256,88 +258,88 @@ $endPage = min($totalPages, $page + 2);
                     <ul class="pagination__list">
                         <!-- First Page Button -->
                         <?php if ($page > 1): ?>
-                        <li class="pagination__item">
-                            <a href="<?php echo buildPaginationUrl(1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
-                                class="pagination__link pagination__link--first">
-                                <i class="fas fa-angle-double-left"></i> Đầu
-                            </a>
-                        </li>
+                            <li class="pagination__item">
+                                <a href="<?php echo buildPaginationUrl(1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
+                                    class="pagination__link pagination__link--first">
+                                    <i class="fas fa-angle-double-left"></i> Đầu
+                                </a>
+                            </li>
                         <?php endif; ?>
 
                         <!-- Previous Button -->
                         <li class="pagination__item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
                             <?php if ($page > 1): ?>
-                            <a href="<?php echo buildPaginationUrl($page - 1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
-                                class="pagination__link">
-                                <i class="fas fa-angle-left"></i> Trước
-                            </a>
+                                <a href="<?php echo buildPaginationUrl($page - 1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
+                                    class="pagination__link">
+                                    <i class="fas fa-angle-left"></i> Trước
+                                </a>
                             <?php else: ?>
-                            <span class="pagination__link pagination__link--disabled">
-                                <i class="fas fa-angle-left"></i> Trước
-                            </span>
+                                <span class="pagination__link pagination__link--disabled">
+                                    <i class="fas fa-angle-left"></i> Trước
+                                </span>
                             <?php endif; ?>
                         </li>
 
                         <!-- Show first page and ellipsis if needed -->
                         <?php if ($startPage > 1): ?>
-                        <li class="pagination__item">
-                            <a href="<?php echo buildPaginationUrl(1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
-                                class="pagination__link">1</a>
-                        </li>
-                        <?php if ($startPage > 2): ?>
-                        <li class="pagination__item">
-                            <span class="pagination__ellipsis">...</span>
-                        </li>
-                        <?php endif; ?>
+                            <li class="pagination__item">
+                                <a href="<?php echo buildPaginationUrl(1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
+                                    class="pagination__link">1</a>
+                            </li>
+                            <?php if ($startPage > 2): ?>
+                                <li class="pagination__item">
+                                    <span class="pagination__ellipsis">...</span>
+                                </li>
+                            <?php endif; ?>
                         <?php endif; ?>
 
                         <!-- Page Numbers -->
                         <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
-                        <li class="pagination__item <?php echo $i == $page ? 'active' : ''; ?>">
-                            <?php if ($i == $page): ?>
-                            <span class="pagination__link pagination__link--active"><?php echo $i; ?></span>
-                            <?php else: ?>
-                            <a href="<?php echo buildPaginationUrl($i, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
-                                class="pagination__link"><?php echo $i; ?></a>
-                            <?php endif; ?>
-                        </li>
+                            <li class="pagination__item <?php echo $i == $page ? 'active' : ''; ?>">
+                                <?php if ($i == $page): ?>
+                                    <span class="pagination__link pagination__link--active"><?php echo $i; ?></span>
+                                <?php else: ?>
+                                    <a href="<?php echo buildPaginationUrl($i, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
+                                        class="pagination__link"><?php echo $i; ?></a>
+                                <?php endif; ?>
+                            </li>
                         <?php endfor; ?>
 
                         <!-- Show last page and ellipsis if needed -->
                         <?php if ($endPage < $totalPages): ?>
-                        <?php if ($endPage < $totalPages - 1): ?>
-                        <li class="pagination__item">
-                            <span class="pagination__ellipsis">...</span>
-                        </li>
-                        <?php endif; ?>
-                        <li class="pagination__item">
-                            <a href="<?php echo buildPaginationUrl($totalPages, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
-                                class="pagination__link"><?php echo $totalPages; ?></a>
-                        </li>
+                            <?php if ($endPage < $totalPages - 1): ?>
+                                <li class="pagination__item">
+                                    <span class="pagination__ellipsis">...</span>
+                                </li>
+                            <?php endif; ?>
+                            <li class="pagination__item">
+                                <a href="<?php echo buildPaginationUrl($totalPages, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
+                                    class="pagination__link"><?php echo $totalPages; ?></a>
+                            </li>
                         <?php endif; ?>
 
                         <!-- Next Button -->
                         <li class="pagination__item <?php echo $page >= $totalPages ? 'disabled' : ''; ?>">
                             <?php if ($page < $totalPages): ?>
-                            <a href="<?php echo buildPaginationUrl($page + 1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
-                                class="pagination__link">
-                                Sau <i class="fas fa-angle-right"></i>
-                            </a>
+                                <a href="<?php echo buildPaginationUrl($page + 1, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
+                                    class="pagination__link">
+                                    Sau <i class="fas fa-angle-right"></i>
+                                </a>
                             <?php else: ?>
-                            <span class="pagination__link pagination__link--disabled">
-                                Sau <i class="fas fa-angle-right"></i>
-                            </span>
+                                <span class="pagination__link pagination__link--disabled">
+                                    Sau <i class="fas fa-angle-right"></i>
+                                </span>
                             <?php endif; ?>
                         </li>
 
                         <!-- Last Page Button -->
                         <?php if ($page < $totalPages): ?>
-                        <li class="pagination__item">
-                            <a href="<?php echo buildPaginationUrl($totalPages, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
-                                class="pagination__link pagination__link--last">
-                                Cuối <i class="fas fa-angle-double-right"></i>
-                            </a>
-                        </li>
+                            <li class="pagination__item">
+                                <a href="<?php echo buildPaginationUrl($totalPages, $reviewsPerPage, $currentSearch, $currentRating, $currentStatus, $currentDateRange); ?>"
+                                    class="pagination__link pagination__link--last">
+                                    Cuối <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
                         <?php endif; ?>
                     </ul>
                 </div>

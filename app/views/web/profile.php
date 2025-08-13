@@ -8,7 +8,7 @@ use Core\View; ?>
 <div class="profile">
     <div class="profile__sidebar">
         <div class="profile__avatar">
-            <img src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/default-avatar.jpg') ?>"
+            <img src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/avatars/avatar.png') ?>"
                 alt="Avatar người dùng" />
             <h3 class="profile__name"><?= htmlspecialchars($user['name'] ?? 'Người dùng') ?></h3>
             <p class="profile__phone"><?= htmlspecialchars($user['phone_number'] ?? '') ?></p>
@@ -31,7 +31,7 @@ use Core\View; ?>
                 <h2 class="profile__title">Hồ sơ của tôi</h2>
 
                 <div class="profile__row">
-                    <label>Họ và tên</label>
+                    <label>Tên đăng nhập</label>
                     <input type="text" name="name" value="<?= htmlspecialchars($user['name'] ?? '') ?>" required />
                 </div>
 
@@ -144,9 +144,9 @@ use Core\View; ?>
                 </div>
 
                 <div class="profile__row">
-                    <label for="address_line1">Địa chỉ chi tiết</label>
-                    <input type="text" id="address_line1" name="address_line1"
-                        value="<?= htmlspecialchars($user['address']['address_line1'] ?? '') ?>" />
+                    <label for="address">Địa chỉ chi tiết</label>
+                    <input type="text" id="address" name="address"
+                        value="<?= htmlspecialchars($user['address']['address'] ?? '') ?>" />
                 </div>
                 <button type="submit" class="profile__btn">Lưu</button>
             </div>

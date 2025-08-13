@@ -22,23 +22,23 @@ class HomeController
 
     public function index()
     {
+        $subcategoryIds = [101, 401, 1607, 701, 1403, 803, 801]; // iPhone, PC, watch, air fryer, massager, air cooler, vacuum cleaner
+        $limitPerCategory = 15;
+        $totalLimit = $limitPerCategory * count($subcategoryIds);
+
+        $allProducts = $this->productService->getHomeProductsByCategoryIds($subcategoryIds, $totalLimit);
+
+        // Phân loại sản phẩm theo subcategory_id
+        $iphoneProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 101);
+        $pcProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 401);
+        $watchProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1607);
+        $airFryerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 701);
+        $massagerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1403);
+        $airCoolerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 803);
+        $vacuumCleanerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 801);
 
         $saleProducts = $this->productService->getSaleProducts(5);
-
-        $iphoneProducts = $this->productService->getHomeProductsByCategoryId(101, 15);
-        $pcProducts = $this->productService->getHomeProductsByCategoryId(401, 15);
-        $watchProducts = $this->productService->getHomeProductsByCategoryId(1607, 15);
-        $tefalProducts = $this->productService->getHomeProductsByCategoryId(701, 15);
-        $massagerProducts = $this->productService->getHomeProductsByCategoryId(1403, 15);
-        $airCoolerProducts = $this->productService->getHomeProductsByCategoryId(803, 15);
-        $vacuumCleanerProducts = $this->productService->getHomeProductsByCategoryId(801, 15);
-
-        // echo '<pre>';
-        // print_r($airCoolerProducts);
-        // echo '</pre>';
-        // exit;
         $featuredProducts = $this->productService->getFeaturedProducts(9);
-
         $categories = $this->categoryService->getAllCategories();
 
         // Dữ liệu tạm thời cho phụ kiện và linh kiện máy tính
@@ -71,7 +71,7 @@ class HomeController
             'iphoneProducts' => $iphoneProducts,
             'pcProducts' => $pcProducts,
             'watchProducts' => $watchProducts,
-            'tefalProducts' => $tefalProducts,
+            'airFryerProducts' => $airFryerProducts,
             'massagerProducts' => $massagerProducts,
             'airCoolerProducts' => $airCoolerProducts,
             'vacuumCleanerProducts' => $vacuumCleanerProducts,
@@ -85,14 +85,14 @@ class HomeController
     }
 
     // Xử lý yêu cầu AJAX để lấy sản phẩm sale theo ngày
-    public function getSaleProductsByDate()
-    {
-        if (isset($_GET['date'])) {
-            $selectedDate = $_GET['date'];
-            $products = $this->promotionService->getSaleProductsByDate($selectedDate);
-            header('Content-Type: application/json');
-            echo json_encode(['products' => $products]);
-            exit;
-        }
-    }
+    // public function getSaleProductsByDate()
+    // {
+    //     if (isset($_GET['date'])) {
+    //         $selectedDate = $_GET['date'];
+    //         $products = $this->promotionService->getSaleProductsByDate($selectedDate);
+    //         header('Content-Type: application/json');
+    //         echo json_encode(['products' => $products]);
+    //         exit;
+    //     }
+    // }
 }

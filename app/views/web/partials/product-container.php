@@ -44,7 +44,7 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($tefalProducts as $tefalProduct): ?>
+            <?php foreach ($airFryerProducts as $tefalProduct): ?>
                 <?php View::partial('components.product-card', ['regularProduct' => $tefalProduct]); ?>
             <?php endforeach; ?>
         </div>

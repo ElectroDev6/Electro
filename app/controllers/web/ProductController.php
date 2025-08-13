@@ -13,21 +13,24 @@ class ProductController
         $this->productService = new ProductService($pdo);
     }
 
-    public function showAll($matches = [])
+    public function showAll($params = [])
     {
-        $categorySlug = $matches[0] ?? 'phone'; // Mặc định là 'phone' nếu null
-        $subcategorySlug = $matches[1] ?? null;
-        error_log("ProductController: showAll - CategorySlug: " . ($categorySlug ?? 'null') . ", SubcategorySlug: " . ($subcategorySlug ?? 'null'));
+        // Dynamic segment từ URL
+        $categorySlug = $params['matches'][0] ?? 'phone';
+        $subcategorySlug = $params['matches'][1] ?? null;
 
+        // Query params (?brand=asus&brand=dell)
         $filters = [
-            'brand' => $_GET['brand'] ?? [],
+            'brand' => $params['query']['brand'] ?? [],
             'limit' => 15
         ];
 
         $subcategories = [];
+
         if ($categorySlug) {
             $category = $this->productService->getCategoryBySlug($categorySlug);
             error_log("ProductController: Category found: " . json_encode($category));
+
             if ($category) {
                 $filters['category_id'] = $category['category_id'];
                 $subcategories = $this->productService->getSubcategories($category['category_id']);
@@ -54,5 +57,14 @@ class ProductController
             'selectedBrands' => $filters['brand'],
             'subcategories' => $subcategories
         ]);
+    }
+
+    public function searchProducts()
+    {
+        $keyword = $_GET['keyword'] ?? '';
+        $category = $_GET['category'] ?? '';
+
+        $products = $this->productService->searchProducts($keyword, $category);
+        View::render('products', ['products' => $products, 'keyword' => $keyword, 'category' => $category]);
     }
 }

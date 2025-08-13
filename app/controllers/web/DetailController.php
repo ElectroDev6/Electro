@@ -17,14 +17,22 @@ class DetailController
         $this->productService = new ProductService($pdo, $this->cartService);
     }
 
-    public function showDetail($slug)
+    public function showDetail($params)
     {
-        $product = $this->productService->getProductService($slug);
+        $slug = $params['matches']['slug'] ?? null;
+
+        if (!$slug) {
+            header('Location: /products');
+            exit;
+        }
+
+        $product = $this->productService->getProductDetail($slug);
         $relatedProducts = $this->productService->relatedProducts(
-            $product['category_id'],
+            $product['subcategory_id'],
             $product['product_id'],
             5
         );
+
         $reviews = $this->productService->getReviews($product['product_id']);
 
         View::render('detail', [
@@ -75,10 +83,8 @@ class DetailController
         $product_id = $input['product_id'] ?? null;
         $parent_review_id = $input['parent_review_id'] ? (int)$input['parent_review_id'] : null; // Chuyển chuỗi rỗng thành null
         $comment_text = $input['comment_text'] ?? '';
-        $rating = $input['rating'] ? (int)$input['rating'] : null; // Chuyển rating thành int
         $user_name = $input['user_name'] ?? null;
         $email = $input['email'] ?? null;
-
         $user_id = $_SESSION['user_id'] ?? null;
 
         if (!$product_id || !$comment_text) {
@@ -98,7 +104,6 @@ class DetailController
             $user_id,
             $parent_review_id,
             $comment_text,
-            $rating,
             $user_name,
             $email
         );

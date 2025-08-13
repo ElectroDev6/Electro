@@ -121,9 +121,9 @@ class UsersModel
     public function getUserById($id)
     {
         $stmt = $this->pdo->prepare("
-            SELECT u.*, ua.address_line1, ua.ward_commune, ua.district, ua.province_city
+            SELECT u.*, ua.address, ua.ward_commune, ua.district, ua.province_city
             FROM users u
-            LEFT JOIN user_address ua ON u.user_id = ua.user_id AND ua.is_default = 1
+            LEFT JOIN user_address ua ON u.user_id = ua.user_id
             WHERE u.user_id = :id
             LIMIT 1
         ");
@@ -131,9 +131,9 @@ class UsersModel
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && !$user['address_line1']) {
+        if ($user && !$user['address']) {
             $stmt = $this->pdo->prepare("
-                SELECT address_line1, ward_commune, district, province_city
+                SELECT address, ward_commune, district, province_city
                 FROM user_address
                 WHERE user_id = :id
                 LIMIT 1
@@ -142,7 +142,7 @@ class UsersModel
             $stmt->execute();
             $address = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($address) {
-                $user['address_line1'] = $address['address_line1'];
+                $user['address'] = $address['address'];
                 $user['ward_commune'] = $address['ward_commune'];
                 $user['district'] = $address['district'];
                 $user['province_city'] = $address['province_city'];
@@ -190,20 +190,20 @@ class UsersModel
         if ($addressExists) {
             $stmt = $this->pdo->prepare("
                 UPDATE user_address 
-                SET address_line1 = :address_line1, ward_commune = :ward_commune, 
+                SET address = :address, ward_commune = :ward_commune, 
                     district = :district, province_city = :province_city, 
                     updated_at = NOW()
                 WHERE user_id = :user_id AND is_default = 1
             ");
         } else {
             $stmt = $this->pdo->prepare("
-                INSERT INTO user_address (user_id, address_line1, ward_commune, district, province_city, is_default, created_at, updated_at)
-                VALUES (:user_id, :address_line1, :ward_commune, :district, :province_city, 1, NOW(), NOW())
+                INSERT INTO user_address (user_id, address, ward_commune, district, province_city, is_default, created_at, updated_at)
+                VALUES (:user_id, :address, :ward_commune, :district, :province_city, 1, NOW(), NOW())
             ");
         }
         $stmt->execute([
             ':user_id' => $user_id,
-            ':address_line1' => $data['address_line1'] ?? null,
+            ':address' => $data['address'] ?? null,
             ':ward_commune' => $data['ward_commune'] ?? null,
             ':district' => $data['district'] ?? null,
             ':province_city' => $data['province_city'] ?? null,

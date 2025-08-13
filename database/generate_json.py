@@ -63,6 +63,7 @@ def process_nested_table(table, csv_file, nested_field, nested_columns):
                         'product_id': int(row['product_id']),  # Lấy từ cột product_id
                         'price': float(row['price']) if 'price' in row and pd.notna(row['price']) else None,
                         'stock_quantity': int(row['stock_quantity']) if 'stock_quantity' in row and pd.notna(row['stock_quantity']) else 0,
+                        'is_default': int(row['is_default']) if 'is_default' in row and pd.notna(row['is_default']) else False,
                         'is_active': int(row['is_active']) if 'is_active' in row and pd.notna(row['is_active']) else False
                     }
                     items.append(sku_item)
@@ -137,14 +138,14 @@ def process_attribute_option_sku():
 process_flat_table('categories', 'categories.csv', ['name', 'image', 'description', 'slug'])
 process_flat_table('subcategories', 'subcategories.csv', ['subcategory_id','category_id', 'name', 'subcategory_slug'])
 process_flat_table('brands', 'brands.csv', ['name', 'description', 'logo_url'])
-process_flat_table('products', 'products.csv', ['name', 'brand_id', 'subcategory_id', 'base_price', 'slug', 'is_featured'])
+process_flat_table('products', 'products.csv', ['name', 'brand_id', 'subcategory_id', 'slug', 'is_featured'])
 process_flat_table('product_contents', 'product_contents.csv', ['product_id', 'description', 'image_url'])
 process_flat_table('product_specs', 'product_specs.csv', ['product_id', 'spec_name', 'spec_value', 'display_order'])
 process_flat_table('attributes', 'attributes.csv', ['name', 'display_type'])
 process_flat_table('attribute_options', 'attribute_options.csv', ['attribute_id', 'value', 'display_order'])
 process_flat_table('promotions', 'promotions.csv', ['sku_code', 'discount_percent', 'start_date', 'end_date'])
 process_flat_table('users', 'users.csv', ['name', 'email', 'password_hash', 'phone_number', 'gender', 'birth_date', 'role', 'is_active', 'avatar_url'])
-process_flat_table('user_address', 'user_address.csv', ['user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'])
+process_flat_table('user_address', 'user_address.csv', ['user_id', 'address', 'ward_commune', 'district', 'province_city'])
 process_flat_table('cart', 'cart.csv', ['user_id', 'session_id'])
 process_flat_table('cart_items', 'cart_items.csv', ['cart_id', 'sku_id', 'quantity', 'selected', 'color', 'warranty_enabled', 'voucher_code'])
 process_flat_table('reviews', 'reviews.csv', ['user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text','status'])
@@ -156,7 +157,7 @@ process_flat_table('payments', 'payments.csv', ['order_id', 'payment_method', 'a
 process_flat_table('shipping', 'shipping.csv', ['order_id', 'carrier', 'tracking_number', 'estimated_delivery', 'status'])
 
 # Xử lý bảng phân cấp
-process_nested_table('skus', 'skus.csv', 'skus', ['sku_code', 'product_id', 'price', 'stock_quantity', 'is_active'])
+process_nested_table('skus', 'skus.csv', 'skus', ['sku_code', 'product_id', 'price', 'stock_quantity', 'is_default', 'is_active'])
 process_nested_table('variant_images', 'images.csv', 'images', ['product_id', 'name', 'sku_code_prefix', 'capacity', 'color', 'image_set', 'image_index', 'is_default', 'sort_order'])
 
 # Xử lý attribute_option_sku

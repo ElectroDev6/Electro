@@ -16,7 +16,6 @@ class Router
     self::$routes['POST'][$uri] = $controllerAction;
   }
 
-  // File: core/Router.php
   public static function dispatch(string $uri, string $method)
   {
     $path = parse_url($uri, PHP_URL_PATH);
@@ -24,14 +23,21 @@ class Router
 
     error_log("Router: Dispatching URI: $uri, Method: $method, Path: $path");
 
+    if (!isset(self::$routes[$method])) {
+      error_log("Router: No routes registered for method $method");
+      return false;
+    }
+
     foreach (self::$routes[$method] as $route => $handler) {
-      // Thay tất cả tham số động (:param) bằng ([^/]+)
-      $pattern = preg_replace('#:[\w]+#', '([^/]+)', $route);
+      // Thay :param thành nhóm đặt tên (?P<param>[^/]+)
+      $pattern = preg_replace('#:([\w]+)#', '(?P<$1>[^/]+)', $route);
       $pattern = '#^' . $pattern . '$#';
-      // error_log("Router: Trying pattern: $pattern for route: $route");
+
       if (preg_match($pattern, $path, $matches)) {
-        array_shift($matches);
         error_log("Router: Matched route: $route, Handler: $handler, Matches: " . json_encode($matches));
+
+        // Xóa match nguyên chuỗi, giữ lại key tên param
+        unset($matches[0]);
 
         [$controller, $action] = explode('@', $handler);
         $namespace = str_starts_with($path, '/admin')
@@ -66,15 +72,18 @@ class Router
           error_log("Router: Raw JSON: $json, Parsed Input: " . json_encode($input));
         }
 
-        $params = ($method === 'GET') ? $matches : array_merge([$input], $matches);
-        error_log("Router: Calling $controllerClass->$action with params: " . json_encode($params));
-        call_user_func_array([$instance, $action], $params);
+        $params = [
+          'query'   => $_GET ?? [],
+          'matches' => $matches,
+          'body'    => $method === 'POST' ? $input : []
+        ];
+
+        call_user_func_array([$instance, $action], [$params]);
         return;
       }
     }
 
     error_log("Router: No route matched for $path");
-    error_log("Router: Dispatching URI: $uri, Method: $method, Path: $path");
     error_log("Router: Registered routes: " . json_encode(self::$routes));
     return false;
   }

@@ -94,17 +94,7 @@
                     <option value="4">Danh mục 4</option>
                 </select>
                 <button type="submit" class="header__search-btn">
-                    <span class="header__search-icon">
-                        <svg width="16" height="16" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#333e48">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <g id="layer1">
-                                    <!-- SVG content here (giả sử bạn đã có) -->
-                                </g>
-                            </g>
-                        </svg>
-                    </span>
+                    <img style="width: 22px;" src="/icons/search-svgrepo-com.svg" alt="">
                 </button>
             </form>
 

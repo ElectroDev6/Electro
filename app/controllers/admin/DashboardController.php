@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Controllers\Admin;
 
 use Core\View;
 use PDO;
+use PDOException;
 
 class DashboardController
 {
@@ -13,7 +15,7 @@ class DashboardController
         $host = 'localhost';
         $db = 'electro_db';
         $user = 'root';
-        $pass = '0971621814duc';
+        $pass = '@Khanhduy23803';
 
         try {
             $this->db = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
@@ -56,7 +58,7 @@ class DashboardController
             ORDER BY date ASC
         ");
         $orderTrendData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         // Đảm bảo có dữ liệu cho 7 ngày gần nhất
         $data['orderTrend'] = $this->fillMissingDates($orderTrendData, 7);
 
@@ -82,7 +84,7 @@ class DashboardController
             ORDER BY date ASC
         ");
         $userGrowthData = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         // Đảm bảo có dữ liệu cho 7 ngày gần nhất
         $data['userGrowth'] = $this->fillMissingDates($userGrowthData, 7);
 
@@ -154,16 +156,16 @@ class DashboardController
     {
         $result = [];
         $dataByDate = [];
-        
+
         // Tạo array với key là date
         foreach ($data as $item) {
             $dataByDate[$item['date']] = $item;
         }
-        
+
         // Tạo dữ liệu cho n ngày gần nhất
         for ($i = $days - 1; $i >= 0; $i--) {
             $date = date('Y-m-d', strtotime("-{$i} days"));
-            
+
             if (isset($dataByDate[$date])) {
                 $result[] = $dataByDate[$date];
             } else {
@@ -176,7 +178,7 @@ class DashboardController
                 ];
             }
         }
-        
+
         return $result;
     }
 
@@ -192,11 +194,11 @@ class DashboardController
             LIMIT 20
         ");
         $payments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         echo "<pre>";
         echo "Raw Payment Data:\n";
         print_r($payments);
-        
+
         // Kiểm tra distinct payment methods
         $stmt = $this->db->query("
             SELECT DISTINCT p.payment_method, COUNT(*) as total_count
@@ -206,10 +208,9 @@ class DashboardController
             GROUP BY p.payment_method
         ");
         $methods = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         echo "\nDistinct Payment Methods:\n";
         print_r($methods);
         echo "</pre>";
     }
 }
-?>

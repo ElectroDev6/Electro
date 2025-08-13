@@ -1,68 +1,38 @@
 [
   {
-    "sku_code": "IP13-128GB-BLACK",
+    "sku_code": "ecovacs-N30-BLACK",
     "discount_percent": 15,
     "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-10T23:59:59"
+    "end_date": "2025-08-15T23:59:59"
   },
   {
     "sku_code": "IP14-128GB-BLACK",
     "discount_percent": 10,
     "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-10T23:59:59"
+    "end_date": "2025-08-15T23:59:59"
   },
   {
-    "sku_code": "IP14PLUS-128GB-BLACK",
+    "sku_code": "DM208-DM208-BLACK",
     "discount_percent": 5,
     "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-10T23:59:59"
+    "end_date": "2025-08-15T23:59:59"
   },
   {
     "sku_code": "IP15-128GB-BLACK",
     "discount_percent": 15,
     "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-11T23:59:59"
+    "end_date": "2025-08-14T23:59:59"
   },
   {
-    "sku_code": "IP15-128GB-WHITE",
-    "discount_percent": 10,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-11T23:59:59"
-  },
-  {
-    "sku_code": "IP15-256GB-BLACK",
+    "sku_code": "4lit-40lit-BLACK",
     "discount_percent": 15,
     "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-11T23:59:59"
+    "end_date": "2025-08-15T23:59:59"
   },
   {
-    "sku_code": "IP15-256GB-WHITE",
-    "discount_percent": 10,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-11T23:59:59"
-  },
-  {
-    "sku_code": "IP15PLUS-128GB-BLACK",
+    "sku_code": "IP13-128GB-BLACK",
     "discount_percent": 15,
     "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-12T23:59:59"
-  },
-  {
-    "sku_code": "IP15PLUS-128GB-WHITE",
-    "discount_percent": 10,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-12T23:59:59"
-  },
-  {
-    "sku_code": "IP15PLUS-256GB-BLACK",
-    "discount_percent": 15,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-12T23:59:59"
-  },
-  {
-    "sku_code": "IP15PLUS-256GB-WHITE",
-    "discount_percent": 10,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-12T23:59:59"
+    "end_date": "2025-08-13T23:59:59"
   }
 ]

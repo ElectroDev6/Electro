@@ -1,11 +1,1 @@
-[
-  {
-    "cart_id": 1,
-    "sku_id": 1,
-    "quantity": 2,
-    "selected": 1,
-    "color": "red",
-    "warranty_enabled": 1,
-    "voucher_code": "abc123"
-  }
-]
+[]

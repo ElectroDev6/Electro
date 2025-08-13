@@ -1,16 +1,1 @@
-[
-  {
-    "order_id": 1,
-    "carrier": "GiaoNhanNhanh",
-    "tracking_number": "GHN123456789",
-    "estimated_delivery": "2025-08-04 18:00:00",
-    "status": "in_transit"
-  },
-  {
-    "order_id": 2,
-    "carrier": "VNPost",
-    "tracking_number": "VN123456789",
-    "estimated_delivery": "2025-08-05 17:30:00",
-    "status": "waiting"
-  }
-]
+[]

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\admin;
 
 use PDO;
@@ -90,7 +91,7 @@ class OrdersModel
             $stmt = $this->pdo->prepare("
                 SELECT 
                     o.*, c.code AS coupon_code, u.name AS username, u.phone_number, u.email,
-                    CONCAT(ua.address_line1, ', ', ua.ward_commune, ', ', ua.district, ', ', ua.province_city) AS full_address,
+                    CONCAT(ua.address, ', ', ua.ward_commune, ', ', ua.district, ', ', ua.province_city) AS full_address,
                     p.payment_method, p.status AS payment_status,
                     GROUP_CONCAT(CONCAT(oi.quantity, ' x ', s.sku_code, ' (@', oi.price, 'đ)') SEPARATOR ', ') AS order_items,
                     COALESCE((SELECT SUM(oi2.quantity * oi2.price) FROM order_items oi2 WHERE oi2.order_id = o.order_id), 0) AS calculated_total
@@ -110,7 +111,7 @@ class OrdersModel
                 LEFT JOIN order_items oi ON o.order_id = oi.order_id
                 LEFT JOIN skus s ON oi.sku_id = s.sku_id
                 WHERE o.order_id = :order_id
-                GROUP BY o.order_id, c.code, u.name, u.phone_number, u.email, ua.address_line1, ua.ward_commune, ua.district, ua.province_city, p.payment_method, p.status
+                GROUP BY o.order_id, c.code, u.name, u.phone_number, u.email, ua.address, ua.ward_commune, ua.district, ua.province_city, p.payment_method, p.status
             ");
             $stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
             $stmt->execute();

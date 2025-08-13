@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\Admin\Users;
 
 use App\Models\admin\UsersModel;
@@ -15,7 +16,7 @@ class UpdateUserController
         $this->model = new UsersModel($pdo);
     }
     public function index()
-    {   
+    {
         $id = $_GET['id'];
         $user = $this->model->getUserById($id);
         View::render('users/update', [
@@ -23,7 +24,7 @@ class UpdateUserController
         ]);
     }
 
-  public function handle()
+    public function handle()
     {
         $user_id = $_POST['user_id'] ?? null;
         if (!$user_id) {
@@ -39,9 +40,9 @@ class UpdateUserController
             'role' => $_POST['role'] ?? '',
             'is_active' => (int)($_POST['is_active'] ?? 0),
         ];
-        
+
         $addressData = [
-            'address_line1' => trim($_POST['address_line1'] ?? '') ?: null,
+            'address' => trim($_POST['address'] ?? '') ?: null,
             'ward_commune' => trim($_POST['ward_commune'] ?? '') ?: null,
             'district' => trim($_POST['district'] ?? '') ?: null,
             'province_city' => trim($_POST['province_city'] ?? '') ?: null,
@@ -120,5 +121,4 @@ class UpdateUserController
         header('Location: /admin/users/detail?id=' . urlencode($user_id) . '&success=' . urlencode('Sửa người dùng thành công'));
         exit;
     }
-
 }

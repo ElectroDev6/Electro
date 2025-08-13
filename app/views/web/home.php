@@ -82,7 +82,7 @@ Trang chủ
     'iphoneProducts' => $iphoneProducts,
     'pcProducts' => $pcProducts,
     'watchProducts' => $watchProducts,
-    'tefalProducts' => $tefalProducts,
+    'airFryerProducts' => $airFryerProducts,
     'massagerProducts' => $massagerProducts,
     'airCoolerProducts' => $airCoolerProducts,
     'vacuumCleanerProducts' => $vacuumCleanerProducts
@@ -100,10 +100,12 @@ Trang chủ
         <div class="tech-news__container">
             <div class="tech-news__main">
                 <div class="news-card news-card--large news-card--microsoft">
-                    <img src="/img/news/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
-                    <div class="news-card__content">
-                        <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
-                    </div>
+                    <a target="_blank" href="https://thanhnien.vn/mang-dial-up-huyen-thoai-cua-aol-dung-hoat-dong-sau-34-nam-18525081109571965.htm">
+                        <img src="/img/news/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                        <div class="news-card__content">
+                            <h3 class="news-card__title">Mạng dial-up huyền thoại của AOL dừng hoạt động sau 34 năm</h3>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="news-card news-card--medium news-card--office">

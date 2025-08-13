@@ -14,22 +14,21 @@ class ProductService
     {
         $this->productModel = new ProductModel($pdo);
         $this->cartService = $cartService;
-        // $this->pdo = $pdo;
     }
 
-    public function getHomeProductsByCategoryId(int $subcategoryId, int $limit = 8): array
+    public function getHomeProductsByCategoryIds(array $subcategoryIds, int $limit): array
     {
         return $this->productModel->getProducts([
-            'subcategory_id' => $subcategoryId,
-            'limit' => 8
+            'subcategory_ids' => $subcategoryIds,
+            'limit' => $limit
         ]);
     }
 
-    public function getSaleProducts(int $limit = 8): array
+    public function getSaleProducts(int $limit): array
     {
         return $this->productModel->getProducts([
             'is_sale' => true,
-            'limit' => 8
+            'limit' => $limit
         ]);
     }
 
@@ -37,21 +36,11 @@ class ProductService
     {
         return $this->productModel->getProducts([
             'is_featured' => true,
-            'limit' => 6
+            'limit' => $limit
         ]);
     }
 
-    public function relatedProducts(int $categoryId, int $excludeProductId, int $limit = 6): array
-    {
-        return $this->productModel->getProducts([
-            'category_id' => $categoryId,
-            'exclude_id'  => $excludeProductId,
-            'limit'       => $limit
-        ]);
-    }
-
-
-    public function getProductService(string $slug): array
+    public function getProductDetail(string $slug): array
     {
         return $this->productModel->getProductDetailModel($slug);
     }
@@ -63,9 +52,14 @@ class ProductService
         error_log("ProductService: Add to cart result: " . json_encode($result));
         return $result;
     }
-    public function getAllProduct()
+
+    public function relatedProducts(int $subcategory_id, int $excludeProductId, int $limit): array
     {
-        return $this->productModel->getAllProducts();
+        return $this->productModel->getProducts([
+            'subcategory_id' => $subcategory_id,
+            'exclude_id'  => $excludeProductId,
+            'limit'       => $limit
+        ]);
     }
 
     public function getFilteredProducts(array $filters = []): array
@@ -88,9 +82,9 @@ class ProductService
         return $this->productModel->getSubcategories($category_id);
     }
 
-    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text, int $rating = null, ?string $user_name = null, ?string $email = null): bool
+    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text,  ?string $user_name = null, ?string $email = null): bool
     {
-        return $this->productModel->addReview($product_id, $user_id, $parent_review_id, $comment_text, $rating, $user_name, $email);
+        return $this->productModel->addReview($product_id, $user_id, $parent_review_id, $comment_text, $user_name, $email);
     }
 
     public function getReviews(int $product_id): array

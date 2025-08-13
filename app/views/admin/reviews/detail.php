@@ -17,20 +17,20 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 <body>
     <!-- <?php
-    echo '<pre>';
-    print_r($review);
-    echo '</pre>';
-    ?> -->
+            echo '<pre>';
+            print_r($review);
+            echo '</pre>';
+            ?> -->
     <?php echo $htmlHeader; ?>
     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
-    <div class="notification notification--success show" id="success-notification">
-        <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
-    </div>
+        <div class="notification notification--success show" id="success-notification">
+            <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
+        </div>
     <?php endif; ?>
     <?php if (isset($_GET['error']) && $_GET['error'] !== ''): ?>
-    <div class="notification notification--error" id="error-notification">
-        <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
-    </div>
+        <div class="notification notification--error" id="error-notification">
+            <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
+        </div>
     <?php endif; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -49,7 +49,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                     <div class="review-detail__user-section">
                         <div class="review-detail__user-info">
                             <div class="review-detail__user-avatar">
-                                <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.jpg'); ?>"
+                                <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.png'); ?>"
                                     alt="Avatar" class="reviews__user-avatar">
                             </div>
                             <div class="review-detail__user-details">
@@ -65,8 +65,8 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                             <div class="review-detail__rating">
                                 <div class="review-detail__stars">
                                     <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <span
-                                        class="review-detail__star <?php echo $i <= $review['rating'] ? 'review-detail__star--filled' : ''; ?>">★</span>
+                                        <span
+                                            class="review-detail__star <?php echo $i <= $review['rating'] ? 'review-detail__star--filled' : ''; ?>">★</span>
                                     <?php endfor; ?>
                                 </div>
                                 <span
@@ -82,14 +82,14 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                             <span class="review-detail__stat-label">Trạng thái</span>
                             <span
                                 class="review-detail__stat-value review-detail__status review-detail__status--<?php echo strtolower(htmlspecialchars($review['status'])); ?>">
-                                <?php 
-                                    $statusText = [
-                                        'pending' => 'Đang chờ xử lý',
-                                        'active' => 'Đã chấp nhận',
-                                        'inactive' => 'Đã từ chối'
-                                    ];
-                                    echo htmlspecialchars($statusText[strtolower($review['status'])] ?? ucfirst($review['status']));
-                                    ?>
+                                <?php
+                                $statusText = [
+                                    'pending' => 'Đang chờ xử lý',
+                                    'active' => 'Đã chấp nhận',
+                                    'inactive' => 'Đã từ chối'
+                                ];
+                                echo htmlspecialchars($statusText[strtolower($review['status'])] ?? ucfirst($review['status']));
+                                ?>
                             </span>
                         </div>
                         <div class="review-detail__stat-item">
@@ -120,10 +120,10 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                         </div>
                         <div class="review-detail__reply-section">
                             <a class="reply-link reply-trigger"
-                                data-target="reply-form-main-<?php echo $review['review_id']?>">
+                                data-target="reply-form-main-<?php echo $review['review_id'] ?>">
                                 Trả lời
                             </a>
-                            <div id="reply-form-main-<?php echo $review['review_id']?>" class="reply-form"
+                            <div id="reply-form-main-<?php echo $review['review_id'] ?>" class="reply-form"
                                 style="display: none;">
                                 <form action="/admin/reviews/reply" method="POST">
                                     <input type="hidden" name="review_id"
@@ -136,7 +136,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                         placeholder="Nhập phản hồi của bạn..." required></textarea>
                                     <div class="reply-form__actions">
                                         <button type="button" class="reply-btn reply-btn--secondary reply-form__cancel"
-                                            data-target="reply-form-main-<?php echo $review['review_id']?>">Hủy</button>
+                                            data-target="reply-form-main-<?php echo $review['review_id'] ?>">Hủy</button>
                                         <button type="submit" class="reply-btn">Gửi phản hồi</button>
                                     </div>
                                 </form>
@@ -146,8 +146,9 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                     <div class="review-detail__review-section">
                         <h2 class="review-detail__section-title">Phản hồi</h2>
                         <?php if (!empty($review['replies'])): ?>
-                        <?php
-                            function displayReplies($replies, $depth = 0, $reviewData = []) {
+                            <?php
+                            function displayReplies($replies, $depth = 0, $reviewData = [])
+                            {
                                 if (empty($replies)) return;
                                 $marginLeft = ($depth === 0) ? 0 : (($depth === 1) ? 10 : 15);
                                 $containerClass = 'review-detail__review-content review-detail__reply';
@@ -156,71 +157,71 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                     $containerStyle .= " border: 0; padding: 0; margin-top: 0; margin-left: 0;";
                                 }
                                 foreach ($replies as $index => $reply): ?>
-                        <div class="<?php echo $containerClass; ?>" style="<?php echo $containerStyle; ?>">
-                            <div class="review-detail__user-info">
-                                <div class="review-detail__user-avatar">
-                                    <img src="<?php echo htmlspecialchars($reply['user_avatar'] ?? '/img/avatar/default-avatar.jpg'); ?>"
-                                        alt="Avatar" class="reviews__user-avatar">
-                                </div>
-                                <div class="review-detail__user-details">
-                                    <h3 class="review-detail__user-name">
-                                        <?php echo htmlspecialchars($reply['user_name'] ?? 'N/A'); ?></h3>
-                                    <p class="review-detail__user-meta">
-                                        Phản hồi vào
-                                        <?php echo date('d/m/Y H:i', strtotime($reply['review_date'] ?? 'now')); ?>
-                                    </p>
-                                </div>
-                            </div>
-                            <p class="review-detail__content--text">
-                                <?php echo htmlspecialchars($reply['comment_text'] ?? 'N/A')?></p>
-                            <?php if (isset($reply['rating']) && !empty($reply['rating'])): ?>
-                            <div class="review-detail__rating" style="margin-top: 5px;">
-                                <div class="review-detail__stars">
-                                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                                    <span
-                                        class="review-detail__star <?php echo $i <= $reply['rating'] ? 'review-detail__star--filled' : ''; ?>">★</span>
-                                    <?php endfor; ?>
-                                </div>
-                                <span
-                                    class="review-detail__rating-text"><?php echo htmlspecialchars($reply['rating']); ?>/5</span>
-                            </div>
-                            <?php endif; ?>
-                            <div class="review-detail__reply-section">
-                                <a class="reply-link reply-trigger"
-                                    data-target="reply-form-<?php echo $reply['review_id']; ?>-<?php echo $depth; ?>">
-                                    Trả lời
-                                </a>
-                                <div id="reply-form-<?php echo $reply['review_id']; ?>-<?php echo $depth; ?>"
-                                    class="reply-form" style="display: none;">
-                                    <form action="/admin/reviews/reply" method="POST">
-                                        <input type="hidden" name="review_id"
-                                            value="<?php echo htmlspecialchars($reviewData['review_id'] ?? ''); ?>">
-                                        <input type="hidden" name="product_id"
-                                            value="<?php echo htmlspecialchars($reviewData['product_id'] ?? ''); ?>">
-                                        <input type="hidden" name="parent_id"
-                                            value="<?php echo htmlspecialchars($reply['review_id'] ?? ''); ?>">
-                                        <input type="hidden" name="reply_depth" value="<?php echo $depth + 1; ?>">
-                                        <textarea name="comment_text" class="reply-form__textarea"
-                                            placeholder="Nhập phản hồi của bạn..." required></textarea>
-                                        <div class="reply-form__actions">
-                                            <button type="button"
-                                                class="reply-btn reply-btn--secondary reply-form__cancel"
-                                                data-target="reply-form-<?php echo $reply['review_id']; ?>-<?php echo $depth; ?>">Hủy</button>
-                                            <button type="submit" class="reply-btn">Gửi phản hồi</button>
+                                    <div class="<?php echo $containerClass; ?>" style="<?php echo $containerStyle; ?>">
+                                        <div class="review-detail__user-info">
+                                            <div class="review-detail__user-avatar">
+                                                <img src="<?php echo htmlspecialchars($reply['user_avatar'] ?? '/img/avatar/default-avatar.png'); ?>"
+                                                    alt="Avatar" class="reviews__user-avatar">
+                                            </div>
+                                            <div class="review-detail__user-details">
+                                                <h3 class="review-detail__user-name">
+                                                    <?php echo htmlspecialchars($reply['user_name'] ?? 'N/A'); ?></h3>
+                                                <p class="review-detail__user-meta">
+                                                    Phản hồi vào
+                                                    <?php echo date('d/m/Y H:i', strtotime($reply['review_date'] ?? 'now')); ?>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <?php if (!empty($reply['replies'])): ?>
-                            <?php displayReplies($reply['replies'], $depth + 1, $reviewData); ?>
-                            <?php endif; ?>
-                        </div>
-                        <?php endforeach;
+                                        <p class="review-detail__content--text">
+                                            <?php echo htmlspecialchars($reply['comment_text'] ?? 'N/A') ?></p>
+                                        <?php if (isset($reply['rating']) && !empty($reply['rating'])): ?>
+                                            <div class="review-detail__rating" style="margin-top: 5px;">
+                                                <div class="review-detail__stars">
+                                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                        <span
+                                                            class="review-detail__star <?php echo $i <= $reply['rating'] ? 'review-detail__star--filled' : ''; ?>">★</span>
+                                                    <?php endfor; ?>
+                                                </div>
+                                                <span
+                                                    class="review-detail__rating-text"><?php echo htmlspecialchars($reply['rating']); ?>/5</span>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="review-detail__reply-section">
+                                            <a class="reply-link reply-trigger"
+                                                data-target="reply-form-<?php echo $reply['review_id']; ?>-<?php echo $depth; ?>">
+                                                Trả lời
+                                            </a>
+                                            <div id="reply-form-<?php echo $reply['review_id']; ?>-<?php echo $depth; ?>"
+                                                class="reply-form" style="display: none;">
+                                                <form action="/admin/reviews/reply" method="POST">
+                                                    <input type="hidden" name="review_id"
+                                                        value="<?php echo htmlspecialchars($reviewData['review_id'] ?? ''); ?>">
+                                                    <input type="hidden" name="product_id"
+                                                        value="<?php echo htmlspecialchars($reviewData['product_id'] ?? ''); ?>">
+                                                    <input type="hidden" name="parent_id"
+                                                        value="<?php echo htmlspecialchars($reply['review_id'] ?? ''); ?>">
+                                                    <input type="hidden" name="reply_depth" value="<?php echo $depth + 1; ?>">
+                                                    <textarea name="comment_text" class="reply-form__textarea"
+                                                        placeholder="Nhập phản hồi của bạn..." required></textarea>
+                                                    <div class="reply-form__actions">
+                                                        <button type="button"
+                                                            class="reply-btn reply-btn--secondary reply-form__cancel"
+                                                            data-target="reply-form-<?php echo $reply['review_id']; ?>-<?php echo $depth; ?>">Hủy</button>
+                                                        <button type="submit" class="reply-btn">Gửi phản hồi</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <?php if (!empty($reply['replies'])): ?>
+                                            <?php displayReplies($reply['replies'], $depth + 1, $reviewData); ?>
+                                        <?php endif; ?>
+                                    </div>
+                            <?php endforeach;
                             }
                             displayReplies($review['replies'], 0, $review);
                             ?>
                         <?php else: ?>
-                        <p>Chưa có phản hồi nào.</p>
+                            <p>Chưa có phản hồi nào.</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -230,61 +231,61 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                         <div class="review-detail__actions">
                             <div class="review-detail__actions-row">
                                 <?php if ($review['status'] === 'pending'): ?>
-                                <!-- Form cho Chấp nhận -->
-                                <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
-                                    <input type="hidden" name="review_id"
-                                        value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                    <input type="hidden" name="status" value="active">
-                                    <button type="submit"
-                                        class="review-detail__action-btn review-detail__action-btn--accept"
-                                        onclick="return confirm('Bạn có chắc chắn chấp nhận đánh giá này không?');">
-                                        <i class="fas fa-check"></i> Chấp nhận
-                                    </button>
-                                </form>
-                                <!-- Form cho Từ chối -->
-                                <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
-                                    <input type="hidden" name="review_id"
-                                        value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                    <input type="hidden" name="status" value="inactive">
-                                    <button type="submit"
-                                        class="review-detail__action-btn review-detail__action-btn--reject"
-                                        onclick="return confirm('Bạn có chắc chắn từ chối đánh giá này không?');">
-                                        <i class="fas fa-times"></i> Từ chối
-                                    </button>
-                                </form>
-                                <!-- Form cho Xóa -->
-                                <form action="/admin/reviews/delete" method="POST" class="review-detail__form">
-                                    <input type="hidden" name="review_id"
-                                        value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                    <button type="submit"
-                                        class="review-detail__action-btn review-detail__action-btn--delete"
-                                        onclick="return confirm('Bạn có chắc muốn xóa đánh giá này?');">
-                                        <i class="fas fa-trash"></i> Xóa
-                                    </button>
-                                </form>
+                                    <!-- Form cho Chấp nhận -->
+                                    <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
+                                        <input type="hidden" name="review_id"
+                                            value="<?php echo htmlspecialchars($review['review_id']); ?>">
+                                        <input type="hidden" name="status" value="active">
+                                        <button type="submit"
+                                            class="review-detail__action-btn review-detail__action-btn--accept"
+                                            onclick="return confirm('Bạn có chắc chắn chấp nhận đánh giá này không?');">
+                                            <i class="fas fa-check"></i> Chấp nhận
+                                        </button>
+                                    </form>
+                                    <!-- Form cho Từ chối -->
+                                    <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
+                                        <input type="hidden" name="review_id"
+                                            value="<?php echo htmlspecialchars($review['review_id']); ?>">
+                                        <input type="hidden" name="status" value="inactive">
+                                        <button type="submit"
+                                            class="review-detail__action-btn review-detail__action-btn--reject"
+                                            onclick="return confirm('Bạn có chắc chắn từ chối đánh giá này không?');">
+                                            <i class="fas fa-times"></i> Từ chối
+                                        </button>
+                                    </form>
+                                    <!-- Form cho Xóa -->
+                                    <form action="/admin/reviews/delete" method="POST" class="review-detail__form">
+                                        <input type="hidden" name="review_id"
+                                            value="<?php echo htmlspecialchars($review['review_id']); ?>">
+                                        <button type="submit"
+                                            class="review-detail__action-btn review-detail__action-btn--delete"
+                                            onclick="return confirm('Bạn có chắc muốn xóa đánh giá này?');">
+                                            <i class="fas fa-trash"></i> Xóa
+                                        </button>
+                                    </form>
                                 <?php elseif ($review['status'] === 'active'): ?>
-                                <!-- Form cho Xóa -->
-                                <form action="/admin/reviews/delete" method="POST" class="review-detail__form">
-                                    <input type="hidden" name="review_id"
-                                        value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                    <button type="submit"
-                                        class="review-detail__action-btn review-detail__action-btn--delete"
-                                        onclick="return confirm('Bạn có chắc muốn xóa đánh giá này?');">
-                                        <i class="fas fa-trash"></i> Xóa
-                                    </button>
-                                </form>
+                                    <!-- Form cho Xóa -->
+                                    <form action="/admin/reviews/delete" method="POST" class="review-detail__form">
+                                        <input type="hidden" name="review_id"
+                                            value="<?php echo htmlspecialchars($review['review_id']); ?>">
+                                        <button type="submit"
+                                            class="review-detail__action-btn review-detail__action-btn--delete"
+                                            onclick="return confirm('Bạn có chắc muốn xóa đánh giá này?');">
+                                            <i class="fas fa-trash"></i> Xóa
+                                        </button>
+                                    </form>
                                 <?php elseif ($review['status'] === 'inactive'): ?>
-                                <!-- Form cho Khôi phục -->
-                                <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
-                                    <input type="hidden" name="review_id"
-                                        value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                    <input type="hidden" name="status" value="pending">
-                                    <button type="submit"
-                                        class="review-detail__action-btn review-detail__action-btn--restore"
-                                        onclick="return confirm('Bạn có chắc muốn khôi phục đánh giá này không?');">
-                                        <i class="fas fa-undo"></i> Khôi phục
-                                    </button>
-                                </form>
+                                    <!-- Form cho Khôi phục -->
+                                    <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
+                                        <input type="hidden" name="review_id"
+                                            value="<?php echo htmlspecialchars($review['review_id']); ?>">
+                                        <input type="hidden" name="status" value="pending">
+                                        <button type="submit"
+                                            class="review-detail__action-btn review-detail__action-btn--restore"
+                                            onclick="return confirm('Bạn có chắc muốn khôi phục đánh giá này không?');">
+                                            <i class="fas fa-undo"></i> Khôi phục
+                                        </button>
+                                    </form>
                                 <?php endif; ?>
                             </div>
                             <div class="review-detail__actions-row">
@@ -331,14 +332,14 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                         <?php echo date('d/m/Y H:i', strtotime($review['updated_at'])); ?> -
                                         <span
                                             class="review-detail__status review-detail__status--<?php echo strtolower(htmlspecialchars($review['status'])); ?>">
-                                            <?php 
-                                        $statusText = [
-                                            'pending' => 'Đang chờ xử lý',
-                                            'active' => 'Đã chấp nhận',
-                                            'inactive' => 'Đã từ chối'
-                                        ];
-                                        echo htmlspecialchars($statusText[strtolower($review['status'])] ?? ucfirst($review['status']));
-                                        ?>
+                                            <?php
+                                            $statusText = [
+                                                'pending' => 'Đang chờ xử lý',
+                                                'active' => 'Đã chấp nhận',
+                                                'inactive' => 'Đã từ chối'
+                                            ];
+                                            echo htmlspecialchars($statusText[strtolower($review['status'])] ?? ucfirst($review['status']));
+                                            ?>
                                         </span>
                                     </span>
                                 </div>

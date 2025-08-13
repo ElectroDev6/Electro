@@ -6,12 +6,14 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chỉnh sửa người dùng - Admin</title>
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
+
 <body>
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
@@ -140,11 +142,11 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
 
                 <!-- Địa chỉ -->
                 <div class="input-group">
-                    <input type="text" name="address_line1" id="address_line1" class="input-group__field" value="<?= htmlspecialchars($user['address_line1'] ?? '') ?>">
-                    <label for="address_line1" class="input-group__label">Địa chỉ (Dòng 1)</label>
+                    <input type="text" name="address" id="address" class="input-group__field" value="<?= htmlspecialchars($user['address'] ?? '') ?>">
+                    <label for="address" class="input-group__label">Địa chỉ (Dòng 1)</label>
                 </div>
-                <?php if (isset($errors['address_line1'])): ?>
-                    <span class="category-detail--error"><?= htmlspecialchars($errors['address_line1']) ?></span>
+                <?php if (isset($errors['address'])): ?>
+                    <span class="category-detail--error"><?= htmlspecialchars($errors['address']) ?></span>
                 <?php endif; ?>
 
                 <div class="input-group">
@@ -274,7 +276,7 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
 
             // Restrict phone number input to numbers only
             const phoneInput = document.getElementById('phone_number');
-            phoneInput.addEventListener('input', function (e) {
+            phoneInput.addEventListener('input', function(e) {
                 this.value = this.value.replace(/[^0-9]/g, '');
                 if (this.value.length > 11) {
                     this.value = this.value.slice(0, 11);
@@ -283,4 +285,5 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
         });
     </script>
 </body>
+
 </html>

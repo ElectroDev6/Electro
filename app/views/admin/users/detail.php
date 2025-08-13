@@ -23,14 +23,14 @@ include dirname(__DIR__) . '/partials/header.php';
     <?php echo $htmlHeader; ?>
     <!-- Notification -->
     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
-    <div class="notification notification--success show" id="success-notification">
-        <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
-    </div>
+        <div class="notification notification--success show" id="success-notification">
+            <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
+        </div>
     <?php endif; ?>
     <?php if (isset($_GET['error']) && $_GET['error'] !== ''): ?>
-    <div class="notification notification--error" id="error-notification">
-        <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
-    </div>
+        <div class="notification notification--error" id="error-notification">
+            <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
+        </div>
     <?php endif; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
@@ -53,12 +53,12 @@ include dirname(__DIR__) . '/partials/header.php';
             <section class="user-detail__profile">
                 <div class="user-detail__avatar">
                     <?php if ($user['avatar_url']): ?>
-                    <img src="<?php echo htmlspecialchars($user['avatar_url']); ?>" alt="Avatar"
-                        class="user-detail__avatar-image">
+                        <img src="<?php echo htmlspecialchars($user['avatar_url']); ?>" alt="Avatar"
+                            class="user-detail__avatar-image">
                     <?php else: ?>
-                    <span class="user-detail__avatar-text">
-                        <?php echo strtoupper(substr($user['name'] ?? 'U', 0, 1)); ?>
-                    </span>
+                        <span class="user-detail__avatar-text">
+                            <?php echo strtoupper(substr($user['name'] ?? 'U', 0, 1)); ?>
+                        </span>
                     <?php endif; ?>
                 </div>
                 <div class="user-detail__profile-info">
@@ -110,54 +110,54 @@ include dirname(__DIR__) . '/partials/header.php';
                 <section class="user-detail__section">
                     <h3 class="user-detail__section-title">Thông tin địa chỉ</h3>
                     <div class="user-detail__info-grid">
-                        <?php 
+                        <?php
                         // Kiểm tra xem có địa chỉ không
-                        $hasAddress = !empty($user['address_line1']) || !empty($user['ward_commune']) || 
-                                    !empty($user['district']) || !empty($user['province_city']);
-                        
+                        $hasAddress = !empty($user['address']) || !empty($user['ward_commune']) ||
+                            !empty($user['district']) || !empty($user['province_city']);
+
                         if ($hasAddress): ?>
-                        <div class="user-detail__info-item user-detail__info-item--full">
-                            <label class="user-detail__label">Địa chỉ đầy đủ:</label>
-                            <span class="user-detail__value">
-                                <?php 
+                            <div class="user-detail__info-item user-detail__info-item--full">
+                                <label class="user-detail__label">Địa chỉ đầy đủ:</label>
+                                <span class="user-detail__value">
+                                    <?php
                                     $addressParts = array_filter([
-                                        $user['address_line1'] ?? '',
+                                        $user['address'] ?? '',
                                         $user['ward_commune'] ?? '',
                                         $user['district'] ?? '',
                                         $user['province_city'] ?? ''
                                     ]);
                                     echo htmlspecialchars(implode(', ', $addressParts));
                                     ?>
-                            </span>
-                        </div>
+                                </span>
+                            </div>
 
-                        <div class="user-detail__info-item">
-                            <label class="user-detail__label">Địa chỉ cụ thể:</label>
-                            <span
-                                class="user-detail__value"><?php echo htmlspecialchars($user['address_line1'] ?? 'Không có'); ?></span>
-                        </div>
-                        <div class="user-detail__info-item">
-                            <label class="user-detail__label">Phường/Xã:</label>
-                            <span
-                                class="user-detail__value"><?php echo htmlspecialchars($user['ward_commune'] ?? 'Không có'); ?></span>
-                        </div>
-                        <div class="user-detail__info-item">
-                            <label class="user-detail__label">Quận/Huyện:</label>
-                            <span
-                                class="user-detail__value"><?php echo htmlspecialchars($user['district'] ?? 'Không có'); ?></span>
-                        </div>
-                        <div class="user-detail__info-item">
-                            <label class="user-detail__label">Tỉnh/Thành phố:</label>
-                            <span
-                                class="user-detail__value"><?php echo htmlspecialchars($user['province_city'] ?? 'Không có'); ?></span>
-                        </div>
+                            <div class="user-detail__info-item">
+                                <label class="user-detail__label">Địa chỉ cụ thể:</label>
+                                <span
+                                    class="user-detail__value"><?php echo htmlspecialchars($user['address'] ?? 'Không có'); ?></span>
+                            </div>
+                            <div class="user-detail__info-item">
+                                <label class="user-detail__label">Phường/Xã:</label>
+                                <span
+                                    class="user-detail__value"><?php echo htmlspecialchars($user['ward_commune'] ?? 'Không có'); ?></span>
+                            </div>
+                            <div class="user-detail__info-item">
+                                <label class="user-detail__label">Quận/Huyện:</label>
+                                <span
+                                    class="user-detail__value"><?php echo htmlspecialchars($user['district'] ?? 'Không có'); ?></span>
+                            </div>
+                            <div class="user-detail__info-item">
+                                <label class="user-detail__label">Tỉnh/Thành phố:</label>
+                                <span
+                                    class="user-detail__value"><?php echo htmlspecialchars($user['province_city'] ?? 'Không có'); ?></span>
+                            </div>
                         <?php else: ?>
-                        <div class="user-detail__info-item user-detail__info-item--full">
-                            <label class="user-detail__label">Địa chỉ:</label>
-                            <span class="user-detail__value user-detail__value--empty">
-                                Địa chỉ người dùng chưa cập nhật
-                            </span>
-                        </div>
+                            <div class="user-detail__info-item user-detail__info-item--full">
+                                <label class="user-detail__label">Địa chỉ:</label>
+                                <span class="user-detail__value user-detail__value--empty">
+                                    Địa chỉ người dùng chưa cập nhật
+                                </span>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </section>

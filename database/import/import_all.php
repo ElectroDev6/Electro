@@ -37,12 +37,20 @@ function importJson($table, $columns, $jsonFile, &$skuCodeMap = [])
             foreach ($records as $row) {
                 $values = [];
                 foreach ($columns as $col) {
+
+                    $val = $row[$col] ?? null;
+
+                    // Chuyển 'NULL' hoặc 'null' thành null PHP thực sự
+                    if (is_string($val) && strtoupper($val) === 'NULL') {
+                        $val = null;
+                    }
+
                     if ($col === 'sku_id' && isset($row['sku_code'])) {
                         $values[":$col"] = isset($newSkuCodeMap[$row['sku_code']]) ? $newSkuCodeMap[$row['sku_code']] : null;
                     } elseif ($col === 'product_id' && !isset($row['product_id']) && isset($item['product_id'])) {
                         $values[":$col"] = $item['product_id'];
                     } else {
-                        $values[":$col"] = $row[$col] ?? null;
+                        $values[":$col"] = $val; // dùng $val đã xử lý
                     }
                 }
                 try {
@@ -99,14 +107,14 @@ $skuCodeMap = [];
 importJson('categories', ['name', 'image', 'description', 'slug'], 'categories.json');
 importJson('subcategories', ['subcategory_id', 'category_id', 'name', 'subcategory_slug'], 'subcategories.json');
 importJson('brands', ['name', 'description', 'logo_url'], 'brands.json');
-importJson('products', ['name', 'brand_id', 'subcategory_id', 'base_price', 'slug', 'is_featured'], 'products.json');
+importJson('products', ['name', 'brand_id', 'subcategory_id', 'slug', 'is_featured'], 'products.json');
 importJson('product_contents', ['product_id', 'description', 'image_url'], 'product_contents.json');
 importJson('product_specs', ['product_id', 'spec_name', 'spec_value', 'display_order'], 'product_specs.json');
 importJson('attributes', ['name', 'display_type'], 'attributes.json');
 importJson('attribute_options', ['attribute_option_id', 'attribute_id', 'value', 'display_order'], 'attribute_options.json');
 
 // Nhập skus và lấy ánh xạ
-$skuCodeMap = importJson('skus', ['sku_code', 'product_id', 'price', 'stock_quantity', 'is_active'], 'skus.json', $skuCodeMap);
+$skuCodeMap = importJson('skus', ['sku_code', 'product_id', 'price', 'stock_quantity', 'is_default', 'is_active'], 'skus.json', $skuCodeMap);
 
 // Nhập các bảng phụ thuộc
 $skuCodeMap = importJson('attribute_option_sku', ['sku_id', 'attribute_option_id'], 'attribute_option_sku.json', $skuCodeMap);
@@ -115,7 +123,7 @@ $skuCodeMap = importJson('promotions', ['sku_code', 'discount_percent', 'start_d
 
 // Nhập các bảng còn lại
 importJson('users', ['name', 'email', 'password_hash', 'phone_number', 'gender', 'birth_date', 'role', 'is_active', 'avatar_url'], 'users.json');
-importJson('user_address', ['user_id', 'address_line1', 'ward_commune', 'district', 'province_city', 'is_default'], 'user_address.json');
+importJson('user_address', ['user_id', 'address', 'ward_commune', 'district', 'province_city'], 'user_address.json');
 importJson('cart', ['user_id', 'session_id'], 'cart.json');
 importJson('cart_items', ['cart_id', 'sku_id', 'quantity', 'selected', 'color', 'warranty_enabled', 'voucher_code'], 'cart_items.json');
 importJson('reviews', ['user_id', 'product_id', 'parent_review_id', 'rating', 'comment_text', 'status'], 'reviews.json');

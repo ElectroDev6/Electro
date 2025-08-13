@@ -283,8 +283,6 @@ Chi tiết sản phẩm
                         </div>
                     </div>
                 </div>
-
-
                 <!-- Bình luận Tab -->
                 <div class="product-detail__tab-panel" id="comments-panel">
                     <div class="product-detail__comments">
@@ -301,7 +299,7 @@ Chi tiết sản phẩm
                                         <input type="email" id="comment-email" name="email" required />
                                     </div>
                                 <?php endif; ?>
-                                <div class="product-detail__form-group">
+                                <!-- <div class="product-detail__form-group">
                                     <label for="comment-rating">Đánh giá</label>
                                     <select id="comment-rating" name="rating">
                                         <option value="">Chọn số sao</option>
@@ -311,7 +309,7 @@ Chi tiết sản phẩm
                                         <option value="4">4 sao</option>
                                         <option value="5">5 sao</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="product-detail__form-group">
                                     <label for="comment-content">Nội dung bình luận *</label>
                                     <textarea id="comment-content" name="comment_text" rows="4" required></textarea>
@@ -329,12 +327,6 @@ Chi tiết sản phẩm
                                                 <h4 class="product-detail__reviewer-name">
                                                     <?= htmlspecialchars($review['user_name']) ?>
                                                 </h4>
-                                                <?php if ($review['rating']): ?>
-                                                    <div class="product-detail__review-rating">
-                                                        <?= str_repeat('★', (int)$review['rating']) ?>
-                                                        <?= str_repeat('☆', 5 - (int)$review['rating']) ?>
-                                                    </div>
-                                                <?php endif; ?>
                                                 <span class="product-detail__review-date">
                                                     <?= date('d/m/Y', strtotime($review['review_date'])) ?>
                                                 </span>
@@ -372,137 +364,133 @@ Chi tiết sản phẩm
                         </div>
                     </div>
                 </div>
-
             </div>
-            <div class="product-detail__comments-list">
-                <!-- FAQ Section -->
-                <div class="product-detail__faq-section">
-                    <h2 class="product-detail__faq-title">Câu hỏi thường gặp</h2>
-                    <div class="product-detail__faq-list">
-                        <div class="product-detail__faq-item">
-                            <div class="product-detail__faq-question">
-                                <span class="product-detail__faq-question-text">Sản phẩm này có bảo hành bao lâu?</span>
-                                <span class="product-detail__faq-toggle">+</span>
-                            </div>
-                            <div class="product-detail__faq-answer">
-                                <p>Sản phẩm được bảo hành chính hãng 24 tháng.</p>
-                            </div>
-                        </div>
+        </div>
 
-                        <div class="product-detail__faq-item">
-                            <div class="product-detail__faq-question">
-                                <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ tiếng Việt không?</span>
-                                <span class="product-detail__faq-toggle">+</span>
+        <!-- Product Reviews -->
+        <div class="product-detail__reviews-section">
+            <h2 class="product-detail__reviews-title">Đánh giá sản phẩm</h2>
+            <div class="product-detail__review-summary">
+                <div class="product-detail__rating-overview">
+                    <span class="product-detail__rating-score">4 trên 5</span>
+                    <div class="product-detail__rating-bars">
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">5 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 60%"></div>
                             </div>
-                            <div class="product-detail__faq-answer">
-                                <p>Có, sản phẩm hỗ trợ đầy đủ tiếng Việt trong menu và các ứng dụng.</p>
-                            </div>
+                            <span class="product-detail__rating-count">3 đánh giá</span>
                         </div>
-
-                        <div class="product-detail__faq-item">
-                            <div class="product-detail__faq-question">
-                                <span class="product-detail__faq-question-text">Tivi này có kết nối internet không?</span>
-                                <span class="product-detail__faq-toggle">+</span>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">4 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 40%"></div>
                             </div>
-                            <div class="product-detail__faq-answer">
-                                <p>Có, sản phẩm hỗ trợ kết nối WiFi và cổng LAN.</p>
-                            </div>
+                            <span class="product-detail__rating-count">2 đánh giá</span>
                         </div>
-
-                        <div class="product-detail__faq-item">
-                            <div class="product-detail__faq-question">
-                                <span class="product-detail__faq-question-text">Sản phẩm này có remote điều khiển không?</span>
-                                <span class="product-detail__faq-toggle">+</span>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">3 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 0%"></div>
                             </div>
-                            <div class="product-detail__faq-answer">
-                                <p>Có, sản phẩm đi kèm remote điều khiển thông minh.</p>
-                            </div>
+                            <span class="product-detail__rating-count">0 đánh giá</span>
                         </div>
-
-                        <div class="product-detail__faq-item">
-                            <div class="product-detail__faq-question">
-                                <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ lắp đặt không?</span>
-                                <span class="product-detail__faq-toggle">+</span>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">2 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 0%"></div>
                             </div>
-                            <div class="product-detail__faq-answer">
-                                <p>Có, chúng tôi hỗ trợ lắp đặt miễn phí tại nhà.</p>
+                            <span class="product-detail__rating-count">0 đánh giá</span>
+                        </div>
+                        <div class="product-detail__rating-bar">
+                            <span class="product-detail__rating-label">1 sao</span>
+                            <div class="product-detail__bar">
+                                <div class="product-detail__fill" style="width: 0%"></div>
                             </div>
+                            <span class="product-detail__rating-count">0 đánh giá</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Product Reviews -->
-                <div class="product-detail__reviews-section">
-                    <h2 class="product-detail__reviews-title">Đánh giá sản phẩm</h2>
-                    <div class="product-detail__review-summary">
-                        <div class="product-detail__rating-overview">
-                            <span class="product-detail__rating-score">4 trên 5</span>
-                            <div class="product-detail__rating-bars">
-                                <div class="product-detail__rating-bar">
-                                    <span class="product-detail__rating-label">5 sao</span>
-                                    <div class="product-detail__bar">
-                                        <div class="product-detail__fill" style="width: 60%"></div>
-                                    </div>
-                                    <span class="product-detail__rating-count">3 đánh giá</span>
-                                </div>
-                                <div class="product-detail__rating-bar">
-                                    <span class="product-detail__rating-label">4 sao</span>
-                                    <div class="product-detail__bar">
-                                        <div class="product-detail__fill" style="width: 40%"></div>
-                                    </div>
-                                    <span class="product-detail__rating-count">2 đánh giá</span>
-                                </div>
-                                <div class="product-detail__rating-bar">
-                                    <span class="product-detail__rating-label">3 sao</span>
-                                    <div class="product-detail__bar">
-                                        <div class="product-detail__fill" style="width: 0%"></div>
-                                    </div>
-                                    <span class="product-detail__rating-count">0 đánh giá</span>
-                                </div>
-                                <div class="product-detail__rating-bar">
-                                    <span class="product-detail__rating-label">2 sao</span>
-                                    <div class="product-detail__bar">
-                                        <div class="product-detail__fill" style="width: 0%"></div>
-                                    </div>
-                                    <span class="product-detail__rating-count">0 đánh giá</span>
-                                </div>
-                                <div class="product-detail__rating-bar">
-                                    <span class="product-detail__rating-label">1 sao</span>
-                                    <div class="product-detail__bar">
-                                        <div class="product-detail__fill" style="width: 0%"></div>
-                                    </div>
-                                    <span class="product-detail__rating-count">0 đánh giá</span>
-                                </div>
-                            </div>
-                        </div>
+            </div>
+            <div class="product-detail__review-item">
+                <div class="product-detail__reviewer-info">
+                    <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+                    <div class="product-detail__reviewer-details">
+                        <h4 class="product-detail__reviewer-name">Phạm Thị D</h4>
+                        <div class="product-detail__review-rating">★★★★☆</div>
+                        <span class="product-detail__review-date">2 tuần trước</span>
                     </div>
-                    <div class="product-detail__review-item">
-                        <div class="product-detail__reviewer-info">
-                            <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
-                            <div class="product-detail__reviewer-details">
-                                <h4 class="product-detail__reviewer-name">Phạm Thị D</h4>
-                                <div class="product-detail__review-rating">★★★★☆</div>
-                                <span class="product-detail__review-date">2 tuần trước</span>
-                            </div>
-                        </div>
-                        <div class="product-detail__review-content">
-                            <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn shop!</p>
-                            <div class="product-detail__review-images">
-                                <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                                <img src="/img/reviews/review-1.jpg" alt="Review image" />
-                            </div>
-                        </div>
+                </div>
+                <div class="product-detail__review-content">
+                    <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn shop!</p>
+                    <div class="product-detail__review-images">
+                        <img src="/img/reviews/review-1.jpg" alt="Review image" />
+                        <img src="/img/reviews/review-1.jpg" alt="Review image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-detail__load-more">
+            <button class="product-detail__btn-load-more">Xem thêm đánh giá</button>
+        </div>
+        <!-- FAQ Section -->
+        <div class="product-detail__faq-section">
+            <h2 class="product-detail__faq-title">Câu hỏi thường gặp</h2>
+            <div class="product-detail__faq-list">
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có bảo hành bao lâu?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Sản phẩm được bảo hành chính hãng 24 tháng.</p>
                     </div>
                 </div>
 
-                <div class="product-detail__load-more">
-                    <button class="product-detail__btn-load-more">Xem thêm đánh giá</button>
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ tiếng Việt không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, sản phẩm hỗ trợ đầy đủ tiếng Việt trong menu và các ứng dụng.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Tivi này có kết nối internet không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, sản phẩm hỗ trợ kết nối WiFi và cổng LAN.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có remote điều khiển không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, sản phẩm đi kèm remote điều khiển thông minh.</p>
+                    </div>
+                </div>
+
+                <div class="product-detail__faq-item">
+                    <div class="product-detail__faq-question">
+                        <span class="product-detail__faq-question-text">Sản phẩm này có hỗ trợ lắp đặt không?</span>
+                        <span class="product-detail__faq-toggle">+</span>
+                    </div>
+                    <div class="product-detail__faq-answer">
+                        <p>Có, chúng tôi hỗ trợ lắp đặt miễn phí tại nhà.</p>
+                    </div>
                 </div>
             </div>
-            <!-- Related Products -->
-            <div class="product-detail__related-products">
-                <?php View::partial('partials.related-container', ['relatedProducts' => $relatedProducts]); ?>
-            </div>
+        </div>
+        <!-- Related Products -->
+        <div class="product-detail__related-products">
+            <?php View::partial('partials.related-container', ['relatedProducts' => $relatedProducts]); ?>
         </div>
         <script>
             window.productData = {
@@ -530,7 +518,6 @@ Chi tiết sản phẩm
                             ) ?>
             };
         </script>
-
 
         <script>
             document.getElementById('comment-form').addEventListener('submit', async (e) => {

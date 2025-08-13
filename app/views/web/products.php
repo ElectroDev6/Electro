@@ -29,8 +29,8 @@ Sản phẩm
             <h3 class="use-needs__title">Nhu cầu sử dụng</h3>
             <div class="use-needs__list">
                 <?php foreach ($subcategories as $sub): ?>
-                    <a href="/products/<?php echo htmlspecialchars($categorySlug); ?>/<?php echo htmlspecialchars($sub['subcategory_slug']); ?>" class="use-needs__item" style="background: linear-gradient(135deg, #<?php echo dechex(rand(0xcccccc, 0xffffff)); ?>, #<?php echo dechex(rand(0xaaaaaa, 0xeeeeee)); ?>);">
-                        <img src="/img/products/thumbnails/<?php echo htmlspecialchars($sub['subcategory_slug']); ?>/thumbnail.webp" alt="<?php echo htmlspecialchars($sub['name']); ?>">
+                    <a href="/products/<?php echo htmlspecialchars($categorySlug); ?>/<?php echo htmlspecialchars($sub['subcategory_slug']); ?>" class="use-needs__item" style="background: #fff; ?>">
+                        <img src="/img/brands/<?php echo htmlspecialchars($sub['subcategory_slug']); ?>.webp" alt="<?php echo htmlspecialchars($sub['name']); ?>">
                         <p><?php echo htmlspecialchars($sub['name']); ?></p>
                     </a>
                 <?php endforeach; ?>

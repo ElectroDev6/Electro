@@ -752,7 +752,7 @@
     "images": [
       {
         "sku_code": "4lit-40lit-BLACK",
-        "image_set": "tefal/tefal-ey505d15-den-0.webp",
+        "image_set": "airFryer/tefal-ey505d15-den-0.webp",
         "is_default": 1,
         "sort_order": 1
       }
@@ -763,7 +763,7 @@
     "images": [
       {
         "sku_code": "4lit-41lit-BLACK",
-        "image_set": "tefal/tefal-ey505d11-den-0.webp",
+        "image_set": "airFryer/tefal-ey505d11-den-0.webp",
         "is_default": 1,
         "sort_order": 1
       }
@@ -774,7 +774,7 @@
     "images": [
       {
         "sku_code": "4lit-44lit-BLACK",
-        "image_set": "tefal/tefal-ey401d12-den-0.webp",
+        "image_set": "airFryer/tefal-ey401d12-den-0.webp",
         "is_default": 1,
         "sort_order": 1
       }
@@ -785,7 +785,7 @@
     "images": [
       {
         "sku_code": "4lit-24lit-BLACK",
-        "image_set": "tefal/tefal-ey201d13-den-0.webp",
+        "image_set": "airFryer/tefal-ey201d13-den-0.webp",
         "is_default": 1,
         "sort_order": 1
       }
@@ -796,7 +796,7 @@
     "images": [
       {
         "sku_code": "75l-75l-BLACK",
-        "image_set": "tefal/tefal-af75h12-den-0.webp",
+        "image_set": "airFryer/tefal-af75h12-den-0.webp",
         "is_default": 1,
         "sort_order": 1
       }

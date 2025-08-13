@@ -6,6 +6,10 @@
     color: #666;
   }
 
+  &__faq-list {
+    padding: 0 2rem;
+  }
+
   &__breadcrumb-item {
     text-decoration: none;
     color: #333;
@@ -534,6 +538,7 @@
 
     .product-detail__tabs-content {
       padding: 2rem;
+      min-height: 20rem;
       .product-detail__tab-panel {
         display: none;
         animation: fadeIn 0.3s ease-in-out;
@@ -785,6 +790,7 @@
   }
 
   &__faq-title {
+    padding: 0 2rem;
     font-size: 24px;
     margin-bottom: 20px;
     padding-bottom: 10px;
@@ -792,7 +798,7 @@
   }
 
   &__faq-list {
-    // Container for FAQ items
+    padding: 0 2rem;
   }
 
   &__faq-item {
@@ -857,6 +863,7 @@
   }
 
   &__reviews-title {
+    padding: 0 2rem;
     font-size: 24px;
     margin-bottom: 20px;
     padding-bottom: 10px;
