@@ -44,9 +44,10 @@ class ProfileModel
                 name = :name, 
                 phone_number = :phone_number, 
                 email = :email, 
-                gender = :gender, 
+                gender = :gender,
+                dob_day = :dob_day,
                 dob_month = :dob_month, 
-                dob_year = :dob_year,
+                dob_year = :dob_year
                 WHERE user_id = :user_id";
 
             $stmt = $this->pdo->prepare($sql);
@@ -56,12 +57,47 @@ class ProfileModel
                 ':phone_number' => $data['phone_number'],
                 ':email' => $data['email'],
                 ':gender' => $data['gender'],
+                ':dob_day' => $data['dob_day'],
                 ':dob_month' => $data['dob_month'],
                 ':dob_year' => $data['dob_year'],
                 ':user_id' => $userId,
             ]);
         } catch (\PDOException $e) {
             error_log("ProfileModel updateUserProfile error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateUserAvatar(int $userId, array $file): bool
+    {
+        try {
+            // Kiểm tra file upload
+            if (!isset($file['avatar']) || $file['avatar']['error'] !== UPLOAD_ERR_OK) {
+                return false;
+            }
+
+            $fileTmp = $file['avatar']['tmp_name'];
+            $fileName = basename($file['avatar']['name']);
+
+            // Thư mục lưu ảnh
+            $uploadDir = 'img/avatars/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+
+            $targetPath = $uploadDir . $fileName;
+
+            if (!move_uploaded_file($fileTmp, $targetPath)) {
+                return false;
+            }
+
+            // Cập nhật database
+            $sql = "UPDATE users SET avatar_url = :avatar_url WHERE user_id = :user_id";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([
+                ':avatar_url' => 'img/avatars/' . $fileName,
+                ':user_id' => $userId
+            ]);
+        } catch (\PDOException $e) {
+            error_log("ProfileModel updateUserAvatar error: " . $e->getMessage());
             return false;
         }
     }

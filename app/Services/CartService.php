@@ -10,7 +10,7 @@ class CartService
     private $cartModel;
     private $productService;
 
-    public function __construct(\PDO $pdo, ?ProductService $productService = null)
+    public function __construct(PDO $pdo, ?ProductService $productService = null)
     {
         $this->cartModel = new CartModel($pdo);
         $this->productService = $productService;
@@ -40,17 +40,7 @@ class CartService
             return ['products' => [], 'summary' => ['total_price' => 0, 'total_discount' => 0, 'shipping_fee' => 0, 'final_total' => 0, 'voucher_code' => '']];
         }
 
-        $pdo = $this->cartModel->getPdo();
-        $stmt = $pdo->prepare("
-            SELECT ci.cart_item_id, ci.cart_id, ci.sku_id, ci.quantity, ci.selected, ci.color, ci.warranty_enabled, ci.voucher_code, ci.image_url,
-                   s.price, p.name
-            FROM cart_items ci
-            JOIN skus s ON ci.sku_id = s.sku_id
-            JOIN products p ON s.product_id = p.product_id
-            WHERE ci.cart_id = :cart_id
-        ");
-        $stmt->execute([':cart_id' => $cartId]);
-        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $items = $this->cartModel->fetchCartItems($cartId);
         error_log("CartService: Fetched items: " . print_r($items, true));
 
         $products = [];
@@ -61,8 +51,8 @@ class CartService
 
         foreach ($items as $item) {
             $warrantyPrice = $item['warranty_enabled'] ? ($item['price'] * 0.1) : 0;
-            $colors = $this->getAvailableColors($item['sku_id']);
-            $imageUrl = $item['image_url'] ?: $this->getImageForVariant($item['sku_id'], $item['color']);
+            $colors = $this->cartModel->getAvailableColors($item['sku_id']);
+            $imageUrl = $item['image_url'] ?: $this->cartModel->getImageForVariant($item['sku_id'], $item['color']);
             $subtotal = $item['price'] * $item['quantity'] + $warrantyPrice;
             if ($item['selected']) {
                 $totalPrice += $subtotal;
@@ -87,7 +77,7 @@ class CartService
         }
 
         if ($voucherCode) {
-            $totalDiscount = $this->calculateVoucherDiscount($totalPrice, $voucherCode);
+            $totalDiscount = $this->cartModel->calculateVoucherDiscount($totalPrice, $voucherCode);
         }
 
         return [
@@ -100,115 +90,6 @@ class CartService
                 'voucher_code' => $voucherCode
             ]
         ];
-    }
-
-    private function getAvailableColors($skuId)
-    {
-        $pdo = $this->cartModel->getPdo();
-        $stmt = $pdo->prepare("
-            SELECT DISTINCT ao.value
-            FROM attribute_options ao
-            JOIN attribute_option_sku aos ON ao.attribute_option_id = aos.attribute_option_id
-            JOIN attributes a ON ao.attribute_id = a.attribute_id
-            JOIN skus s ON aos.sku_id = s.sku_id
-            WHERE s.product_id = (SELECT product_id FROM skus WHERE sku_id = :sku_id)
-            AND a.name = 'Color'
-        ");
-        $stmt->execute([':sku_id' => $skuId]);
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
-    }
-
-    private function getImageForVariant($skuId, $color)
-    {
-        $pdo = $this->cartModel->getPdo();
-        // Ưu tiên lấy ảnh mặc định của sku_id
-        $stmt = $pdo->prepare("
-            SELECT image_set
-            FROM variant_images
-            WHERE sku_id = :sku_id AND is_default = TRUE
-            LIMIT 1
-        ");
-        $stmt->execute([':sku_id' => $skuId]);
-        $image = $stmt->fetchColumn();
-
-        if ($image) {
-            return "$image";
-        }
-
-        // Fallback lấy ảnh từ sku khác cùng màu
-        if ($color) {
-            $stmt = $pdo->prepare("
-                SELECT vi.image_set
-                FROM variant_images vi
-                JOIN skus s ON vi.sku_id = s.sku_id
-                JOIN attribute_option_sku aos ON s.sku_id = aos.sku_id
-                JOIN attribute_options ao ON aos.attribute_option_id = ao.attribute_option_id
-                JOIN attributes a ON ao.attribute_id = a.attribute_id
-                WHERE s.product_id = (SELECT product_id FROM skus WHERE sku_id = :sku_id)
-                AND a.name = 'Color' AND LOWER(ao.value) = LOWER(:color)
-                AND vi.is_default = TRUE
-                LIMIT 1
-            ");
-            $stmt->execute([':sku_id' => $skuId, ':color' => $color]);
-            $image = $stmt->fetchColumn();
-            if ($image) {
-                return "$image";
-            }
-        }
-
-        // Dùng màu mặc định nếu color rỗng
-        $stmt = $pdo->prepare("
-            SELECT DISTINCT ao.value
-            FROM attribute_options ao
-            JOIN attribute_option_sku aos ON ao.attribute_option_id = aos.attribute_option_id
-            JOIN attributes a ON ao.attribute_id = a.attribute_id
-            JOIN skus s ON aos.sku_id = s.sku_id
-            WHERE s.product_id = (SELECT product_id FROM skus WHERE sku_id = :sku_id)
-            AND a.name = 'Color'
-            LIMIT 1
-        ");
-        $stmt->execute([':sku_id' => $skuId]);
-        $defaultColor = $stmt->fetchColumn();
-        if ($defaultColor) {
-            $stmt = $pdo->prepare("
-                SELECT vi.image_set
-                FROM variant_images vi
-                JOIN skus s ON vi.sku_id = s.sku_id
-                JOIN attribute_option_sku aos ON s.sku_id = aos.sku_id
-                JOIN attribute_options ao ON aos.attribute_option_id = ao.attribute_option_id
-                JOIN attributes a ON ao.attribute_id = a.attribute_id
-                WHERE s.product_id = (SELECT product_id FROM skus WHERE sku_id = :sku_id)
-                AND a.name = 'Color' AND LOWER(ao.value) = LOWER(:color)
-                AND vi.is_default = TRUE
-                LIMIT 1
-            ");
-            $stmt->execute([':sku_id' => $skuId, ':color' => $defaultColor]);
-            $image = $stmt->fetchColumn();
-            if ($image) {
-                return "$image";
-            }
-        }
-
-        return '/img/placeholder.jpg';
-    }
-
-    private function calculateVoucherDiscount($totalPrice, $voucherCode)
-    {
-        $pdo = $this->cartModel->getPdo();
-        $stmt = $pdo->prepare("
-            SELECT discount_percent
-            FROM coupons
-            WHERE code = :code AND is_active = TRUE
-            AND start_date <= NOW() AND (expires_at IS NULL OR expires_at > NOW())
-            LIMIT 1
-        ");
-        $stmt->execute([':code' => $voucherCode]);
-        $coupon = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($coupon) {
-            return $totalPrice * ($coupon['discount_percent'] / 100);
-        }
-        return 0;
     }
 
     public function updateSelectAll($userId, $sessionId, $selectAll)
@@ -231,7 +112,7 @@ class CartService
     {
         $cartId = $this->cartModel->getCartId($userId, $sessionId);
         if ($cartId) {
-            $imageUrl = $this->getImageForVariant($skuId, $color);
+            $imageUrl = $this->cartModel->getImageForVariant($skuId, $color);
             $this->cartModel->updateProductColor($cartId, $skuId, $color, $imageUrl);
         }
     }
@@ -264,20 +145,7 @@ class CartService
     {
         $cartId = $this->cartModel->getCartId($userId, $sessionId);
         if ($cartId) {
-            $pdo = $this->cartModel->getPdo();
-            $stmt = $pdo->prepare("
-                SELECT coupon_id
-                FROM coupons
-                WHERE code = :code AND is_active = TRUE
-                AND start_date <= NOW() AND (expires_at IS NULL OR expires_at > NOW())
-                LIMIT 1
-            ");
-            $stmt->execute([':code' => $voucherCode]);
-            if ($stmt->fetch()) {
-                $this->cartModel->applyVoucher($cartId, $voucherCode);
-                return ['success' => true, 'message' => 'Voucher applied successfully.'];
-            }
-            return ['success' => false, 'message' => 'Invalid or expired voucher code.'];
+            return $this->cartModel->applyVoucher($cartId, $voucherCode);
         }
         return ['success' => false, 'message' => 'Failed to apply voucher.'];
     }

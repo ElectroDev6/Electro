@@ -140,45 +140,178 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
                     <?php endif; ?>
                 </div>
 
-                <!-- Địa chỉ -->
-                <div class="input-group">
-                    <input type="text" name="address" id="address" class="input-group__field" value="<?= htmlspecialchars($user['address'] ?? '') ?>">
-                    <label for="address" class="input-group__label">Địa chỉ (Dòng 1)</label>
+                <!-- Tỉnh/Thành phố -->
+                <div class="select-group">
+                    <select name="province_city" id="province_city" class="select-group__field">
+                        <option value="">Chọn Tỉnh/Thành phố</option>
+                    </select>
+                    <label for="province_city" class="select-group__label">Tỉnh/Thành phố</label>
+                    <?php if (isset($errors['province_city'])): ?>
+                        <span class="category-detail--error"><?= htmlspecialchars($errors['province_city']) ?></span>
+                    <?php endif; ?>
                 </div>
-                <?php if (isset($errors['address'])): ?>
-                    <span class="category-detail--error"><?= htmlspecialchars($errors['address']) ?></span>
-                <?php endif; ?>
 
-                <div class="input-group">
-                    <input type="text" name="ward_commune" id="ward_commune" class="input-group__field" value="<?= htmlspecialchars($user['ward_commune'] ?? '') ?>">
-                    <label for="ward_commune" class="input-group__label">Phường/Xã</label>
+                <!-- Quận/Huyện -->
+                <div class="select-group">
+                    <select name="district" id="district" class="select-group__field">
+                        <option value="">Chọn Quận/Huyện</option>
+                    </select>
+                    <label for="district" class="select-group__label">Quận/Huyện</label>
+                    <?php if (isset($errors['district'])): ?>
+                        <span class="category-detail--error"><?= htmlspecialchars($errors['district']) ?></span>
+                    <?php endif; ?>
                 </div>
-                <?php if (isset($errors['ward_commune'])): ?>
-                    <span class="category-detail--error"><?= htmlspecialchars($errors['ward_commune']) ?></span>
-                <?php endif; ?>
 
-                <div class="input-group">
-                    <input type="text" name="district" id="district" class="input-group__field" value="<?= htmlspecialchars($user['district'] ?? '') ?>">
-                    <label for="district" class="input-group__label">Quận/Huyện</label>
+                <!-- Phường/Xã -->
+                <div class="select-group">
+                    <select name="ward_commune" id="ward_commune" class="select-group__field">
+                        <option value="">Chọn Phường/Xã</option>
+                    </select>
+                    <label for="ward_commune" class="select-group__label">Phường/Xã</label>
+                    <?php if (isset($errors['ward_commune'])): ?>
+                        <span class="category-detail--error"><?= htmlspecialchars($errors['ward_commune']) ?></span>
+                    <?php endif; ?>
                 </div>
-                <?php if (isset($errors['district'])): ?>
-                    <span class="category-detail--error"><?= htmlspecialchars($errors['district']) ?></span>
-                <?php endif; ?>
 
+                <!-- Địa chỉ chi tiết -->
                 <div class="input-group">
-                    <input type="text" name="province_city" id="province_city" class="input-group__field" value="<?= htmlspecialchars($user['province_city'] ?? '') ?>">
-                    <label for="province_city" class="input-group__label">Tỉnh/Thành phố</label>
+                    <input type="text" name="address_line1" id="address_line1" class="input-group__field" placeholder="Số nhà, tên đường..." value="<?= htmlspecialchars($user['address_line1'] ?? '') ?>">
+                    <label for="address_line1" class="input-group__label">Địa chỉ chi tiết</label>
+                    <?php if (isset($errors['address_line1'])): ?>
+                        <span class="category-detail--error"><?= htmlspecialchars($errors['address_line1']) ?></span>
+                    <?php endif; ?>
                 </div>
-                <?php if (isset($errors['province_city'])): ?>
-                    <span class="category-detail--error"><?= htmlspecialchars($errors['province_city']) ?></span>
-                <?php endif; ?>
+
                 <button type="submit" class="edit-user-form__submit">Lưu thay đổi</button>
             </form>
         </div>
     </main>
 
     <script>
+        const vietnamAddresses = {
+            "Hà Nội": {
+                "Ba Đình": ["Phúc Xá", "Trúc Bạch", "Vĩnh Phúc", "Cống Vị", "Liễu Giai", "Nguyễn Trung Trực", "Quán Thánh", "Ngọc Hà", "Điện Biên", "Đội Cấn", "Ngọc Khánh", "Kim Mã", "Giảng Võ", "Thành Công"],
+                "Hoàn Kiếm": ["Phúc Tân", "Đồng Xuân", "Hàng Mã", "Hàng Buồm", "Hàng Đào", "Hàng Bồ", "Cửa Đông", "Lý Thái Tổ", "Hàng Bạc", "Hàng Gai", "Chương Dương", "Cửa Nam", "Hàng Trống", "Tràng Tiền", "Trần Hưng Đạo", "Phan Chu Trinh"],
+                "Tây Hồ": ["Phú Thượng", "Nhật Tan", "Tứ Liên", "Quảng An", "Xuân La", "Yến Phụ", "Bưởi", "Thụy Khuê"],
+                "Long Biên": ["Thượng Thanh", "Ngọc Lâm", "Gia Thụy", "Ngọc Thụy", "Sài Đồng", "Long Biên", "Thạch Bàn", "Phúc Lợi", "Bo Đề", "Đức Giang", "Việt Hùng", "Cự Khối", "Phúc Đồng", "Long Biên"],
+                "Cầu Giấy": ["Nghĩa Đô", "Nghĩa Tân", "Mai Dịch", "Dịch Vọng", "Dịch Vọng Hậu", "Quan Hoa", "Yên Hòa", "Trung Hòa"]
+            },
+            "TP. Hồ Chí Minh": {
+                "Quận 1": ["Tân Định", "Đa Kao", "Bến Nghé", "Bến Thành", "Nguyễn Thái Bình", "Phạm Ngũ Lão", "Cầu Ông Lãnh", "Cô Giang", "Nguyễn Cư Trinh", "Cầu Kho"],
+                "Quận 2": ["Thảo Điền", "An Phú", "An Khánh", "Bình An", "Bình Trưng Đông", "Bình Trưng Tây", "Cát Lái", "Thạnh Mỹ Lợi", "An Lợi Đông", "Thủ Thiêm"],
+                "Quận 3": ["Võ Thị Sáu", "Đa Kao", "Nguyễn Thái Bình", "Phạm Ngũ Lão", "Nguyễn Cư Trinh", "Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5"],
+                "Quận 4": ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 6", "Phường 8", "Phường 9", "Phường 10", "Phường 13", "Phường 14"],
+                "Quận 5": ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5", "Phường 6", "Phường 7", "Phường 8", "Phường 9", "Phường 10"]
+            },
+            "Đà Nẵng": {
+                "Hải Châu": ["Thạch Thang", "Hải Châu I", "Hải Châu II", "Phước Ninh", "Hòa Thuận Tây", "Hòa Thuận Đông", "Nam Dương", "Bình Hiên", "Bình Thuận", "Hòa Cường Bắc"],
+                "Thanh Khê": ["Tam Thuận", "Thanh Khê Tây", "Thanh Khê Đông", "Xuân Hà", "Tân Chính", "Chính Gián", "Vĩnh Trung", "Thạc Gián", "An Khê", "Hòa Khê"],
+                "Sơn Trà": ["Thọ Quang", "Nại Hiên Đông", "Mân Thái", "An Hải Bắc", "Phước Mỹ", "An Hải Tây", "An Hải Đông"],
+                "Ngũ Hành Sơn": ["Mỹ An", "Khuê Mỹ", "Hòa Quý", "Hòa Hải"]
+            }
+        };
+
+        // Lấy giá trị hiện tại từ user data
+        const currentProvinceCity = '<?= htmlspecialchars($user['province_city'] ?? '') ?>';
+        const currentDistrict = '<?= htmlspecialchars($user['district'] ?? '') ?>';
+        const currentWardCommune = '<?= htmlspecialchars($user['ward_commune'] ?? '') ?>';
+
+        function loadProvinces() {
+            const provinceSelect = document.getElementById('province_city');
+            provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
+
+            Object.keys(vietnamAddresses).forEach(province => {
+                const option = document.createElement('option');
+                option.value = province;
+                option.textContent = province;
+                if (province === currentProvinceCity) {
+                    option.selected = true;
+                }
+                provinceSelect.appendChild(option);
+            });
+        }
+
+        // Hàm load quận/huyện
+        function loadDistricts(province) {
+            const districtSelect = document.getElementById('district');
+            const wardSelect = document.getElementById('ward_commune');
+
+            // Reset districts và wards
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+            wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+
+            if (province && vietnamAddresses[province]) {
+                Object.keys(vietnamAddresses[province]).forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    if (district === currentDistrict) {
+                        option.selected = true;
+                    }
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Hàm load phường/xã
+        function loadWards(province, district) {
+            const wardSelect = document.getElementById('ward_commune');
+            wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+
+            if (province && district && vietnamAddresses[province] && vietnamAddresses[province][district]) {
+                vietnamAddresses[province][district].forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward;
+                    option.textContent = ward;
+                    if (ward === currentWardCommune) {
+                        option.selected = true;
+                    }
+                    wardSelect.appendChild(option);
+                });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Load dữ liệu ban đầu
+            loadProvinces();
+            if (currentProvinceCity) {
+                loadDistricts(currentProvinceCity);
+                if (currentDistrict) {
+                    loadWards(currentProvinceCity, currentDistrict);
+                }
+            }
+
+            // Event listeners cho các dropdown
+            document.getElementById('province_city').addEventListener('change', function() {
+                const selectedProvince = this.value;
+                loadDistricts(selectedProvince);
+                if (this.value !== '') {
+                    this.classList.add('has-value');
+                } else {
+                    this.classList.remove('has-value');
+                }
+            });
+
+            document.getElementById('district').addEventListener('change', function() {
+                const selectedProvince = document.getElementById('province_city').value;
+                const selectedDistrict = this.value;
+                loadWards(selectedProvince, selectedDistrict);
+                if (this.value !== '') {
+                    this.classList.add('has-value');
+                } else {
+                    this.classList.remove('has-value');
+                }
+            });
+
+            document.getElementById('ward_commune').addEventListener('change', function() {
+                if (this.value !== '') {
+                    this.classList.add('has-value');
+                } else {
+                    this.classList.remove('has-value');
+                }
+            });
+
+            // Avatar handling
             const avatarUrl = '<?= htmlspecialchars($user['avatar_url'] ?? '') ?>';
             const avatarInput = document.getElementById('avatar_url');
             const avatarPreview = document.getElementById('avatarPreview');
@@ -244,6 +377,7 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
                 }
             });
 
+            // Select styling
             const selectElements = document.querySelectorAll('.select-group__field');
             selectElements.forEach(select => {
                 select.addEventListener('change', function() {
@@ -258,6 +392,7 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
                 }
             });
 
+            // Input styling
             const inputElements = document.querySelectorAll('.input-group__field');
             inputElements.forEach(input => {
                 if (!input.classList.contains('input-group__field--date-top')) {

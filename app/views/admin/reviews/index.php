@@ -14,8 +14,6 @@ function buildPaginationUrl($pageNum, $reviewsPerPage, $search = '', $rating = '
     if (!empty($rating)) $params['rating'] = $rating;
     if (!empty($status)) $params['status'] = $status;
     if (!empty($date_range)) $params['date_range'] = $date_range;
-
-    // Get current path without query string
     $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     return $currentPath . '?' . http_build_query($params);
 }
@@ -24,8 +22,6 @@ $currentSearch = isset($_GET['search']) ? $_GET['search'] : '';
 $currentRating = isset($_GET['rating']) ? $_GET['rating'] : '';
 $currentStatus = isset($_GET['status']) ? $_GET['status'] : '';
 $currentDateRange = isset($_GET['date_range']) ? $_GET['date_range'] : '';
-
-// Calculate pagination info
 $startItem = ($page - 1) * $reviewsPerPage + 1;
 $endItem = min($page * $reviewsPerPage, $totalReviews);
 $startPage = max(1, $page - 2);
@@ -43,11 +39,10 @@ $endPage = min($totalPages, $page + 2);
 </head>
 
 <body>
-    <!-- Debug code (commented out) -->
-    <!--
-    <?php // echo '<pre'; print_r($reviews); echo '</pre>'; 
-    ?>
-    -->
+    <!-- <?php echo '<pre';
+            print_r($reviews);
+            echo '</pre>'; ?> -->
+
     <?php echo $htmlHeader; ?>
     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
         <div class="notification notification--success show" id="success-notification">
@@ -61,7 +56,6 @@ $endPage = min($totalPages, $page + 2);
     <?php endif; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
-
         <div class="reviews">
             <!-- Header Section -->
             <div class="reviews__header">
@@ -197,7 +191,7 @@ $endPage = min($totalPages, $page + 2);
                                 </td>
                                 <td class="reviews__table-cell">
                                     <div class="reviews__user">
-                                        <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.png'); ?>"
+                                        <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatars/default-avatar.jpg'); ?>"
                                             alt="Avatar" class="reviews__user-avatar">
                                         <span
                                             class="reviews__user-name"><?php echo htmlspecialchars($review['user_name']); ?></span>

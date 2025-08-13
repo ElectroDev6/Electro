@@ -2,185 +2,133 @@
 namespace App\Controllers\Admin\Products;
 
 use App\Models\admin\ProductsModel;
-use App\Models\admin\CategoriesModel;
 use Core\View;
 use Container;
 
 class CreateProductController
 {
     private ProductsModel $productModel;
-    private CategoriesModel $categoriesModel;
 
     public function __construct()
     {
         $pdo = Container::get('pdo');
         $this->productModel = new ProductsModel($pdo);
-        $this->categoriesModel = new CategoriesModel($pdo);
     }
+    
 
     public function index()
-    {
-        $categories = $this->categoriesModel->fetchAllCategories();
-        $colors = $this->productModel->getAllColors();
+        {
+            // Fetch data for form
+            $categories = $this->productModel->getCategories();
+            $subcategories = $this->productModel->getSubcategories();
+            $brands = $this->productModel->getBrands();
+            $colors = $this->productModel->getAttributeOptions(1); // attribute_id 1 = Color
+            $capacities = $this->productModel->getAttributeOptions(2); // attribute_id 2 = Capacity
 
-        View::render('products/create', [
-            'categories' => $categories,
-            'colors' => $colors
-        ]);
-    }
-
-    public function handleCreate()
-    {
-        error_log('$_FILES: ' . print_r($_FILES, true));
-
-        $data = [
-            'product_name' => trim(filter_input(INPUT_POST, 'product_name', FILTER_DEFAULT)) ?? '',
-            'description_html' => trim(filter_input(INPUT_POST, 'description_html', FILTER_DEFAULT)) ?? '',
-            'category_id' => filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT) ?? '',
-            'media_alt' => trim(filter_input(INPUT_POST, 'media_alt', FILTER_DEFAULT)) ?? '',
-            'variants' => $this->processVariants($_POST['variants'] ?? [])
-        ];
-
-        // Xử lý ảnh chính
-        $imagePathForDB = null;
-        if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
-            $imagePathForDB = $this->productModel->uploadFile($_FILES['main_image']);
-            if (!$imagePathForDB) {
-                View::render('products/create', [
-                    'error' => 'Không thể upload ảnh chính. Định dạng không hợp lệ, kích thước vượt quá 2MB, hoặc lỗi thư mục.',
-                    'categories' => $this->categoriesModel->fetchAllCategories(),
-                    'colors' => $this->productModel->getAllColors()
-                ]);
-                return;
-            }
-            $data['main_image'] = $imagePathForDB;
-        }
-
-        if (empty($data['product_name']) || empty($data['category_id']) || empty($data['main_image'])) {
+            // Render the create product form view
             View::render('products/create', [
-                'error' => 'Tên sản phẩm, danh mục và ảnh chính là bắt buộc.',
-                'categories' => $this->categoriesModel->fetchAllCategories(),
-                'colors' => $this->productModel->getAllColors()
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+                'brands' => $brands,
+                'colors' => $colors,
+                'capacities' => $capacities,
             ]);
-            return;
+        }
+        
+        public function handleCreate()
+        {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                try {
+                    // Validate and sanitize input data
+                    $productData = [
+                        'name' => htmlspecialchars(trim($_POST['product_name'] ?? ''), ENT_QUOTES, 'UTF-8'),
+                        'brand_id' => filter_input(INPUT_POST, 'brand_id', FILTER_VALIDATE_INT),
+                        'subcategory_id' => $_POST['subcategory_id'] ?? null,
+                        'description' => htmlspecialchars($_POST['description_html'] ?? '', ENT_QUOTES, 'UTF-8'),
+                        'base_price' => $_POST['base_price'] ?? null,
+                        'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
+                        'slug' => $this->generateSlug($_POST['product_name']),
+                        'main_image' => $_FILES['main_image'] ?? null,
+                        'media_alt' => htmlspecialchars(trim($_POST['media_alt'] ?? ''), ENT_QUOTES, 'UTF-8'),
+                    ];
+
+                    // Validate required fields
+                    if (!$productData['name'] || !$productData['brand_id'] || !$productData['subcategory_id'] || 
+                        !$productData['base_price'] || !$productData['main_image'] || !$productData['media_alt']) {
+                        throw new \Exception('Vui lòng điền đầy đủ các trường bắt buộc.');
+                    }
+
+                    // Process variants
+                    $variants = $_POST['variants'] ?? [];
+                    $variantData = [];
+                    foreach ($variants as $v_idx => $variant) {
+                        $variantData[$v_idx] = [
+                            'price' => filter_var($variant['price'], FILTER_VALIDATE_FLOAT),
+                            'original_price' => filter_var($variant['original_price'], FILTER_VALIDATE_FLOAT),
+                            'stock_quantity' => filter_var($variant['stock_quantity'], FILTER_VALIDATE_INT),
+                            'capacity_id' => filter_var($variant['capacity_id'], FILTER_VALIDATE_INT),
+                            'colors' => [],
+                        ];
+
+                        foreach ($variant['colors'] ?? [] as $c_idx => $color) {
+                            $variantData[$v_idx]['colors'][$c_idx] = [
+                                'color_id' => filter_var($color['color_id'], FILTER_VALIDATE_INT),
+                                'stock_quantity' => filter_var($color['stock_quantity'], FILTER_VALIDATE_INT),
+                                'is_active' => isset($color['is_active']) ? 1 : 0,
+                                'images' => [],
+                            ];
+
+                            foreach ($color['images'] ?? [] as $i_idx => $image) {
+                                $fileKey = "variants[{$v_idx}][colors][{$c_idx}][images][{$i_idx}][file]";
+                                $variantData[$v_idx]['colors'][$c_idx]['images'][$i_idx] = [
+                                    'file' => isset($_FILES[$fileKey]) ? $_FILES[$fileKey] : null,
+                                    'gallery_image_alt' => htmlspecialchars(trim($image['gallery_image_alt'] ?? ''), ENT_QUOTES, 'UTF-8'),
+                                    'sort_order' => filter_var($image['sort_order'], FILTER_VALIDATE_INT, ['default' => $i_idx]),
+                                ];
+                            }
+                        }
+                    }
+
+                    // Validate variant data
+                    if (empty($variantData)) {
+                        throw new \Exception('Phải có ít nhất một biến thể sản phẩm.');
+                    }
+
+                    // Create product
+                    $result = $this->productModel->createProduct($productData, $variantData);
+
+                    if ($result) {
+                        header('Location: /admin/products?success=Sản phẩm đã được tạo thành công');
+                        exit;
+                    } else {
+                        throw new \Exception('Không thể tạo sản phẩm.');
+                    }
+                } catch (\Exception $e) {
+                    $error = $e->getMessage();
+                }
+            }
+
+            // Fetch data for form
+            $categories = $this->productModel->getCategories();
+            $subcategories = $this->productModel->getSubcategories();
+            $brands = $this->productModel->getBrands();
+            $colors = $this->productModel->getAttributeOptions(1); // attribute_id 1 = Color
+            $capacities = $this->productModel->getAttributeOptions(2); // attribute_id 2 = Capacity
+
+            // Render view
+            View::render('admin/products/create', [
+                'categories' => $categories,
+                'subcategories' => $subcategories,
+                'brands' => $brands,
+                'colors' => $colors,
+                'capacities' => $capacities,
+                'error' => $error ?? null,
+            ]);
         }
 
-        $success = $this->productModel->createProduct($data);
-
-        if ($success) {
-            header('Location: /admin/products?success=1');
-            exit;
-        }
-
-        View::render('products/create', [
-            'error' => 'Không thể tạo sản phẩm. Vui lòng kiểm tra dữ liệu hoặc file upload.',
-            'categories' => $this->categoriesModel->fetchAllCategories(),
-            'colors' => $this->productModel->getAllColors()
-        ]);
-    }
-
-    private function processVariants($rawVariants)
+    private function generateSlug($name)
     {
-        $variants = [];
-        if (!is_array($rawVariants)) {
-            return $variants;
-        }
-        foreach ($rawVariants as $index => $variant) {
-            $variants[] = [
-                'capacity_group' => $variant['capacity_group'] ?? '',
-                'price' => filter_var($variant['price'] ?? 0, FILTER_VALIDATE_FLOAT) ?: 0,
-                'original_price' => filter_var($variant['original_price'] ?? 0, FILTER_VALIDATE_FLOAT) ?: 0,
-                'stock_quantity' => filter_var($variant['stock_quantity'] ?? 0, FILTER_VALIDATE_INT) ?: 0,
-                'colors' => $this->processColors($variant['colors'] ?? [], $index)
-            ];
-        }
-        return $variants;
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
+        return $slug;
     }
-
-    private function processColors($rawColors, $variantIndex)
-    {
-        $colors = [];
-        if (!is_array($rawColors)) {
-            return $colors;
-        }
-        foreach ($rawColors as $colorIndex => $color) {
-            $colorData = [
-                'color_id' => filter_var($color['color_id'] ?? 0, FILTER_VALIDATE_INT) ?: 0,
-                'stock_quantity' => filter_var($color['stock_quantity'] ?? 0, FILTER_VALIDATE_INT) ?: 0,
-                'is_active' => isset($color['is_active']) ? filter_var($color['is_active'], FILTER_VALIDATE_INT) : 1,
-                'images' => $this->processImages($color['images'] ?? [], $variantIndex, $colorIndex)
-            ];
-            if ($colorData['color_id']) {
-                $colors[] = $colorData;
-            }
-        }
-        return $colors;
-    }
-
-   private function processImages($rawImages, $variantIndex, $colorIndex)
-{
-    $images = [];
-    if (!is_array($rawImages)) {
-        error_log("Không có ảnh trong rawImages cho biến thể $variantIndex, màu $colorIndex");
-        return $images;
-    }
-
-    // Log toàn bộ $_FILES để debug
-    error_log('$_FILES trong processImages: ' . print_r($_FILES, true));
-
-    // Kiểm tra cấu trúc $_FILES - Sửa lại đường dẫn truy cập
-    if (!isset($_FILES['variants']['name'][$variantIndex]['colors'][$colorIndex]['images'])) {
-        error_log("Không tìm thấy ảnh trong $_FILES cho biến thể $variantIndex, màu $colorIndex");
-        return $images;
-    }
-
-    $variantImages = $_FILES['variants']['name'][$variantIndex]['colors'][$colorIndex]['images'] ?? [];
-    $variantTypes = $_FILES['variants']['type'][$variantIndex]['colors'][$colorIndex]['images'] ?? [];
-    $variantTmpNames = $_FILES['variants']['tmp_name'][$variantIndex]['colors'][$colorIndex]['images'] ?? [];
-    $variantErrors = $_FILES['variants']['error'][$variantIndex]['colors'][$colorIndex]['images'] ?? [];
-    $variantSizes = $_FILES['variants']['size'][$variantIndex]['colors'][$colorIndex]['images'] ?? [];
-
-    foreach ($rawImages as $imageIndex => $image) {
-        // Kiểm tra nếu file tồn tại và không có lỗi - Sửa lại cách truy cập
-        if (isset($variantImages[$imageIndex]['file']) && 
-            isset($variantErrors[$imageIndex]['file']) && 
-            $variantErrors[$imageIndex]['file'] === UPLOAD_ERR_OK) {
-            $file = [
-                'name' => $variantImages[$imageIndex]['file'],
-                'type' => $variantTypes[$imageIndex]['file'],
-                'tmp_name' => $variantTmpNames[$imageIndex]['file'],
-                'error' => $variantErrors[$imageIndex]['file'],
-                'size' => $variantSizes[$imageIndex]['file']
-            ];
-
-            error_log("Đang xử lý ảnh $imageIndex cho biến thể $variantIndex, màu $colorIndex: " . print_r($file, true));
-
-            $imagePath = $this->productModel->uploadFile($file);
-            if ($imagePath) {
-                $images[] = [
-                    'url' => $imagePath,
-                    'gallery_image_alt' => $image['gallery_image_alt'] ?? '',
-                    'sort_order' => filter_var($image['sort_order'] ?? $imageIndex, FILTER_VALIDATE_INT) ?: $imageIndex
-                ];
-                error_log("Upload thành công ảnh $imageIndex cho biến thể $variantIndex, màu $colorIndex: $imagePath");
-            } else {
-                error_log("Không thể upload ảnh $imageIndex cho biến thể $variantIndex, màu $colorIndex");
-            }
-        } else {
-            $errorCode = $variantErrors[$imageIndex]['file'] ?? 'không xác định';
-            error_log("Ảnh $imageIndex không hợp lệ cho biến thể $variantIndex, màu $colorIndex, mã lỗi: $errorCode");
-            
-            // Thêm thông tin debug chi tiết hơn
-            if (isset($variantImages[$imageIndex]['file'])) {
-                error_log("Tên file: " . $variantImages[$imageIndex]['file']);
-            }
-            if (isset($variantSizes[$imageIndex]['file'])) {
-                error_log("Kích thước file: " . $variantSizes[$imageIndex]['file']);
-            }
-        }
-    }
-
-    error_log("Đã xử lý " . count($images) . " ảnh thành công cho biến thể $variantIndex, màu $colorIndex");
-    return $images;
-}
 }

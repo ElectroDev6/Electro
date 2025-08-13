@@ -88,6 +88,7 @@ class InforController
             ]);
             return;
         }
+
         // Cập nhật thông tin cá nhân
         $resultProfile = $this->profileService->updateUserProfile($userId, $data);
 
@@ -105,6 +106,16 @@ class InforController
                 'error' => 'Cập nhật thất bại. Vui lòng thử lại.'
             ]);
         }
+    }
+
+    public function uploadAvatar()
+    {
+        $userId = $_SESSION['user_id'] ?? null;
+        if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+            $this->profileService->updateUserAvatar($userId, $_FILES);
+        }
+        header('Location: /profile');
+        exit;
     }
 
     public function logout()

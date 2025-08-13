@@ -39,16 +39,11 @@ class UsersModel
                   ORDER BY created_at DESC 
                   LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($query);
-
-        // Bind filter parameters
         foreach ($params as $key => $value) {
             $stmt->bindValue($key, $value);
         }
-
-        // Bind pagination parameters
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -121,9 +116,9 @@ class UsersModel
     public function getUserById($id)
     {
         $stmt = $this->pdo->prepare("
-            SELECT u.*, ua.address, ua.ward_commune, ua.district, ua.province_city
+            SELECT u.*, ua.address_line1, ua.ward_commune, ua.district, ua.province_city
             FROM users u
-            LEFT JOIN user_address ua ON u.user_id = ua.user_id
+            LEFT JOIN user_address ua ON u.user_id = ua.user_id AND ua.is_default = 1
             WHERE u.user_id = :id
             LIMIT 1
         ");
@@ -131,9 +126,9 @@ class UsersModel
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && !$user['address']) {
+        if ($user && !$user['address_line1']) {
             $stmt = $this->pdo->prepare("
-                SELECT address, ward_commune, district, province_city
+                SELECT address_line1, ward_commune, district, province_city
                 FROM user_address
                 WHERE user_id = :id
                 LIMIT 1
@@ -142,7 +137,7 @@ class UsersModel
             $stmt->execute();
             $address = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($address) {
-                $user['address'] = $address['address'];
+                $user['address_line1'] = $address['address_line1'];
                 $user['ward_commune'] = $address['ward_commune'];
                 $user['district'] = $address['district'];
                 $user['province_city'] = $address['province_city'];
@@ -190,23 +185,46 @@ class UsersModel
         if ($addressExists) {
             $stmt = $this->pdo->prepare("
                 UPDATE user_address 
-                SET address = :address, ward_commune = :ward_commune, 
+                SET address_line1 = :address_line1, ward_commune = :ward_commune, 
                     district = :district, province_city = :province_city, 
                     updated_at = NOW()
                 WHERE user_id = :user_id AND is_default = 1
             ");
         } else {
             $stmt = $this->pdo->prepare("
-                INSERT INTO user_address (user_id, address, ward_commune, district, province_city, is_default, created_at, updated_at)
-                VALUES (:user_id, :address, :ward_commune, :district, :province_city, 1, NOW(), NOW())
+                INSERT INTO user_address (user_id, address_line1, ward_commune, district, province_city, is_default, created_at, updated_at)
+                VALUES (:user_id, :address_line1, :ward_commune, :district, :province_city, 1, NOW(), NOW())
             ");
         }
         $stmt->execute([
             ':user_id' => $user_id,
-            ':address' => $data['address'] ?? null,
+            ':address_line1' => $data['address_line1'] ?? null,
             ':ward_commune' => $data['ward_commune'] ?? null,
             ':district' => $data['district'] ?? null,
             ':province_city' => $data['province_city'] ?? null,
         ]);
+    }
+
+    public function getUserActiveOrders($userId)
+    {
+        $stmt = $this->pdo->prepare("
+            SELECT COUNT(*) 
+            FROM orders 
+            WHERE user_id = :id 
+            AND status IN ('pending', 'paid', 'shipped', 'delivering')
+        ");
+        $stmt->execute(['id' => $userId]);
+        return $stmt->fetchColumn();
+    }
+
+
+    public function toggleUserLock($userId)
+    {
+        $stmt = $this->pdo->prepare("
+            UPDATE users 
+            SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END 
+            WHERE user_id = :user_id
+        ");
+        return $stmt->execute([':user_id' => $userId]);
     }
 }

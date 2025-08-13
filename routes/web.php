@@ -20,7 +20,7 @@ Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
 
 // Cart & Order
 Router::get('/cart', 'CartController@showCart');
-Router::post('/detail/add-to-cart', 'CartController@addToCart');
+// Router::post('/detail/add-to-cart', 'CartController@addToCart');
 Router::post('/cart/select-all', 'CartController@selectAll');
 Router::post('/cart/select-product', 'CartController@selectProduct');
 Router::post('/cart/update-color', 'CartController@updateColor');
@@ -53,6 +53,7 @@ Router::get('/history', 'HistoryController@showHistory');
 Router::get('/policy-mobile', 'PolicyController@showMobilePolicy');
 Router::get('/refund-policy', 'RefundController@showRefundPolicy');
 Router::post('/profile/save', 'InforController@saveProfile');
+Router::post('/profile/avatar', 'InforController@uploadAvatar');
 
 // Other Features
 Router::get('/clients', 'ClientController@showClients');

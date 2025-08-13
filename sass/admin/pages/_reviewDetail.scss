@@ -38,10 +38,6 @@
       display: grid;
       grid-template-columns: 1fr 300px;
       gap: 20px;
-      @media (max-width: 768px) {
-         grid-template-columns: 1fr;
-         gap: 15px;
-      }
    }
 
    &__main {
@@ -103,10 +99,6 @@
       margin-bottom: 15px;
       padding-bottom: 15px;
       border-bottom: 1px solid #ddd;
-      @media (max-width: 768px) {
-         grid-template-columns: 1fr;
-         gap: 10px;
-      }
    }
 
    &__stat-item {
@@ -287,10 +279,6 @@
    &__actions-row {
       display: flex;
       gap: 10px;
-      @media (max-width: 768px) {
-         flex-direction: column;
-         gap: 8px;
-      }
    }
 
    &__action-btn {

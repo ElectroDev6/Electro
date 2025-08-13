@@ -12,6 +12,10 @@ class ReadOrderController
     public function __construct()
     {
         $pdo = Container::get('pdo');
+        if (!$pdo) {
+            error_log("Kết nối PDO thất bại trong OrdersController");
+            throw new \Exception("Không thể kết nối cơ sở dữ liệu.");
+        }
         $this->model = new OrdersModel($pdo);
     }
 
@@ -40,24 +44,34 @@ class ReadOrderController
             ]);
         } catch (\Exception $e) {
             error_log("Lỗi khi lấy danh sách đơn hàng: " . $e->getMessage());
+            // Redirect với thông báo lỗi
+            header('Location: /admin/orders?error=' . urlencode($e->getMessage()));
+            exit;
         }
     }
 
-    public function detail()
+   public function detail()
 {
     try {
         $order_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        
         if ($order_id <= 0) {
             throw new \Exception("ID đơn hàng không hợp lệ.");
         }
+
         $order = $this->model->getOrderById($order_id);
+        if ($order === null) {
+            throw new \Exception("Không tìm thấy đơn hàng với ID $order_id.");
+        }
+
         View::render('orders/detail', [
-            'order' => $order
+            'order' => $order,
+            'title' => 'Chi tiết đơn hàng #' . ($order['order_code'] ?? 'N/A')
         ]);
     } catch (\Exception $e) {
-        error_log("Lỗi khi lấy chi tiết đơn hàng: " . $e->getMessage());
-        // Chuyển hướng đến trang danh sách đơn hàng với thông báo lỗi
-        header("Location: /orders?error=" . urlencode($e->getMessage()));
+        error_log("Lỗi khi lấy chi tiết đơn hàng ID $order_id: " . $e->getMessage());
+        // Truyền lỗi qua query string
+        header('Location: /admin/orders/detail?id=' . $order_id . '&error=' . urlencode($e->getMessage()));
         exit;
     }
 }

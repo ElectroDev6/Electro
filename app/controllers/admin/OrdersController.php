@@ -19,6 +19,12 @@ class OrdersController
         $controller = new ReadOrderController();
         $controller->detail();
     }
+
+    public function status()
+    {
+        $controller = new UpdateOrderController();
+        $controller->handleUpdateStatus();
+    }
     
 }
 

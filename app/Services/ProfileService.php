@@ -39,4 +39,9 @@ class ProfileService
     {
         return $this->profileModel->updateUserAddress($userId, $data);
     }
+
+    public function updateUserAvatar(int $userId, array $file): bool
+    {
+        return $this->profileModel->updateUserAvatar($userId, $file);
+    }
 }

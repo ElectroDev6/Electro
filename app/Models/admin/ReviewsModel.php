@@ -93,7 +93,7 @@ class ReviewsModel
 
     public function getReviewWithReplies(int $id): ?array
     {
-        $sql = "SELECT r.*, u.name AS user_name, u.avatar_url AS user_avatar, p.product_id, p.name AS product_name, p.base_price, p.description 
+        $sql = "SELECT r.*, u.name AS user_name, u.avatar_url AS user_avatar, p.product_id, p.name AS product_name, p.base_price    
                 FROM reviews r 
                 JOIN users u ON r.user_id = u.user_id 
                 JOIN products p ON r.product_id = p.product_id 

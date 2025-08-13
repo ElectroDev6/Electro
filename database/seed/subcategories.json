@@ -74,8 +74,8 @@
   {
     "subcategory_id": 203,
     "category_id": 2,
-    "name": "Xiaomi",
-    "subcategory_slug": "xiaomi"
+    "name": "Xiaomi Phone",
+    "subcategory_slug": "xiaomi-phone"
   },
   {
     "subcategory_id": 204,
@@ -104,8 +104,8 @@
   {
     "subcategory_id": 208,
     "category_id": 2,
-    "name": "Xiaomi",
-    "subcategory_slug": "xiaomi"
+    "name": "Xiaomi Pad",
+    "subcategory_slug": "xiaomi-pad"
   },
   {
     "subcategory_id": 301,

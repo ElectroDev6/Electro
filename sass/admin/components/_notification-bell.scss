@@ -20,7 +20,7 @@
 
    p {
       margin: 0;
-      font-size: 16px;
+      font-size: 1.4rem;
       line-height: 1.5;
    }
 
@@ -41,6 +41,32 @@
 
       p {
          color: #721c24;
+      }
+   }
+
+   &__btn-danger {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      outline: none;
+      padding: 7px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      &:hover {
+         background-color: #b02a37;
+      }
+   }
+
+   &__btn-neutral {
+      background-color: #e0e0e0;
+      color: #333;
+      border: none;
+      padding: 7px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      outline: none;
+      &:hover {
+         background-color: #c7c7c7;
       }
    }
 }

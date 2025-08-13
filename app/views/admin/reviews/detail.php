@@ -49,7 +49,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                     <div class="review-detail__user-section">
                         <div class="review-detail__user-info">
                             <div class="review-detail__user-avatar">
-                                <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.png'); ?>"
+                                <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.jpg'); ?>"
                                     alt="Avatar" class="reviews__user-avatar">
                             </div>
                             <div class="review-detail__user-details">
@@ -160,7 +160,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                     <div class="<?php echo $containerClass; ?>" style="<?php echo $containerStyle; ?>">
                                         <div class="review-detail__user-info">
                                             <div class="review-detail__user-avatar">
-                                                <img src="<?php echo htmlspecialchars($reply['user_avatar'] ?? '/img/avatar/default-avatar.png'); ?>"
+                                                <img src="<?php echo htmlspecialchars($reply['user_avatar'] ?? '/img/avatar/default-avatar.jpg'); ?>"
                                                     alt="Avatar" class="reviews__user-avatar">
                                             </div>
                                             <div class="review-detail__user-details">
@@ -235,7 +235,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                     <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
                                         <input type="hidden" name="review_id"
                                             value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                        <input type="hidden" name="status" value="active">
+                                        <input type="hidden" name="status" value="approved">
                                         <button type="submit"
                                             class="review-detail__action-btn review-detail__action-btn--accept"
                                             onclick="return confirm('Bạn có chắc chắn chấp nhận đánh giá này không?');">
@@ -246,7 +246,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                     <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
                                         <input type="hidden" name="review_id"
                                             value="<?php echo htmlspecialchars($review['review_id']); ?>">
-                                        <input type="hidden" name="status" value="inactive">
+                                        <input type="hidden" name="status" value="rejected">
                                         <button type="submit"
                                             class="review-detail__action-btn review-detail__action-btn--reject"
                                             onclick="return confirm('Bạn có chắc chắn từ chối đánh giá này không?');">

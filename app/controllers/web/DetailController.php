@@ -27,6 +27,11 @@ class DetailController
         }
 
         $product = $this->productService->getProductDetail($slug);
+
+        // echo '<pre>';
+        // print_r($product);
+        // echo '</pre>';
+        // exit;
         $relatedProducts = $this->productService->relatedProducts(
             $product['subcategory_id'],
             $product['product_id'],
@@ -53,11 +58,13 @@ class DetailController
             return;
         }
 
-        $skuId = $input['sku_id'] ?? null;
-        $quantity = (int)($input['quantity'] ?? 1);
-        $color = $input['color'] ?? null;
-        $warrantyEnabled = isset($input['warranty_enabled']) ? (bool)$input['warranty_enabled'] : false;
-        $imageUrl = $input['image_url'] ?? null;
+        $body = $input['body'] ?? [];
+        $skuId = $body['sku_id'] ?? null;
+        $quantity = (int)($body['quantity'] ?? 1);
+        $color = $body['color'] ?? null;
+        $warrantyEnabled = isset($body['warranty_enabled']) ? (bool)$body['warranty_enabled'] : false;
+        $imageUrl = $body['image_url'] ?? null;
+
 
         error_log("DetailController: Parsed - SKU: " . ($skuId ?? 'null') . ", Quantity: $quantity, Color: " . ($color ?? 'null') . ", Warranty: " . ($warrantyEnabled ? 'true' : 'false') . ", Image: " . ($imageUrl ?? 'null'));
 

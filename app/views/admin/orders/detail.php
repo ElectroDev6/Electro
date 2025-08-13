@@ -27,44 +27,91 @@ include dirname(__DIR__) . '/partials/header.php';
                     <div class="page__title-section">
                         <h1 class="page__title">Chi Tiết Đơn Hàng #<?php echo htmlspecialchars($order['order_id']); ?></h1>
                         <div class="page__actions">
-                            <?php if ($order['status'] === 'pending'): ?>
-                                <form action="/admin/orders/approve" method="POST" style="display:inline;">
+                            <?php
+                            $status = $order['status'] ?? 'pending';
+                            $paymentStatus = $order['payment_status'] ?? 'pending';
+                            $paymentMethod = $order['payment_method'] ?? 'cod';
+                            ?>
+                            <?php if ($status === 'pending'): ?>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="paid">
                                     <button type="submit" class="btn btn--success"
                                             onclick="return confirm('Bạn có chắc muốn chấp nhận đơn hàng này không?')">
                                         ✓ Chấp nhận
                                     </button>
                                 </form>
-                                <form action="/admin/orders/cancel" method="POST" style="display:inline;">
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="cancelled">
                                     <button type="submit" class="btn btn--danger"
-                                            onclick="return confirm('Bạn có chắc muốn từ chối đơn hàng này không?')">
-                                        ✗ Từ chối
+                                            onclick="return confirm('Bạn có chắc muốn hủy đơn hàng này không?')">
+                                        ✗ Hủy
                                     </button>
                                 </form>
-                            <?php elseif ($order['status'] === 'paid' && $order['payment_status'] === 'success'): ?>
-                                <form action="/admin/orders/approve" method="POST" style="display:inline;">
+                            <?php elseif ($status === 'paid'): ?>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="shipped">
                                     <button type="submit" class="btn btn--success"
-                                            onclick="return confirm('Duyệt đơn đã thanh toán này?')">
-                                        ✓ Duyệt đơn
+                                            onclick="return confirm('Chuẩn bị giao hàng cho đơn này?')">
+                                        ✓ Chuẩn bị giao
                                     </button>
-                                </form>
-                                <form action="/admin/orders/cancel" method="POST" style="display:inline;">
+        </form>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="cancelled">
                                     <button type="submit" class="btn btn--danger"
-                                            onclick="return confirm('ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?')">
-                                        ✗ Hủy & Hoàn tiền
+                                            onclick="return confirm('<?php echo ($paymentStatus === 'success' && $paymentMethod !== 'cod') ? 'ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?' : 'Bạn có chắc muốn hủy đơn hàng này không?'; ?>')">
+                                        ✗ Hủy
                                     </button>
                                 </form>
-                            <?php elseif ($order['status'] === 'delivering'): ?>
-                                <form action="/admin/orders/complete" method="POST" style="display:inline;">
+                            <?php elseif ($status === 'shipped'): ?>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="delivering">
                                     <button type="submit" class="btn btn--success"
-                                            onclick="return confirm('Xác nhận giao hàng thành công?')">
-                                        ✓ Đã giao xong
+                                            onclick="return confirm('Bắt đầu giao hàng cho đơn này?')">
+                                        ✓ Bắt đầu giao
                                     </button>
                                 </form>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button type="submit" class="btn btn--danger"
+                                            onclick="return confirm('<?php echo ($paymentStatus === 'success' && $paymentMethod !== 'cod') ? 'ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?' : 'Bạn có chắc muốn hủy đơn hàng này không?'; ?>')">
+                                        ✗ Hủy
+                                    </button>
+                                </form>
+                            <?php elseif ($status === 'delivering'): ?>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="completed">
+                                    <button type="submit" class="btn btn--success"
+                                            onclick="return confirm('<?php echo ($paymentMethod === 'cod') ? 'Xác nhận giao hàng thành công và thu tiền?' : 'Xác nhận giao hàng thành công?'; ?>')">
+                                        ✓ Giao thành công
+                                    </button>
+                                </form>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button type="submit" class="btn btn--danger"
+                                            onclick="return confirm('<?php echo ($paymentStatus === 'success' && $paymentMethod !== 'cod') ? 'ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?' : 'Bạn có chắc muốn hủy đơn hàng này không?'; ?>')">
+                                        ✗ Hủy
+                                    </button>
+                                </form>
+                            <?php elseif ($status === 'completed'): ?>
+                                <span class="btn btn--success" style="cursor: default;">✓ Đã hoàn thành</span>
+                                <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button type="submit" class="btn btn--danger"
+                                            onclick="return confirm('<?php echo ($paymentStatus === 'success' && $paymentMethod !== 'cod') ? 'ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?' : 'Bạn có chắc muốn hủy đơn hàng này không?'; ?>')">
+                                        ✗ Hủy
+                                    </button>
+                                </form>
+                            <?php elseif ($status === 'cancelled'): ?>
+                                <span class="btn btn--danger" style="cursor: default;">✗ Đã hủy</span>
                             <?php endif; ?>
                             <a href="/admin/orders" class="btn btn--secondary">Quay lại</a>
                         </div>
@@ -83,29 +130,30 @@ include dirname(__DIR__) . '/partials/header.php';
                                         <div class="info-card__content">
                                             <div class="info-row">
                                                 <span class="info-row__label">Mã Đơn Hàng</span>
-                                                <span class="info-row__value"><?php echo htmlspecialchars($order['order_code']); ?></span>
+                                                <span class="info-row__value"><?php echo htmlspecialchars($order['order_code'] ?? 'N/A'); ?></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Ngày Tạo Đơn</span>
-                                                <span class="info-row__value"><?php echo date('H:i:s d/m/Y', strtotime($order['created_at'])); ?></span>
+                                                <span class="info-row__value"><?php echo date('H:i:s d/m/Y', strtotime($order['created_at'] ?? 'now')); ?></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Cập Nhật Lần Cuối</span>
-                                                <span class="info-row__value"><?php echo date('H:i:s d/m/Y', strtotime($order['updated_at'])); ?></span>
+                                                <span class="info-row__value"><?php echo date('H:i:s d/m/Y', strtotime($order['updated_at'] ?? 'now')); ?></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Trạng Thái Đơn Hàng</span>
                                                 <span class="info-row__value"><?php
                                                     $statusMap = [
                                                         'pending' => 'Chờ duyệt',
-                                                        'paid' => 'Đã thanh toán',
+                                                        'paid' => 'Đã chấp nhận',
+                                                        'shipped' => 'Chuẩn bị giao',
                                                         'delivering' => 'Đang giao hàng',
-                                                        'delivered' => 'Đã giao',
-                                                        'canceled' => 'Đã hủy'
+                                                        'completed' => 'Hoàn thành',
+                                                        'cancelled' => 'Đã hủy'
                                                     ];
                                                     echo htmlspecialchars($statusMap[$order['status']] ?? $order['status']);
-                                                    if ($order['status'] === 'delivered') {
-                                                        echo ' - ' . date('H:i:s d/m/Y', strtotime($order['updated_at']));
+                                                    if ($order['status'] === 'completed') {
+                                                        echo ' - ' . date('H:i:s d/m/Y', strtotime($order['updated_at'] ?? 'now'));
                                                     }
                                                 ?></span>
                                             </div>
@@ -121,15 +169,15 @@ include dirname(__DIR__) . '/partials/header.php';
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Số Điện Thoại</span>
-                                                <span class="info-row__value"><?php echo htmlspecialchars('N/A'); // Chưa có dữ liệu phone, cần join thêm bảng users nếu có ?></span>
+                                                <span class="info-row__value"><?php echo htmlspecialchars($order['phone_number'] ?? 'N/A'); ?></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Email</span>
-                                                <span class="info-row__value"><?php echo htmlspecialchars($order['username'] ?? 'N/A'); ?></span>
+                                                <span class="info-row__value"><?php echo htmlspecialchars($order['email'] ?? 'N/A'); ?></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Địa Chỉ Giao Hàng</span>
-                                                <span class="info-row__value"><?php echo htmlspecialchars($order['address'] ?? 'N/A'); ?></span>
+                                                <span class="info-row__value"><?php echo htmlspecialchars($order['full_address'] ?? 'N/A'); ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -151,17 +199,16 @@ include dirname(__DIR__) . '/partials/header.php';
                                             <div class="info-row">
                                                 <span class="info-row__label">Trạng Thái Thanh Toán</span>
                                                 <span class="info-row__value"><?php
-                                                    $status = $order['status'];
+                                                    $status = $order['status'] ?? 'pending';
                                                     $paymentMethod = $order['payment_method'] ?? 'cod';
                                                     $paymentStatus = $order['payment_status'] ?? 'pending';
-                                                    
-                                                    if ($status === 'canceled') {
+                                                    if ($status === 'cancelled') {
                                                         echo 'Đã hủy';
                                                         if ($paymentMethod !== 'cod' && $paymentStatus === 'success') {
                                                             echo ' - Chờ hoàn tiền';
                                                         }
                                                     } elseif ($paymentMethod === 'cod') {
-                                                        if ($status === 'delivered') {
+                                                        if ($status === 'completed') {
                                                             echo 'Đã thanh toán';
                                                         } else {
                                                             echo 'Chưa thanh toán';
@@ -171,13 +218,19 @@ include dirname(__DIR__) . '/partials/header.php';
                                                     }
                                                 ?></span>
                                             </div>
+                                            <?php if (isset($order['coupon_code']) && $order['coupon_code']): ?>
+                                            <div class="info-row">
+                                                <span class="info-row__label">Mã Giảm Giá</span>
+                                                <span class="info-row__value"><?php echo htmlspecialchars($order['coupon_code']) . ' (-' . ($order['coupon_discount'] ?? 0) . '%)'; ?></span>
+                                            </div>
+                                            <?php endif; ?>
                                             <div class="info-row">
                                                 <span class="info-row__label">Ngày Thanh Toán</span>
-                                                <span class="info-row__value"><?php echo $order['payment_status'] === 'success' ? date('H:i:s d/m/Y', strtotime($order['updated_at'])) : 'Chưa thanh toán'; ?></span>
+                                                <span class="info-row__value"><?php echo ($paymentStatus === 'success' && $paymentMethod !== 'cod') ? date('H:i:s d/m/Y', strtotime($order['updated_at'] ?? 'now')) : 'Chưa thanh toán'; ?></span>
                                             </div>
                                             <div class="info-row">
                                                 <span class="info-row__label">Tổng Tiền</span>
-                                                <span class="info-row__value"><?php echo number_format($order['total_price'], 0, ',', '.') . ' đ'; ?></span>
+                                                <span class="info-row__value"><?php echo number_format($order['total_price'] ?? 0, 0, ',', '.') . ' đ'; ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -190,65 +243,77 @@ include dirname(__DIR__) . '/partials/header.php';
                                 <div class="products-table">
                                     <div class="products-table__header">
                                         <div class="products-table__cell products-table__cell--product">Sản Phẩm</div>
-                                        <div class="products-table__cell products-table__cell--category">Danh Mục</div>
+                                        <div class="products-table__cell products-table__cell--category">Thương Hiệu</div>
                                         <div class="products-table__cell products-table__cell--quantity">Số Lượng</div>
                                         <div class="products-table__cell products-table__cell--unit-price">Đơn Giá</div>
                                         <div class="products-table__cell products-table__cell--total">Thành Tiền</div>
                                     </div>
-                                    <?php
-                                    // Phân tích order_items từ chuỗi GROUP_CONCAT
-                                    $items = [];
-                                    if (!empty($order['order_items'])) {
-                                        $itemStrings = explode(', ', $order['order_items']);
-                                        foreach ($itemStrings as $itemString) {
-                                            if (preg_match('/^(\d+) x SKU (\d+) \(@(\d+)đ\)$/', $itemString, $matches)) {
-                                                $items[] = [
-                            'quantity' => (int)$matches[1],
-                            'sku_id' => (int)$matches[2],
-                            'price' => (float)str_replace('.', '', $matches[3]) // Loại bỏ dấu chấm trong giá
-                        ];
-                                            }
-                                        }
-                                    }
-                                    foreach ($items as $index => $item): ?>
-                                        <div class="products-table__row">
-                                            <div class="products-table__cell products-table__cell--product">
-                                                <div class="product-item">
-                                                    <img src="/images/placeholder.jpg" alt="SKU <?php echo htmlspecialchars($item['sku_id']); ?>" class="product-table__image">
-                                                    <span class="product-item__name">SKU <?php echo htmlspecialchars($item['sku_id']); ?></span>
+                                    
+                                    <?php if (!empty($order['order_items'])): ?>
+                                        <?php foreach ($order['order_items'] as $item): ?>
+                                            <div class="products-table__row">
+                                                <div class="products-table__cell products-table__cell--product">
+                                                    <div class="product-item">
+                                                        <img src="/img/products/gallery/<?php echo htmlspecialchars($item['image_path'] ?? '/images/placeholder.jpg'); ?>" 
+                                                             alt="<?php echo htmlspecialchars($item['product_name'] ?? 'N/A'); ?>" 
+                                                             class="product-table__image">
+                                                        <div class="product-item__info">
+                                                            <span class="product-item__name"><?php echo htmlspecialchars($item['product_name'] ?? 'N/A'); ?></span>
+                                                            <span class="product-item__sku">SKU: <?php echo htmlspecialchars($item['sku_code'] ?? 'N/A'); ?></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="products-table__cell products-table__cell--category">
+                                                    <?php echo htmlspecialchars($item['brand_name'] ?? 'N/A'); ?>
+                                                </div>
+                                                <div class="products-table__cell products-table__cell--quantity">
+                                                    <?php echo $item['quantity'] ?? 0; ?>
+                                                </div>
+                                                <div class="products-table__cell products-table__cell--unit-price">
+                                                    <?php echo number_format($item['price'] ?? 0, 0, ',', '.') . ' đ'; ?>
+                                                </div>
+                                                <div class="products-table__cell products-table__cell--total">
+                                                    <?php echo number_format(($item['price'] ?? 0) * ($item['quantity'] ?? 0), 0, ',', '.') . ' đ'; ?>
                                                 </div>
                                             </div>
-                                            <div class="products-table__cell products-table__cell--category">N/A</div>
-                                            <div class="products-table__cell products-table__cell--quantity"><?php echo $item['quantity']; ?></div>
-                                            <div class="products-table__cell products-table__cell--unit-price"><?php echo number_format($item['price'], 0, ',', '.') . ' đ'; ?></div>
-                                            <div class="products-table__cell products-table__cell--total"><?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.') . ' đ'; ?></div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <div class="products-table__row">
+                                            <div class="products-table__cell" colspan="5">Không có sản phẩm nào</div>
                                         </div>
-                                    <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                                 
                                 <div class="order-summary">
                                     <?php
-                                    $subtotal = array_sum(array_map(function($item) {
-                                        return $item['price'] * $item['quantity'];
-                                    }, $items));
-                                    $discountAmount = 0; // Giả định, cần join coupons nếu có
-                                    $shippingFee = 0; // Giả định, cần thêm logic nếu có
+                                    $subtotal = $order['calculated_total'] ?? $order['total_price'] ?? 0;
+                                    $discountAmount = 0;
+                                    if (isset($order['coupon_discount']) && $order['coupon_discount'] > 0) {
+                                        $discountAmount = $subtotal * ($order['coupon_discount'] / 100);
+                                    }
+                                    $finalTotal = isset($order['discounted_total']) ? $order['discounted_total'] : ($subtotal - $discountAmount);
                                     ?>
+                                    
                                     <div class="order-summary__row">
                                         <span class="order-summary__label">Tạm Tính:</span>
                                         <span class="order-summary__value"><?php echo number_format($subtotal, 0, ',', '.') . ' đ'; ?></span>
                                     </div>
+                                    
+                                    <?php if ($discountAmount > 0): ?>
                                     <div class="order-summary__row">
-                                        <span class="order-summary__label">Giảm Giá:</span>
-                                        <span class="order-summary__value"><?php echo number_format($discountAmount, 0, ',', '.') . ' đ'; ?></span>
+                                        <span class="order-summary__label">Giảm Giá (<?php echo $order['coupon_code'] ?? 'N/A'; ?> -<?php echo $order['coupon_discount'] ?? 0; ?>%):</span>
+                                        <span class="order-summary__value">-<?php echo number_format($discountAmount, 0, ',', '.') . ' đ'; ?></span>
                                     </div>
+                                    <?php endif; ?>
+                                    
                                     <div class="order-summary__row">
                                         <span class="order-summary__label">Phí Vận Chuyển:</span>
-                                        <span class="order-summary__value"><?php echo number_format($shippingFee, 0, ',', '.') . ' đ'; ?></span>
+                                        <span class="order-summary__value">Miễn phí</span>
                                     </div>
+                                    
                                     <div class="order-summary__row order-summary__row--total">
                                         <span class="order-summary__label">Tổng Cộng:</span>
-                                        <span class="order-summary__value"><?php echo number_format($subtotal - $discountAmount + $shippingFee, 0, ',', '.') . ' đ'; ?></span>
+                                        <span class="order-summary__value"><?php echo number_format($finalTotal, 0, ',', '.') . ' đ'; ?></span>
                                     </div>
                                 </div>
                             </section>
@@ -261,34 +326,63 @@ include dirname(__DIR__) . '/partials/header.php';
                                     <h3 class="order-sidebar__title">Lịch Sử Hoạt Động</h3>
                                     <div class="activity-list">
                                         <?php
-                                        // Giả định timeline dựa trên trạng thái và thời gian
-                                        $timeline = [
-                                            ['status' => $order['status'], 'timestamp' => $order['updated_at'], 'note' => $statusMap[$order['status']] ?? 'Cập nhật trạng thái']
+                                        // Tạo timeline dựa trên dữ liệu
+                                        $timeline = [];
+                                        
+                                        // 1. Đơn hàng được tạo (luôn có)
+                                        $timeline[] = [
+                                            'time' => $order['created_at'] ?? 'now',
+                                            'title' => 'Đơn hàng được tạo',
+                                            'icon' => '📄'
                                         ];
-                                        if ($order['payment_status'] === 'success' && $order['status'] !== 'pending') {
-                                            $timeline[] = ['status' => 'paid', 'timestamp' => $order['updated_at'], 'note' => 'Thanh toán thành công'];
+                                        
+                                        // 2. Thanh toán (nếu có và không phải COD)
+                                        if (($order['payment_status'] ?? 'pending') === 'success' && ($order['payment_method'] ?? 'cod') !== 'cod') {
+                                            $timeline[] = [
+                                                'time' => $order['updated_at'] ?? 'now',
+                                                'title' => 'Thanh toán thành công',
+                                                'icon' => '💳'
+                                            ];
                                         }
-                                        foreach ($timeline as $event): ?>
-                                            <div class="activity-item">
-                                                <span class="activity-item__icon">
-                                                    <?php
-                                                    $icons = [
-                                                        'pending' => '📄',
-                                                        'paid' => '💳',
-                                                        'delivering' => '🚚',
-                                                        'delivered' => '✅',
-                                                        'canceled' => '✖️'
-                                                    ];
-                                                    echo $icons[$event['status']] ?? '📄';
-                                                    ?>
-                                                </span>
-                                                <div class="activity-item__content">
-                                                    <div class="activity-item__title"><?php
-                                                        echo htmlspecialchars($statusMap[$event['status']] ?? $event['note']);
-                                                    ?></div>
-                                                    <div class="activity-item__time"><?php echo date('d/m/Y H:i', strtotime($event['timestamp'])); ?></div>
-                                                </div>
+                                        
+                                        // 3. Cập nhật trạng thái đơn hàng
+                                        $statusTitles = [
+                                            'paid' => 'Đã chấp nhận',
+                                            'shipped' => 'Chuẩn bị giao',
+                                            'delivering' => 'Đang giao hàng',
+                                            'completed' => 'Giao hàng thành công',
+                                            'cancelled' => 'Đơn hàng đã bị hủy'
+                                        ];
+                                        $statusIcons = [
+                                            'paid' => '✅',
+                                            'shipped' => '📦',
+                                            'delivering' => '🚚',
+                                            'completed' => '✔️',
+                                            'cancelled' => '❌'
+                                        ];
+                                        
+                                        if ($order['status'] !== 'pending') {
+                                            $timeline[] = [
+                                                'time' => $order['updated_at'] ?? 'now',
+                                                'title' => $statusTitles[$order['status']] ?? 'Cập nhật trạng thái',
+                                                'icon' => $statusIcons[$order['status']] ?? '📄'
+                                            ];
+                                        }
+                                        
+                                        // Sắp xếp theo thời gian (mới nhất trên đầu)
+                                        usort($timeline, function($a, $b) {
+                                            return strtotime($b['time']) - strtotime($a['time']);
+                                        });
+                                        ?>
+                                        
+                                        <?php foreach ($timeline as $event): ?>
+                                        <div class="activity-item">
+                                            <span class="activity-item__icon"><?php echo $event['icon']; ?></span>
+                                            <div class="activity-item__content">
+                                                <div class="activity-item__title"><?php echo htmlspecialchars($event['title']); ?></div>
+                                                <div class="activity-item__time"><?php echo date('d/m/Y H:i', strtotime($event['time'])); ?></div>
                                             </div>
+                                        </div>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>

@@ -101,7 +101,14 @@ use Core\View;
                 <input type="text" name="voucher_code" placeholder="Nhập mã voucher" value="<?= htmlspecialchars($cart['summary']['voucher_code']) ?>">
                 <button type="submit">Áp dụng</button>
               </form>
-              <div id="voucher-message"></div>
+              <div id="voucher-message">
+                <?php
+                if (isset($_SESSION['voucher_message'])) {
+                  echo htmlspecialchars($_SESSION['voucher_message']);
+                  unset($_SESSION['voucher_message']); // Xóa thông báo sau khi hiển thị
+                }
+                ?>
+              </div>
             </div>
 
             <div class="order-summary__info">
@@ -186,6 +193,51 @@ use Core\View;
           alert(data.message);
         }
       });
+  });
+</script>
+
+<script>
+  document.getElementById('voucher-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const messageDiv = document.getElementById('voucher-message');
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest' // Đảm bảo header AJAX
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      messageDiv.textContent = result.message;
+      messageDiv.style.color = result.success ? 'green' : 'red';
+
+      if (result.success) {
+        messageDiv.textContent = result.message;
+        messageDiv.style.color = 'green';
+
+        // Delay reload 1.5 giây để người dùng nhìn thấy thông báo
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } else {
+        messageDiv.textContent = result.message;
+        messageDiv.style.color = 'red';
+      }
+
+    } catch (error) {
+      console.error('Error applying voucher:', error);
+      messageDiv.textContent = 'Lỗi khi áp dụng voucher: ' + error.message;
+      messageDiv.style.color = 'red';
+    }
   });
 </script>
 

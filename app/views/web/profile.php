@@ -8,10 +8,17 @@ use Core\View; ?>
 <div class="profile">
     <div class="profile__sidebar">
         <div class="profile__avatar">
-            <img src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/avatars/avatar.png') ?>"
-                alt="Avatar người dùng" />
+            <div class="profile__avatar-wrapper">
+                <img id="avatar-img" src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/avatars/avatar.png') ?>" alt="Avatar người dùng" />
+                <button id="edit-avatar-btn" type="button">Sửa avatar</button>
+            </div>
             <h3 class="profile__name"><?= htmlspecialchars($user['name'] ?? 'Người dùng') ?></h3>
             <p class="profile__phone"><?= htmlspecialchars($user['phone_number'] ?? '') ?></p>
+
+            <form id="avatar-form" action="/profile/avatar" method="post" enctype="multipart/form-data" style="display:none;">
+                <input type="file" name="avatar" accept="image/*" id="avatar-input" required />
+                <button type="submit">Cập nhật</button>
+            </form>
         </div>
         <ul class="profile__menu">
             <li><a href="#">Tổng quan</a></li>
@@ -155,6 +162,15 @@ use Core\View; ?>
         </form>
     </div>
 </div>
+
+<script>
+    const editBtn = document.getElementById('edit-avatar-btn');
+    const avatarForm = document.getElementById('avatar-form');
+
+    editBtn.addEventListener('click', () => {
+        avatarForm.style.display = 'block';
+    });
+</script>
 
 <?php if (isset($success)): ?>
     <p style="color: green;"><?= htmlspecialchars($success) ?></p>

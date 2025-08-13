@@ -22,23 +22,6 @@ class CartController
         View::render('cart', ['cart' => $cart]);
     }
 
-    public function addToCart()
-    {
-        $userId = $_SESSION['user_id'] ?? null;
-        $sessionId = session_id();
-        $skuId = $_POST['sku_id'] ?? null;
-        $quantity = (int)($_POST['quantity'] ?? 1);
-        $color = $_POST['color'] ?? null;
-        $warrantyEnabled = isset($_POST['warranty_enabled']) && $_POST['warranty_enabled'] === 'true';
-        $imageUrl = $_POST['image_url'] ?? null;
-
-        if ($skuId) {
-            $result = $this->cartService->addToCart($skuId, $quantity, $userId, $sessionId, $color, $warrantyEnabled, $imageUrl);
-            return $result;
-        }
-        return ['success' => false, 'message' => 'Invalid product ID.'];
-    }
-
     public function getCartItemCount()
     {
         $userId = $_SESSION['user_id'] ?? null;
@@ -128,8 +111,26 @@ class CartController
         $userId = $_SESSION['user_id'] ?? null;
         $sessionId = session_id();
         $voucherCode = $_POST['voucher_code'] ?? null;
-        $result = $this->cartService->applyVoucher($userId, $sessionId, $voucherCode);
-        return $result;
+        error_log("CartController: Applying voucher - Voucher: " . ($voucherCode ?? 'null') . ", UserID: " . ($userId ?? 'null') . ", SessionID: $sessionId");
+
+        $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+
+        if (!$voucherCode) {
+            $result = ['success' => false, 'message' => 'Vui lòng nhập mã voucher.'];
+        } else {
+            $result = $this->cartService->applyVoucher($userId, $sessionId, $voucherCode);
+        }
+
+        $_SESSION['voucher_message'] = $result['message'];
+
+        if ($isAjax) {
+            header('Content-Type: application/json');
+            echo json_encode($result);
+            exit;
+        }
+
+        header('Location: /cart');
+        exit;
     }
 
     public function confirmOrder()
