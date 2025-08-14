@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use App\Middlewares\AdminMiddleware;
+
 class Router
 {
   protected static array $routes = [];
@@ -43,6 +45,12 @@ class Router
         $namespace = str_starts_with($path, '/admin')
           ? 'App\Controllers\Admin\\'
           : 'App\Controllers\Web\\';
+
+        // Nếu route thuộc admin thì chạy middleware
+        if ($namespace === 'App\Controllers\Admin\\') {
+          \App\Middlewares\AdminMiddleware::handle();
+        }
+
         $controllerClass = $namespace . $controller;
 
         if (!class_exists($controllerClass)) {

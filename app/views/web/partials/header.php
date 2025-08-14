@@ -195,7 +195,12 @@
                             </g>
                         </svg>
                     </a>
-                    <span class="header__count">0</span>
+                    <span class="header__count" id="cartCount">
+                        <span class="header__count" id="cartCount">
+                            <?= get_cart_count(\Container::get('pdo')) ?>
+                        </span>
+
+                    </span>
                 </div>
             </div>
         </div>

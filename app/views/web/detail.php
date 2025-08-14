@@ -518,41 +518,4 @@ Chi tiết sản phẩm
                             ) ?>
             };
         </script>
-
-        <script>
-            document.getElementById('comment-form').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const form = e.target;
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
-                data.product_id = form.dataset.productId;
-
-                try {
-                    const response = await fetch('/comment/add', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    const result = await response.json();
-                    if (result.success) {
-                        alert('Bình luận đã được gửi, đang chờ duyệt.');
-                        form.reset();
-                        document.getElementById('parent-review-id').value = '';
-                    } else {
-                        alert(result.error || 'Có lỗi xảy ra.');
-                    }
-                } catch (error) {
-                    alert('Lỗi kết nối: ' + error.message);
-                }
-            });
-
-            document.querySelectorAll('.product-detail__reply-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.getElementById('parent-review-id').value = btn.dataset.reviewId;
-                    document.getElementById('comment-content').focus();
-                });
-            });
-        </script>
         <?php View::endSection(); ?>

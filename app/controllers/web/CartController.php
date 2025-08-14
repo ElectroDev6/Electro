@@ -8,10 +8,14 @@ use Core\View;
 class CartController
 {
     private $cartService;
+    private ?int $userId;
+    private string $sessionId;
 
     public function __construct(\PDO $pdo)
     {
         $this->cartService = new CartService($pdo);
+        $this->userId = $_SESSION['user_id'] ?? null;
+        $this->sessionId = session_id();
     }
 
     public function showCart()
@@ -24,10 +28,9 @@ class CartController
 
     public function getCartItemCount()
     {
-        $userId = $_SESSION['user_id'] ?? null;
-        $sessionId = session_id();
-        $count = $this->cartService->getCartItemCount($userId, $sessionId);
-        return ['success' => true, 'count' => $count];
+        header('Content-Type: application/json');
+        $count = $this->cartService->getCartItemCount($this->userId, $this->sessionId);
+        echo json_encode(['success' => true, 'count' => $count]);
     }
 
     public function selectAll()
@@ -135,13 +138,47 @@ class CartController
 
     public function confirmOrder()
     {
-        $userId = $_SESSION['user_id'] ?? null;
-        $sessionId = session_id();
-        $result = $this->cartService->confirmOrder($userId, $sessionId);
-        if ($result['success']) {
-            header('Location: /checkout');
+        $isAjax = $this->isAjax();
+        error_log("CartController: Confirming order - UserID: $this->userId, SessionID: $this->sessionId, IsAjax: " . var_export($isAjax, true));
+
+        if (!$this->userId) {
+            $_SESSION['post_login_redirect'] = '/checkout';
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập để tiếp tục thanh toán.', 'redirect' => '/login']);
+                exit;
+            }
+            header('Location: /login');
             exit;
         }
-        return $result;
+
+        $result = $this->cartService->confirmOrder($this->userId, $this->sessionId);
+        if ($result) {
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true, 'message' => 'Xác nhận đơn hàng thành công.', 'redirect' => '/checkout']);
+                exit;
+            }
+            header('Location: /checkout');
+            exit;
+        } else {
+            $_SESSION['error_message'] = 'Không thể xác nhận đơn hàng. Vui lòng thử lại.';
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Không thể xác nhận đơn hàng. Vui lòng thử lại.', 'redirect' => '/cart']);
+                exit;
+            }
+            header('Location: /cart');
+            exit;
+        }
+    }
+
+    /**
+     * Kiểm tra xem yêu cầu có phải AJAX không
+     * @return bool
+     */
+    private function isAjax(): bool
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 }

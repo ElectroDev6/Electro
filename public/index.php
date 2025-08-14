@@ -12,6 +12,7 @@ require_once BASE_PATH . '/core/View.php';
 require_once BASE_PATH . '/app/helpers/asset.php';
 require_once BASE_PATH . '/routes/web.php';
 require_once BASE_PATH . '/routes/admin.php';
+require_once BASE_PATH . '/app/helpers/cart_helper.php';
 
 $found = Router::dispatch($_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD']);
 

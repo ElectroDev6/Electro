@@ -20,7 +20,6 @@ Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
 
 // Cart & Order
 Router::get('/cart', 'CartController@showCart');
-// Router::post('/detail/add-to-cart', 'CartController@addToCart');
 Router::post('/cart/select-all', 'CartController@selectAll');
 Router::post('/cart/select-product', 'CartController@selectProduct');
 Router::post('/cart/update-color', 'CartController@updateColor');
@@ -29,7 +28,7 @@ Router::post('/cart/update-warranty', 'CartController@updateWarranty');
 Router::post('/cart/delete', 'CartController@delete');
 Router::post('/cart/apply-voucher', 'CartController@applyVoucher');
 Router::post('/cart/confirm', 'CartController@confirmOrder');
-Router::get('/cart/item-count', 'CartController@getCartItemCount');
+Router::get('/cart/count', 'CartController@getCartItemCount');
 
 // Router::get('/checkout', 'CheckoutController@showCheckoutForm');
 Router::get('/thank-you', 'ThankyouController@showConfirmation');
@@ -47,19 +46,21 @@ Router::post('/handle-reset-password', 'AuthController@handleResetPassword');
 // Information & Pages
 Router::get('/about', 'AboutController@showAbout');
 Router::get('/contact', 'ContactController@showContact');
-Router::get('/profile', 'InforController@showProfile');
-Router::get('/logout', 'InforController@logout');
+Router::get('/profile', 'ProfileController@showProfile');
+Router::get('/logout', 'ProfileController@logout');
 Router::get('/history', 'HistoryController@showHistory');
 Router::get('/policy-mobile', 'PolicyController@showMobilePolicy');
 Router::get('/refund-policy', 'RefundController@showRefundPolicy');
-Router::post('/profile/save', 'InforController@saveProfile');
-Router::post('/profile/avatar', 'InforController@uploadAvatar');
+Router::post('/profile/save', 'ProfileController@saveProfile');
+Router::post('/profile/avatar', 'ProfileController@uploadAvatar');
 
 // Other Features
 Router::get('/clients', 'ClientController@showClients');
 Router::get('/unboxing', 'UnboxingController@showUnboxing');
 Router::get('/repair', 'RepairController@showRepair');
 
+
+Router::post('/checkout/submit', 'CheckoutController@submit');
 Router::get('/checkout', 'CheckoutController@index');
 
 Router::get('/thankyou', 'ThankyouController@index');

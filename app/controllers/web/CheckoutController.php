@@ -3,83 +3,109 @@
 namespace App\Controllers\Web;
 
 use Core\View;
-use Core\Redirect;
-use App\Services\CartService;
-use App\Models\CartModel;
 use App\Services\CheckoutService;
-use App\Services\ProductService;
 
 class CheckoutController
 {
-    protected CartService $cartService;
-    protected CheckoutService $checkoutService;
-    protected int $userId;
-    protected string $sessionId;
+    private CheckoutService $checkoutService;
+    private ?int $userId;
+    private string $sessionId;
 
     public function __construct(\PDO $pdo)
     {
-        $productService = new ProductService($pdo);
-
-        $this->cartService = new CartService($pdo, $productService);
-        $this->checkoutService = new CheckoutService($pdo, $productService);
-
-        $this->userId = $_SESSION['user_id'] ?? 1; // Giả lập nếu chưa login
+        $this->checkoutService = new CheckoutService($pdo);
+        $this->userId = $_SESSION['user_id'] ?? null;
         $this->sessionId = session_id();
     }
 
     /**
-     * Trang checkout
+     * Hiển thị trang checkout
      */
-
     public function index()
     {
-        // Lấy danh sách sản phẩm đã chọn trong giỏ hàng cùng tổng tiền
-        $Items = $this->cartService->getCart($this->userId, $this->sessionId);
+        $data = $this->checkoutService->getCheckoutData($this->userId, $this->sessionId);
 
-        // Truyền dữ liệu sang view checkout
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
+        // exit;
+
+        if (!empty($data['errors'])) {
+            $_SESSION['error_message'] = $data['errors'][0];
+            $_SESSION['post_login_redirect'] = '/checkout';
+            if ($this->isAjax()) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => $data['errors'][0], 'redirect' => '/login']);
+                exit;
+            }
+            header('Location: ' . ($this->userId ? '/cart' : '/login'));
+            exit;
+        }
+
         View::render('checkout', [
-            'Items' => $Items
+            'Items' => $data['items'],
+            'user_address' => $data['user_address'],
+            // 'errors' => $_SESSION['error_message'] ? [$_SESSION['error_message']] : []
         ]);
+
+        unset($_SESSION['error_message']);
     }
 
-
-
-
     /**
-     * Xác nhận đơn hàng (COD hoặc VNPAY)
+     * Xử lý gửi form checkout
      */
     public function submit()
     {
-        error_log('Submit called');
-        $postData = $_POST;
-        error_log('POST data: ' . print_r($postData, true));
-
-        $cartItems = $this->cartService->getSelectedCartItems($this->userId, $this->sessionId);
-        error_log('Selected cart items: ' . print_r($cartItems, true));
-
-        if (empty($cartItems)) {
-            error_log('No selected cart items');
-            Redirect::to('/cart');
-            return;
+        if (!$this->userId) {
+            $_SESSION['error_message'] = 'Vui lòng đăng nhập để tiếp tục thanh toán.';
+            $_SESSION['post_login_redirect'] = '/checkout';
+            if ($this->isAjax()) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập để tiếp tục thanh toán.', 'redirect' => '/login']);
+                exit;
+            }
+            header('Location: /login');
+            exit;
         }
 
-        $orderId = $this->checkoutService->createOrder($this->userId, $postData);
+        $orderId = $this->checkoutService->createOrder($this->userId, $_POST, $this->sessionId);
 
         if ($orderId) {
-            $this->cartService->clearSelectedItems($this->userId, $this->sessionId);
-            Redirect::to('/thank-you');
+            if (($_POST['payment_method'] ?? 'cod') === 'zalopay') {
+                $redirectUrl = $this->checkoutService->createVNPayUrl($this->userId, $orderId);
+                if ($this->isAjax()) {
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => true, 'message' => 'Đặt hàng thành công.', 'redirect' => $redirectUrl]);
+                    exit;
+                }
+                header("Location: $redirectUrl");
+                exit;
+            }
+            if ($this->isAjax()) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true, 'message' => 'Đặt hàng thành công.', 'redirect' => '/thank-you']);
+                exit;
+            }
+            header('Location: /thank-you');
+            exit;
         } else {
-            Redirect::to('/checkout?error=order-failed');
+            $_SESSION['error_message'] = 'Không thể tạo đơn hàng. Vui lòng thử lại.';
+            if ($this->isAjax()) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Không thể tạo đơn hàng. Vui lòng thử lại.', 'redirect' => '/checkout']);
+                exit;
+            }
+            header('Location: /checkout');
+            exit;
         }
     }
 
     /**
-     * Thanh toán VNPay
+     * Kiểm tra xem yêu cầu có phải AJAX không
+     * @return bool
      */
-    public function vnpayCheckout()
+    private function isAjax(): bool
     {
-        $redirectUrl = $this->checkoutService->createVNPayUrl($this->userId);
-        header("Location: $redirectUrl");
-        exit;
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 }

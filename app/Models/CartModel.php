@@ -19,46 +19,119 @@ class CartModel
         return $this->pdo;
     }
 
-    public function getOrCreateCart($userId = null, $sessionId = null)
+    public function getOrCreateCart($userId = null, $sessionId = null, $mergeIfNeeded = false)
     {
         error_log("CartModel: getOrCreateCart - UserID: " . ($userId ?? 'null') . ", SessionID: " . ($sessionId ?? 'null'));
-        $cartId = null;
         try {
-            $this->pdo->beginTransaction();
+            $cartId = null;
+
             if ($userId) {
-                $query = "INSERT INTO cart (user_id) VALUES (:user_id) ON DUPLICATE KEY UPDATE updated_at = CURRENT_TIMESTAMP";
-                $stmt = $this->pdo->prepare($query);
-                $stmt->execute([':user_id' => $userId]);
-                $cartId = $this->pdo->lastInsertId() ?: $this->getCartIdByUserId($userId);
+                $cartId = $this->getCartIdByUserId($userId);
+                if (!$cartId) {
+                    $stmt = $this->pdo->prepare("INSERT INTO cart (user_id) VALUES (:user_id)");
+                    $stmt->execute([':user_id' => $userId]);
+                    $cartId = $this->pdo->lastInsertId();
+                    error_log("CartModel: Created new cart for UserID: $userId, CartID: $cartId");
+                }
+
+                // Chỉ merge nếu được yêu cầu
+                if ($mergeIfNeeded && $sessionId) {
+                    $this->mergeCart($userId, $sessionId, $cartId);
+                }
             } elseif ($sessionId) {
                 $cartId = $this->getCartIdBySessionId($sessionId);
                 if (!$cartId) {
-                    $query = "INSERT INTO cart (session_id) VALUES (:session_id) ON DUPLICATE KEY UPDATE updated_at = CURRENT_TIMESTAMP";
-                    $stmt = $this->pdo->prepare($query);
+                    $stmt = $this->pdo->prepare("INSERT INTO cart (session_id) VALUES (:session_id)");
                     $stmt->execute([':session_id' => $sessionId]);
-                    $cartId = $this->pdo->lastInsertId() ?: $this->getCartIdBySessionId($sessionId);
+                    $cartId = $this->pdo->lastInsertId();
+                    error_log("CartModel: Created new cart for SessionID: $sessionId, CartID: $cartId");
                 }
             }
-            $this->pdo->commit();
+
             return $cartId;
-        } catch (Exception $e) {
-            $this->pdo->rollBack();
-            error_log("CartModel: Error in getOrCreateCart - UserID: " . ($userId ?? 'null') . ", SessionID: " . ($sessionId ?? 'null') . ", Error: " . $e->getMessage());
+        } catch (\Throwable $e) {
+            error_log("CartModel: Error in getOrCreateCart - " . $e->getMessage());
             return null;
         }
     }
 
-    private function getCartIdByUserId($userId)
+    public function sessionCartExists($sessionId)
     {
-        $query = "SELECT cart_id FROM cart WHERE user_id = :user_id LIMIT 1";
+        $sql = "SELECT COUNT(*) as total 
+            FROM cart_items ci
+            JOIN cart c ON ci.cart_id = c.cart_id
+            WHERE c.session_id = :session_id";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute(['session_id' => $sessionId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row && $row['total'] > 0;
+    }
+
+    public function mergeCart($userId, $sessionId, $userCartId)
+    {
+        error_log("CartModel: Merging cart - UserID: $userId, SessionID: $sessionId, UserCartID: $userCartId");
+
+        // Lấy cart_id của session_id
+        $sessionCartId = $this->getCartIdBySessionId($sessionId);
+        if (!$sessionCartId || $sessionCartId == $userCartId) {
+            error_log("CartModel: No session cart to merge or same as user cart - SessionID: $sessionId");
+            return;
+        }
+
+        // Lấy các sản phẩm từ giỏ hàng session_id
+        $sessionItems = $this->fetchCartItems($sessionCartId);
+        if (empty($sessionItems)) {
+            error_log("CartModel: No items to merge from SessionCartID: $sessionCartId");
+            // Xóa giỏ hàng session_id nếu không có sản phẩm
+            $this->deleteCart($sessionCartId);
+            return;
+        }
+
+        // Chuyển từng sản phẩm sang giỏ hàng user_id
+        foreach ($sessionItems as $item) {
+            $this->addToCart(
+                $userCartId,
+                $item['sku_id'],
+                $item['quantity'],
+                $item['color'],
+                $item['warranty_enabled'],
+                $item['image_url']
+            );
+        }
+
+        // Xóa giỏ hàng session_id sau khi hợp nhất
+        $this->deleteCart($sessionCartId);
+        error_log("CartModel: Successfully merged and deleted SessionCartID: $sessionCartId into UserCartID: $userCartId");
+    }
+
+    private function deleteCart($cartId)
+    {
+        try {
+            // Xóa cart_items trước do ràng buộc FOREIGN KEY
+            $stmt = $this->pdo->prepare("DELETE FROM cart_items WHERE cart_id = :cart_id");
+            $stmt->execute([':cart_id' => $cartId]);
+            // Xóa cart
+            $stmt = $this->pdo->prepare("DELETE FROM cart WHERE cart_id = :cart_id");
+            $stmt->execute([':cart_id' => $cartId]);
+            error_log("CartModel: Deleted cart - CartID: $cartId");
+        } catch (Exception $e) {
+            error_log("CartModel: Error in deleteCart - CartID: $cartId, Error: " . $e->getMessage());
+        }
+    }
+
+    public function getCartIdByUserId($userId)
+    {
+        $query = "SELECT cart_id FROM cart WHERE user_id = :user_id AND created_at > DATE_SUB(NOW(), INTERVAL 7 DAY) ORDER BY created_at DESC LIMIT 1";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([':user_id' => $userId]);
         return $stmt->fetchColumn() ?: null;
     }
 
-    private function getCartIdBySessionId($sessionId)
+    public function getCartIdBySessionId($sessionId)
     {
-        $query = "SELECT cart_id FROM cart WHERE session_id = :session_id LIMIT 1";
+        $query = "SELECT cart_id FROM cart WHERE session_id = :session_id AND created_at > DATE_SUB(NOW(), INTERVAL 7 DAY) ORDER BY created_at DESC LIMIT 1";
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([':session_id' => $sessionId]);
         return $stmt->fetchColumn() ?: null;

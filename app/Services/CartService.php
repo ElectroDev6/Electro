@@ -153,15 +153,23 @@ class CartService
     public function confirmOrder($userId, $sessionId)
     {
         $cartId = $this->cartModel->getCartId($userId, $sessionId);
-        if ($cartId) {
-            $cart = $this->getCart($userId, $sessionId);
-            if (empty($cart['products']) || !array_filter($cart['products'], fn($p) => $p['selected'])) {
-                return ['success' => false, 'message' => 'Please select at least one product.'];
-            }
-            $_SESSION['cart_data'] = $cart;
-            return ['success' => true, 'message' => 'Order confirmed, proceeding to checkout.'];
+        if (!$cartId) {
+            return ['success' => false, 'message' => 'Giỏ hàng trống hoặc không tồn tại.'];
         }
-        return ['success' => false, 'message' => 'Invalid cart.'];
+
+        $items = $this->cartModel->fetchCartItems($cartId);
+        if (empty($items)) {
+            return ['success' => false, 'message' => 'Giỏ hàng trống. Vui lòng thêm sản phẩm để tiếp tục.'];
+        }
+
+        $selectedItems = array_filter($items, fn($item) => $item['selected']);
+        if (empty($selectedItems)) {
+            return ['success' => false, 'message' => 'Vui lòng chọn ít nhất một sản phẩm để thanh toán.'];
+        }
+
+        // Có thể thêm logic kiểm tra tồn kho, trạng thái đơn hàng, v.v.
+        error_log("CartService: Order confirmed - CartID: $cartId, UserID: " . ($userId ?? 'null') . ", SessionID: $sessionId");
+        return ['success' => true, 'message' => 'Đơn hàng đã được xác nhận.'];
     }
 
     public function getCartItemCount($userId = null, $sessionId = null)

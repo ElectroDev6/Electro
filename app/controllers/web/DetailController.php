@@ -27,11 +27,6 @@ class DetailController
         }
 
         $product = $this->productService->getProductDetail($slug);
-
-        // echo '<pre>';
-        // print_r($product);
-        // echo '</pre>';
-        // exit;
         $relatedProducts = $this->productService->relatedProducts(
             $product['subcategory_id'],
             $product['product_id'],

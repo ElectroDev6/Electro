@@ -3,26 +3,27 @@
 namespace App\Controllers\Web;
 
 use App\Services\AuthService;
+use App\Models\CartModel;
 use Core\View;
 
 class AuthController
 {
     private $authService;
+    private $cartModel;
 
     public function __construct(\PDO $pdo)
     {
         $this->authService = new AuthService($pdo);
+        $this->cartModel = new CartModel($pdo); // Khởi tạo CartModel
     }
 
-    // Hiển thị form login/register
     public function showAuthForm()
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        // Nếu đã login rồi redirect sang trang chính
         if (!empty($_SESSION['user_id'])) {
-            header('Location: /login');
+            header('Location: /');
             exit;
         }
 
@@ -32,6 +33,9 @@ class AuthController
     public function handleAuth()
     {
         if (session_status() === PHP_SESSION_NONE) {
+            // Thiết lập session timeout trước khi bắt đầu session
+            ini_set('session.gc_maxlifetime', 3600);
+            session_set_cookie_params(3600);
             session_start();
         }
 
@@ -48,6 +52,7 @@ class AuthController
 
     private function handleLogin()
     {
+        $isAjax = $this->isAjax();
         $username = trim($_POST['username'] ?? '');
         $password = $_POST['password'] ?? '';
         $remember = isset($_POST['remember']);
@@ -68,20 +73,38 @@ class AuthController
         if ($user) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_role'] = $user['role'];
 
-            // Nếu chọn "Nhớ mật khẩu", lưu session có thời gian 1 giờ
+            // Hợp nhất giỏ hàng session_id với user_id
+            if (
+                !empty($_SESSION['post_login_redirect']) &&
+                in_array($_SESSION['post_login_redirect'], ['/cart', '/checkout']) &&
+                $this->cartModel->sessionCartExists(session_id())
+            ) {
+                $sessionId = session_id();
+                $userCartId = $this->cartModel->getOrCreateCart($user['user_id'], $sessionId, true);
+                error_log("AuthController: Merged cart for UserID: {$user['user_id']}, SessionID: $sessionId, CartID: $userCartId");
+            }
+
+            // Nếu chọn "Nhớ mật khẩu", tái tạo session ID
             if ($remember) {
-                // Tạo session với thời gian 1 giờ (3600s)
-                ini_set('session.gc_maxlifetime', 3600);
-                session_set_cookie_params(3600);
                 session_regenerate_id(true);
             }
 
-            if ($user['role'] === 'admin') {
-                header('Location: /admin');
-            } else {
-                header('Location: /');
+            $redirect = $_SESSION['post_login_redirect'] ?? ($user['role'] === 'admin' ? '/admin/index' : '/');
+            unset($_SESSION['post_login_redirect']);
+
+            if ($isAjax) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true, 'message' => 'Đăng nhập thành công', 'redirect' => $redirect]);
+                exit;
             }
+
+            // Chuyển hướng dựa trên post_login_redirect hoặc vai trò
+            if ($redirect === '/cart/confirm') {
+                $redirect = '/checkout';
+            }
+            header('Location: ' . $redirect);
             exit;
         }
 
@@ -90,6 +113,11 @@ class AuthController
             'old' => $old,
             'formType' => 'login'
         ]);
+    }
+
+    private function isAjax(): bool
+    {
+        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
 
     private function handleRegister()
@@ -105,7 +133,6 @@ class AuthController
             'reg_phone' => $phone,
         ];
 
-        // Validate bắt buộc
         if ($name === '' || $phone === '' || $password === '' || $rePassword === '') {
             View::render('auth', [
                 'error' => 'Vui lòng nhập đầy đủ thông tin',
@@ -115,7 +142,6 @@ class AuthController
             return;
         }
 
-        // Validate số điện thoại: bắt đầu bằng 0, tối đa 11 số, chỉ số
         if (!preg_match('/^0\d{8,10}$/', $phone)) {
             View::render('auth', [
                 'error' => 'Số điện thoại không hợp lệ',
@@ -125,7 +151,6 @@ class AuthController
             return;
         }
 
-        // Mật khẩu khớp
         if ($password !== $rePassword) {
             View::render('auth', [
                 'error' => 'Mật khẩu nhập lại không khớp',
@@ -135,7 +160,6 @@ class AuthController
             return;
         }
 
-        // Email validate
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             View::render('auth', [
                 'error' => 'Email không hợp lệ hoặc đã được sử dụng',

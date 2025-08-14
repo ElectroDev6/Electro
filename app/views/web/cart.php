@@ -148,7 +148,10 @@ use Core\View;
     const form = document.getElementById('select-all-form');
     fetch(form.action, {
       method: 'POST',
-      body: new FormData(form)
+      body: new FormData(form),
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
     }).then(() => window.location.reload());
   }
 
@@ -160,85 +163,112 @@ use Core\View;
     });
   });
 
-  document.getElementById('voucher-form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const form = e.target;
-    fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form)
-      })
-      .then(response => response.json())
-      .then(data => {
-        const messageDiv = document.getElementById('voucher-message');
-        messageDiv.textContent = data.message;
-        messageDiv.style.color = data.success ? 'green' : 'red';
-        if (data.success) {
-          setTimeout(() => window.location.reload(), 1000);
+  // Xử lý voucher-form
+  const voucherForm = document.getElementById('voucher-form');
+  if (voucherForm) {
+    voucherForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      const messageDiv = document.getElementById('voucher-message');
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      });
-  });
 
-  document.getElementById('confirm-order-form')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const form = e.target;
-    fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = '/checkout';
-        } else {
-          alert(data.message);
-        }
-      });
-  });
-</script>
-
-<script>
-  document.getElementById('voucher-form').addEventListener('submit', async function(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const messageDiv = document.getElementById('voucher-message');
-
-    try {
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest' // Đảm bảo header AJAX
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      messageDiv.textContent = result.message;
-      messageDiv.style.color = result.success ? 'green' : 'red';
-
-      if (result.success) {
+        const result = await response.json();
         messageDiv.textContent = result.message;
-        messageDiv.style.color = 'green';
+        messageDiv.style.color = result.success ? 'green' : 'red';
 
-        // Delay reload 1.5 giây để người dùng nhìn thấy thông báo
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-      } else {
-        messageDiv.textContent = result.message;
+        if (result.success) {
+          setTimeout(() => window.location.reload(), 1500);
+        }
+      } catch (error) {
+        console.error('Error applying voucher:', error);
+        messageDiv.textContent = 'Lỗi khi áp dụng voucher: ' + error.message;
         messageDiv.style.color = 'red';
       }
+    });
+  }
 
-    } catch (error) {
-      console.error('Error applying voucher:', error);
-      messageDiv.textContent = 'Lỗi khi áp dụng voucher: ' + error.message;
-      messageDiv.style.color = 'red';
-    }
-  });
+  // Xử lý confirm-order-form
+  const confirmOrderForm = document.getElementById('confirm-order-form');
+  if (confirmOrderForm) {
+    confirmOrderForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const form = event.target;
+      const messageDiv = document.getElementById('voucher-message');
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        if (result.success) {
+          window.location.href = '/checkout';
+        } else {
+          messageDiv.textContent = result.message;
+          messageDiv.style.color = 'red';
+          if (result.redirect) {
+            setTimeout(() => window.location.href = result.redirect, 1500);
+          }
+        }
+      } catch (error) {
+        console.error('Error confirming order:', error);
+        messageDiv.textContent = 'Lỗi khi xác nhận đơn hàng: ' + error.message;
+        messageDiv.style.color = 'red';
+      }
+    });
+  }
+
+
+  // // Kiểm tra post_login_redirect sau khi đăng nhập
+  // window.addEventListener('load', async function() {
+  //   const postLoginRedirect = '<?php echo isset($_SESSION['post_login_redirect']) ? $_SESSION['post_login_redirect'] : ''; ?>';
+  //   if (postLoginRedirect) {
+  //     try {
+  //       const response = await fetch(postLoginRedirect, {
+  //         method: 'GET',
+  //         headers: {
+  //           'X-Requested-With': 'XMLHttpRequest'
+  //         }
+  //       });
+  //       const result = await response.json();
+  //       if (result.success) {
+  //         window.location.href = '/checkout';
+  //       } else {
+  //         const messageDiv = document.getElementById('voucher-message');
+  //         messageDiv.textContent = result.message;
+  //         messageDiv.style.color = 'red';
+  //         if (result.redirect) {
+  //           setTimeout(() => window.location.href = result.redirect, 1500);
+  //         }
+  //       }
+  //       // Xóa post_login_redirect sau khi xử lý
+  //       <?php unset($_SESSION['post_login_redirect']); ?>
+  //     } catch (error) {
+  //       console.error('Error handling post-login redirect:', error);
+  //     }
+  //   }
+  // });
 </script>
 
 <?php View::endSection(); ?>
