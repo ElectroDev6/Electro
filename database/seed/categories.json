@@ -100,23 +100,5 @@
     "image": "/img/category/dieu_hoa_cate.webp",
     "description": "Máy tính để bàn và các linh kiện như CPU, RAM, SSD.",
     "slug": "pc-components"
-  },
-  {
-    "name": "Nấu Nướng",
-    "image": "/img/category/dieu_hoa_cate.webp",
-    "description": "Các thiết bị hỗ trợ nấu ăn như bếp điện, nồi cơm, lò nướng.",
-    "slug": "cooking"
-  },
-  {
-    "name": "Chuẩn Bị & Dọn Dẹp",
-    "image": "/img/category/dieu_hoa_cate.webp",
-    "description": "Thiết bị hỗ trợ dọn dẹp và chuẩn bị bữa ăn tiện lợi.",
-    "slug": "cleaning"
-  },
-  {
-    "name": "Sức Khỏe",
-    "image": "/img/category/dieu_hoa_cate.webp",
-    "description": "Máy đo huyết áp, nhiệt kế điện tử và thiết bị chăm sóc sức khỏe.",
-    "slug": "health"
   }
 ]

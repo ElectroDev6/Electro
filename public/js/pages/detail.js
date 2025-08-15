@@ -1,4 +1,4 @@
-class DetailPage {
+export default class DetailPage {
   constructor(productData) {
     this.productData = productData;
   }

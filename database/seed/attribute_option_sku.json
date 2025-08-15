@@ -167,22 +167,6 @@
         "attribute_option_id": 3
       },
       {
-        "sku_code": "IP15PROMAX-256GB-BLACK",
-        "attribute_option_id": 1
-      },
-      {
-        "sku_code": "IP15PROMAX-256GB-BLACK",
-        "attribute_option_id": 4
-      },
-      {
-        "sku_code": "IP15PROMAX-256GB-WHITE",
-        "attribute_option_id": 2
-      },
-      {
-        "sku_code": "IP15PROMAX-256GB-WHITE",
-        "attribute_option_id": 4
-      },
-      {
         "sku_code": "IP15PROMAX-1TB-BLACK",
         "attribute_option_id": 1
       },
@@ -197,6 +181,22 @@
       {
         "sku_code": "IP15PROMAX-1TB-WHITE",
         "attribute_option_id": 5
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PROMAX-256GB-WHITE",
+        "attribute_option_id": 4
       }
     ]
   },
@@ -257,22 +257,6 @@
         "attribute_option_id": 3
       },
       {
-        "sku_code": "IP15PRO-256GB-BLACK",
-        "attribute_option_id": 1
-      },
-      {
-        "sku_code": "IP15PRO-256GB-BLACK",
-        "attribute_option_id": 4
-      },
-      {
-        "sku_code": "IP15PRO-256GB-WHITE",
-        "attribute_option_id": 2
-      },
-      {
-        "sku_code": "IP15PRO-256GB-WHITE",
-        "attribute_option_id": 4
-      },
-      {
         "sku_code": "IP15PRO-1TB-BLACK",
         "attribute_option_id": 1
       },
@@ -287,6 +271,22 @@
       {
         "sku_code": "IP15PRO-1TB-WHITE",
         "attribute_option_id": 5
+      },
+      {
+        "sku_code": "IP15PRO-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP15PRO-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP15PRO-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP15PRO-256GB-WHITE",
+        "attribute_option_id": 4
       }
     ]
   },
@@ -347,22 +347,6 @@
         "attribute_option_id": 3
       },
       {
-        "sku_code": "IP16PROMAX-256GB-BLACK",
-        "attribute_option_id": 1
-      },
-      {
-        "sku_code": "IP16PROMAX-256GB-BLACK",
-        "attribute_option_id": 4
-      },
-      {
-        "sku_code": "IP16PROMAX-256GB-WHITE",
-        "attribute_option_id": 2
-      },
-      {
-        "sku_code": "IP16PROMAX-256GB-WHITE",
-        "attribute_option_id": 4
-      },
-      {
         "sku_code": "IP16PROMAX-1TB-BLACK",
         "attribute_option_id": 1
       },
@@ -377,6 +361,22 @@
       {
         "sku_code": "IP16PROMAX-1TB-WHITE",
         "attribute_option_id": 5
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-BLACK",
+        "attribute_option_id": 1
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-BLACK",
+        "attribute_option_id": 4
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-WHITE",
+        "attribute_option_id": 2
+      },
+      {
+        "sku_code": "IP16PROMAX-256GB-WHITE",
+        "attribute_option_id": 4
       }
     ]
   },
@@ -784,7 +784,7 @@
     "product_id": 46,
     "attribute_options": [
       {
-        "sku_code": "ecovacs-deebot-BLACK",
+        "sku_code": "Ecovacs-Deebot-BLACK",
         "attribute_option_id": 1
       }
     ]
@@ -793,7 +793,7 @@
     "product_id": 47,
     "attribute_options": [
       {
-        "sku_code": "ecovacs-T30C-BLACK",
+        "sku_code": "Ecovacs-T30C-BLACK",
         "attribute_option_id": 1
       }
     ]
@@ -802,7 +802,7 @@
     "product_id": 48,
     "attribute_options": [
       {
-        "sku_code": "ecovacs-N30-BLACK",
+        "sku_code": "Ecovacs-N30-BLACK",
         "attribute_option_id": 1
       }
     ]
@@ -820,7 +820,7 @@
     "product_id": 50,
     "attribute_options": [
       {
-        "sku_code": "ecovacs-Y1-BLACK",
+        "sku_code": "Ecovacs-Y1-BLACK",
         "attribute_option_id": 1
       }
     ]

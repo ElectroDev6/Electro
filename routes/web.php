@@ -12,6 +12,8 @@ Router::get('/products', 'ProductController@showAll');
 Router::get('/detail/:slug', 'DetailController@showDetail');
 Router::post('/detail/add-to-cart', 'DetailController@addToCart');
 
+Router::get('/search/suggestions', 'SearchController@suggestions');
+
 // Comment
 Router::post('/comment/add', 'DetailController@addComment');
 // Search

@@ -13,6 +13,9 @@ Trang chủ
 <?php View::endSection(); ?>
 
 <?php View::section('content'); ?>
+
+<?php View::component('components.scroll-to-top'); ?>
+
 <!-- Menu -->
 <div class="container-main">
     <ul class="breadcrumb">
@@ -25,14 +28,6 @@ Trang chủ
                         <li><a href="#">Home v1</a></li>
                         <li><a href="#">Home v2</a></li>
                         <li><a href="#">Home v3</a></li>
-                    </ul>
-                </div>
-                <div class="mega-column">
-                    <h4>Trang mua sắm</h4>
-                    <ul>
-                        <li><a href="#">Sản phẩm dạng lưới</a></li>
-                        <li><a href="#">Dạng danh sách</a></li>
-                        <li><a href="#">Sidebar trái / phải</a></li>
                     </ul>
                 </div>
                 <div class="mega-column">

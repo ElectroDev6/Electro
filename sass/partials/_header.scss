@@ -77,13 +77,13 @@
     margin: 0 2rem;
     border: 1px solid #ccc;
     border-radius: 2rem;
-    overflow: hidden;
 
     &-btn {
       background-color: colors.$primary-color;
       border: none;
       padding: 0 2rem;
       cursor: pointer;
+      border-radius: 0 2rem 2rem 0;
     }
 
     &-icon {
@@ -96,6 +96,7 @@
     flex: 1;
     border: none;
     padding: 1rem 1.5rem;
+    border-radius: 2rem;
 
     &:focus {
       outline: none;

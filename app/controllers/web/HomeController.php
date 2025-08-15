@@ -11,13 +11,11 @@ class HomeController
 {
     private $productService;
     private $categoryService;
-    private $promotionService;
 
     public function __construct(\PDO $pdo)
     {
         $this->productService = new ProductService($pdo);
         $this->categoryService = new CategoryService($pdo);
-        $this->promotionService = new PromotionService($pdo);
     }
 
     public function index()
@@ -83,16 +81,4 @@ class HomeController
             'computerAccessories' => $computerAccessories
         ]);
     }
-
-    // Xử lý yêu cầu AJAX để lấy sản phẩm sale theo ngày
-    // public function getSaleProductsByDate()
-    // {
-    //     if (isset($_GET['date'])) {
-    //         $selectedDate = $_GET['date'];
-    //         $products = $this->promotionService->getSaleProductsByDate($selectedDate);
-    //         header('Content-Type: application/json');
-    //         echo json_encode(['products' => $products]);
-    //         exit;
-    //     }
-    // }
 }

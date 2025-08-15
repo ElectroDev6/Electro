@@ -23,6 +23,7 @@
 </body>
 <?php Core\View::yield('page_styles'); ?>
 <script type="module" src="<?= asset("js/{$pageName}.js") ?>"></script>
+<script type="module" src="<?= asset("js/main.js") ?>"></script>
 <?php
 ?>
 

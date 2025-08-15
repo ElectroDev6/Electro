@@ -88,10 +88,23 @@
                 <input type="text" class="header__input" id="header__input" placeholder="Tìm kiếm sản phẩm" />
                 <select class="header__select" id="header__select">
                     <option value="">Tất cả các danh mục</option>
-                    <option value="1">Danh mục 1</option>
-                    <option value="2">Danh mục 2</option>
-                    <option value="3">Danh mục 3</option>
-                    <option value="4">Danh mục 4</option>
+                    <option value="1">Điện thoại</option>
+                    <option value="2">Máy tính bảng</option>
+                    <option value="3">Laptop</option>
+                    <option value="4">Phụ kiện</option>
+                    <option value="5">Tivi</option>
+                    <option value="6">Tủ lạnh</option>
+                    <option value="7">Điện gia dụng</option>
+                    <option value="8">SIM</option>
+                    <option value="9">Quạt điều hòa</option>
+                    <option value="10">Màn hình</option>
+                    <option value="11">Camera</option>
+                    <option value="12">Thiết bị nhà bếp</option>
+                    <option value="13">Thiết bị sinh hoạt</option>
+                    <option value="14">Gaming</option>
+                    <option value="15">Chăm sóc cá nhân</option>
+                    <option value="16">Card đồ họa</option>
+                    <option value="17">PC & Linh kiện</option>
                 </select>
                 <button type="submit" class="header__search-btn">
                     <img style="width: 22px;" src="/icons/search-svgrepo-com.svg" alt="">
@@ -116,6 +129,7 @@
                 });
             </script>
 
+            <!-- Mobile -->
             <div class="header__search-dropdown">
                 <form class="header__search-dropdown-form">
                     <input type="text" placeholder="Tìm kiếm sản phẩm..." />
