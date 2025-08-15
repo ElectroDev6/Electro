@@ -59,3 +59,4 @@ Router::get('/delivery', 'DeliveryController@delivery');
 Router::get('/customer', 'CustomerController@customer');
 Router::get('/frequently_questions', 'frequently_questionsController@frequently_questions');
 Router::get('/Introducing_shop', 'Introducing_shopController@introducing_shop');
+Router::get('/wishlist', 'WishlistController@wishlist');

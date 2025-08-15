@@ -1,17 +1,14 @@
 <!-- Trang sản phẩm Iphone -->
 <?php
-
 use Core\View; ?>
 <?php View::extend('layouts.main'); ?>
-
 <?php View::section('page_title'); ?>
 Sản phẩm
 <?php View::endSection(); ?>
-
 <?php View::section('content'); ?>
 
 <body>
-    <!-- <?php echo '<pre>';
+     <?php echo '<pre>';
     print_r($products);
     echo '</pre>';
     ?>
@@ -19,7 +16,7 @@ Sản phẩm
     <?php echo '<pre>';
     print_r($storage);
     echo '</pre>';
-    ?> -->
+    ?> 
     <div class="navigation">
         <a href="/">Trang chủ</a> / <a class="active" href="/products/iphone">Điện thoại</a>
     </div>
@@ -63,12 +60,12 @@ Sản phẩm
                         </div>
                     </a>
                     <a href="/products/iphone?brand=Apple" class="brand-logos__link" data-brand="Apple">
-                        <div class="brand-logo-card" >
+                        <div class="brand-logo-card">
                             <img src="/img/Menu_LT_apple.jpg" alt="Apple" class="brand-logo-card__image">
                         </div>
                     </a>
                     <a href="/products/iphone?brand=Vivo" class="brand-logos__link" data-brand="Vivo">
-                        <div class="brand-logo-card" >
+                        <div class="brand-logo-card">
                             <img src="/img/Menu_DT_vivo.jpg" alt="Vivo" class="brand-logo-card__image">
                         </div>
                     </a>
@@ -78,56 +75,65 @@ Sản phẩm
             <form method="GET" action="/product" id="mainFilter">
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Mức giá</h4>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="all"
-                            class="filter-group__radio"> Tất cả </label>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="25-30"
-                            class="filter-group__radio"> Từ 25 đến 30 triệu
+                    <label class="filter-group__label"> <input type="checkbox" name="price[]" value="all"
+                            <?= in_array('all', $priceRange) ? 'checked' : '' ?> class="filter-group__radio"> Tất cả
+                    </label>
+                    <label class="filter-group__label"> <input type="checkbox" name="price[]" value="25-30"
+                            <?= in_array('25-30', $priceRange) ? 'checked' : '' ?> class="filter-group__radio"> Từ 25
+                        đến 30 triệu
                     </label>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="price" value="20-25" class="filter-group__radio"> Từ 20 đến 25
+                        <input type="checkbox" name="price[]" value="20-25" <?= in_array('20-25', $priceRange) ? 'checked' : '' ?> class="filter-group__radio"> Từ 20 đến 25
                         triệu
                     </label>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="15-20"
-                            class="filter-group__radio"> Từ 15 đến 20 triệu </label>
+                    <label class="filter-group__label"> <input type="checkbox" name="price[]" value="15-20"
+                            <?= in_array('15-20', $priceRange) ? 'checked' : '' ?> class="filter-group__radio"> Từ 15
+                        đến 20 triệu </label>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="price" value="10-15" class="filter-group__radio"> Từ 10 đến 15
+                        <input type="checkbox" name="price[]" value="10-15" <?= in_array('10-15', $priceRange) ? 'checked' : '' ?> class="filter-group__radio"> Từ 10 đến 15
                         triệu
                     </label>
-                    <label class="filter-group__label"> <input type="checkbox" name="price" value="duoi10"
+                    <label class="filter-group__label"> <input type="checkbox" name="price[]" value="duoi10"
                             class="filter-group__radio"> Dưới 10 triệu </label>
                 </div>
 
-                <div class="filter-group">
+                <!-- <div class="filter-group">
                     <h4 class="filter-group__heading">Hệ điều hành</h4>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="operating_system[]" value="IOS" class="filter-group__checkbox"> IOS
+                        <input type="checkbox" name="operating_system[]" value="IOS" 
+                         class="filter-group__checkbox"> IOS
                     </label>
                     <label class="filter-group__label">
-                        <input type="checkbox" name="operating_system[]" value="Android" class="filter-group__checkbox">
+                        <input type="checkbox" name="operating_system[]" value="Android" 
+                        class="filter-group__checkbox">
                         Android
                     </label>
 
-                </div>
+                </div> -->
 
                 <div class="filter-group filter-group--ram">
                     <h4 class="filter-group__heading">Dung lượng</h4>
                     <div class="ram-options">
-                        <a href="/products/iphone?storage=128GB" class="ram-options__link">
+                        <a href="/products/iphone?storage=128GB" <?= in_array('128GB', $storage) ? 'checked' : '' ?>
+                            class="ram-options__link">
                             <div class="ram-option-card">
                                 <p class="ram-option-card__text">128GB</p>
                             </div>
                         </a>
-                        <a href="/products/iphone?storage=256GB" class="ram-options__link">
+                        <a href="/products/iphone?storage=256GB" <?= in_array('256GB', $storage) ? 'checked' : '' ?>
+                            class="ram-options__link">
                             <div class="ram-option-card" data-brand="Apple">
                                 <p class="ram-option-card__text">256GB</p>
                             </div>
                         </a>
-                        <a href="/products/iphone?storage=512GB" class="ram-options__link">
+                        <a href="/products/iphone?storage=512GB" <?= in_array('512GB', $storage) ? 'checked' : '' ?>
+                            class="ram-options__link">
                             <div class="ram-option-card" data-brand="Dell">
                                 <p class="ram-option-card__text">512GB</p>
                             </div>
                         </a>
-                        <a href="/products/iphone?storage=1TB" class="ram-options__link">
+                        <a href="/products/iphone?storage=1TB" <?= in_array('1TB', $storage) ? 'checked' : '' ?>
+                            class="ram-options__link">
                             <div class="ram-option-card" data-brand="HP">
                                 <p class="ram-option-card__text">1TB</p>
                             </div>
@@ -311,17 +317,22 @@ Sản phẩm
 
     allCheckboxes.forEach(cb => {
         cb.addEventListener('change', () => {
-            const params = new URLSearchParams();
+            // Lấy các params hiện có từ URL
+            const params = new URLSearchParams(window.location.search);
 
-            // Duyệt tất cả checkbox đã được check trong form
-            mainForm.querySelectorAll('input[type="checkbox"]:checked').forEach(checkedCb => {
+            // Xóa hết giá trị cũ của filter hiện tại
+            params.delete(cb.name);
+
+            // Lấy tất cả checkbox đang check có cùng name
+            mainForm.querySelectorAll(`input[name="${cb.name}"]:checked`).forEach(checkedCb => {
                 params.append(checkedCb.name, checkedCb.value);
             });
 
-            // Tạo URL mới chứa filter và chuyển trang
-            window.location.search = '?' + params.toString();
+            // Reload với URL mới (giữ các filter khác)
+            window.location.search = params.toString();
         });
     });
+
 
 </script>
 <?php View::endSection(); ?>

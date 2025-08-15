@@ -8,10 +8,9 @@ class ProductLaptopService
 {
     private $productLaptopModel;
     private $cartService;
-    public function __construct(\PDO $pdo, ?CartService $cartService = null)
+    public function __construct(\PDO $pdo)
     {
         $this->productLaptopModel = new ProductLaptopModel($pdo);
-        $this->cartService = $cartService;
     }
 
     public function showAllLaptops(): array

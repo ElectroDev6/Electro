@@ -36,13 +36,11 @@ class ProductLaptopModel
         SUBSTRING_INDEX(SUBSTRING_INDEX(s.sku_code, '-', 2), '-', -1) AS storage,
 
         -- Thương hiệu
-        b.name AS brand_name,
-
-        --  Hệ điều hành
-        os.name AS operating_system
+        b.name AS brand_name
 
     FROM products p
 
+    
     -- SKU chính
     INNER JOIN (
         SELECT s1.*
@@ -66,15 +64,10 @@ class ProductLaptopModel
     -- Thương hiệu
     LEFT JOIN brands b ON b.brand_id = p.brand_id
 
-    --  Hệ điều hành
-    LEFT JOIN operating_systems os ON os.id = p.operating_system_id
-
     -- Bộ lọc thương hiệu
     WHERE b.name IN ('Apple', 'Oppo', 'Vivo')
 
-    -- (Tùy chọn) Bộ lọc hệ điều hành:
-    -- AND os.slug = 'android'  -- hoặc 'ios'
-
+    
     ORDER BY p.created_at DESC
 ";
 

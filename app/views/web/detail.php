@@ -3,9 +3,9 @@
 $colorMap = [
     'black' => '#000000',
     'white' => '#ffffff',
-    'blue'  => '#007bff',
-    'red'   => '#ff0000',
-    'gray'  => '#666666',
+    'blue' => '#007bff',
+    'red' => '#ff0000',
+    'gray' => '#666666',
 ];
 
 
@@ -31,9 +31,10 @@ Chi tiết sản phẩm
         <div class="product-detail__main">
             <div class="product-detail__images">
                 <!-- Main Image -->
+
                 <div class="product-detail__main-image">
-                    <img
-                        id="main-product-image"
+                    
+                    <img id="main-product-image"
                         src="/img/products<?= htmlspecialchars($product['images'][$product['variants'][0]['sku_id']][0]['gallery_url'] ?? '') ?>"
                         alt="Ảnh chính sản phẩm" />
                 </div>
@@ -44,9 +45,9 @@ Chi tiết sản phẩm
                     $defaultSkuId = $product['variants'][0]['sku_id'];
                     $images = $product['images'][$defaultSkuId] ?? [];
                     foreach (array_slice($images, 0, 4) as $img): ?>
-                        <div class="product-detail__thumbnail <?= $img['sort_order'] == 1 ? 'product-detail__thumbnail--active' : '' ?>">
-                            <img
-                                src="/img/products<?= htmlspecialchars($img['thumbnail_url']) ?>"
+                        <div
+                            class="product-detail__thumbnail <?= $img['sort_order'] == 1 ? 'product-detail__thumbnail--active' : '' ?>">
+                            <img src="/img/products<?= htmlspecialchars($img['thumbnail_url']) ?>"
                                 data-gallery-url="/img/products<?= htmlspecialchars($img['gallery_url']) ?>"
                                 alt="Thumbnail" />
                         </div>
@@ -130,7 +131,8 @@ Chi tiết sản phẩm
                         <?= number_format($product['variants'][0]['price_original'] ?? 0, 0, ',', '.') ?> ₫
                     </div>
 
-                    <div class="product-detail__discount-badge">-<?= $product['variants'][0]['discount_percent'] ?? 0 ?>%</div>
+                    <div class="product-detail__discount-badge">
+                        -<?= $product['variants'][0]['discount_percent'] ?? 0 ?>%</div>
                 </div>
 
                 <div class="product-detail__options">
@@ -152,12 +154,11 @@ Chi tiết sản phẩm
                                 foreach (array_keys($colors) as $colorName): ?>
                                     <button
                                         class="product-detail__option-btn product-detail__color-btn <?= $i === 0 ? 'product-detail__color-btn--active' : '' ?>"
-                                        style="background-color: <?= $colorMap[$colorName] ?? '#ccc' ?>"
-                                        data-option-id="1"
+                                        style="background-color: <?= $colorMap[$colorName] ?? '#ccc' ?>" data-option-id="1"
                                         data-value="<?= htmlspecialchars($colorName) ?>">
                                         <span class="product-detail__color-name"></span>
                                     </button>
-                                <?php $i++;
+                                    <?php $i++;
                                 endforeach; ?>
                             </div>
                         </div>
@@ -175,11 +176,10 @@ Chi tiết sản phẩm
                                 foreach (array_keys($capacities) as $capacity): ?>
                                     <button
                                         class="product-detail__option-btn product-detail__capacity-btn <?= $j === 0 ? 'product-detail__capacity-btn--active' : '' ?>"
-                                        data-option-id="2"
-                                        data-value="<?= htmlspecialchars(strtolower($capacity)) ?>">
+                                        data-option-id="2" data-value="<?= htmlspecialchars(strtolower($capacity)) ?>">
                                         <?= htmlspecialchars(strtoupper($capacity)) ?>
                                     </button>
-                                <?php $j++;
+                                    <?php $j++;
                                 endforeach; ?>
                             </div>
                         </div>
@@ -222,7 +222,9 @@ Chi tiết sản phẩm
         <div class="product-detail__description">
             <h2 class="product-detail__description-title">Mô tả sản phẩm</h2>
             <div class="product-detail__description-content">
-                <p>Tivi OLED Samsung QE65S95D 65 inch là sản phẩm tivi cao cấp mới nhất của Samsung, được trang bị công nghệ QD-OLED tiên tiến, mang đến trải nghiệm hình ảnh vượt trội với độ tương phản vô cực và dải màu rộng.</p>
+                <p>Tivi OLED Samsung QE65S95D 65 inch là sản phẩm tivi cao cấp mới nhất của Samsung, được trang bị công
+                    nghệ QD-OLED tiên tiến, mang đến trải nghiệm hình ảnh vượt trội với độ tương phản vô cực và dải màu
+                    rộng.</p>
 
                 <div class="product-detail__feature-image">
                     <img src="/img/tv-feature.webp" alt="Tính năng sản phẩm" />
@@ -343,7 +345,8 @@ Chi tiết sản phẩm
                         </div>
                     </div>
                     <div class="product-detail__review-content">
-                        <p>Sản phẩm rất tốt, hình ảnh sắc nét, màn hình lớn phù hợp với phòng khách. Giao hàng nhanh, đóng gói cẩn thận. Tôi rất hài lòng với sản phẩm này. Sẽ tiếp tục ủng hộ shop.</p>
+                        <p>Sản phẩm rất tốt, hình ảnh sắc nét, màn hình lớn phù hợp với phòng khách. Giao hàng nhanh,
+                            đóng gói cẩn thận. Tôi rất hài lòng với sản phẩm này. Sẽ tiếp tục ủng hộ shop.</p>
                         <div class="product-detail__review-images">
                             <img src="/img/review.webp" alt="Review image" />
                             <img src="/img/review.webp" alt="Review image" />
@@ -361,7 +364,8 @@ Chi tiết sản phẩm
                         </div>
                     </div>
                     <div class="product-detail__review-content">
-                        <p>Tivi đẹp, chất lượng tốt. Nhân viên tư vấn nhiệt tình. Giao hàng đúng hẹn. Giá cả hợp lý. Recommend!</p>
+                        <p>Tivi đẹp, chất lượng tốt. Nhân viên tư vấn nhiệt tình. Giao hàng đúng hẹn. Giá cả hợp lý.
+                            Recommend!</p>
                         <div class="product-detail__review-images">
                             <img src="/img/review.webp" alt="Review image" />
                             <img src="/img/review.webp" alt="Review image" />
@@ -379,7 +383,8 @@ Chi tiết sản phẩm
                         </div>
                     </div>
                     <div class="product-detail__review-content">
-                        <p>Màn hình to, hình ảnh đẹp, âm thanh hay. Shop tư vấn nhiệt tình, giao hàng nhanh. Sẽ giới thiệu cho bạn bè.</p>
+                        <p>Màn hình to, hình ảnh đẹp, âm thanh hay. Shop tư vấn nhiệt tình, giao hàng nhanh. Sẽ giới
+                            thiệu cho bạn bè.</p>
                         <div class="product-detail__review-images">
                             <img src="/img/review.webp" alt="Review image" />
                             <img src="/img/review.webp" alt="Review image" />
@@ -397,7 +402,8 @@ Chi tiết sản phẩm
                         </div>
                     </div>
                     <div class="product-detail__review-content">
-                        <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn shop!</p>
+                        <p>Sản phẩm tốt, đúng như mô tả. Chất lượng hình ảnh rất đẹp. Âm thanh to rõ. Giá hợp lý. Cảm ơn
+                            shop!</p>
                         <div class="product-detail__review-images">
                             <img src="/img/review.webp" alt="Review image" />
                             <img src="/img/review.webp" alt="Review image" />
@@ -420,53 +426,53 @@ Chi tiết sản phẩm
 
 <script>
     const variants = <?= json_encode(
-                            array_map(function ($variant) use ($product) {
-                                $skuId = $variant['sku_id'];
-                                $images = [];
-                                $currentAttributes = $product['attributes'][$skuId] ?? [];
-                                $currentColor = strtolower($currentAttributes[0]['option_value'] ?? '');
-                                if (!empty($product['images'][$skuId])) {
-                                    foreach ($product['images'][$skuId] as $img) {
-                                        $images[] = [
-                                            'default_url'   => !empty($img['default_url']) ? $img['default_url'] : '',
-                                            'thumbnail_url' => $img['thumbnail_url'],
-                                            'gallery_url'   => $img['gallery_url'],
-                                            'sort_order'    => $img['sort_order'],
-                                        ];
-                                    }
-                                } else {
-                                    $matchingSku = array_filter($product['variants'], function ($v) use ($skuId, $currentColor, $product) {
-                                        $otherAttributes = $product['attributes'][$v['sku_id']] ?? [];
-                                        $otherColor = strtolower($otherAttributes[0]['option_value'] ?? '');
-                                        return $v['sku_id'] !== $skuId && $currentColor === $otherColor && !empty($product['images'][$v['sku_id']]);
-                                    });
-                                    $fallbackSkuId = !empty($matchingSku) ? reset($matchingSku)['sku_id'] : $product['variants'][0]['sku_id'];
-                                    foreach ($product['images'][$fallbackSkuId] ?? [] as $img) {
-                                        $images[] = [
-                                            'default_url'   => !empty($img['default_url']) ? $img['default_url'] : '',
-                                            'thumbnail_url' => $img['thumbnail_url'],
-                                            'gallery_url'   => $img['gallery_url'],
-                                            'sort_order'    => $img['sort_order'],
-                                        ];
-                                    }
-                                }
-                                $attributes = $product['attributes'][$skuId] ?? [];
-                                foreach ($attributes as &$attr) {
-                                    $attr['option_value'] = strtolower($attr['option_value']);
-                                }
-                                return [
-                                    'sku_id'          => $skuId,
-                                    'sku_code'        => $variant['sku_code'],
-                                    'price_original'  => $variant['price_original'],
-                                    'price_discount'  => $variant['price_discount'],
-                                    'discount_percent' => $variant['discount_percent'],
-                                    'discount_amount' => $variant['discount_amount'],
-                                    'stock_quantity'  => $variant['stock_quantity'],
-                                    'attributes'      => $attributes,
-                                    'images'          => $images,
-                                ];
-                            }, $product['variants'])
-                        ) ?>;
+        array_map(function ($variant) use ($product) {
+        $skuId = $variant['sku_id'];
+        $images = [];
+        $currentAttributes = $product['attributes'][$skuId] ?? [];
+        $currentColor = strtolower($currentAttributes[0]['option_value'] ?? '');
+        if (!empty($product['images'][$skuId])) {
+            foreach ($product['images'][$skuId] as $img) {
+                $images[] = [
+                    'default_url' => !empty($img['default_url']) ? $img['default_url'] : '',
+                    'thumbnail_url' => $img['thumbnail_url'],
+                    'gallery_url' => $img['gallery_url'],
+                    'sort_order' => $img['sort_order'],
+                ];
+            }
+        } else {
+            $matchingSku = array_filter($product['variants'], function ($v) use ($skuId, $currentColor, $product) {
+                $otherAttributes = $product['attributes'][$v['sku_id']] ?? [];
+                $otherColor = strtolower($otherAttributes[0]['option_value'] ?? '');
+                return $v['sku_id'] !== $skuId && $currentColor === $otherColor && !empty($product['images'][$v['sku_id']]);
+            });
+            $fallbackSkuId = !empty($matchingSku) ? reset($matchingSku)['sku_id'] : $product['variants'][0]['sku_id'];
+            foreach ($product['images'][$fallbackSkuId] ?? [] as $img) {
+                $images[] = [
+                    'default_url' => !empty($img['default_url']) ? $img['default_url'] : '',
+                    'thumbnail_url' => $img['thumbnail_url'],
+                    'gallery_url' => $img['gallery_url'],
+                    'sort_order' => $img['sort_order'],
+                ];
+            }
+        }
+        $attributes = $product['attributes'][$skuId] ?? [];
+        foreach ($attributes as &$attr) {
+            $attr['option_value'] = strtolower($attr['option_value']);
+        }
+        return [
+            'sku_id' => $skuId,
+            'sku_code' => $variant['sku_code'],
+            'price_original' => $variant['price_original'],
+            'price_discount' => $variant['price_discount'],
+            'discount_percent' => $variant['discount_percent'],
+            'discount_amount' => $variant['discount_amount'],
+            'stock_quantity' => $variant['stock_quantity'],
+            'attributes' => $attributes,
+            'images' => $images,
+        ];
+    }, $product['variants'])
+    ) ?>;
 
     document.addEventListener('DOMContentLoaded', () => {
         const addToCartBtn = document.querySelector('.product-detail__btn-add-cart');
@@ -510,16 +516,16 @@ Chi tiết sản phẩm
             console.log('[Add to Cart] Quantity:', quantity);
 
             fetch('/detail/add-to-cart', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Requested-With': 'XMLHttpRequest'
-                    },
-                    body: JSON.stringify({
-                        sku_id: selectedSkuId,
-                        quantity: quantity
-                    })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify({
+                    sku_id: selectedSkuId,
+                    quantity: quantity
                 })
+            })
                 .then(response => {
                     console.log('[Fetch] Raw response object:', response);
                     return response.text();
@@ -564,6 +570,8 @@ Chi tiết sản phẩm
             }
         });
     });
+
+
 </script>
 
 
