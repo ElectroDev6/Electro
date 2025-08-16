@@ -6,24 +6,22 @@ use App\Services\SearchService;
 
 class SearchController
 {
-    private $productService;
+    private $service;
 
-    public function __construct()
+    public function __construct(\PDO $pdo)
     {
-        $this->productService = new SearchService();
+        $this->service = new SearchService($pdo);
     }
 
     public function suggestions()
     {
-        $keyword = $_GET['q'] ?? '';
+        $q = $_GET['q'] ?? '';
         header('Content-Type: application/json');
-
-        if (strlen($keyword) < 2) {
+        if (mb_strlen(trim($q)) < 2) {
             echo json_encode([]);
             return;
         }
 
-        $results = $this->productService->searchProducts($keyword);
-        echo json_encode($results);
+        echo json_encode($this->service->suggestions($q));
     }
 }

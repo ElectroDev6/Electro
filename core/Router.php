@@ -86,6 +86,8 @@ class Router
           'body'    => $method === 'POST' ? $input : []
         ];
 
+        error_log("Router: Params: " . json_encode($params));
+
         call_user_func_array([$instance, $action], [$params]);
         return;
       }

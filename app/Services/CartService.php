@@ -27,7 +27,7 @@ class CartService
 
         $result = $this->cartModel->addToCart($cartId, $skuId, $quantity, $color, $warrantyEnabled, $imageUrl);
         if ($result) {
-            return ['success' => true, 'message' => 'Thêm vào giỏ hàng thành công.', 'redirect' => '/cart'];
+            return ['success' => true, 'message' => 'Thêm vào giỏ hàng thành công.'];
         }
         return ['success' => false, 'message' => 'Thêm vào giỏ hàng thất bại.'];
     }
@@ -158,6 +158,7 @@ class CartService
         }
 
         $items = $this->cartModel->fetchCartItems($cartId);
+
         if (empty($items)) {
             return ['success' => false, 'message' => 'Giỏ hàng trống. Vui lòng thêm sản phẩm để tiếp tục.'];
         }

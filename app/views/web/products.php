@@ -10,6 +10,8 @@ Sản phẩm
 
 <?php View::section('content'); ?>
 
+<?php View::component('components.scroll-to-top'); ?>
+
 <div class="container-main">
     <div class="navigation">
         <a href="/">Trang chủ</a> /
@@ -39,7 +41,7 @@ Sản phẩm
     <?php endif; ?>
 
     <div class="content-layout">
-        <?php if (!$subcategorySlug): ?>
+        <?php if ($subcategorySlug): ?>
             <?php
             error_log("Products View: Brands before component: " . json_encode($brands));
             View::component('components.filter-phone', ['brands' => $brands, 'selectedBrands' => $selectedBrands]);

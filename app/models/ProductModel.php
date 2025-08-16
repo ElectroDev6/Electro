@@ -31,7 +31,7 @@ class ProductModel
             $where[] = "p.subcategory_id = :subcategory_id";
             $params['subcategory_id'] = (int) $options['subcategory_id'];
         } elseif (!empty($options['subcategory_slug'])) {
-            $where[] = "sc.slug = :subcategory_slug";
+            $where[] = "sc.subcategory_slug = :subcategory_slug";
             $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
             $params['subcategory_slug'] = $options['subcategory_slug'];
         }
@@ -137,7 +137,7 @@ class ProductModel
         $params = [];
 
         if (!empty($options['subcategory_slug'])) {
-            $where[] = "sc.slug = :subcategory_slug";
+            $where[] = "sc.subcategory_slug = :subcategory_slug";
             $joins[] = "INNER JOIN products p ON p.brand_id = b.brand_id";
             $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
             $params['subcategory_slug'] = $options['subcategory_slug'];

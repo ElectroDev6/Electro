@@ -7,12 +7,16 @@ Router::get('/', 'HomeController@index');
 
 // Product
 Router::get('/products', 'ProductController@showAll');
+Router::get('/products/:categorySlug', 'ProductController@showAll');
+Router::get('/products/:categorySlug/:subcategorySlug', 'ProductController@showAll');
 
 // Product Detail
 Router::get('/detail/:slug', 'DetailController@showDetail');
 Router::post('/detail/add-to-cart', 'DetailController@addToCart');
 
+// Search
 Router::get('/search/suggestions', 'SearchController@suggestions');
+// Router::get('/api/search/suggestions', 'SearchController@suggestions');
 
 // Comment
 Router::post('/comment/add', 'DetailController@addComment');

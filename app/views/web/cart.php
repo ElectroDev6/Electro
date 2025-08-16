@@ -238,37 +238,6 @@ use Core\View;
       }
     });
   }
-
-
-  // // Kiểm tra post_login_redirect sau khi đăng nhập
-  // window.addEventListener('load', async function() {
-  //   const postLoginRedirect = '<?php echo isset($_SESSION['post_login_redirect']) ? $_SESSION['post_login_redirect'] : ''; ?>';
-  //   if (postLoginRedirect) {
-  //     try {
-  //       const response = await fetch(postLoginRedirect, {
-  //         method: 'GET',
-  //         headers: {
-  //           'X-Requested-With': 'XMLHttpRequest'
-  //         }
-  //       });
-  //       const result = await response.json();
-  //       if (result.success) {
-  //         window.location.href = '/checkout';
-  //       } else {
-  //         const messageDiv = document.getElementById('voucher-message');
-  //         messageDiv.textContent = result.message;
-  //         messageDiv.style.color = 'red';
-  //         if (result.redirect) {
-  //           setTimeout(() => window.location.href = result.redirect, 1500);
-  //         }
-  //       }
-  //       // Xóa post_login_redirect sau khi xử lý
-  //       <?php unset($_SESSION['post_login_redirect']); ?>
-  //     } catch (error) {
-  //       console.error('Error handling post-login redirect:', error);
-  //     }
-  //   }
-  // });
 </script>
 
 <?php View::endSection(); ?>

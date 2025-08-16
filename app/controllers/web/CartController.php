@@ -153,6 +153,7 @@ class CartController
         }
 
         $result = $this->cartService->confirmOrder($this->userId, $this->sessionId);
+
         if ($result) {
             if ($isAjax) {
                 header('Content-Type: application/json');

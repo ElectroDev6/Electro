@@ -1,4 +1,4 @@
-class CartHandler {
+export default class CartHandler {
   constructor() {
     document.addEventListener("click", (event) => this.handleQuantityClick(event));
     document.addEventListener("DOMContentLoaded", () => this.initEventListeners());

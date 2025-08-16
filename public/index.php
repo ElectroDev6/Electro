@@ -3,8 +3,9 @@ session_start();
 
 use Core\Router;
 
+$isLocal = strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false || $_SERVER['HTTP_HOST'] === 'electro.test';
 define('BASE_PATH', dirname(__DIR__));
-define('BASE_URL', 'http://electro.test');
+define('BASE_URL', $isLocal ? 'http://electro.test/' : 'https://electro.id.vn');
 
 require_once BASE_PATH . '/vendor/autoload.php';
 require_once BASE_PATH . '/core/Container.php';

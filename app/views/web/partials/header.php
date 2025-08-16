@@ -111,7 +111,7 @@
                 </button>
             </form>
 
-            <script>
+            <!-- <script>
                 document.getElementById('searchForm').addEventListener('submit', function(event) {
                     event.preventDefault(); // Ngăn chặn form submit mặc định
                     const keyword = document.getElementById('header__input').value.trim().toLowerCase();
@@ -127,12 +127,12 @@
                         alert('Vui lòng nhập từ khóa tìm kiếm!');
                     }
                 });
-            </script>
+            </script> -->
 
             <!-- Mobile -->
             <div class="header__search-dropdown">
                 <form class="header__search-dropdown-form">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+                    <input id="header__input" type="text" placeholder="Tìm kiếm sản phẩm..." />
                     <button type="submit" class="header__search-btn">
                         <span class="header__search-icon">
                             <svg width="16" height="16" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#333e48">
