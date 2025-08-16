@@ -26,7 +26,6 @@ class CreateUserController
         $email = trim($_POST['email'] ?? '');
         $phone_number = trim($_POST['phone_number'] ?? '');
         $gender = $_POST['gender'] ?? '';
-        $birth_date = $_POST['birth_date'] ?? '';
         $role = $_POST['role'] ?? '';
         $is_active = $_POST['is_active'] ?? '';
         $password = trim($_POST['password'] ?? '');
@@ -48,9 +47,6 @@ class CreateUserController
         if (empty($gender)) {
             $errors['gender'] = 'Vui lòng chọn giới tính.';
         }
-        if (empty($birth_date)) {
-            $errors['birth_date'] = 'Vui lòng chọn ngày sinh.';
-        }
         if (empty($role)) {
             $errors['role'] = 'Vui lòng chọn vai trò.';
         }
@@ -70,7 +66,6 @@ class CreateUserController
                 'email' => $email,
                 'phone_number' => $phone_number,
                 'gender' => $gender,
-                'birth_date' => $birth_date,
                 'role' => $role,
                 'is_active' => $is_active,
                 'password' => $password,

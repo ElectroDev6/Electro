@@ -1,33 +1,43 @@
-const notification = document.getElementById("success-notification");
+const successNotification = document.getElementById("success-notification");
 const successMessage = document.getElementById("success-message");
 
-// Show notification if success message exists
-document.addEventListener("DOMContentLoaded", () => {
-   if (successMessage) {
-      if (successMessage.textContent.trim() !== "") {
-         notification.classList.add("show");
-         console.log(
-            "Notification shown with message:",
-            successMessage.textContent
-         );
+const errorNotification = document.getElementById("error-notification");
+const errorMessage = document.getElementById("error-message");
 
-         setTimeout(() => {
-            notification.classList.remove("show");
-            // Remove success query parameter from URL
-            const url = new URL(window.location);
-            url.searchParams.delete("success");
-            window.history.replaceState({}, document.title, url);
-         }, 3000);
-      }
+document.addEventListener("DOMContentLoaded", () => {
+   // Success
+   if (successMessage && successMessage.textContent.trim() !== "") {
+      showNotification(successNotification, "success");
+   }
+
+   // Error
+   if (errorMessage && errorMessage.textContent.trim() !== "") {
+      showNotification(errorNotification, "error");
    }
 });
 
-// Hide notification on click
-if (notification) {
-   notification.addEventListener("click", () => {
-      notification.classList.remove("show");
-      const url = new URL(window.location);
-      url.searchParams.delete("success");
-      window.history.replaceState({}, document.title, url);
+function showNotification(element, type) {
+   if (!element) return;
+
+   element.classList.add("show");
+   console.log(
+      `Notification (${type}) shown with message:`,
+      element.textContent.trim()
+   );
+
+   setTimeout(() => {
+      element.classList.remove("show");
+      removeQueryParam(type);
+   }, 3000);
+
+   element.addEventListener("click", () => {
+      element.classList.remove("show");
+      removeQueryParam(type);
    });
+}
+
+function removeQueryParam(type) {
+   const url = new URL(window.location);
+   url.searchParams.delete(type);
+   window.history.replaceState({}, document.title, url);
 }

@@ -8,10 +8,12 @@ use PDOException;
 class UsersModel
 {
     private $pdo;
+
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
+
     public function getAllUsers($filters = [], $limit = 8, $offset = 0)
     {
         $whereConditions = [];
@@ -97,14 +99,13 @@ class UsersModel
 
     public function createUser($data)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, phone_number, gender, birth_date, role, is_active, password_hash, avatar_url, created_at, updated_at) 
-                                    VALUES (:name, :email, :phone_number, :gender, :birth_date, :role, :is_active, :password_hash, :avatar_url, NOW(), NOW())");
+        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, phone_number, gender, role, is_active, password_hash, avatar_url, created_at, updated_at) 
+                                    VALUES (:name, :email, :phone_number, :gender, :role, :is_active, :password_hash, :avatar_url, NOW(), NOW())");
         $stmt->execute([
             ':name' => $data['name'],
             ':email' => $data['email'],
             ':phone_number' => $data['phone_number'],
             ':gender' => $data['gender'],
-            ':birth_date' => $data['birth_date'],
             ':role' => $data['role'],
             ':is_active' => $data['is_active'],
             ':password_hash' => $data['password_hash'],
@@ -116,92 +117,87 @@ class UsersModel
     public function getUserById($id)
     {
         $stmt = $this->pdo->prepare("
-            SELECT u.*, ua.address_line1, ua.ward_commune, ua.district, ua.province_city
+            SELECT u.*, ua.address, ua.ward_commune, ua.district, ua.province_city
             FROM users u
-            LEFT JOIN user_address ua ON u.user_id = ua.user_id AND ua.is_default = 1
+            LEFT JOIN user_address ua ON u.user_id = ua.user_id
             WHERE u.user_id = :id
             LIMIT 1
         ");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && !$user['address_line1']) {
-            $stmt = $this->pdo->prepare("
-                SELECT address_line1, ward_commune, district, province_city
-                FROM user_address
-                WHERE user_id = :id
-                LIMIT 1
-            ");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmt->execute();
-            $address = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($address) {
-                $user['address_line1'] = $address['address_line1'];
-                $user['ward_commune'] = $address['ward_commune'];
-                $user['district'] = $address['district'];
-                $user['province_city'] = $address['province_city'];
-            }
-        }
-        return $user;
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
-    public function deleteUser($id)
+
+   public function deleteUser($id)
     {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM users WHERE user_id = :id");
-            return $stmt->execute([':id' => $id]);
+            $stmtOrders = $this->pdo->prepare("DELETE FROM orders WHERE user_address_id IN (SELECT user_address_id FROM user_address WHERE user_id = :id)");
+            $stmtOrders->execute([':id' => $id]);
+
+            // Xóa địa chỉ người dùng
+            $stmtAddress = $this->pdo->prepare("DELETE FROM user_address WHERE user_id = :id");
+            $stmtAddress->execute([':id' => $id]);
+
+            // Xóa người dùng
+            $stmtUser = $this->pdo->prepare("DELETE FROM users WHERE user_id = :id");
+            $stmtUser->execute([':id' => $id]);
+
+            return true;
         } catch (PDOException $e) {
-            error_log("Error deleting user: " . $e->getMessage());
-            return false;
+            // Trả về false hoặc thông báo lỗi
+            return false; // Hoặc: throw new Exception("Lỗi khi xóa: " . $e->getMessage());
         }
     }
+
     public function updateUser($user_id, $data)
     {
         $stmt = $this->pdo->prepare("
             UPDATE users 
-            SET name = :name, email = :email, phone_number = :phone_number, gender = :gender, 
-                birth_date = :birth_date, role = :role, is_active = :is_active, 
-                avatar_url = :avatar_url, updated_at = NOW()
+            SET name = :name, email = :email, phone_number = :phone_number, 
+                gender = :gender, role = :role, is_active = :is_active, 
+                avatar_url = :avatar_url,
+                updated_at = NOW()
             WHERE user_id = :user_id
         ");
-        $stmt->execute([
+        return $stmt->execute([
             ':user_id' => $user_id,
             ':name' => $data['name'],
             ':email' => $data['email'],
             ':phone_number' => $data['phone_number'] ?: null,
-            ':gender' => $data['gender'],
-            ':birth_date' => $data['birth_date'],
+            ':gender' => $data['gender'] ?: null,
             ':role' => $data['role'],
             ':is_active' => $data['is_active'],
             ':avatar_url' => $data['avatar_url'] ?? null,
         ]);
     }
+
     public function updateAddress($user_id, $data)
     {
-        $stmt = $this->pdo->prepare("SELECT user_address_id FROM user_address WHERE user_id = :user_id AND is_default = 1 LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT user_address_id FROM user_address WHERE user_id = :user_id LIMIT 1");
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         $addressExists = $stmt->fetchColumn();
+
         if ($addressExists) {
             $stmt = $this->pdo->prepare("
                 UPDATE user_address 
-                SET address_line1 = :address_line1, ward_commune = :ward_commune, 
+                SET address = :address, ward_commune = :ward_commune, 
                     district = :district, province_city = :province_city, 
                     updated_at = NOW()
-                WHERE user_id = :user_id AND is_default = 1
+                WHERE user_id = :user_id
             ");
         } else {
             $stmt = $this->pdo->prepare("
-                INSERT INTO user_address (user_id, address_line1, ward_commune, district, province_city, is_default, created_at, updated_at)
-                VALUES (:user_id, :address_line1, :ward_commune, :district, :province_city, 1, NOW(), NOW())
+                INSERT INTO user_address (user_id, address, ward_commune, district, province_city, created_at, updated_at)
+                VALUES (:user_id, :address, :ward_commune, :district, :province_city, NOW(), NOW())
             ");
         }
-        $stmt->execute([
+        return $stmt->execute([
             ':user_id' => $user_id,
-            ':address_line1' => $data['address_line1'] ?? null,
-            ':ward_commune' => $data['ward_commune'] ?? null,
-            ':district' => $data['district'] ?? null,
-            ':province_city' => $data['province_city'] ?? null,
+            ':address' => $data['address'],
+            ':ward_commune' => $data['ward_commune'],
+            ':district' => $data['district'],
+            ':province_city' => $data['province_city'],
         ]);
     }
 
@@ -211,12 +207,11 @@ class UsersModel
             SELECT COUNT(*) 
             FROM orders 
             WHERE user_id = :id 
-            AND status IN ('pending', 'paid', 'shipped', 'delivering')
+            AND status IN ('processing', 'shipped', 'paid')
         ");
         $stmt->execute(['id' => $userId]);
         return $stmt->fetchColumn();
     }
-
 
     public function toggleUserLock($userId)
     {

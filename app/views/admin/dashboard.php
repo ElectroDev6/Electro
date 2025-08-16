@@ -1,6 +1,7 @@
 <?php
 include dirname(__DIR__) . '/admin/partials/sidebar.php';
 include dirname(__DIR__) . '/admin/partials/header.php';
+include dirname(__DIR__) . '/admin/partials/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,19 +12,6 @@ include dirname(__DIR__) . '/admin/partials/header.php';
     <title>Electro Dashboard</title>
     <link rel="stylesheet" href="/css/admin/style-admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        @media (max-width: 768px) {
-            .dashboard-stats {
-                flex-direction: column;
-            }
-            .analytics-grid {
-                grid-template-columns: 1fr;
-            }
-            .tables-row {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 <body>
     <?php echo $htmlHeader; ?>

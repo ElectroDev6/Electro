@@ -91,7 +91,7 @@ class OrdersModel
                     u.name AS username,
                     u.phone_number,
                     u.email,
-                    CONCAT(ua.address_line1, ', ', ua.ward_commune, ', ', ua.district, ', ', ua.province_city) AS full_address,
+                    CONCAT(ua.address, ', ', ua.ward_commune, ', ', ua.district, ', ', ua.province_city) AS full_address,
                     p.payment_method,
                     p.status AS payment_status,
                     c.code AS coupon_code,

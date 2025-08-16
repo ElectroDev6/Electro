@@ -18,7 +18,6 @@
 ?>
     <!DOCTYPE html>
     <html lang="vi">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +50,7 @@
                     <a href="/admin/users/create" class="user-page__add-btn">+ Thêm người dùng</a>
                 </div>
                     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
-                    <div class="notification notification--success show" id="success-notification">
+                    <div class="notification notification--success" id="success-notification">
                         <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
                     </div>
                     <?php endif; ?>
@@ -131,7 +130,6 @@
                                 <th class="user-table__header">Vai trò</th>
                                 <th class="user-table__header">SĐT</th>
                                 <th class="user-table__header">Giới tính</th>
-                                <th class="user-table__header">Ngày sinh</th>
                                 <th class="user-table__header">Điều hướng</th>
                             </tr>
                         </thead>
@@ -172,16 +170,6 @@
                                         echo htmlspecialchars($genderMap[$user['gender']] ?? 'Không xác định');
                                         ?>
                                 </td>
-                                <td class="user-table__cell">
-                                    <?php 
-                                        if ($user['birth_date']) {
-                                            $birthDate = new DateTime($user['birth_date']);
-                                            echo $birthDate->format('d/m/Y');
-                                        } else {
-                                            echo 'Chưa cập nhật';
-                                        }
-                                        ?>
-                                </td>
                                 <td class="user-table__cell user-table__cell--actions">
                                     <a href="/admin/users/detail?id=<?php echo htmlspecialchars($user['user_id']); ?>"
                                         class="product-table__action-btn" title="Xem chi tiết">
@@ -196,6 +184,8 @@
                                         <input type="hidden" name="id" value="<?php echo $user['user_id']; ?>">
                                         <input type="hidden" name="name"
                                             value="<?php echo htmlspecialchars($user['name'], ENT_QUOTES); ?>">
+                                        <!-- lấy page hiện tại -->
+                                        <input type="hidden" name="page" value="<?php echo htmlspecialchars($page); ?>">
                                         <button type="submit" class="product-table__action-btn" title="Xóa">
                                             <img src="/icons/trash_icon.svg" alt="Xóa">
                                         </button>

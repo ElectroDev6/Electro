@@ -53,20 +53,16 @@ class ReadOrderController
    public function detail()
 {
     try {
-        $order_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        
+        $order_id = $_GET['id'];
         if ($order_id <= 0) {
             throw new \Exception("ID đơn hàng không hợp lệ.");
         }
-
         $order = $this->model->getOrderById($order_id);
         if ($order === null) {
             throw new \Exception("Không tìm thấy đơn hàng với ID $order_id.");
         }
-
         View::render('orders/detail', [
             'order' => $order,
-            'title' => 'Chi tiết đơn hàng #' . ($order['order_code'] ?? 'N/A')
         ]);
     } catch (\Exception $e) {
         error_log("Lỗi khi lấy chi tiết đơn hàng ID $order_id: " . $e->getMessage());

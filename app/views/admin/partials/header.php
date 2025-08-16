@@ -11,11 +11,6 @@ include dirname(__DIR__) . '/partials/notification.php';
 include dirname(__DIR__) . '/partials/dropdown_user.php';
 ?>
 <header class="header">
-    <?php
-    echo '<pre>';
-    print_r($notifications);
-    echo '</pre>';
-    ?>
     <div class="header__container">
         <a href="/" class="header__brand">
             <svg width="145" height="42" viewBox="0 0 175.748 42.52">
