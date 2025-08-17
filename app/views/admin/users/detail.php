@@ -23,7 +23,7 @@ include dirname(__DIR__) . '/partials/header.php';
     <?php echo $htmlHeader; ?>
     <!-- Notification -->
     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
-        <div class="notification notification--success show" id="success-notification">
+        <div class="notification notification--success" id="success-notification">
             <p id="success-message"><?= htmlspecialchars($_GET['success']) ?></p>
         </div>
     <?php endif; ?>

@@ -25,7 +25,7 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
             <form action="/admin/users/handleCreate" method="POST" class="create-user-form" enctype="multipart/form-data">
                 <!-- Họ và tên -->
                 <div class="input-group">
-                    <input type="text" name="name" id="name" class="input-group__field" required value="<?= htmlspecialchars($name ?? '') ?>">
+                    <input type="text" name="name" id="name" class="input-group__field" value="<?= htmlspecialchars($name ?? '') ?>">
                     <label for="name" class="input-group__label">Họ và tên</label>
                                     <?php if (isset($errors['name'])): ?>
                     <span class="category-detail--error"><?= htmlspecialchars($errors['name']) ?></span>
@@ -35,7 +35,7 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
 
                 <!-- Email -->
                 <div class="input-group">
-                    <input type="email" name="email" id="email" class="input-group__field" required value="<?= htmlspecialchars($email ?? '') ?>">
+                    <input type="email" name="email" id="email" class="input-group__field" value="<?= htmlspecialchars($email ?? '') ?>">
                     <label for="email" class="input-group__label">Email</label>
                                     <?php if (isset($errors['email'])): ?>
                     <span class="category-detail--error"><?= htmlspecialchars($errors['email']) ?></span>
@@ -52,7 +52,7 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
                         class="input-group__field"
                         inputmode="numeric"
                         pattern="[0-9]{10,11}"
-                        required
+                        
                         value="<?= htmlspecialchars($phone_number ?? '') ?>">
                     <label for="phone_number" class="input-group__label">Số điện thoại</label>
                                     <?php if (isset($errors['phone_number'])): ?>
@@ -74,18 +74,9 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
                     <span class="category-detail--error"><?= htmlspecialchars($errors['gender']) ?></span>
                 <?php endif; ?>
                 </div>
-                <!-- Ngày sinh -->
-                <div class="input-group">
-                    <input type="date" name="birth_date" id="birth_date" class="input-group__field input-group__field--date input-group__field--date-top" value="<?= htmlspecialchars($birth_date ?? '') ?>">
-                    <label for="birth_date" class="input-group__label">Ngày sinh</label>
-                <?php if (isset($errors['birth_date'])): ?>
-                    <span class="category-detail--error"><?= htmlspecialchars($errors['birth_date']) ?></span>
-                <?php endif; ?>
-                </div>
-
                 <!-- Vai trò -->
                 <div class="select-group">
-                    <select name="role" id="role" class="select-group__field" required>
+                    <select name="role" id="role" class="select-group__field" >
                         <option value="" <?= (!isset($role) || $role === '') ? 'selected' : '' ?>></option>
                         <option value="user" <?= (isset($role) && $role === 'user') ? 'selected' : '' ?>>User</option>
                         <option value="admin" <?= (isset($role) && $role === 'admin') ? 'selected' : '' ?>>Admin</option>
@@ -114,7 +105,7 @@ include dirname(__DIR__) . '/helpers/DateTimeHelper.php';
 
                 <!-- Mật khẩu -->
                 <div class="input-group">
-                    <input type="password" name="password" id="password" class="input-group__field" required value="<?= htmlspecialchars($password ?? '') ?>">
+                    <input type="password" name="password" id="password" class="input-group__field" value="<?= htmlspecialchars($password ?? '') ?>">
                     <label for="password" class="input-group__label">Mật khẩu</label>
                     
                 <?php if (isset($errors['password'])): ?>

@@ -21,7 +21,7 @@ class UpdateUserController
         $id = $_GET['id'];
         $user = $this->model->getUserById($id);
         View::render('users/update', [
-            'user'   => $user,
+            'user' => $user,
         ]);
     }
 
@@ -32,30 +32,33 @@ class UpdateUserController
             header('Location: /admin/users/index?id=' . urlencode($user_id ?? '') . '&error=' . urlencode('ID người dùng không hợp lệ.'));
             exit;
         }
+
         $userData = [
             'name' => trim($_POST['name'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
             'phone_number' => trim($_POST['phone_number'] ?? ''),
             'gender' => $_POST['gender'] ?? '',
-            'birth_date' => $_POST['birth_date'] ?? '',
             'role' => $_POST['role'] ?? '',
-            'is_active' => (int)($_POST['is_active'] ?? 0),
+            'is_active' => $_POST['is_active'] ?? '',
+            'dob_day' => $_POST['dob_day'] ?? null,
+            'dob_month' => $_POST['dob_month'] ?? null,
+            'dob_year' => $_POST['dob_year'] ?? null,
         ];
 
         $addressData = [
-            'address_line1' => trim($_POST['address_line1'] ?? '') ?: null,
-            'ward_commune' => trim($_POST['ward_commune'] ?? '') ?: null,
-            'district' => trim($_POST['district'] ?? '') ?: null,
-            'province_city' => trim($_POST['province_city'] ?? '') ?: null,
+            'address' => trim($_POST['address'] ?? ''),
+            'ward_commune' => trim($_POST['ward_commune'] ?? ''),
+            'district' => trim($_POST['district'] ?? ''),
+            'province_city' => trim($_POST['province_city'] ?? ''),
         ];
 
-        // Initialize errors array
         $errors = [];
-        // Validation
+
+        // Xác thực
         if (empty($userData['name'])) {
             $errors['name'] = 'Vui lòng nhập họ và tên.';
         }
-        if (empty($userData['email']) || !$userData['email']) {
+        if (empty($userData['email']) || !filter_var($userData['email'], FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'Email không hợp lệ.';
         } elseif ($this->model->userExistsByEmail($userData['email'], $user_id)) {
             $errors['email'] = 'Email đã tồn tại.';
@@ -63,23 +66,33 @@ class UpdateUserController
         if (!empty($userData['phone_number']) && !preg_match('/^[0-9]{10,11}$/', $userData['phone_number'])) {
             $errors['phone_number'] = 'Số điện thoại phải là 10-11 chữ số.';
         }
-        if (!in_array($userData['gender'], ['male', 'female', 'other', ''])) {
-            $errors['gender'] = 'Giới tính không hợp lệ.';
+        if (!in_array($userData['gender'], ['male', 'female', 'other'])) {
+            $errors['gender'] = 'Vui lòng chọn giới tính.';
         }
-        if (!empty($userData['birth_date']) && strtotime($userData['birth_date']) === false) {
-            $errors['birth_date'] = 'Ngày sinh không hợp lệ.';
+        if (!in_array($userData['role'], ['user', 'admin'])) {
+            $errors['role'] = 'Vui lòng chọn vai trò.';
         }
-        if (!in_array($userData['role'], ['user', 'admin', 'guest', ''])) {
-            $errors['role'] = 'Vai trò không hợp lệ.';
-        }
-        if (!in_array($userData['is_active'], [0, 1])) {
-            $errors['is_active'] = 'Trạng thái không hợp lệ.';
+        if (!in_array($userData['is_active'], ['0', '1'])) {
+            $errors['is_active'] = 'Vui lòng chọn trạng thái.';
         }
 
+        // Xác thực địa chỉ
+        if (empty($addressData['address'])) {
+            $errors['address'] = 'Vui lòng nhập địa chỉ chi tiết.';
+        }
+        if (empty($addressData['ward_commune'])) {
+            $errors['ward_commune'] = 'Vui lòng chọn phường/xã.';
+        }
+        if (empty($addressData['district'])) {
+            $errors['district'] = 'Vui lòng chọn quận/huyện.';
+        }
+        if (empty($addressData['province_city'])) {
+            $errors['province_city'] = 'Vui lòng chọn tỉnh/thành phố.';
+        }
 
-        // Handle avatar upload
+        // Xử lý tải lên avatar
         $oldAvatarPath = $this->model->getUserById($user_id)['avatar_url'] ?? null;
-        $avatarPathForDB = $oldAvatarPath; // Giữ avatar cũ nếu không tải lên mới
+        $avatarPathForDB = $oldAvatarPath;
         if (isset($_FILES['avatar_url']) && $_FILES['avatar_url']['error'] === UPLOAD_ERR_OK) {
             $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             $maxSize = 5 * 1024 * 1024; // 5MB
@@ -92,7 +105,6 @@ class UpdateUserController
                 $targetPath = $uploadDir . $filename;
                 if (move_uploaded_file($_FILES['avatar_url']['tmp_name'], $targetPath)) {
                     $avatarPathForDB = '/img/avatar/' . $filename;
-                    // Xóa avatar cũ nếu tồn tại và khác với avatar mới
                     if (!empty($oldAvatarPath) && file_exists($_SERVER['DOCUMENT_ROOT'] . $oldAvatarPath) && $oldAvatarPath !== $avatarPathForDB) {
                         unlink($_SERVER['DOCUMENT_ROOT'] . $oldAvatarPath);
                     }
@@ -104,26 +116,25 @@ class UpdateUserController
             }
         }
 
-        if (!empty($errors['email'])) {
-            header('Location: /admin/users/detail?id=' . urlencode($user_id) .  '&error=' . urldecode('Email đã tồn tại'));
-            exit;
-        }
-
-        // If there are errors, return to edit page with errors
+        // Nếu có lỗi, chuyển hướng về trang chi tiết
         if (!empty($errors)) {
-            header('Location: /admin/users/detail?id=' . urlencode($user_id) . '&error=' . urldecode('Có lỗi'));
+            $errorMessages = http_build_query($errors);
+            header('Location: /admin/users/detail?id=' . urlencode($user_id) . '&error=' . urlencode('Vui lòng nhập đầy đủ thông tin') . '&' . $errorMessages);
             exit;
         }
 
         // Gán avatar vào userData
         $userData['avatar_url'] = $avatarPathForDB;
-        $this->model->updateUser($user_id, $userData);
-        $this->model->updateAddress($user_id, $addressData);
-        header('Location: /admin/users/detail?id=' . urlencode($user_id) . '&success=' . urlencode('Sửa người dùng thành công'));
+
+        // Cập nhật dữ liệu
+        if ($this->model->updateUser($user_id, $userData) && $this->model->updateAddress($user_id, $addressData)) {
+            header('Location: /admin/users/detail?id=' . urlencode($user_id) . '&success=' . urlencode('Sửa người dùng thành công'));
+        } else {
+            header('Location: /admin/users/detail?id=' . urlencode($user_id) . '&error=' . urlencode('Có lỗi xảy ra khi cập nhật thông tin. Vui lòng thử lại.'));
+        }
         exit;
     }
 
-    // update users lock and unlock
     public function toggleLock()
     {
         $user_id = (int) ($_POST['user_id'] ?? 0);
@@ -133,7 +144,6 @@ class UpdateUserController
         }
 
         $this->model->toggleUserLock($user_id);
-
         header('Location: /admin/users?success=' . urlencode('Đã cập nhật trạng thái người dùng thành công.'));
         exit;
     }

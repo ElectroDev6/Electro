@@ -21,8 +21,17 @@ class DeleteUserController
             return;
         }
 
+
+
         $id = $_POST['id'] ?? null;
         $name = $_POST['name'] ?? 'Unknown';
+        $page = $_POST['page'] ?? 1;
+
+        // kiểm tra lúc xúa thì không được xóa admin đang đăng nhập
+        if ($id == $_SESSION['user_id']) {
+            header('Location: /admin/users?page=' . $page . '&error=' . urlencode('Bạn không thể xóa tài khoản đang đăng nhập'));
+            exit;
+        }
 
         if (!$id || !is_numeric($id)) {
             $this->renderUserList('ID user không hợp lệ');
@@ -33,7 +42,7 @@ class DeleteUserController
        if ($activeOrders > 0) {
             $_SESSION['error'] = 'Người dùng này đang có đơn hàng chưa hoàn tất, không thể xóa.';
             $_SESSION['error_user_id'] = $id;
-            header('Location: /admin/users');
+            header('Location: /admin/users?page='. $page);
             exit;
         }
 
@@ -42,7 +51,7 @@ class DeleteUserController
             $page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0
                 ? (int)$_GET['page']
                 : 1;
-            header('Location: /admin/users?page=' . $page . '&success=' . urlencode('Đã xóa người dùng ' . $name . ' thành công'));
+            header('Location: /admin/users?success=' . urlencode('Đã xóa người dùng ' . $name . ' thành công'));
             exit;
         }
     }

@@ -1,6 +1,7 @@
 <?php
 include dirname(__DIR__) . '/partials/sidebar.php';
 include dirname(__DIR__) . '/partials/header.php';
+
 function buildPaginationUrl($pageNum, $ordersPerPage, $search = '', $status = '', $date = '') {
     $params = [
         'page' => $pageNum,
@@ -13,6 +14,7 @@ function buildPaginationUrl($pageNum, $ordersPerPage, $search = '', $status = ''
     $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     return $currentPath . '?' . http_build_query($params);
 }
+
 $currentSearch = $_GET['search'] ?? '';
 $currentStatus = $_GET['status'] ?? '';
 $currentDate = $_GET['date'] ?? '';
@@ -23,81 +25,135 @@ $startItem = ($page - 1) * $ordersPerPage + 1;
 $endItem = min($page * $ordersPerPage, $totalOrders ?? 0);
 $startPage = max(1, $page - 2);
 $endPage = min($totalPages, $page + 2);
-$pendingCount = $preparingCount = $deliveringCount = $deliveredCount = $canceledCount = $totalRevenue = 0;
+
+// Đếm trạng thái với logic thanh toán từ bảng payments
+$pendingCount = $processingCount = $paidCount = $shippedCount = $completedCount = $cancelledCount = $waitingPaymentCount = $totalRevenue = 0;
+
 foreach ($orders as $order) {
     $status = $order['status'];
     $totalPrice = floatval($order['total_price'] ?? 0);
     $paymentMethod = $order['payment_method'] ?? 'cod';
     $paymentStatus = $order['payment_status'] ?? 'pending';
 
-    switch ($status) {
+    // Logic tương tự getOrderStatusDisplay để đồng nhất
+    $displayStatus = getEffectiveOrderStatus($order);
+    
+    switch ($displayStatus) {
         case 'pending':
             $pendingCount++;
             break;
-        case 'preparing':
-            $preparingCount++;
+        case 'waiting_payment':
+            $waitingPaymentCount++;
             break;
-        case 'delivering':
-            $deliveringCount++;
+        case 'processing':
+            $processingCount++;
             break;
-        case 'delivered':
-            $deliveredCount++;
+        case 'paid':
+            $paidCount++;
+            break;
+        case 'shipped':
+            $shippedCount++;
+            break;
+        case 'completed':
+            $completedCount++;
             $totalRevenue += $totalPrice;
             break;
         case 'cancelled':
-            $canceledCount++;
+            $cancelledCount++;
             break;
     }
 }
-$statusMap = [
-    'pending' => 'Chờ duyệt',
-    'preparing' => 'Chuẩn bị hàng',
-    'delivering' => 'Đang giao hàng',
-    'delivered' => 'Hoàn thành',
-    'cancelled' => 'Đã hủy',
-];
 
-$paymentMethodMap = [
-    'cod' => 'COD',
-    'bank_transfer' => 'Chuyển khoản',
-    'momo' => 'Momo',
-    'credit_card' => 'Thẻ tín dụng',
-    'zalopay' => 'ZaloPay',
-];
+function getEffectiveOrderStatus($order) {
+    $status = $order['status'];
+    $paymentMethod = $order['payment_method'] ?? 'cod';
+    $paymentStatus = $order['payment_status'] ?? 'pending';
 
-$paymentStatusMap = [
-    'pending' => 'Chưa thanh toán',
-    'success' => 'Đã thanh toán',
-    'failed' => 'Thất bại',
-];
+    // Đơn hàng chưa duyệt + phương thức online + chưa thanh toán
+    if ($status === 'pending' && $paymentMethod !== 'cod' && $paymentStatus !== 'success') {
+        return 'waiting_payment';
+    }
+
+    return $status;
+}
+
 function getPaymentStatusDisplay($order) {
     $paymentMethod = $order['payment_method'] ?? 'cod';
     $paymentStatus = $order['payment_status'] ?? 'pending';
     $orderStatus = $order['status'];
-    
+
     if ($paymentMethod === 'cod') {
-        return $orderStatus === 'delivered' ? 'Đã thanh toán' : 'Chưa thanh toán';
+        // COD: chỉ tính đã thanh toán khi hoàn thành đơn hàng
+        return $orderStatus === 'completed' ? 'Đã thanh toán' : 'Chưa thanh toán';
     } else {
-        return $paymentStatus === 'success' ? 'Đã thanh toán' : 'Chưa thanh toán';
+        // Online payment: dựa vào payment status
+        switch ($paymentStatus) {
+            case 'success':
+                return 'Đã thanh toán';
+            case 'failed':
+                return 'Thanh toán thất bại';
+            case 'pending':
+            default:
+                return 'Chờ thanh toán';
+        }
     }
 }
+
 function getOrderStatusDisplay($order) {
     $status = $order['status'];
     $paymentMethod = $order['payment_method'] ?? 'cod';
     $paymentStatus = $order['payment_status'] ?? 'pending';
-    if ($paymentMethod !== 'cod' && $status === 'pending' && $paymentStatus !== 'success') {
+
+    // Trường hợp đặc biệt: đơn pending + online payment + chưa thanh toán
+    if ($status === 'pending' && $paymentMethod !== 'cod' && $paymentStatus !== 'success') {
         return 'Chờ thanh toán';
     }
+
+    // Trường hợp COD: shipped nhưng chưa thanh toán
+    if ($status === 'shipped' && $paymentMethod === 'cod' && $paymentStatus !== 'success') {
+        return 'Đang giao hàng (Chưa thanh toán)';
+    }
+
     $statusMap = [
         'pending' => 'Chờ duyệt',
-        'preparing' => 'Chuẩn bị hàng',
-        'delivering' => 'Đang giao hàng',
-        'delivered' => 'Hoàn thành',
+        'processing' => 'Đang xử lý',
+        'paid' => 'Đã thanh toán',
+        'shipped' => 'Đang giao hàng',
+        'completed' => 'Hoàn thành',
         'cancelled' => 'Đã hủy',
     ];
-    
+
+    // Chỉ hiển thị 'Đã thanh toán' khi payment_status là 'success'
+    if ($status === 'paid' && $paymentStatus !== 'success') {
+        return 'Đang xử lý thanh toán'; // Hoặc trạng thái khác tùy ý, ví dụ: 'Chờ xác nhận thanh toán'
+    }
+
     return $statusMap[$status] ?? ucfirst($status);
 }
+
+function getPaymentMethodDisplay($paymentMethod) {
+    $methodMap = [
+        'cod' => 'COD (Thanh toán khi nhận hàng)',
+        'bank_transfer' => 'Chuyển khoản ngân hàng',
+        'credit_card' => 'Thẻ tín dụng',
+        'momo' => 'Ví MoMo',
+        'zalopay' => 'ZaloPay'
+    ];
+    
+    return $methodMap[$paymentMethod] ?? ucfirst($paymentMethod);
+}
+
+// Status map cho filter dropdown - thêm trạng thái chờ thanh toán
+$statusMap = [
+    'pending' => 'Chờ duyệt',
+    'waiting_payment' => 'Chờ thanh toán',
+    'processing' => 'Đang xử lý',
+    'paid' => 'Đã thanh toán',
+    'shipped' => 'Đang giao hàng',
+    'completed' => 'Hoàn thành',
+    'cancelled' => 'Đã hủy'
+];
+
 ?>
 
 <!DOCTYPE html>
@@ -121,45 +177,65 @@ function getOrderStatusDisplay($order) {
         <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
     </div>
     <?php endif; ?>
+    
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
         <div class="order-page" data-target="pagination-container">
             <div class="order-page__header">
                 <h1 class="order-page__title">Trang đơn hàng</h1>
             </div>
+
+            <!-- Stats cards phản ánh đúng logic thanh toán -->
             <div class="order-stats">
                 <div class="order-stats__card">
                     <div class="order-stats__label">Chờ duyệt</div>
                     <div class="order-stats__value"><?php echo $pendingCount; ?></div>
-                    <div class="order-stats__change order-stats__change--positive">↗ 12.5%</div>
+                    <div class="order-stats__change order-stats__change--warning">⏳ Pending</div>
                 </div>
+                
                 <div class="order-stats__card">
-                    <div class="order-stats__label">Chuẩn bị hàng</div>
-                    <div class="order-stats__value"><?php echo $preparingCount; ?></div>
-                    <div class="order-stats__change order-stats__change--positive">↗ 12.5%</div>
+                    <div class="order-stats__label">Chờ thanh toán</div>
+                    <div class="order-stats__value"><?php echo $waitingPaymentCount; ?></div>
+                    <div class="order-stats__change order-stats__change--info">💳 Payment</div>
                 </div>
+                
+                <div class="order-stats__card">
+                    <div class="order-stats__label">Đang xử lý</div>
+                    <div class="order-stats__value"><?php echo $processingCount; ?></div>
+                    <div class="order-stats__change order-stats__change--primary">🔄 Processing</div>
+                </div>
+                
+                <div class="order-stats__card">
+                    <div class="order-stats__label">Đã thanh toán</div>
+                    <div class="order-stats__value"><?php echo $paidCount; ?></div>
+                    <div class="order-stats__change order-stats__change--success">✅ Paid</div>
+                </div>
+                
                 <div class="order-stats__card">
                     <div class="order-stats__label">Đang giao hàng</div>
-                    <div class="order-stats__value"><?php echo $deliveringCount; ?></div>
-                    <div class="order-stats__change order-stats__change--positive">↗ 12.5%</div>
+                    <div class="order-stats__value"><?php echo $shippedCount; ?></div>
+                    <div class="order-stats__change order-stats__change--info">🚚 Shipping</div>
                 </div>
+                
                 <div class="order-stats__card">
                     <div class="order-stats__label">Hoàn thành</div>
-                    <div class="order-stats__value"><?php echo $deliveredCount; ?></div>
-                    <div class="order-stats__change order-stats__change--positive">↗ 12.5%</div>
+                    <div class="order-stats__value"><?php echo $completedCount; ?></div>
+                    <div class="order-stats__change order-stats__change--positive">🎉 Done</div>
                 </div>
+                
                 <div class="order-stats__card">
                     <div class="order-stats__label">Đã hủy</div>
-                    <div class="order-stats__value"><?php echo $canceledCount; ?></div>
-                    <div class="order-stats__change order-stats__change--negative">↘ 5.2%</div>
+                    <div class="order-stats__value"><?php echo $cancelledCount; ?></div>
+                    <div class="order-stats__change order-stats__change--negative">❌ Cancelled</div>
                 </div>
+                
                 <div class="order-stats__card">
                     <div class="order-stats__label">Tổng doanh thu</div>
                     <div class="order-stats__value"><?php echo number_format($totalRevenue, 0, ',', '.') . ' đ'; ?></div>
-                    <div class="order-stats__change order-stats__change--positive">↗ 12.5%</div>
+                    <div class="order-stats__change order-stats__change--positive">💰 Revenue</div>
                 </div>
             </div>
-            
+
             <div class="order-filter">
                 <form method="GET">
                     <div class="order-filter__group">
@@ -226,94 +302,107 @@ function getOrderStatusDisplay($order) {
                                 
                                 $orderStatusLabel = getOrderStatusDisplay($order);
                                 $paymentStatusLabel = getPaymentStatusDisplay($order);
-                                $paymentMethodLabel = $paymentMethodMap[$paymentMethod] ?? ucfirst($paymentMethod);
+                                $paymentMethodLabel = getPaymentMethodDisplay($paymentMethod);
                             ?>
-                        <tr class="order-table__row">
-                            <td class="order-table__cell"><?php echo htmlspecialchars($order['order_code']); ?></td>
-                            <td class="order-table__cell"><?php echo htmlspecialchars($order['coupon_code'] ?? 'Chưa áp dụng'); ?></td>
-                            <td class="order-table__cell">
-                                <span class="order-table__status order-table__status--<?php echo htmlspecialchars($status); ?>">
-                                    <?php echo $orderStatusLabel; ?>
-                                </span>
-                            </td>
-                            <td class="order-table__cell"><?php echo $paymentMethodLabel; ?></td>
-                            <td class="order-table__cell">
-                                <span class="payment-status payment-status--<?php echo ($paymentStatusLabel === 'Đã thanh toán') ? 'success' : 'pending'; ?>">
-                                    <?php echo $paymentStatusLabel; ?>
-                                </span>
-                            </td>
-                            <td class="order-table__cell"><?php echo number_format($order['total_price'] ?? 0, 0, ',', '.') . ' đ'; ?></td>
-                            <td class="order-table__cell"><?php echo date('H:i:s d/m/Y', strtotime($order['created_at'] ?? 'now')); ?></td>
-                            <td class="order-table__cell order-table__cell--actions">
-                                <a href="/admin/orders/detail?id=<?php echo $order['order_id']; ?>" class="order-table__action-btn order-table__action-btn--view">Chi tiết</a>
-                                
-                                <?php if ($status === 'pending'): ?>
-                                    <?php if ($paymentMethod === 'cod' || ($paymentMethod !== 'cod' && $paymentStatus === 'success')): ?>
-                                        <!-- Có thể duyệt đơn -->
+                            <tr class="order-table__row">
+                                <td class="order-table__cell"><?php echo htmlspecialchars($order['order_code']); ?></td>
+                                <td class="order-table__cell">
+                                    <?php echo $order['order_code'] ? '#' . $order['order_code'] : 'Chưa áp dụng'; ?>
+                                </td>
+                                <td class="order-table__cell">
+                                    <span class="order-table__status order-table__status--<?php echo htmlspecialchars($status); ?>">
+                                        <?php echo $orderStatusLabel; ?>
+                                    </span>
+                                </td>
+                                <td class="order-table__cell"><?php echo $paymentMethodLabel; ?></td>
+                                <td class="order-table__cell">
+                                    <span class="payment-status payment-status--<?php 
+                                        echo ($paymentStatusLabel === 'Đã thanh toán') ? 'success' : 
+                                            (($paymentStatusLabel === 'Thanh toán thất bại') ? 'failed' : 'pending'); 
+                                    ?>">
+                                        <?php echo $paymentStatusLabel; ?>
+                                    </span>
+                                </td>
+                                <td class="order-table__cell"><?php echo number_format($order['total_price'] ?? 0, 0, ',', '.') . ' đ'; ?></td>
+                                <td class="order-table__cell"><?php echo date('H:i:s d/m/Y', strtotime($order['created_at'] ?? 'now')); ?></td>
+                                <td class="order-table__cell order-table__cell--actions">
+                                    <a href="/admin/orders/detail?id=<?php echo $order['order_id']; ?>" 
+                                       class="order-table__action-btn order-table__action-btn--view">Chi tiết</a>
+                                    
+                                    <?php if ($status === 'pending'): ?>
+                                        <?php if ($paymentMethod === 'cod'): ?>
+                                            <!-- COD: có thể duyệt ngay -->
+                                            <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                                <input type="hidden" name="status" value="processing">
+                                                <button type="submit" class="order-table__action-btn order-table__action-btn--approve" 
+                                                        onclick="return confirm('Duyệt đơn hàng COD này?')">Duyệt đơn</button>
+                                            </form>
+                                        <?php elseif ($paymentStatus === 'success'): ?>
+                                            <!-- Online payment đã thanh toán: có thể duyệt -->
+                                            <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                                <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                                <input type="hidden" name="status" value="processing">
+                                                <button type="submit" class="order-table__action-btn order-table__action-btn--approve" 
+                                                        onclick="return confirm('Duyệt đơn hàng đã thanh toán này?')">Duyệt đơn</button>
+                                            </form>
+                                        <?php endif; ?>
+                                        <!-- Luôn có thể hủy đơn ở trạng thái pending -->
+                                        <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                            <input type="hidden" name="status" value="cancelled">
+                                            <button type="submit" class="order-table__action-btn order-table__action-btn--reject" 
+                                                    onclick="return confirm('<?php echo ($paymentStatus === 'success') ? '⚠️ ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?' : 'Hủy đơn hàng này?'; ?>')">
+                                                <?php echo ($paymentStatus === 'success') ? 'Hủy & Hoàn tiền' : '❌ Hủy đơn'; ?>
+                                            </button>
+                                        </form>
+                                        
+                                    <?php elseif ($status === 'processing'): ?>
+                                        <!-- Gửi hàng: processing -> shipped -->
+                                        <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                            <input type="hidden" name="status" value="shipped">
+                                            <button type="submit" class="order-table__action-btn order-table__action-btn--ship" 
+                                                    onclick="return confirm('Xác nhận gửi hàng?')">🚚 Gửi hàng</button>
+                                        </form>
+                                        <!-- Hủy đơn: processing -> cancelled -->
+                                        <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                            <input type="hidden" name="status" value="cancelled">
+                                            <button type="submit" class="order-table__action-btn order-table__action-btn--reject" 
+                                                    onclick="return confirm('Xác nhận hủy đơn?')">❌ Hủy đơn</button>
+                                        </form>
+                                    <?php elseif ($status === 'paid'): ?>
+                                        <!-- Hoàn thành: paid -> completed -->
+                                        <form action="/admin/orders/status" method="POST" style="display:inline;">
+                                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
+                                            <input type="hidden" name="status" value="completed">
+                                            <button type="submit" class="order-table__action-btn order-table__action-btn--complete" 
+                                                    onclick="return confirm('Xác nhận hoàn thành?')">✔️ Hoàn thành</button>
+                                        </form>
+                                        
+                                    <?php elseif ($status === 'shipped'): ?>
+                                        <!-- Xác nhận thanh toán: shipped -> paid -->
                                         <form action="/admin/orders/status" method="POST" style="display:inline;">
                                             <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
                                             <input type="hidden" name="status" value="paid">
-                                            <button type="submit" class="order-table__action-btn order-table__action-btn--approve" 
-                                                    onclick="return confirm('Duyệt đơn hàng này?')">Duyệt đơn</button>
+                                            <button type="submit" class="order-table__action-btn order-table__action-btn--pay" 
+                                                    onclick="return confirm('Xác nhận đã thanh toán?')">✅ Xác nhận thanh toán</button>
                                         </form>
-                                    <?php else: ?>
-                                        <!-- Bank transfer chưa thanh toán -->
-                                        <span class="order-table__note">Chờ khách thanh toán</span>
+                                    <?php elseif ($status === 'completed'): ?>
+                                        <span class="order-table__status-complete">✅ Đã hoàn thành</span>
+                                        
+                                    <?php elseif ($status === 'cancelled'): ?>
+                                        <span class="order-table__status-cancelled">❌ Đã hủy</span>
                                     <?php endif; ?>
-                                    
-                                    <!-- Luôn có thể hủy đơn ở trạng thái pending -->
-                                    <form action="/admin/orders/status" method="POST" style="display:inline;">
-                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
-                                        <input type="hidden" name="status" value="cancelled">
-                                        <button type="submit" class="order-table__action-btn order-table__action-btn--reject" 
-                                                onclick="return confirm('<?php echo ($paymentMethod !== 'cod' && $paymentStatus === 'success') ? 'ĐƠN ĐÃ THANH TOÁN! Hủy sẽ cần hoàn tiền. Bạn có chắc?' : 'Hủy đơn hàng này?'; ?>')">
-                                            <?php echo ($paymentMethod !== 'cod' && $paymentStatus === 'success') ? 'Hủy & Hoàn tiền' : 'Hủy đơn'; ?>
-                                        </button>
-                                    </form>
-                                    
-                                <?php elseif ($status === 'paid'): ?>
-                                    <!-- Chuyển sang trạng thái shipped (chuẩn bị giao hàng) -->
-                                    <form action="/admin/orders/status" method="POST" style="display:inline;">
-                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
-                                        <input type="hidden" name="status" value="shipped">
-                                        <button type="submit" class="order-table__action-btn order-table__action-btn--ship" 
-                                                onclick="return confirm('Chuẩn bị giao hàng?')">Chuẩn bị giao</button>
-                                    </form>
-                                    
-                                <?php elseif ($status === 'shipped'): ?>
-                                    <!-- Chuyển sang trạng thái delivering (giao hàng) -->
-                                    <form action="/admin/orders/status" method="POST" style="display:inline;">
-                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
-                                        <input type="hidden" name="status" value="delivering">
-                                        <button type="submit" class="order-table__action-btn order-table__action-btn--ship" 
-                                                onclick="return confirm('Giao hàng cho shipper?')">Giao shipper</button>
-                                    </form>
-                                    
-                                <?php elseif ($status === 'delivering'): ?>
-                                    <!-- Xác nhận giao thành công -->
-                                    <form action="/admin/orders/status" method="POST" style="display:inline;">
-                                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
-                                        <input type="hidden" name="status" value="completed">
-                                        <button type="submit" class="order-table__action-btn order-table__action-btn--complete" 
-                                                onclick="return confirm('<?php echo ($paymentMethod === 'cod') ? 'Xác nhận giao hàng thành công và thu tiền?' : 'Xác nhận giao hàng thành công?'; ?>')">
-                                            Giao thành công
-                                        </button>
-                                    </form>
-                                    
-                                <?php elseif ($status === 'completed'): ?>
-                                    <span class="order-table__status-complete">Đã hoàn thành</span>
-                                    
-                                <?php elseif ($status === 'cancelled'): ?>
-                                    <span class="order-table__status-cancelled">Đã hủy</span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
                 
-                <!-- Pagination section remains the same -->
+                <!-- Pagination -->
                 <div class="order-pagination">
                     <ul class="pagination__list">
                         <?php if ($page > 1): ?>
@@ -406,6 +495,6 @@ function getOrderStatusDisplay($order) {
             </div>
         </div>
     </main>
-        <script type="module" src="/admin-ui/js/common/notification.js"></script>
+    <script type="module" src="/admin-ui/js/common/notification.js"></script>
 </body>
 </html>

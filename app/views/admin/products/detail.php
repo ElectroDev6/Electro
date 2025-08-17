@@ -7,119 +7,174 @@ include dirname(__DIR__) . '/partials/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chi tiết sản phẩm - <?= htmlspecialchars($product['product_name'] ?? '') ?></title>
+    <title>Chi tiết sản phẩm - <?= htmlspecialchars($product['name'] ?? '') ?></title>
     <link rel="stylesheet" href="/css/admin/style-admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
+    <!-- <?php echo '<pre>'; echo print_r($product, true); echo '</pre>'; ?> -->
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
+        
+        <!-- Notifications -->
+        <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
+            <div class="notification notification--success" id="success-notification">
+                <p><?= htmlspecialchars($_GET['success']) ?></p>
+            </div>
+        <?php endif; ?>
+        
+        <?php if (isset($_GET['error']) && $_GET['error'] !== ''): ?>
+            <div class="notification notification--error" id="error-notification">
+                <p><?= htmlspecialchars($_GET['error']) ?></p>
+            </div>
+        <?php endif; ?>
+
         <div class="product-detail">
             <div class="product-detail__container">
-                
-                <div class="product-detail__product-view">
-                    <!-- Left - Images -->
-                    <div class="product-detail__product-image">
-                        <div class="product-detail__box-preview">
-                            <img src="" alt="" class="product-detail__main-img" id="mainImage">
+                <div class="product-detail__layout">
+                    <!-- Left side - Images -->
+                    <div class="product-detail__images">
+                        <div class="product-detail__main-image">
+                            <img src="/img/default.png" alt="<?= htmlspecialchars($product['name'] ?? '') ?>" class="product-detail__main-img" id="mainImage">
                         </div>
-                        <div class="product-detail__image-thumbnails" id="thumbnailContainer">
-                            <!-- JS sẽ render thumbnails -->
+                        <div class="product-detail__thumbnails" id="thumbnailContainer">
+                            <!-- Thumbnails will be rendered by JavaScript -->
                         </div>
                     </div>
                     
-                    <!-- Right - Product Info -->
-                    <div class="product-detail__product-info">
-                        <h1 class="product-detail__product-title">
-                            <?= htmlspecialchars($product['product_name'] ?? '') ?>
+                    <!-- Right side - Product info -->
+                    <div class="product-detail__info">
+                        <h1 class="product-detail__title">
+                            <?= htmlspecialchars($product['name'] ?? '') ?>
                         </h1>
                         
-                        <div class="rating-section">
-                            <div class="stars">★★★★★</div>
-                            <span>234 đánh giá</span>
-                            <span>Đã bán 234</span>
+                        <div class="product-detail__rating">
+                            <div class="product-detail__stars">★★★★★</div>
+                            <div class="product-detail__rating-text">
+                                <span>234 đánh giá</span>
+                                <span>Đã bán 234</span>
+                            </div>
                         </div>
 
-                        <div class="product-detail__price-section">
+                        <div class="product-detail__price">
                             <div class="product-detail__current-price" id="currentPrice">
-                                <!-- JS sẽ cập nhật giá -->
+                                <!-- Price will be updated by JavaScript -->
                             </div>
-                            <span class="original-price">20.490.000 đ</span>
-                            <span class="discount-badge">-15%</span>
+                            <div class="product-detail__price-info">
+                                <?php 
+                                $basePrice = 0;
+                                if (!empty($product['variants'])) {
+                                    $basePrice = $product['variants'][0]['price_original'] ?? 0;
+                                }
+                                ?>
+                                <span class="product-detail__original-price"><?= number_format($basePrice, 0, ',', '.') ?> đ</span>
+                                <span class="product-detail__discount">-15%</span>
+                            </div>
                         </div>
 
-                        <div class="product-detail__variant-selector">
-                            <label class="product-detail__variant-label">Màu sắc:</label>
-                            <div class="product-detail__color-options" id="colorOptions">
-                                <!-- JS sẽ render màu sắc -->
+                        <div class="product-detail__variants">
+                            <!-- Color selection -->
+                            <div class="product-detail__variant-group">
+                                <label class="product-detail__variant-label">Màu sắc:</label>
+                                <div class="product-detail__colors" id="colorOptions">
+                                    <!-- Colors will be rendered by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <!-- Capacity selection -->
+                            <div class="product-detail__variant-group">
+                                <label class="product-detail__variant-label">Dung lượng:</label>
+                                <div class="product-detail__capacities" id="capacityOptions">
+                                    <!-- Capacities will be rendered by JavaScript -->
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="product-detail__variant-selector">
-                            <label class="product-detail__variant-label">Dung lượng:</label>
-                            <div class="product-detail__size-options" id="sizeOptions">
-                                <!-- JS sẽ render dung lượng -->
-                            </div>
-                        </div>
-                        <div class="product-detail__stock-info" id="stockInfo">
-                            <!-- JS sẽ cập nhật số lượng kho -->
+
+                        <div class="product-detail__stock" id="stockInfo">
+                            <!-- Stock info will be updated by JavaScript -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Product Features -->
-                <div class="product-features">
-                    <h3 class="features-title">Điểm nổi bật sản phẩm:</h3>
-                    <ul class="features-list">
-                        <li>Màn hình Super Retina XDR 6.1 inch</li>
-                        <li>Chip Apple A15 Bionic mạnh mẽ</li>
-                        <li>Camera kép 12MP (Wide & Ultra Wide)</li>
-                        <li>Hỗ trợ 5G và HDR Display</li>
+                <!-- Product features -->
+                <div class="product-detail__features">
+                    <h3 class="product-detail__section-title">Điểm nổi bật sản phẩm:</h3>
+                    <ul class="product-detail__feature-list">
+                        <?php if (empty($product['descriptions'])): ?>
+                            <li class="product-detail__feature-item">Chưa có mô tả chi tiết.</li>
+                        <?php else: ?>
+                            <?php foreach ($product['descriptions'] as $desc): ?>
+                                <li class="product-detail__feature-item"><?= htmlspecialchars($desc['description'] ?? '') ?></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </ul>
                 </div>
 
-                <!-- Specs Section -->
-                <div class="specs-section">
-                    <h3 class="features-title">Thông số nổi bật</h3>
-                    <div class="specs-grid">
-                        <div class="spec-item">
-                            <div class="spec-icon"><i class="fas fa-microchip"></i></div>
-                            <div>Chip</div>
-                            <div>Apple A15 Bionic</div>
-                        </div>
-                        <div class="spec-item">
-                            <div class="spec-icon"><i class="fas fa-mobile-alt"></i></div>
-                            <div>Kích thước màn hình</div>
-                            <div>6.1 inch</div>
-                        </div>
-                        <div class="spec-item">
-                            <div class="spec-icon"><i class="fas fa-battery-three-quarters"></i></div>
-                            <div>Thời lượng pin</div>
-                            <div>22 Giờ</div>
-                        </div>
+                <!-- Product specifications -->
+                <div class="product-detail__specs">
+                    <h3 class="product-detail__section-title">Thông số kỹ thuật</h3>
+                    <div class="product-detail__specs-grid">
+                        <?php if (empty($product['specs'])): ?>
+                            <div class="product-detail__spec-item">
+                                <div class="product-detail__spec-icon"><i class="fas fa-microchip"></i></div>
+                                <div class="product-detail__spec-name">Chưa có thông số</div>
+                                <div class="product-detail__spec-value">-</div>
+                            </div>
+                        <?php else: ?>
+                            <?php 
+                            $specIcons = [
+                                'Màn hình' => 'fas fa-tv',
+                                'Chip xử lý' => 'fas fa-microchip',
+                                'Camera' => 'fas fa-camera',
+                                'Pin' => 'fas fa-battery-full',
+                                'Bộ nhớ' => 'fas fa-memory',
+                                'RAM' => 'fas fa-memory',
+                                'Hệ điều hành' => 'fas fa-mobile-alt',
+                                'Kết nối' => 'fas fa-wifi',
+                                'Trọng lượng' => 'fas fa-weight',
+                                'Màu sắc' => 'fas fa-palette'
+                            ];
+                            
+                            foreach ($product['specs'] as $spec): 
+                                $iconClass = 'fas fa-info-circle';
+                                foreach ($specIcons as $keyword => $icon) {
+                                    if (stripos($spec['spec_name'], $keyword) !== false) {
+                                        $iconClass = $icon;
+                                        break;
+                                    }
+                                }
+                            ?>
+                                <div class="product-detail__spec-item">
+                                    <div class="product-detail__spec-icon"><i class="<?= $iconClass ?>"></i></div>
+                                    <div class="product-detail__spec-name"><?= htmlspecialchars($spec['spec_name'] ?? '') ?></div>
+                                    <div class="product-detail__spec-value"><?= htmlspecialchars($spec['spec_value'] ?? '') ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
-                <!-- Policy Section -->
-                <div class="policy-section">
-                    <h3 class="features-title">Chính sách sản phẩm</h3>
-                    <div class="policy-grid">
-                        <div class="policy-item">
-                            <div class="policy-icon"><i class="fas fa-shield-alt"></i></div>
-                            <div>Hàng chính hãng - Bảo hành 12 tháng</div>
+                <!-- Policies -->
+                <div class="product-detail__policies">
+                    <h3 class="product-detail__section-title">Chính sách sản phẩm</h3>
+                    <div class="product-detail__policy-grid">
+                        <div class="product-detail__policy-item">
+                            <div class="product-detail__policy-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="product-detail__policy-text">Hàng chính hãng - Bảo hành 12 tháng</div>
                         </div>
-                        <div class="policy-item">
-                            <div class="policy-icon"><i class="fas fa-shipping-fast"></i></div>
-                            <div>Miễn phí giao hàng toàn quốc</div>
+                        <div class="product-detail__policy-item">
+                            <div class="product-detail__policy-icon"><i class="fas fa-user-shield"></i></div>
+                            <div class="product-detail__policy-text">Kỹ thuật viên hỗ trợ trực tuyến</div>
                         </div>
-                        <div class="policy-item">
-                            <div class="policy-icon"><i class="fas fa-user-shield"></i></div>
-                            <div>Kỹ thuật viên hỗ trợ trực tuyến</div>
+                        <div class="product-detail__policy-item">
+                            <div class="product-detail__policy-icon"><i class="fas fa-shipping-fast"></i></div>
+                            <div class="product-detail__policy-text">Miễn phí giao hàng toàn quốc</div>
                         </div>
-                        <div class="policy-item">
-                            <div class="policy-icon"><i class="fas fa-undo-alt"></i></div>
-                            <div>Đổi trả trong 7 ngày nếu có lỗi</div>
+                        <div class="product-detail__policy-item">
+                            <div class="product-detail__policy-icon"><i class="fas fa-undo-alt"></i></div>
+                            <div class="product-detail__policy-text">Đổi trả trong 7 ngày nếu có lỗi</div>
                         </div>
                     </div>
                 </div>
@@ -127,13 +182,16 @@ include dirname(__DIR__) . '/partials/header.php';
         </div>
     </main>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Dữ liệu từ PHP
-    let productData = <?= json_encode($product, JSON_UNESCAPED_SLASHES) ?>;
-    let variants = productData.variants || [];
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    // Product data from PHP
+    const productData = <?= json_encode($product, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    console.log('Product data loaded:', productData);
+
+    const variants = productData.variants || [];
+    const images = productData.images || {};
     
-    // State
+    // Current state
     let selectedColor = null;
     let selectedCapacity = null;
     let currentVariant = null;
@@ -142,155 +200,332 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainImage = document.getElementById('mainImage');
     const thumbnailContainer = document.getElementById('thumbnailContainer');
     const colorOptions = document.getElementById('colorOptions');
-    const sizeOptions = document.getElementById('sizeOptions');
+    const capacityOptions = document.getElementById('capacityOptions');
     const currentPrice = document.getElementById('currentPrice');
     const stockInfo = document.getElementById('stockInfo');
 
-    // Helper functions
-    function getCapacities() {
-        return [...new Set(variants.map(v => v.attributes.Capacity))].sort((a, b) => parseInt(a) - parseInt(b));
+    // Utility functions
+    function getUniqueCapacities() {
+        const capacities = [...new Set(
+            variants.map(v => v.attributes.find(a => a.option_name === 'Capacity')?.option_value)
+        )].filter(Boolean);
+        
+        return capacities.sort((a, b) => {
+            const numA = parseInt(a);
+            const numB = parseInt(b);
+            return numA - numB;
+        });
     }
 
-    function getColors() {
-        return [...new Set(variants.map(v => v.attributes.Color))];
+    function getUniqueColors() {
+        return [...new Set(
+            variants.map(v => v.attributes.find(a => a.option_name === 'Color')?.option_value)
+        )].filter(Boolean);
     }
 
-    function findVariant(color, capacity) {
-        return variants.find(v => v.attributes.Color === color && v.attributes.Capacity === capacity);
+    function findVariantByAttributes(color, capacity) {
+        return variants.find(variant => {
+            const colorAttr = variant.attributes.find(a => a.option_name === 'Color')?.option_value;
+            const capacityAttr = variant.attributes.find(a => a.option_name === 'Capacity')?.option_value;
+            
+            // ✅ FIX: Handle cases where capacity might be undefined
+            if (capacity === null || capacity === undefined) {
+                // If no capacity is selected/available, match only by color
+                return colorAttr === color;
+            }
+            
+            return colorAttr === color && capacityAttr === capacity;
+        });
     }
 
-    function findFallbackImages(color) {
-        // Tìm variant cùng màu có ảnh, ưu tiên 128GB
-        const sameColorVariants = variants.filter(v => 
-            v.attributes.Color === color && v.images && v.images.length > 0
-        );
-        return sameColorVariants.find(v => v.attributes.Capacity === '128GB') || sameColorVariants[0];
-    }
-
-    function getColorHex(color) {
-        const colors = {
+    function getColorHexCode(colorName) {
+        const colorMap = {
             'Black': '#1d1d1f',
-            'White': '#f5f5f7'
+            'White': '#f5f5f7', 
+            'Blue': '#4A90E2',
+            'Pink': '#FFB6C1',
+            'Red': '#FF0000',
+            'Green': '#228B22',
+            'Purple': '#8A2BE2',
+            'Yellow': '#FFD700',
+            'Silver': '#C0C0C0',
+            'Gold': '#FFD700'
         };
-        return colors[color] || '#666';
+        return colorMap[colorName] || '#666666';
     }
 
-    // Render màu sắc
-    function renderColors() {
+    function getVariantImages(skuId) {
+        return images[skuId] || null;
+    }
+
+    function findFallbackImagesByColor(color) {
+        const sameColorVariants = variants.filter(variant => {
+            const colorAttr = variant.attributes.find(a => a.option_name === 'Color')?.option_value;
+            return colorAttr === color;
+        });
+        
+        for (const variant of sameColorVariants) {
+            const variantImages = getVariantImages(variant.sku_id);
+            if (variantImages?.gallery_urls?.length > 0) {
+                return variantImages;
+            }
+        }
+        return null;
+    }
+
+    // Render functions
+    function renderColorOptions() {
+        const colors = getUniqueColors();
         colorOptions.innerHTML = '';
-        getColors().forEach(color => {
-            const div = document.createElement('div');
-            div.className = 'product-detail__color-option';
-            div.style.backgroundColor = getColorHex(color);
-            div.onclick = () => selectColor(color);
-            colorOptions.appendChild(div);
+        
+        colors.forEach((color, index) => {
+            const colorElement = document.createElement('div');
+            colorElement.className = 'product-detail__color';
+            colorElement.style.backgroundColor = getColorHexCode(color);
+            colorElement.title = color;
+            colorElement.onclick = () => selectColor(color);
+            
+            if (index === 0 && !selectedColor) {
+                colorElement.classList.add('product-detail__color--active');
+            }
+            
+            colorOptions.appendChild(colorElement);
         });
     }
 
-    // Render dung lượng
-    function renderCapacities() {
-        sizeOptions.innerHTML = '';
-        getCapacities().forEach(capacity => {
-            const div = document.createElement('div');
-            div.className = 'product-detail__size-option';
-            div.textContent = capacity;
-            div.onclick = () => selectCapacity(capacity);
-            sizeOptions.appendChild(div);
+    function renderCapacityOptions() {
+        const capacities = getUniqueCapacities();
+        
+        // ✅ FIX: Hide capacity section if no capacities available
+        const capacityGroup = capacityOptions.closest('.product-detail__variant-group');
+        if (capacities.length === 0) {
+            if (capacityGroup) {
+                capacityGroup.style.display = 'none';
+            }
+            return;
+        }
+        
+        if (capacityGroup) {
+            capacityGroup.style.display = 'block';
+        }
+        
+        capacityOptions.innerHTML = '';
+        
+        capacities.forEach((capacity, index) => {
+            const capacityElement = document.createElement('div');
+            capacityElement.className = 'product-detail__capacity';
+            capacityElement.textContent = capacity;
+            capacityElement.onclick = () => selectCapacity(capacity);
+            
+            if (index === 0 && !selectedCapacity) {
+                capacityElement.classList.add('product-detail__capacity--active');
+            }
+            
+            capacityOptions.appendChild(capacityElement);
         });
     }
 
-    // Chọn màu
+    function renderThumbnails() {
+        thumbnailContainer.innerHTML = '';
+        
+        if (!currentVariant) return;
+        
+        let variantImages = getVariantImages(currentVariant.sku_id);
+        
+        // Fallback to same color images if current variant has no images
+        if (!variantImages?.gallery_urls?.length && selectedColor) {
+            variantImages = findFallbackImagesByColor(selectedColor);
+        }
+        
+        if (!variantImages?.gallery_urls?.length) {
+            console.log('No images found for variant:', currentVariant.sku_id);
+            return;
+        }
+        
+        variantImages.gallery_urls.forEach((imageUrl, index) => {
+            const thumbnailDiv = document.createElement('div');
+            thumbnailDiv.className = 'product-detail__thumbnail';
+            
+            if (index === 0) {
+                thumbnailDiv.classList.add('product-detail__thumbnail--active');
+            }
+            
+            const thumbnailImg = document.createElement('img');
+            // Use thumbnail URL if available, otherwise use gallery URL
+            const thumbnailUrl = variantImages.thumbnail_url?.[index] || imageUrl;
+            thumbnailImg.src = `/img/products/thumbnails/${thumbnailUrl}`;
+            thumbnailImg.alt = `${productData.name} - ${selectedColor} ${selectedCapacity || ''} - Ảnh ${index + 1}`;
+            
+            // ✅ Add error handling for images
+            thumbnailImg.onerror = function() {
+                console.log('Thumbnail image failed to load:', this.src);
+                this.src = '/img/default.png';
+            };
+            
+            thumbnailImg.onclick = () => {
+                const galleryImageSrc = `/img/products/gallery/${imageUrl}`;
+                mainImage.src = galleryImageSrc;
+                mainImage.alt = `${productData.name} - ${selectedColor} ${selectedCapacity || ''}`;
+                
+                // ✅ Add error handling for main image
+                mainImage.onerror = function() {
+                    console.log('Main image failed to load:', this.src);
+                    this.src = '/img/default.png';
+                };
+                
+                // Update active thumbnail
+                document.querySelectorAll('.product-detail__thumbnail').forEach(thumb => 
+                    thumb.classList.remove('product-detail__thumbnail--active')
+                );
+                thumbnailDiv.classList.add('product-detail__thumbnail--active');
+            };
+            
+            thumbnailDiv.appendChild(thumbnailImg);
+            thumbnailContainer.appendChild(thumbnailDiv);
+        });
+    }
+
+    // Selection functions
     function selectColor(color) {
         selectedColor = color;
-        document.querySelectorAll('.product-detail__color-option').forEach((el, i) => {
-            el.classList.toggle('product-detail__color-option--active', getColors()[i] === color);
+        
+        // Update active color
+        const colors = getUniqueColors();
+        document.querySelectorAll('.product-detail__color').forEach((element, index) => {
+            element.classList.toggle('product-detail__color--active', colors[index] === color);
         });
-        updateVariant();
+        
+        updateCurrentVariant();
     }
 
-    // Chọn dung lượng
     function selectCapacity(capacity) {
         selectedCapacity = capacity;
-        document.querySelectorAll('.product-detail__size-option').forEach((el, i) => {
-            el.classList.toggle('product-detail__size-option--active', getCapacities()[i] === capacity);
+        
+        // Update active capacity
+        const capacities = getUniqueCapacities();
+        document.querySelectorAll('.product-detail__capacity').forEach((element, index) => {
+            element.classList.toggle('product-detail__capacity--active', capacities[index] === capacity);
         });
-        updateVariant();
+        
+        updateCurrentVariant();
     }
 
-    // Cập nhật variant
-    function updateVariant() {
-        if (!selectedColor || !selectedCapacity) return;
+    // Update functions
+    function updateCurrentVariant() {
+        // ✅ FIX: Only require color if no capacities are available
+        const hasCapacities = getUniqueCapacities().length > 0;
         
-        currentVariant = findVariant(selectedColor, selectedCapacity);
+        if (!selectedColor) return;
+        if (hasCapacities && !selectedCapacity) return;
+        
+        const foundVariant = findVariantByAttributes(selectedColor, selectedCapacity);
+        
+        if (!foundVariant) {
+            console.warn(`No variant found for ${selectedColor} ${selectedCapacity || 'no capacity'}`);
+            return;
+        }
+        
+        currentVariant = foundVariant;
+        console.log('Current variant updated:', currentVariant);
+        updateProductDisplay();
+    }
+
+    function updateProductDisplay() {
         if (!currentVariant) return;
-
-        // Cập nhật giá
-        currentPrice.textContent = new Intl.NumberFormat('vi-VN').format(currentVariant.price) + ' đ';
         
-        // Cập nhật kho
-        stockInfo.innerHTML = `Còn lại: <strong>${currentVariant.stock_quantity}</strong> sản phẩm`;
-
-        // Cập nhật ảnh
+        // Update price
+        updatePrice();
+        
+        // Update stock info
+        updateStockInfo();
+        
+        // Update images
         updateImages();
     }
 
-    // Cập nhật ảnh - FIXED LOGIC
-    function updateImages() {
-        let imageVariant = currentVariant;
+    function updatePrice() {
+        if (!currentVariant.price_discount) return;
         
-        // Nếu variant hiện tại không có ảnh, tìm fallback
-        if (!currentVariant.images || currentVariant.images.length === 0) {
-            imageVariant = findFallbackImages(selectedColor);
-        }
+        const formattedPrice = new Intl.NumberFormat('vi-VN').format(currentVariant.price_discount);
+        currentPrice.textContent = `${formattedPrice} đ`;
+    }
 
-        // Cập nhật ảnh chính - Ưu tiên hiển thị ảnh đầu tiên trong gallery
-        if (imageVariant && imageVariant.images && imageVariant.images.length > 0) {
-            // Hiển thị ảnh đầu tiên từ gallery images
-            mainImage.src = `/img/products/gallery/${imageVariant.images[0].gallery_image_url}`;
-        } else if (imageVariant && imageVariant.main_media && imageVariant.main_media.url && imageVariant.main_media.url !== '/img/default.png') {
-            // Fallback sang main_media nếu không có gallery images
-            mainImage.src = `/img/products/gallery/${imageVariant.main_media.url}`;
+    function updateStockInfo() {
+        if (currentVariant.stock_quantity === undefined) return;
+        
+        const stockQuantity = currentVariant.stock_quantity;
+        
+        if (stockQuantity > 0) {
+            stockInfo.innerHTML = `Còn lại: <strong>${stockQuantity}</strong> sản phẩm`;
+            stockInfo.className = 'product-detail__stock';
         } else {
-            // Cuối cùng mới dùng default image
+            stockInfo.innerHTML = `<strong>Hết hàng</strong>`;
+            stockInfo.className = 'product-detail__stock product-detail__stock--out';
+        }
+    }
+
+    function updateImages() {
+        if (!currentVariant) return;
+        
+        let variantImages = getVariantImages(currentVariant.sku_id);
+        
+        // Fallback to same color images
+        if (!variantImages?.gallery_urls?.length && selectedColor) {
+            variantImages = findFallbackImagesByColor(selectedColor);
+        }
+        
+        // Update main image
+        if (variantImages?.gallery_urls?.length > 0) {
+            const mainImageSrc = `/img/products/gallery/${variantImages.gallery_urls[0]}`;
+            mainImage.src = mainImageSrc;
+            mainImage.alt = `${productData.name} - ${selectedColor} ${selectedCapacity || ''}`;
+            
+            // ✅ Add error handling for main image
+            mainImage.onerror = function() {
+                console.log('Main image failed to load:', this.src);
+                this.src = '/img/default.png';
+            };
+        } else {
+            console.log('No images available, using default');
             mainImage.src = '/img/default.png';
         }
-
-        // Cập nhật thumbnails
-        thumbnailContainer.innerHTML = '';
-        if (imageVariant && imageVariant.images && imageVariant.images.length > 0) {
-            imageVariant.images.forEach((img, index) => {
-                const thumb = document.createElement('img');
-                thumb.src = `/img/products/thumbnails/${img.gallery_image_url}`;
-                thumb.className = 'product-detail__thumbnail';
-                if (index === 0) thumb.classList.add('product-detail__thumbnail--active');
-                
-                thumb.onclick = () => {
-                    mainImage.src = `/img/products/gallery/${img.gallery_image_url}`;
-                    document.querySelectorAll('.product-detail__thumbnail').forEach(t => 
-                        t.classList.remove('product-detail__thumbnail--active')
-                    );
-                    thumb.classList.add('product-detail__thumbnail--active');
-                };
-                
-                thumbnailContainer.appendChild(thumb);
-            });
-        }
+        
+        // Render thumbnails
+        renderThumbnails();
     }
 
-    // Khởi tạo
-    function init() {
-        renderColors();
-        renderCapacities();
-        if (getColors().length > 0) {
-            selectColor(getColors()[0]);
+    // Initialize the application
+    function initializeApp() {
+        console.log('Initializing product detail page...');
+        
+        if (!variants.length) {
+            console.warn('No variants found');
+            return;
         }
-        if (getCapacities().length > 0) {
-            selectCapacity(getCapacities()[0]);
+        
+        // Render options
+        renderColorOptions();
+        renderCapacityOptions();
+        
+        // Set initial selections
+        const colors = getUniqueColors();
+        const capacities = getUniqueCapacities();
+        
+        if (colors.length > 0) {
+            selectColor(colors[0]);
+        }
+        if (capacities.length > 0) {
+            selectCapacity(capacities[0]);
+        } else {
+            setTimeout(() => {
+                if (selectedColor && !currentVariant) {
+                    updateCurrentVariant();
+                }
+            }, 100);
         }
     }
-
-    init();
+    initializeApp();
 });
-</script>
+    </script>
 </body>
 </html>

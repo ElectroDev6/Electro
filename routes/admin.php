@@ -65,8 +65,5 @@ Router::post('/admin/commentDetail/reply', 'CommentDetailController@reply');
 
 
 
-
-Router::get('/admin/reviews', 'ReviewsController@index');
-Router::get('/admin/reviewDetail', 'ReviewDetailController@index');
 Router::get('/admin/blogs', 'BlogsController@index');
 Router::get('/admin/profile', 'ProfileController@index');

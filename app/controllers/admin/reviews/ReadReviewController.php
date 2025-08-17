@@ -1,17 +1,19 @@
 <?php
 namespace App\Controllers\Admin\Reviews;
 use App\Models\admin\ReviewsModel;
+use App\Models\admin\UsersModel;
 use Container;
 use Core\View;
 
 class ReadReviewController
 {
     private ReviewsModel $model;
-
+    private UsersModel $usersModel;
     public function __construct()
     {
         $pdo = Container::get('pdo');
         $this->model = new ReviewsModel($pdo);
+        $this->usersModel = new UsersModel($pdo);
     }
 
     public function list()
@@ -19,7 +21,7 @@ class ReadReviewController
         // Sanitize and validate inputs
         $search = isset($_GET['search']) ? trim($_GET['search']) : '';
         $rating = isset($_GET['rating']) && is_numeric($_GET['rating']) && $_GET['rating'] >= 1 && $_GET['rating'] <= 5 ? (int)$_GET['rating'] : '';
-        $status = isset($_GET['status']) && in_array($_GET['status'], ['active', 'pending', 'inactive']) ? $_GET['status'] : '';
+        $status = isset($_GET['status']) && in_array($_GET['status'], ['approved', 'pending', 'rejected']) ? $_GET['status'] : '';
         $date_range = isset($_GET['date_range']) && in_array($_GET['date_range'], ['', 'last_7_days', 'last_30_days']) ? $_GET['date_range'] : '';
         $limit = isset($_GET['limit']) && is_numeric($_GET['limit']) ? max(1, (int)$_GET['limit']) : 8;
         $page = isset($_GET['page']) && is_numeric($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
@@ -72,15 +74,17 @@ class ReadReviewController
         public function detail()
     {
         $id = $_GET['id'] ?? null;
+        $userId = $_SESSION['user_id'] ?? null;
         if (!$id) {
             header('Location: /admin/reviews');
             exit;
         }
+        $user = $this->usersModel->getUserById($userId);
         $review = $this->model->getReviewWithReplies($id);
         if (!$review) {
             header('Location: /admin/reviews');
             exit;
         }
-        View::render('reviews/detail', ['review' => $review]);
+        View::render('reviews/detail', ['review' => $review, 'user' => $user]);
     }
 }

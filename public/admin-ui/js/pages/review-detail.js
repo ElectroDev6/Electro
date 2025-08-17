@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-   // Xử lý click vào nút "Trả lời"
+   // Xử lý click vào nút "Trả lời" hoặc "Chỉnh sửa"
    const triggers = document.querySelectorAll(".reply-trigger");
    triggers.forEach((trigger) => {
       trigger.addEventListener("click", function (e) {
@@ -25,6 +25,14 @@ document.addEventListener("DOMContentLoaded", function () {
                   textarea.value.length,
                   textarea.value.length
                );
+
+               // Nếu là chỉnh sửa, giữ nguyên nội dung cũ
+               const action = this.getAttribute("data-action");
+               if (action === "edit" && textarea.value) {
+                  textarea.setSelectionRange(0, textarea.value.length); // Chọn toàn bộ để dễ chỉnh sửa
+               } else {
+                  textarea.value = ""; // Xóa nội dung nếu là reply mới
+               }
             }
          }
       });
@@ -43,10 +51,10 @@ document.addEventListener("DOMContentLoaded", function () {
          if (replyForm) {
             replyForm.style.display = "none";
 
-            // Clear textarea
+            // Giữ nguyên nội dung cũ khi hủy nếu là chỉnh sửa
             const textarea = replyForm.querySelector("textarea");
             if (textarea) {
-               textarea.value = "";
+               // Không clear nếu là chỉnh sửa
             }
          }
       });

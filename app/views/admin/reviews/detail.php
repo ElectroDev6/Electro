@@ -28,7 +28,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
         </div>
     <?php endif; ?>
     <?php if (isset($_GET['error']) && $_GET['error'] !== ''): ?>
-        <div class="notification notification--error" id="error-notification">
+        <div class="notification notification--error show" id="error-notification">
             <p id="error-message"><?= htmlspecialchars($_GET['error']) ?></p>
         </div>
     <?php endif; ?>
@@ -49,7 +49,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                     <div class="review-detail__user-section">
                         <div class="review-detail__user-info">
                             <div class="review-detail__user-avatar">
-                                <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatar/default-avatar.jpg'); ?>"
+                                <img src="<?php echo htmlspecialchars($review['user_avatar'] ?? '/img/avatars/default-avatar.jpg'); ?>"
                                     alt="Avatar" class="reviews__user-avatar">
                             </div>
                             <div class="review-detail__user-details">
@@ -102,13 +102,23 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                         <h2 class="review-detail__section-title">Thông tin sản phẩm</h2>
                         <div class="review-detail__product-info">
                             <div class="review-detail__product-image">
-                                <div class="review-detail__product-placeholder">📱</div>
+                                <?php if (!empty($review['product_image'])): ?>
+                                    <img src="/img/products/default/<?php echo htmlspecialchars($review['product_image']); ?>" alt="<?php echo htmlspecialchars($review['product_name']); ?>" class="review-detail__product-image">
+                                <?php else: ?>
+                                    <div class="review-detail__product-placeholder">📱</div>
+                                <?php endif; ?>
                             </div>
                             <div class="review-detail__product-details">
                                 <h3 class="review-detail__product-name">
-                                    <?php echo htmlspecialchars($review['product_name']); ?></h3>
-                                <p class="review-detail__product-price">
-                                    <?php echo number_format($review['base_price'], 0, ',', '.') . ' VNĐ'; ?></p>
+                                    <?php echo htmlspecialchars($review['product_name']); ?>
+                                </h3>
+                                <?php if (!empty($review['price'])): ?>
+                                    <p class="review-detail__product-price">
+                                        Giá: <?php echo number_format($review['price'], 0, ',', '.') . ' VNĐ'; ?>
+                                    </p>
+                                <?php else: ?>
+                                    <p class="review-detail__product-price">Giá: Không có thông tin</p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -160,7 +170,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                     <div class="<?php echo $containerClass; ?>" style="<?php echo $containerStyle; ?>">
                                         <div class="review-detail__user-info">
                                             <div class="review-detail__user-avatar">
-                                                <img src="<?php echo htmlspecialchars($reply['user_avatar'] ?? '/img/avatar/default-avatar.jpg'); ?>"
+                                                <img src="<?php echo htmlspecialchars($reply['user_avatar'] ?? '/img/avatars/default-avatar.jpg'); ?>"
                                                     alt="Avatar" class="reviews__user-avatar">
                                             </div>
                                             <div class="review-detail__user-details">
@@ -171,6 +181,12 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                                     <?php echo date('d/m/Y H:i', strtotime($reply['review_date'] ?? 'now')); ?>
                                                 </p>
                                             </div>
+                                            <?php if (isset($reply['role']) && $reply['role'] === 'admin'): ?>
+                                                <span class="admin-tag">
+                                                    <i class="fas fa-shield-alt"></i>
+                                                    Quản trị viên
+                                                </span>
+                                            <?php endif; ?>
                                         </div>
                                         <p class="review-detail__content--text">
                                             <?php echo htmlspecialchars($reply['comment_text'] ?? 'N/A') ?></p>
@@ -263,7 +279,17 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                             <i class="fas fa-trash"></i> Xóa
                                         </button>
                                     </form>
-                                <?php elseif ($review['status'] === 'active'): ?>
+                                <?php elseif ($review['status'] === 'approved'): ?>
+                                    <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
+                                        <input type="hidden" name="review_id"
+                                            value="<?php echo htmlspecialchars($review['review_id']); ?>">
+                                        <input type="hidden" name="status" value="pending">
+                                        <button type="submit"
+                                            class="review-detail__action-btn review-detail__action-btn--restore"
+                                            onclick="return confirm('Bạn có chắc muốn khôi phục đánh giá này không?');">
+                                            <i class="fas fa-undo"></i> Khôi phục
+                                        </button>
+                                    </form>
                                     <!-- Form cho Xóa -->
                                     <form action="/admin/reviews/delete" method="POST" class="review-detail__form">
                                         <input type="hidden" name="review_id"
@@ -274,7 +300,8 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                             <i class="fas fa-trash"></i> Xóa
                                         </button>
                                     </form>
-                                <?php elseif ($review['status'] === 'inactive'): ?>
+                                    
+                                <?php elseif ($review['status'] === 'rejected'): ?>
                                     <!-- Form cho Khôi phục -->
                                     <form action="/admin/reviews/update-status" method="POST" class="review-detail__form">
                                         <input type="hidden" name="review_id"

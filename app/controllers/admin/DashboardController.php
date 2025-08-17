@@ -22,11 +22,6 @@ class DashboardController
     public function index()
     {
         $data = $this->model->getDashboardData();
-        $notifications = $this->headerModel->fetchAllNotificationsInfo();
-
-        View::render('partials/header', [
-            'notifications' => $notifications
-        ]);
         View::render('dashboard', $data);
     }
 }

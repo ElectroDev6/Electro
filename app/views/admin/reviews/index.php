@@ -122,15 +122,15 @@ $endPage = min($totalPages, $page + 2);
                         <label for="status" class="reviews__filter-label">Trạng thái</label>
                         <select id="status" class="reviews__filter-select" name="status">
                             <option value="">Tất cả</option>
-                            <option value="active"
-                                <?php echo isset($_GET['status']) && $_GET['status'] === 'active' ? 'selected' : ''; ?>>
-                                Active</option>
+                            <option value="approved"
+                                <?php echo isset($_GET['status']) && $_GET['status'] === 'approved' ? 'selected' : ''; ?>>
+                                Approved</option>
                             <option value="pending"
                                 <?php echo isset($_GET['status']) && $_GET['status'] === 'pending' ? 'selected' : ''; ?>>
                                 Pending</option>
-                            <option value="inactive"
-                                <?php echo isset($_GET['status']) && $_GET['status'] === 'inactive' ? 'selected' : ''; ?>>
-                                Inactive</option>
+                            <option value="rejected"
+                                <?php echo isset($_GET['status']) && $_GET['status'] === 'rejected' ? 'selected' : ''; ?>>
+                                Rejected</option>
                         </select>
                     </div>
 
