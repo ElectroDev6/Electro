@@ -60,25 +60,21 @@ class ProductModel
         }
 
         if (!empty($options['is_sale'])) {
-            $joins[] = "INNER JOIN promotions pr 
-                        ON pr.sku_code = s.sku_code";
-            if (!empty($options['date'])) {
-                $startOfDay = $options['date'] . ' 00:00:00';
-                $endOfDay = $options['date'] . ' 23:59:59';
-                $where[] = "pr.start_date <= :endOfDay";
-                $where[] = "pr.end_date >= :startOfDay";
-                $params['startOfDay'] = $startOfDay;
-                $params['endOfDay'] = $endOfDay;
-            } else {
-                $where[] = "pr.start_date <= NOW()";
-                $where[] = "pr.end_date >= NOW()";
+            $joins[] = "INNER JOIN promotions pr ON pr.sku_code = s.sku_code";
+            if (($options['sale_mode'] ?? '') === 'today') {
+                $where[] = "DATE(pr.start_date) <= CURDATE()";
+                $where[] = "DATE(pr.end_date) >= CURDATE()";
+            } elseif (($options['sale_mode'] ?? '') === 'custom' && !empty($options['date'])) {
+                $where[] = "DATE(pr.start_date) <= :custom_date";
+                $where[] = "DATE(pr.end_date) >= :custom_date";
+                $params['custom_date'] = $options['date'];
             }
             $where[] = "pr.discount_percent IS NOT NULL";
         } else {
             $joins[] = "LEFT JOIN promotions pr 
-                        ON pr.sku_code = s.sku_code
-                        AND pr.start_date <= NOW()
-                        AND pr.end_date >= NOW()";
+                    ON pr.sku_code = s.sku_code
+                    AND pr.start_date <= NOW()
+                    AND pr.end_date >= NOW()";
         }
 
         if (!empty($options['is_featured'])) {
@@ -101,6 +97,8 @@ class ProductModel
             p.subcategory_id,
             s.price AS price_original,
             vi.image_set AS default_image,
+            pr.start_date,
+            pr.end_date,
             CASE 
                 WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
                 ELSE s.price
@@ -386,23 +384,30 @@ class ProductModel
         return $product;
     }
 
-    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text, ?string $user_name = null, ?string $email = null): bool
+    public function addReview(int $product_id, int $user_id, ?int $parent_review_id, string $comment_text): bool
     {
-        $sql = "INSERT INTO reviews (product_id, user_id, parent_review_id, comment_text, user_name, email, status) 
-            VALUES (:product_id, :user_id, :parent_review_id, :comment_text, :user_name, :email, 'approved')";
+        $sql = "INSERT INTO reviews (product_id, user_id, parent_review_id, comment_text, status) 
+            VALUES (:product_id, :user_id, :parent_review_id, :comment_text, 'approved')";
         $stmt = $this->pdo->prepare($sql);
         $params = [
             ':product_id' => $product_id,
             ':user_id' => $user_id,
             ':parent_review_id' => $parent_review_id ?? null,
-            ':comment_text' => $comment_text,
-            ':user_name' => $user_name ?? null,
-            ':email' => $email ?? null
+            ':comment_text' => $comment_text
         ];
         error_log("ProductModel: addReview Query: $sql, Params: " . json_encode($params));
         $result = $stmt->execute($params);
         error_log("ProductModel: addReview Result: " . ($result ? 'success' : 'failed'));
         return $result;
+    }
+
+    public function getUserById($id): ?array
+    {
+        $sql = "SELECT name FROM users WHERE user_id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function getDefaultSkuByProductId(int $productId): ?array
@@ -478,8 +483,7 @@ class ProductModel
     public function getReviewsByProductId(int $product_id): array
     {
         $sql = "
-        SELECT r.review_id, r.user_id, r.parent_review_id, r.comment_text, r.review_date, 
-               COALESCE(r.user_name, u.name) as user_name, COALESCE(u.avatar_url, '/img/avatars/avatar.png') as avatar_url, COALESCE(r.email, u.email) as email
+        SELECT r.review_id, r.user_id, r.parent_review_id, r.comment_text, r.review_date, u.name
         FROM reviews r
         LEFT JOIN users u ON r.user_id = u.user_id
         WHERE r.product_id = :product_id AND r.status = 'approved'
@@ -510,5 +514,10 @@ class ProductModel
 
         // error_log("ProductModel: getReviewsByProductId Result: " . json_encode($comment_tree));
         return array_values($comment_tree);
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->pdo->lastInsertId();
     }
 }

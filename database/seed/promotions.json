@@ -1,38 +1,62 @@
 [
   {
-    "sku_code": "ecovacs-N30-BLACK",
+    "sku_code": "Ecovacs-N30-BLACK",
     "discount_percent": 15,
-    "start_date": "2025-08-08T00:00:00",
+    "start_date": "2025-08-18T00:00:00",
     "end_date": "2025-08-25T23:59:59"
   },
   {
     "sku_code": "IP14-128GB-BLACK",
     "discount_percent": 10,
-    "start_date": "2025-08-08T00:00:00",
+    "start_date": "2025-08-18T00:00:00",
     "end_date": "2025-08-25T23:59:59"
   },
   {
     "sku_code": "DM208-DM208-BLACK",
     "discount_percent": 5,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-25T23:59:59"
+    "start_date": "2025-08-18T00:00:00",
+    "end_date": "2025-08-20T23:59:59"
   },
   {
     "sku_code": "IP15-128GB-BLACK",
     "discount_percent": 15,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-14T23:59:59"
+    "start_date": "2025-08-18T00:00:00",
+    "end_date": "2025-08-18T23:59:59"
   },
   {
     "sku_code": "4lit-40lit-BLACK",
     "discount_percent": 15,
-    "start_date": "2025-08-08T00:00:00",
+    "start_date": "2025-08-18T00:00:00",
     "end_date": "2025-08-25T23:59:59"
   },
   {
     "sku_code": "IP13-128GB-BLACK",
     "discount_percent": 15,
-    "start_date": "2025-08-08T00:00:00",
-    "end_date": "2025-08-13T23:59:59"
+    "start_date": "2025-08-18T00:00:00",
+    "end_date": "2025-08-25T23:59:59"
+  },
+  {
+    "sku_code": "IP14-128GB-BLACK",
+    "discount_percent": 15,
+    "start_date": "2025-08-18T00:00:00",
+    "end_date": "2025-08-25T23:59:59"
+  },
+  {
+    "sku_code": "IP14PLUS-128GB-BLACK",
+    "discount_percent": 15,
+    "start_date": "2025-08-18T00:00:00",
+    "end_date": "2025-08-25T23:59:59"
+  },
+  {
+    "sku_code": "44mm-41mm-BLACK",
+    "discount_percent": 15,
+    "start_date": "2025-08-18T00:00:00",
+    "end_date": "2025-08-25T23:59:59"
+  },
+  {
+    "sku_code": "12400F-6GB-BLACK",
+    "discount_percent": 15,
+    "start_date": "2025-08-18T00:00:00",
+    "end_date": "2025-08-25T23:59:59"
   }
 ]

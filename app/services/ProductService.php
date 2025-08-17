@@ -31,10 +31,41 @@ class ProductService
 
     public function getSaleProducts(int $limit): array
     {
-        return $this->productModel->getProducts([
+        // Lấy sản phẩm sale hôm nay
+        $saleProducts = $this->productModel->getProducts([
             'is_sale' => true,
+            'sale_mode' => 'today',
             'limit' => $limit
         ]);
+
+        if (!empty($saleProducts)) {
+            return [
+                'status' => 'today',
+                'products' => $saleProducts
+            ];
+        }
+
+        // Nếu không có sale hôm nay, lấy sale của ngày mai
+        $tomorrow = date('Y-m-d', strtotime('+1 day'));
+        $saleProducts = $this->productModel->getProducts([
+            'is_sale' => true,
+            'sale_mode' => 'custom',
+            'date' => $tomorrow,
+            'limit' => $limit
+        ]);
+
+        if (!empty($saleProducts)) {
+            return [
+                'status' => 'upcoming',
+                'products' => $saleProducts
+            ];
+        }
+
+        // Không có sale
+        return [
+            'status' => 'none',
+            'products' => []
+        ];
     }
 
     public function getFeaturedProducts(int $limit = 6): array
@@ -87,13 +118,23 @@ class ProductService
         return $this->productModel->getSubcategories($category_id);
     }
 
-    public function addReview(int $product_id, ?int $user_id, ?int $parent_review_id, string $comment_text,  ?string $user_name = null, ?string $email = null): bool
+    public function addReview(int $product_id, int $user_id, ?int $parent_review_id, string $comment_text): bool
     {
-        return $this->productModel->addReview($product_id, $user_id, $parent_review_id, $comment_text, $user_name, $email);
+        return $this->productModel->addReview($product_id, $user_id, $parent_review_id, $comment_text);
     }
 
     public function getReviews(int $product_id): array
     {
         return $this->productModel->getReviewsByProductId($product_id);
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->productModel->getLastInsertId();
+    }
+
+    public function getUserById($id)
+    {
+        return $this->productModel->getUserById($id);
     }
 }

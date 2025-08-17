@@ -14,7 +14,6 @@ export default class ProductVariantManager {
     this.bindEvents();
     this.selectDefaultVariant();
     this.updateCapacityButtons();
-    this.addToCartFromHome();
   }
 
   cacheDom() {

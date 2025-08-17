@@ -67,7 +67,7 @@ Trang chủ
 
 <?php View::partial('partials.category-container', ['categories' => $categories]); ?>
 
-<?php View::partial('partials.sale-container', ['saleProducts' => $saleProducts]); ?>
+<?php View::partial('partials.sale-container', ['saleProducts' => $saleProducts, 'saleStatus' => $saleStatus]); ?>
 <?php View::partial('partials.special-offer-container', [
     'regularProducts' => $regularProducts,
     'featuredProduct' => $featuredProduct,

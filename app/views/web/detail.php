@@ -23,6 +23,8 @@ Chi tiết sản phẩm
 
 <?php View::section('content'); ?>
 
+<?php View::component('components.scroll-to-top'); ?>
+
 <div class="container-main">
     <div class="product-detail">
         <!-- Breadcrumb -->
@@ -288,35 +290,18 @@ Chi tiết sản phẩm
                     <div class="product-detail__comments">
                         <div class="product-detail__comment-form">
                             <h3>Để lại bình luận</h3>
-                            <form class="product-detail__form" id="comment-form" data-product-id="<?= htmlspecialchars($product['product_id']) ?>">
-                                <?php if (!isset($_SESSION['user_id'])): ?>
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                                <form class="product-detail__form" id="comment-form" data-product-id="<?= htmlspecialchars($product['product_id']) ?>">
                                     <div class="product-detail__form-group">
-                                        <label for="comment-name">Họ và tên *</label>
-                                        <input type="text" id="comment-name" name="user_name" required />
+                                        <label for="comment-content">Nội dung bình luận *</label>
+                                        <textarea id="comment-content" name="comment_text" rows="4" required></textarea>
                                     </div>
-                                    <div class="product-detail__form-group">
-                                        <label for="comment-email">Email *</label>
-                                        <input type="email" id="comment-email" name="email" required />
-                                    </div>
-                                <?php endif; ?>
-                                <!-- <div class="product-detail__form-group">
-                                    <label for="comment-rating">Đánh giá</label>
-                                    <select id="comment-rating" name="rating">
-                                        <option value="">Chọn số sao</option>
-                                        <option value="1">1 sao</option>
-                                        <option value="2">2 sao</option>
-                                        <option value="3">3 sao</option>
-                                        <option value="4">4 sao</option>
-                                        <option value="5">5 sao</option>
-                                    </select>
-                                </div> -->
-                                <div class="product-detail__form-group">
-                                    <label for="comment-content">Nội dung bình luận *</label>
-                                    <textarea id="comment-content" name="comment_text" rows="4" required></textarea>
-                                </div>
-                                <input type="hidden" name="parent_review_id" id="parent-review-id" value="">
-                                <button type="submit" class="product-detail__comment-submit">Gửi bình luận</button>
-                            </form>
+                                    <input type="hidden" name="parent_review_id" id="parent-review-id" value="">
+                                    <button type="submit" class="product-detail__comment-submit">Gửi bình luận</button>
+                                </form>
+                            <?php else: ?>
+                                <p>Vui lòng <a href="/login">đăng nhập</a> để gửi bình luận.</p>
+                            <?php endif; ?>
                             <h3>Bình luận từ khách hàng</h3>
                             <div class="product-detail__reviews-list">
                                 <?php foreach ($reviews as $review): ?>
@@ -325,7 +310,7 @@ Chi tiết sản phẩm
                                             <img src="<?= htmlspecialchars($review['avatar_url'] ?? '/img/avatars/avatar.png') ?>" alt="User avatar" class="product-detail__reviewer-avatar" />
                                             <div class="product-detail__reviewer-details">
                                                 <h4 class="product-detail__reviewer-name">
-                                                    <?= htmlspecialchars($review['user_name']) ?>
+                                                    <?= htmlspecialchars($review['name']) ?>
                                                 </h4>
                                                 <span class="product-detail__review-date">
                                                     <?= date('d/m/Y', strtotime($review['review_date'])) ?>
@@ -344,7 +329,7 @@ Chi tiết sản phẩm
                                                             <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
                                                             <div class="product-detail__reviewer-details">
                                                                 <h4 class="product-detail__reviewer-name">
-                                                                    <?= htmlspecialchars($reply['user_name']) ?>
+                                                                    <?= htmlspecialchars($reply['name']) ?>
                                                                 </h4>
                                                                 <span class="product-detail__review-date">
                                                                     <?= date('d/m/Y', strtotime($reply['review_date'])) ?>

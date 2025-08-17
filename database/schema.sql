@@ -205,15 +205,12 @@ CREATE TABLE reviews (
     review_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NULL,
     product_id INT NOT NULL,
-    user_name VARCHAR(255),
-    email VARCHAR(255),
     parent_review_id INT,
     rating INT CHECK (
         rating >= 1
         AND rating <= 5
         OR rating IS NULL
     ),
-    -- Đánh giá sao (1-5), có thể NULL cho phản hồi
     comment_text TEXT NOT NULL,
     status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
     review_date DATETIME DEFAULT CURRENT_TIMESTAMP,

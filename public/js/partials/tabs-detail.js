@@ -12,6 +12,7 @@ export default class ProductDetailTabs {
     this.bindTabEvents();
     this.bindCommentFormEvents();
     this.bindImageEvents();
+    this.bindReplyButtonEvents();
   }
 
   bindTabEvents() {
@@ -24,20 +25,40 @@ export default class ProductDetailTabs {
     const button = e.target;
     const tabId = button.getAttribute("data-tab");
 
-    // Remove active classes
     this.tabButtons.forEach((btn) => btn.classList.remove("product-detail__tab-btn--active"));
     this.tabPanels.forEach((panel) => panel.classList.remove("product-detail__tab-panel--active"));
 
-    // Add active class to clicked button
     button.classList.add("product-detail__tab-btn--active");
-
-    // Show corresponding panel
     const targetPanel = document.getElementById(`${tabId}-panel`);
     if (targetPanel) {
       targetPanel.classList.add("product-detail__tab-panel--active");
     }
 
     this.smoothScrollToTabs();
+  }
+
+  bindReplyButtonEvents() {
+    const replyButtons = document.querySelectorAll(".product-detail__reply-btn");
+    replyButtons.forEach((button) => {
+      button.addEventListener("click", (e) => this.handleReplyClick(e));
+    });
+  }
+
+  handleReplyClick(e) {
+    const button = e.target;
+    const reviewId = button.getAttribute("data-review-id");
+    const parentReviewInput = document.getElementById("parent-review-id");
+
+    if (parentReviewInput) {
+      parentReviewInput.value = reviewId || ""; // Gán review_id vào input hidden
+    }
+
+    // Tùy chọn: Cuộn đến form bình luận và focus vào textarea
+    const commentForm = document.querySelector(".product-detail__comment-form");
+    if (commentForm) {
+      commentForm.scrollIntoView({ behavior: "smooth" });
+      document.getElementById("comment-content").focus();
+    }
   }
 
   bindCommentFormEvents() {
@@ -49,72 +70,113 @@ export default class ProductDetailTabs {
   handleCommentSubmit(e) {
     e.preventDefault();
 
-    const name = document.getElementById("comment-name").value;
-    const email = document.getElementById("comment-email").value;
     const content = document.getElementById("comment-content").value;
+    const productId = this.commentForm.getAttribute("data-product-id");
+    const parentReviewId = document.getElementById("parent-review-id").value;
 
-    if (!this.validateCommentForm(name, email, content)) {
+    if (!this.validateCommentForm(content)) {
       return;
     }
 
-    this.submitComment(name, email, content);
+    this.submitComment(productId, parentReviewId, content);
   }
 
-  validateCommentForm(name, email, content) {
-    if (!name.trim() || !email.trim() || !content.trim()) {
-      alert("Vui lòng điền đầy đủ thông tin!");
+  validateCommentForm(content) {
+    if (!content.trim()) {
+      alert("Vui lòng nhập nội dung bình luận!");
       return false;
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      alert("Email không hợp lệ!");
-      return false;
-    }
-
     return true;
   }
 
-  submitComment(name, email, content) {
+  submitComment(productId, parentReviewId, content) {
     const submitButton = this.commentForm.querySelector(".product-detail__comment-submit");
     const originalText = submitButton.textContent;
 
     submitButton.textContent = "Đang gửi...";
     submitButton.disabled = true;
 
-    setTimeout(() => {
-      this.addNewComment(name, content);
-      this.commentForm.reset();
+    const payload = {
+      product_id: productId,
+      comment_text: content,
+      parent_review_id: parentReviewId !== "" ? parseInt(parentReviewId) : null,
+    };
 
-      submitButton.textContent = originalText;
-      submitButton.disabled = false;
-
-      alert("Cảm ơn bạn đã để lại bình luận!");
-    }, 1500);
+    fetch("/comment/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        console.log("Server response status:", response.status);
+        if (!response.ok) {
+          return response.json().then((data) => {
+            console.log("Server error JSON:", data);
+            throw new Error(data.error || "Lỗi không xác định");
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Server success JSON:", data);
+        if (data.success) {
+          this.lastInsertedReviewId = data.review_id; // Lưu review_id từ server
+          this.addNewComment(data.user_name, content, parentReviewId);
+          this.commentForm.reset();
+          alert("Cảm ơn bạn đã để lại bình luận!");
+        }
+      })
+      .catch((error) => {
+        console.error("Client error:", error);
+        alert("Lỗi: " + error.message);
+      })
+      .finally(() => {
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+      });
   }
 
-  addNewComment(name, content) {
+  addNewComment(name, content, parentReviewId = null) {
     const reviewsList = document.querySelector(".product-detail__reviews-list");
     const newComment = document.createElement("div");
-    newComment.className = "product-detail__review-item";
+    newComment.className = "product-detail__review-item" + (parentReviewId ? " product-detail__reply" : "");
     newComment.style.opacity = "0";
     newComment.style.transform = "translateY(20px)";
 
     newComment.innerHTML = `
-            <div class="product-detail__reviewer-info">
-                <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
-                <div class="product-detail__reviewer-details">
-                    <h4 class="product-detail__reviewer-name">${this.escapeHtml(name)}</h4>
-                    <div class="product-detail__review-rating">★★★★★</div>
-                    <span class="product-detail__review-date">Vừa xong</span>
-                </div>
+        <div class="product-detail__reviewer-info">
+            <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+            <div class="product-detail__reviewer-details">
+                <h4 class="product-detail__reviewer-name">${this.escapeHtml(name)}</h4>
+                <span class="product-detail__review-date">Vừa xong</span>
             </div>
-            <div class="product-detail__review-content">
-                <p>${this.escapeHtml(content)}</p>
-            </div>
-        `;
+        </div>
+        <div class="product-detail__review-content">
+            <p>${this.escapeHtml(content)}</p>
+        </div>
+    `;
 
-    reviewsList.insertBefore(newComment, reviewsList.firstChild);
+    if (parentReviewId) {
+      // Tìm bình luận cha và thêm bình luận con vào replies
+      const parentReview = document.querySelector(`.product-detail__review-item [data-review-id="${parentReviewId}"]`)?.closest(".product-detail__review-item");
+      if (parentReview) {
+        let repliesDiv = parentReview.querySelector(".product-detail__replies");
+        if (!repliesDiv) {
+          repliesDiv = document.createElement("div");
+          repliesDiv.className = "product-detail__replies";
+          parentReview.appendChild(repliesDiv);
+        }
+        repliesDiv.appendChild(newComment);
+      } else {
+        // Nếu không tìm thấy bình luận cha, thêm vào đầu danh sách
+        reviewsList.insertBefore(newComment, reviewsList.firstChild);
+      }
+    } else {
+      // Bình luận cha, thêm vào đầu danh sách
+      reviewsList.insertBefore(newComment, reviewsList.firstChild);
+    }
 
     setTimeout(() => {
       newComment.style.transition = "all 0.3s ease";
@@ -146,13 +208,13 @@ export default class ProductDetailTabs {
     const modal = document.createElement("div");
     modal.className = "image-modal";
     modal.innerHTML = `
-            <div class="image-modal__overlay">
-                <div class="image-modal__content">
-                    <img src="${imageSrc}" alt="Enlarged image" />
-                    <button class="image-modal__close">&times;</button>
-                </div>
-            </div>
-        `;
+      <div class="image-modal__overlay">
+        <div class="image-modal__content">
+          <img src="${imageSrc}" alt="Enlarged image" />
+          <button class="image-modal__close">&times;</button>
+        </div>
+      </div>
+    `;
 
     this.addModalStyles();
     return modal;
@@ -161,45 +223,45 @@ export default class ProductDetailTabs {
   addModalStyles() {
     if (!document.querySelector("#modal-styles")) {
       const modalStyles = `
-                .image-modal {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background-color: rgba(0, 0, 0, 0.8);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 1000;
-                }
-                
-                .image-modal__content {
-                    position: relative;
-                    max-width: 90%;
-                    max-height: 90%;
-                }
-                
-                .image-modal__content img {
-                    max-width: 100%;
-                    max-height: 100%;
-                    border-radius: 8px;
-                }
-                
-                .image-modal__close {
-                    position: absolute;
-                    top: -10px;
-                    right: -10px;
-                    background: white;
-                    border: none;
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    font-size: 18px;
-                    cursor: pointer;
-                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-                }
-            `;
+        .image-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000;
+        }
+        
+        .image-modal__content {
+          position: relative;
+          max-width: 90%;
+          max-height: 90%;
+        }
+        
+        .image-modal__content img {
+          max-width: 100%;
+          max-height: 100%;
+          border-radius: 8px;
+        }
+        
+        .image-modal__close {
+          position: absolute;
+          top: -10px;
+          right: -10px;
+          background: white;
+          border: none;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          font-size: 18px;
+          cursor: pointer;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+      `;
 
       const styleSheet = document.createElement("style");
       styleSheet.id = "modal-styles";

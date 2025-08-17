@@ -35,7 +35,7 @@ class DetailController
 
         $reviews = $this->productService->getReviews($product['product_id']);
         // echo "<pre>";
-        // print_r($product);
+        // print_r($reviews);
         // echo "</pre>";
         // exit();
         View::render('detail', [
@@ -95,24 +95,30 @@ class DetailController
         header('Content-Type: application/json');
         echo json_encode($result);
     }
+
     public function addComment($input)
     {
-        $product_id = $input['product_id'] ?? null;
-        $parent_review_id = $input['parent_review_id'] ? (int)$input['parent_review_id'] : null; // Chuyển chuỗi rỗng thành null
-        $comment_text = $input['comment_text'] ?? '';
-        $user_name = $input['user_name'] ?? null;
-        $email = $input['email'] ?? null;
-        $user_id = $_SESSION['user_id'] ?? null;
-
-        if (!$product_id || !$comment_text) {
-            http_response_code(400);
-            echo json_encode(['error' => 'Missing required fields']);
+        if (!isset($_SESSION['user_id'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Bạn cần đăng nhập để gửi bình luận']);
             return;
         }
 
-        if (!$user_id && (!$user_name || !$email)) {
+        $body = $input['body'] ?? [];
+
+        $product_id = isset($body['product_id']) ? (int)$body['product_id'] : null;
+        $comment_text = $body['comment_text'] ?? '';
+        $user_id = $_SESSION['user_id'];
+
+        $parent_review_id = null;
+        if (isset($body['parent_review_id']) && $body['parent_review_id'] !== '') {
+            $parent_review_id = (int)$body['parent_review_id'];
+        }
+
+        if (!$product_id || $product_id <= 0 || !$comment_text) {
             http_response_code(400);
-            echo json_encode(['error' => 'Name and email required for guests']);
+            error_log("DetailController: Invalid input - product_id: $product_id, comment_text: $comment_text");
+            echo json_encode(['error' => 'Thiếu hoặc không hợp lệ: product_id hoặc comment_text']);
             return;
         }
 
@@ -120,16 +126,18 @@ class DetailController
             $product_id,
             $user_id,
             $parent_review_id,
-            $comment_text,
-            $user_name,
-            $email
+            $comment_text
         );
 
         if ($result) {
-            echo json_encode(['success' => true]);
+            $userName = $this->productService->getUserById($user_id);
+            // Lấy review_id vừa tạo (giả sử addReview trả về ID mới)
+            $new_review_id = $this->productService->getLastInsertId(); // Cần thêm phương thức này
+            echo json_encode(['success' => true, 'review_id' => $new_review_id, 'user_name' => $userName['name']]);
         } else {
             http_response_code(500);
-            echo json_encode(['error' => 'Failed to add comment']);
+            error_log("DetailController: Failed to add review for product_id: $product_id, user_id: $user_id");
+            echo json_encode(['error' => 'Không thể thêm bình luận']);
         }
     }
 }

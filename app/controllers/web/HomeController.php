@@ -23,15 +23,10 @@ class HomeController
         $subcategoryIds = [101, 401, 1607, 701, 1403, 803, 801]; // iPhone, PC, watch, air fryer, massager, air cooler, vacuum cleaner
         $limitPerCategory = 15;
         $totalLimit = $limitPerCategory * count($subcategoryIds);
-
         $allProducts = $this->productService->getHomeProductsByCategoryIds($subcategoryIds, $totalLimit);
-
         // Phân loại sản phẩm theo subcategory_id
+
         $iphoneProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 101);
-        // echo "<pre>";
-        // print_r($iphoneProducts);
-        // echo "</pre>";
-        // exit();
         $pcProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 401);
         $watchProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1607);
         $airFryerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 701);
@@ -39,7 +34,10 @@ class HomeController
         $airCoolerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 803);
         $vacuumCleanerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 801);
 
-        $saleProducts = $this->productService->getSaleProducts(5);
+        $saleData = $this->productService->getSaleProducts(10);
+        $saleStatus = $saleData['status'];
+        $saleProducts = $saleData['products'];
+
         $featuredProducts = $this->productService->getFeaturedProducts(9);
         $categories = $this->categoryService->getAllCategories();
 
@@ -67,6 +65,10 @@ class HomeController
         ];
 
         $featuredProduct = $featuredProducts[0] ?? null;
+        // echo '<pre>';
+        // print_r($featuredProduct);
+        // echo '</pre>';
+        // exit();
         $regularProducts = array_slice($featuredProducts, 1);
 
         View::render('home', [
@@ -78,6 +80,7 @@ class HomeController
             'airCoolerProducts' => $airCoolerProducts,
             'vacuumCleanerProducts' => $vacuumCleanerProducts,
             'saleProducts' => $saleProducts,
+            'saleStatus' => $saleStatus,
             'featuredProduct' => $featuredProduct,
             'regularProducts' => $regularProducts,
             'categories' => $categories,
