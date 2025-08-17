@@ -54,11 +54,12 @@
 
   &__sidebar {
     align-self: stretch;
-    height: 100%;
+    height: 40%;
 
     .order-summary {
       position: sticky;
       top: 20px;
+      
     }
   }
 }
@@ -423,67 +424,106 @@
 
 
 
-.order-product-box {
-  display: flex;
-  align-items: flex-start;
+// ORDER SECTION
+.order-section {
   background: #fff;
-  border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-  &__left {
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+  }
+}
+
+.order-product-box {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #fff;
+  
+}
+
+.order-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+
+  &__image {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f8f8f8;
     flex-shrink: 0;
 
     img {
-      width: 80px;
-      height: auto;
-      border-radius: 4px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
   }
 
-  &__center {
+  &__info {
     flex: 1;
-    margin-left: 15px;
-    margin-right: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    text-align: left; // ✅ Căn trái
-    align-items: flex-start; // ✅ Căn trái
+    gap: 4px;
   }
 
   &__name {
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  &__color {
     font-size: 16px;
-    color: #000;
-    line-height: 1.4;
-    word-break: break-word;
-  }
-
-  &__quantity {
-    font-size: 14px;
-    color: #555;
-    margin-top: 4px;
-  }
-
-  &__right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; // ✅ Căn trái
-    justify-content: center;
-    text-align: left; // ✅ Căn trái
-    min-width: 80px;
+    color: #666;
   }
 
   &__price {
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 14px;
+    gap: 4px;
+
+    .order-product__quantity {
+      color: #555;
+    }
+
+    .order-product__current-price {
+      font-weight: 600;
+      color: #d0021b;
+    }
   }
 }
+
+// Responsive
+@media (max-width: 500px) {
+  .order-product {
+    flex-wrap: wrap;
+    &__image {
+      width: 50px;
+      height: 50px;
+    }
+    &__name {
+      font-size: 13px;
+    }
+  }
+}
+
+
 
 
 
