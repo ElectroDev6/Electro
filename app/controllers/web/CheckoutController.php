@@ -54,31 +54,30 @@ class CheckoutController
     /**
      * Xử lý gửi form checkout
      */
-   public function submit($request) {
-    $userId = $_SESSION['user_id'];
-    $orderCode = uniqid('ORD');
-    
-    $cartItems = $this->cartModel->getCartItemsByUser($userId);
-
-    if (empty($cartItems)) {
-        throw new \Exception("Giỏ hàng trống");
-    }
-
-    $orderId = $this->checkoutService->createOrder($userId, $cartItems, $orderCode);
-
-    // Redirect sang trang cảm ơn
-    header("Location: /checkout/thankyou?order_id=" . $orderId);
-    exit;
-}
-
-
-
-    /**
-     * Kiểm tra xem yêu cầu có phải AJAX không
-     * @return bool
-     */
-    private function isAjax(): bool
+   public function submit()
     {
-        return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_SESSION['user_id'] ?? null;
+            if (!$userId) die("Bạn cần đăng nhập");
+
+            $userAddressId = $_POST['user_address_id'] ?? null;
+            $couponId = $_POST['coupon_id'] ?? null;
+
+            $orderId = $this->checkoutService->createOrder($userId, $userAddressId, $couponId);
+
+            if ($orderId) {
+                header("Location: /checkout/thankyou?order_id=".$orderId);
+                exit;
+            } else {
+                die("Đặt hàng thất bại.");
+            }
+        }
     }
+
+    public function thankyou()
+    {
+        $orderId = $_GET['order_id'] ?? null;
+        return View::render('checkout/thankyou', ['orderId' => $orderId]);
+    }
+
 }

@@ -446,21 +446,34 @@ public function getCartItems($userId) {
     $stmt->execute([$userId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-public function getCartItemsByUser($userId) {
-    $sql = "SELECT ci.*, p.name, p.price 
+public function getCartItemsByUser($userId)
+    {
+        $sql = "
+            SELECT ci.cart_item_id, ci.quantity, ci.sku_id, ci.price, 
+                   s.price AS sku_price, p.name AS product_name
             FROM cart_items ci
-            JOIN products p ON ci.product_id = p.id
-            WHERE ci.user_id = :user_id";
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute(['user_id' => $userId]);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-    public function clearCart(int $userId): bool {
-        $stmt = $this->pdo->prepare("DELETE FROM cart_items WHERE user_id = :user_id");
-        return $stmt->execute([':user_id' => $userId]);
+            INNER JOIN cart c ON ci.cart_id = c.cart_id
+            INNER JOIN skus s ON ci.sku_id = s.sku_id
+            INNER JOIN products p ON s.product_id = p.product_id
+            WHERE c.user_id = :user_id
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Xóa cart sau khi đặt hàng
+    public function clearCart($userId)
+    {
+        $sql = "
+            DELETE ci FROM cart_items ci
+            INNER JOIN cart c ON ci.cart_id = c.cart_id
+            WHERE c.user_id = :user_id
+        ";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute(['user_id' => $userId]);
+    }
+
 
     public function applyVoucher($cartId, $voucherCode)
     {

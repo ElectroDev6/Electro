@@ -185,7 +185,6 @@ use Core\View; ?>
 
       <!-- Sidebar đơn hàng -->
       <div class="order-page__sidebar">
-        <div class="order-summary">
           <div class="order-summary__title">Thông tin đơn hàng</div>
 
           <div class="order-summary__row">

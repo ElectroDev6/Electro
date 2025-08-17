@@ -58,16 +58,25 @@ class CheckoutModel
      * @param array $orderData
      * @return int ID của đơn hàng mới
      */
-    public function createOrder($userId, $orderCode, $totalPrice) {
-    $sql = "INSERT INTO orders (user_id, order_code, total_price, status, created_at)
-            VALUES (:user_id, :order_code, :total_price, 'pending', NOW())";
-    $stmt = $this->db->prepare($sql);
+   // Tạo order mới
+    public function createOrder($userId, $userAddressId, $totalPrice, $couponId = null)
+{
+    $orderCode = "OD" . time() . rand(100,999);
+
+    $sql = "INSERT INTO orders 
+            (user_id, user_address_id, coupon_id, order_code, total_price, status, created_at, updated_at) 
+            VALUES (?, ?, ?, ?, ?, 'pending', NOW(), NOW())";
+
+    $stmt = $this->pdo->prepare($sql);
     $stmt->execute([
-        'user_id' => $userId,
-        'order_code' => $orderCode,
-        'total_price' => $totalPrice
+        $userId,
+        $userAddressId,
+        $couponId,
+        $orderCode,
+        $totalPrice
     ]);
-    return $this->db->lastInsertId();
+
+    return $this->pdo->lastInsertId();
 }
 
    
@@ -77,19 +86,13 @@ class CheckoutModel
      * @param array $itemData
      * @return bool
      */
-    public function addOrderItem($orderId, $productId, $quantity, $price) {
-    $subtotal = $price * $quantity;
-    $sql = "INSERT INTO order_items (order_id, product_id, quantity, price, subtotal)
-            VALUES (:order_id, :product_id, :quantity, :price, :subtotal)";
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute([
-        'order_id' => $orderId,
-        'product_id' => $productId,
-        'quantity' => $quantity,
-        'price' => $price,
-        'subtotal' => $subtotal
-    ]);
-}
+    public function addOrderItem($orderId, $skuId, $quantity, $price)
+    {
+        $sql = "INSERT INTO order_items (order_id, sku_id, quantity, price) 
+                VALUES (?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$orderId, $skuId, $quantity, $price]);
+    }
 
 
     /**
