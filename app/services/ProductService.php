@@ -24,6 +24,11 @@ class ProductService
         ]);
     }
 
+    public function getDefaultSkuByProductId(int $productId): ?array
+    {
+        return $this->productModel->getDefaultSkuByProductId($productId);
+    }
+
     public function getSaleProducts(int $limit): array
     {
         return $this->productModel->getProducts([

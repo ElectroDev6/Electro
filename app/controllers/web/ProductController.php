@@ -37,6 +37,10 @@ class ProductController
         }
 
         $products = $this->productService->getFilteredProducts($filters);
+        // echo '<pre>';
+        // print_r($products);
+        // echo '</pre>';
+
         $brands = $this->productService->getBrands($filters);
 
         View::render('products', [

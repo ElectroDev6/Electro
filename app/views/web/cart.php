@@ -30,6 +30,10 @@ use Core\View;
                 <input type="checkbox" id="select-all" name="select_all" onchange="toggleSelectAll(this)" <?= array_filter($cart['products'], fn($p) => $p['selected']) === $cart['products'] ? 'checked' : '' ?>>
                 <label for="select-all">Chọn tất cả (<?= count($cart['products']) ?>)</label>
               </form>
+
+              <form method="POST" action="/cart/delete-selected" id="deleteForm">
+                <button type="submit" class="cart__delete-btn">Xoá tất cả</button>
+              </form>
             </div>
 
             <?php foreach ($cart['products'] as $product): ?>
@@ -162,6 +166,17 @@ use Core\View;
       }
     });
   });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const deleteForm = document.getElementById("deleteForm");
+
+    deleteForm.addEventListener("submit", (e) => {
+      if (!confirm("Bạn có chắc chắn muốn xoá tất cả không?")) {
+        e.preventDefault(); // hủy submit nếu chọn Cancel
+      }
+    });
+  });
+
 
   // Xử lý voucher-form
   const voucherForm = document.getElementById('voucher-form');

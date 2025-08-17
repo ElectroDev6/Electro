@@ -100,6 +100,14 @@ class CartService
         }
     }
 
+    public function deleteAll($userId, $sessionId)
+    {
+        $cartId = $this->cartModel->getCartId($userId, $sessionId);
+        if ($cartId) {
+            $this->cartModel->deleteAllCartItems($cartId);
+        }
+    }
+
     public function updateProductSelection($userId, $sessionId, $skuId, $selected)
     {
         $cartId = $this->cartModel->getCartId($userId, $sessionId);

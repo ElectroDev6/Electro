@@ -41,13 +41,18 @@ Sản phẩm
     <?php endif; ?>
 
     <div class="content-layout">
-        <?php if ($subcategorySlug): ?>
-            <?php
-            error_log("Products View: Brands before component: " . json_encode($brands));
-            View::component('components.filter-phone', ['brands' => $brands, 'selectedBrands' => $selectedBrands]);
-            ?>
-        <?php endif; ?>
+
+        <?php
+        error_log("Products View: Brands before component: " . json_encode($brands));
+        View::component('components.filter-phone', ['brands' => $brands, 'selectedBrands' => $selectedBrands]);
+        ?>
+
         <main class="products" id="product-list">
+
+            <?php if (!empty($errorMessage)): ?>
+                <p style="color:red;"><?= $errorMessage ?></p>
+            <?php endif; ?>
+
             <?php
             if (empty($products)) {
                 echo '<p style="text-align:center; font-size:18px; color:#666; margin-top:200px;">Không có sản phẩm</p>';
@@ -56,7 +61,6 @@ Sản phẩm
             }
             ?>
         </main>
-
     </div>
 
     <div class="pagination">

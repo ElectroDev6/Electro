@@ -28,6 +28,10 @@ class HomeController
 
         // Phân loại sản phẩm theo subcategory_id
         $iphoneProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 101);
+        // echo "<pre>";
+        // print_r($iphoneProducts);
+        // echo "</pre>";
+        // exit();
         $pcProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 401);
         $watchProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1607);
         $airFryerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 701);

@@ -121,6 +121,17 @@ class CartModel
         }
     }
 
+    public function deleteAllCartItems($cartId)
+    {
+        try {
+            $stmt = $this->pdo->prepare("DELETE FROM cart_items WHERE cart_id = :cart_id");
+            $stmt->execute([':cart_id' => $cartId]);
+            error_log("CartModel: Deleted cart items - CartID: $cartId");
+        } catch (Exception $e) {
+            error_log("CartModel: Error in deleteCartItems - CartID: $cartId, Error: " . $e->getMessage());
+        }
+    }
+
     public function getCartIdByUserId($userId)
     {
         $query = "SELECT cart_id FROM cart WHERE user_id = :user_id AND created_at > DATE_SUB(NOW(), INTERVAL 7 DAY) ORDER BY created_at DESC LIMIT 1";
@@ -359,6 +370,7 @@ class CartModel
             error_log("CartModel: Error in updateSelectAll - CartID: $cartId, SelectAll: $selectAll, Error: " . $e->getMessage());
         }
     }
+
 
     public function updateProductSelection($cartId, $skuId, $selected)
     {

@@ -2,6 +2,14 @@
 
 .header {
   background-color: colors.$white;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
   &__content {
     border-bottom: 1px solid #eee;
   }
@@ -17,6 +25,14 @@
     font-weight: 500;
     color: #333e48;
     background-color: colors.$white;
+    max-height: 100px;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+
+    &.is-hidden {
+      max-height: 0;
+      opacity: 0;
+      padding: 0;
+    }
 
     &-nav {
       display: flex;
@@ -179,7 +195,8 @@
     font-size: 1.5rem;
     cursor: pointer;
 
-    .header__count {
+    .header__count,
+    .header__count-wishlist {
       position: absolute;
       top: -0.3rem;
       right: -0.5rem;

@@ -31,7 +31,6 @@ export default class SearchSuggestion {
       left: "0",
       width: "100%",
       background: "#fff",
-      border: "1px solid #ddd",
       zIndex: "1000",
     });
     this.input.parentNode.appendChild(this.suggestionBox);

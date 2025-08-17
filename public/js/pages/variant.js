@@ -14,6 +14,7 @@ export default class ProductVariantManager {
     this.bindEvents();
     this.selectDefaultVariant();
     this.updateCapacityButtons();
+    this.addToCartFromHome();
   }
 
   cacheDom() {
@@ -27,7 +28,6 @@ export default class ProductVariantManager {
     this.discountBadge = document.querySelector(".product-detail__discount-badge");
     this.stockDisplay = document.querySelector(".product-detail__stock");
     this.addToCartBtn = document.querySelector(".product-detail__btn-add-cart");
-    this.buyNowBtn = document.querySelector(".button-buy-now");
     this.qtyInput = document.querySelector(".product-detail__qty-input");
     this.qtyMinusBtn = document.querySelector(".product-detail__qty-btn--minus");
     this.qtyPlusBtn = document.querySelector(".product-detail__qty-btn--plus");

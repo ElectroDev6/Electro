@@ -34,7 +34,8 @@ Router::post('/cart/update-warranty', 'CartController@updateWarranty');
 Router::post('/cart/delete', 'CartController@delete');
 Router::post('/cart/apply-voucher', 'CartController@applyVoucher');
 Router::post('/cart/confirm', 'CartController@confirmOrder');
-Router::get('/cart/count', 'CartController@getCartItemCount');
+Router::get('/cart/item-count', 'CartController@getCartItemCount');
+Router::post('/cart/delete-selected', 'CartController@deleteAll');
 
 // Router::get('/checkout', 'CheckoutController@showCheckoutForm');
 Router::get('/thank-you', 'ThankyouController@showConfirmation');

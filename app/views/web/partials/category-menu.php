@@ -15,7 +15,9 @@
                             <a href="/products/iphone">
                                 <li class="category-menu__submenu-item">iPhone</li>
                             </a>
-                            <li class="category-menu__submenu-item">Samsung</li>
+                            <a href="/products/samsung">
+                                <li class="category-menu__submenu-item">Samsung</li>
+                            </a>
                             <li class="category-menu__submenu-item">OPPO</li>
                             <li class="category-menu__submenu-item">Xiaomi</li>
                             <li class="category-menu__submenu-item">Tecno</li>

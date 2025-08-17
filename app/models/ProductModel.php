@@ -30,10 +30,21 @@ class ProductModel
         } elseif (!empty($options['subcategory_id'])) {
             $where[] = "p.subcategory_id = :subcategory_id";
             $params['subcategory_id'] = (int) $options['subcategory_id'];
-        } elseif (!empty($options['subcategory_slug'])) {
-            $where[] = "sc.subcategory_slug = :subcategory_slug";
+        }
+
+        // chỉ join subcategories 1 lần nếu có slug hoặc category_id
+        if (!empty($options['subcategory_slug']) || !empty($options['category_id'])) {
             $joins[] = "INNER JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id";
-            $params['subcategory_slug'] = $options['subcategory_slug'];
+
+            if (!empty($options['subcategory_slug'])) {
+                $where[] = "sc.subcategory_slug = :subcategory_slug";
+                $params['subcategory_slug'] = $options['subcategory_slug'];
+            }
+
+            if (!empty($options['category_id'])) {
+                $where[] = "sc.category_id = :category_id";
+                $params['category_id'] = (int) $options['category_id'];
+            }
         }
 
         if (!empty($options['brand'])) {
@@ -392,6 +403,76 @@ class ProductModel
         $result = $stmt->execute($params);
         error_log("ProductModel: addReview Result: " . ($result ? 'success' : 'failed'));
         return $result;
+    }
+
+    public function getDefaultSkuByProductId(int $productId): ?array
+    {
+        $sql = "
+        SELECT 
+            s.sku_id,
+            s.sku_code,
+            s.price AS price_original,
+            s.stock_quantity,
+            CASE 
+                WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
+                ELSE s.price
+            END AS price_discount,
+            pr.discount_percent AS discount_percent,
+            CASE 
+                WHEN pr.discount_percent IS NOT NULL THEN s.price - ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
+                ELSE 0
+            END AS discount_amount
+        FROM skus s
+        LEFT JOIN promotions pr 
+            ON pr.sku_code = s.sku_code
+            AND pr.start_date <= NOW() 
+            AND pr.end_date >= NOW()
+        WHERE s.product_id = :product_id
+        AND s.is_default = 1
+        LIMIT 1
+    ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+        $sku = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$sku) {
+            error_log("ProductModel: No default SKU found for product_id: $productId");
+            return null;
+        }
+
+        // Lấy ảnh mặc định của SKU
+        $imageSql = "
+        SELECT vi.image_set
+        FROM variant_images vi
+        WHERE vi.sku_id = :sku_id
+        AND vi.is_default = 1
+        LIMIT 1
+    ";
+        $stmt = $this->pdo->prepare($imageSql);
+        $stmt->bindValue(':sku_id', $sku['sku_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $image = $stmt->fetch(PDO::FETCH_ASSOC);
+        $sku['image_url'] = $image ? $image['image_set'] : null;
+
+        // Lấy thuộc tính mặc định (ví dụ: color)
+        $attrSql = "
+        SELECT ao.value AS option_value
+        FROM attribute_option_sku aos
+        INNER JOIN attribute_options ao ON aos.attribute_option_id = ao.attribute_option_id
+        INNER JOIN attributes a ON ao.attribute_id = a.attribute_id
+        WHERE aos.sku_id = :sku_id
+        AND a.name = 'Color'
+        LIMIT 1
+    ";
+        $stmt = $this->pdo->prepare($attrSql);
+        $stmt->bindValue(':sku_id', $sku['sku_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $attr = $stmt->fetch(PDO::FETCH_ASSOC);
+        $sku['color'] = $attr ? $attr['option_value'] : null;
+
+        return $sku;
     }
 
     public function getReviewsByProductId(int $product_id): array

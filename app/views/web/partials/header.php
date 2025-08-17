@@ -87,47 +87,73 @@
             <form class="header__search" id="searchForm">
                 <input type="text" class="header__input" id="header__input" placeholder="Tìm kiếm sản phẩm" />
                 <select class="header__select" id="header__select">
-                    <option value="">Tất cả các danh mục</option>
-                    <option value="1">Điện thoại</option>
-                    <option value="2">Máy tính bảng</option>
-                    <option value="3">Laptop</option>
-                    <option value="4">Phụ kiện</option>
-                    <option value="5">Tivi</option>
-                    <option value="6">Tủ lạnh</option>
-                    <option value="7">Điện gia dụng</option>
-                    <option value="8">SIM</option>
-                    <option value="9">Quạt điều hòa</option>
-                    <option value="10">Màn hình</option>
-                    <option value="11">Camera</option>
-                    <option value="12">Thiết bị nhà bếp</option>
-                    <option value="13">Thiết bị sinh hoạt</option>
-                    <option value="14">Gaming</option>
-                    <option value="15">Chăm sóc cá nhân</option>
-                    <option value="16">Card đồ họa</option>
-                    <option value="17">PC & Linh kiện</option>
+                    <option value="">Chọn danh mục</option>
+                    <option value="phone">Điện thoại</option>
+                    <option value="tablet">Máy tính bảng</option>
+                    <option value="laptop">Laptop</option>
+                    <option value="accessories">Phụ kiện</option>
+                    <option value="tv">Tivi</option>
+                    <option value="refrigerator">Tủ lạnh</option>
+                    <option value="home-appliances">Điện gia dụng</option>
+                    <option value="sim">SIM</option>
+                    <option value="air-cooler">Quạt điều hòa</option>
+                    <option value="monitor">Màn hình</option>
+                    <option value="camera">Camera</option>
+                    <option value="kitchen-appliances">Thiết bị nhà bếp</option>
+                    <option value="living-appliances">Thiết bị sinh hoạt</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="personal-care">Chăm sóc cá nhân</option>
+                    <option value="graphics-card">Card đồ họa</option>
+                    <option value="pc-components">PC & Linh kiện</option>
                 </select>
                 <button type="submit" class="header__search-btn">
                     <img style="width: 22px;" src="/icons/search-svgrepo-com.svg" alt="">
                 </button>
             </form>
 
-            <!-- <script>
-                document.getElementById('searchForm').addEventListener('submit', function(event) {
-                    event.preventDefault(); // Ngăn chặn form submit mặc định
-                    const keyword = document.getElementById('header__input').value.trim().toLowerCase();
-                    const category = document.getElementById('header__select').value;
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const form = document.getElementById("searchForm");
+                    const input = document.getElementById("header__input");
+                    const select = document.getElementById("header__select");
 
-                    if (keyword) {
-                        let url = '/products/' + encodeURIComponent(keyword);
+                    // Xử lý khi submit form
+                    form.addEventListener("submit", (e) => {
+                        e.preventDefault();
+                        redirectToProducts();
+                    });
+
+                    // Xử lý khi đổi select
+                    select.addEventListener("change", () => {
+                        redirectToProducts();
+                    });
+
+                    function redirectToProducts() {
+                        const keyword = input.value.trim();
+                        const category = select.value;
+
+                        let url = "/products";
+
                         if (category) {
-                            url += '?category=' + encodeURIComponent(category);
+                            url += `/${category}`;
+                            if (keyword) {
+                                url += `/${encodeURIComponent(keyword)}`;
+                            }
+                        } else if (keyword) {
+                            url += `/${encodeURIComponent(keyword)}`;
                         }
+
                         window.location.href = url;
-                    } else {
-                        alert('Vui lòng nhập từ khóa tìm kiếm!');
+                    }
+
+                    // Giữ lại giá trị đã chọn khi load lại trang
+                    const pathParts = window.location.pathname.split("/");
+                    if (pathParts[1] === "products" && pathParts[2]) {
+                        select.value = pathParts[2]; // ví dụ /products/phone thì sẽ giữ phone
                     }
                 });
-            </script> -->
+            </script>
+
 
             <!-- Mobile -->
             <div class="header__search-dropdown">
@@ -173,7 +199,7 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#333e48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </g>
                     </svg>
-                    <span class="header__count">0</span>
+                    <span class="header__count-wishlist">0</span>
                 </div>
                 <!-- user -->
                 <div class="header__icon">
@@ -210,10 +236,7 @@
                         </svg>
                     </a>
                     <span class="header__count" id="cartCount">
-                        <span class="header__count" id="cartCount">
-                            <?= get_cart_count(\Container::get('pdo')) ?>
-                        </span>
-
+                        <?= get_cart_count(\Container::get('pdo')) ?>
                     </span>
                 </div>
             </div>

@@ -34,7 +34,10 @@ class DetailController
         );
 
         $reviews = $this->productService->getReviews($product['product_id']);
-
+        // echo "<pre>";
+        // print_r($product);
+        // echo "</pre>";
+        // exit();
         View::render('detail', [
             'product' => $product,
             'relatedProducts' => $relatedProducts,
@@ -44,7 +47,7 @@ class DetailController
 
     public function addToCart($input = [], $matches = [])
     {
-        error_log("DetailController: Entered addToCart, Input: " . json_encode($input) . ", Matches: " . json_encode($matches));
+        error_log("DetailController: Entered addToCart, Input: " . json_encode($input));
 
         if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
             error_log("DetailController: Not an AJAX request");
@@ -55,16 +58,29 @@ class DetailController
 
         $body = $input['body'] ?? [];
         $skuId = $body['sku_id'] ?? null;
+        $productId = $body['product_id'] ?? null;
         $quantity = (int)($body['quantity'] ?? 1);
         $color = $body['color'] ?? null;
         $warrantyEnabled = isset($body['warranty_enabled']) ? (bool)$body['warranty_enabled'] : false;
         $imageUrl = $body['image_url'] ?? null;
 
+        // Nếu chỉ có product_id, lấy SKU mặc định
+        if (!$skuId && $productId) {
+            $sku = $this->productService->getDefaultSkuByProductId($productId);
+            if (!$sku) {
+                error_log("DetailController: No default SKU found for product_id: $productId");
+                echo json_encode(['success' => false, 'message' => 'Không tìm thấy SKU mặc định.']);
+                return;
+            }
+            $skuId = $sku['sku_id'];
+            $color = $sku['color'] ?? $color;
+            $imageUrl = $sku['image_url'] ?? $imageUrl;
+        }
 
-        error_log("DetailController: Parsed - SKU: " . ($skuId ?? 'null') . ", Quantity: $quantity, Color: " . ($color ?? 'null') . ", Warranty: " . ($warrantyEnabled ? 'true' : 'false') . ", Image: " . ($imageUrl ?? 'null'));
+        error_log("DetailController: Parsed - SKU: " . ($skuId ?? 'null') . ", Product ID: " . ($productId ?? 'null') . ", Quantity: $quantity, Color: " . ($color ?? 'null') . ", Warranty: " . ($warrantyEnabled ? 'true' : 'false') . ", Image: " . ($imageUrl ?? 'null'));
 
         if (!$skuId) {
-            error_log("DetailController: SKU is invalid or null, Input: " . json_encode($input));
+            error_log("DetailController: SKU is invalid or null");
             echo json_encode(['success' => false, 'message' => 'SKU không hợp lệ.']);
             return;
         }
@@ -79,7 +95,6 @@ class DetailController
         header('Content-Type: application/json');
         echo json_encode($result);
     }
-
     public function addComment($input)
     {
         $product_id = $input['product_id'] ?? null;

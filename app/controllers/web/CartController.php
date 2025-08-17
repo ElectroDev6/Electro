@@ -43,6 +43,15 @@ class CartController
         exit;
     }
 
+    public function deleteAll()
+    {
+        $userId = $_SESSION['user_id'] ?? null;
+        $sessionId = session_id();
+        $this->cartService->deleteAll($userId, $sessionId);
+        header('Location: /cart');
+        exit;
+    }
+
     public function selectProduct()
     {
         $userId = $_SESSION['user_id'] ?? null;

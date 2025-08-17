@@ -2,6 +2,7 @@ import MenuHandler from "../js/components/menuHandler.js";
 import SearchHandler from "../js/components/menuMobileHandler.js";
 import ScrollHandler from "../js/components/scrollHandler.js";
 import SliderHandler from "../js/partials/sliderHandler.js";
+import BtnBuyNow from "../js/partials/btnBuyNow.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   new MenuHandler({
@@ -26,4 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     itemSelector: ".slider__item",
     dotSelector: ".slider__dot",
   });
+
+  new BtnBuyNow();
 });

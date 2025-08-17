@@ -47,9 +47,8 @@ use Core\View; ?>
             </div>
 
             <p class="product__name"><?= $product['name'] ?? 'Camera giám sát IP 3MP 365 Selection C1' ?></p>
-
-            <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
         </a>
+        <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay', 'productId' => $product['product_id']]); ?>
     </div>
 
 <?php else: ?>
