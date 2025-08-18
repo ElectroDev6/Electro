@@ -6,27 +6,27 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     phone_number VARCHAR(20),
     gender ENUM('male', 'female', 'other') DEFAULT NULL,
-    birth_date DATE DEFAULT NULL,
+    dob_day TINYINT UNSIGNED NULL,
+    dob_month TINYINT UNSIGNED NULL,
+    dob_year SMALLINT UNSIGNED NULL,
     role ENUM('admin', 'user') DEFAULT 'user',
     is_active BOOLEAN DEFAULT TRUE,
     avatar_url VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    INDEX idx_users_email (email)
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 -- Bảng user_address
 CREATE TABLE user_address (
     user_address_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
-    address_line1 VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
     ward_commune VARCHAR(100) NOT NULL,
     district VARCHAR(100) NOT NULL,
     province_city VARCHAR(100) NOT NULL,
-    is_default BOOLEAN DEFAULT FALSE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
     INDEX idx_user_address_user_id (user_id)
 );
 
@@ -46,9 +46,11 @@ CREATE TABLE subcategories (
     subcategory_id INT PRIMARY KEY AUTO_INCREMENT,
     category_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
+    subcategory_slug VARCHAR(255) NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE -- UNIQUE (category_id, name)
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    UNIQUE (category_id, name)
 );
 
 -- Bảng brands
@@ -64,34 +66,37 @@ CREATE TABLE brands (
 -- Bảng products
 CREATE TABLE products (
     product_id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
     brand_id INT,
     subcategory_id INT NOT NULL,
-    description TEXT,
-    base_price DECIMAL(10, 2) NOT NULL CHECK (base_price >= 0),
+    name VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE,
     is_featured BOOLEAN DEFAULT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (brand_id) REFERENCES brands(brand_id) ON DELETE
     SET
-        NULL,
-        FOREIGN KEY (subcategory_id) REFERENCES subcategories(subcategory_id) ON DELETE RESTRICT
+        NULL ON UPDATE NO ACTION,
+        FOREIGN KEY (subcategory_id) REFERENCES subcategories(subcategory_id) ON DELETE RESTRICT ON UPDATE NO ACTION
 );
 
--- Bảng product_descriptions
-CREATE TABLE product_descriptions (
-    product_description_id INT PRIMARY KEY AUTO_INCREMENT,
+-- Bảng product_contents
+CREATE TABLE product_contents (
+    content_id INT PRIMARY KEY AUTO_INCREMENT,
     product_id INT NOT NULL,
-    section_title VARCHAR(255) NOT NULL,
-    content_text TEXT NOT NULL,
-    image_url VARCHAR(255),
-    sort_order INT NOT NULL DEFAULT 0,
+    description TEXT,
+    image_url VARCHAR(255) null,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
-    UNIQUE (product_id, section_title),
-    UNIQUE (product_id, sort_order)
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE ON UPDATE NO ACTION
+);
+
+CREATE TABLE product_specs (
+    spec_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_id INT NOT NULL,
+    spec_name VARCHAR(255) NOT NULL,
+    spec_value VARCHAR(255) NOT NULL,
+    display_order INT DEFAULT 0,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng attributes
@@ -111,7 +116,7 @@ CREATE TABLE attribute_options (
     display_order INT DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (attribute_id) REFERENCES attributes(attribute_id) ON DELETE CASCADE,
+    FOREIGN KEY (attribute_id) REFERENCES attributes(attribute_id) ON DELETE CASCADE ON UPDATE NO ACTION,
     UNIQUE (attribute_id, value)
 );
 
@@ -122,16 +127,17 @@ CREATE TABLE skus (
     sku_code VARCHAR(100) UNIQUE,
     price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
     stock_quantity INT NOT NULL CHECK (stock_quantity >= 0),
+    is_default TINYINT(1) DEFAULT 0,
     is_active BOOLEAN DEFAULT TRUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng promotions
 CREATE TABLE promotions (
     promotion_id INT PRIMARY KEY AUTO_INCREMENT,
-    sku_id INT NOT NULL,
+    sku_code VARCHAR(50) NOT NULL,
     discount_percent INT CHECK (
         discount_percent BETWEEN 1
         AND 100
@@ -140,7 +146,7 @@ CREATE TABLE promotions (
     end_date DATETIME NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE
+    FOREIGN KEY (sku_code) REFERENCES skus(sku_code) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng attribute_option_sku
@@ -148,22 +154,20 @@ CREATE TABLE attribute_option_sku (
     sku_id INT NOT NULL,
     attribute_option_id INT NOT NULL,
     PRIMARY KEY (sku_id, attribute_option_id),
-    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE,
-    FOREIGN KEY (attribute_option_id) REFERENCES attribute_options(attribute_option_id) ON DELETE CASCADE
+    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (attribute_option_id) REFERENCES attribute_options(attribute_option_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng variant_images
 CREATE TABLE variant_images (
     image_id INT PRIMARY KEY AUTO_INCREMENT,
     sku_id INT NOT NULL,
-    default_url VARCHAR(255),
-    thumbnail_url VARCHAR(255),
-    gallery_url VARCHAR(255),
+    image_set VARCHAR(255),
     is_default BOOLEAN DEFAULT FALSE,
     sort_order INT DEFAULT 0,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE
+    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng cart
@@ -173,7 +177,7 @@ CREATE TABLE cart (
     session_id VARCHAR(255) UNIQUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
     INDEX idx_cart_user_id (user_id)
 );
 
@@ -183,18 +187,23 @@ CREATE TABLE cart_items (
     cart_id INT NOT NULL,
     sku_id INT NOT NULL,
     quantity INT NOT NULL CHECK (quantity > 0),
+    selected TINYINT(1) DEFAULT 1,
+    -- Đổi thành DEFAULT 1 để đồng bộ với INSERT
+    color VARCHAR(255),
+    warranty_enabled TINYINT(1) DEFAULT 0,
+    voucher_code VARCHAR(50),
+    image_url VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (cart_id) REFERENCES cart(cart_id) ON DELETE CASCADE,
-    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE,
-    UNIQUE (cart_id, sku_id),
-    INDEX idx_cart_items_sku_id (sku_id)
+    FOREIGN KEY (cart_id) REFERENCES cart(cart_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    UNIQUE KEY cart_id_sku_id_color (cart_id, sku_id, color)
 );
 
 -- Bảng reviews
 CREATE TABLE reviews (
     review_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    user_id INT NULL,
     product_id INT NOT NULL,
     parent_review_id INT,
     rating INT CHECK (
@@ -202,14 +211,15 @@ CREATE TABLE reviews (
         AND rating <= 5
         OR rating IS NULL
     ),
-    -- Đánh giá sao (1-5), có thể NULL cho phản hồi
     comment_text TEXT NOT NULL,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
     review_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_viewed BOOLEAN DEFAULT FALSE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE,
-    FOREIGN KEY (parent_review_id) REFERENCES reviews(review_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (parent_review_id) REFERENCES reviews(review_id) ON DELETE CASCADE ON UPDATE NO ACTION,
     INDEX idx_reviews_product_id (product_id),
     INDEX idx_reviews_user_id (user_id)
 );
@@ -220,8 +230,8 @@ CREATE TABLE wishlist (
     product_id INT NOT NULL,
     PRIMARY KEY (user_id, product_id),
     added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng coupons
@@ -240,12 +250,22 @@ CREATE TABLE coupons (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+CREATE TABLE coupon_usage (
+    usage_id INT PRIMARY KEY AUTO_INCREMENT,
+    coupon_id INT NOT NULL,
+    cart_id INT NOT NULL,
+    used_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (coupon_id) REFERENCES coupons(coupon_id) ON DELETE CASCADE,
+    FOREIGN KEY (cart_id) REFERENCES cart(cart_id) ON DELETE CASCADE
+);
+
 -- Bảng orders
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     user_address_id INT NOT NULL,
     coupon_id INT,
+    order_code VARCHAR(50) UNIQUE NOT NULL,
     status ENUM(
         'pending',
         'paid',
@@ -256,11 +276,11 @@ CREATE TABLE orders (
     total_price DECIMAL(10, 2) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_address_id) REFERENCES user_address(user_address_id) ON DELETE RESTRICT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (user_address_id) REFERENCES user_address(user_address_id) ON DELETE RESTRICT ON UPDATE NO ACTION,
     FOREIGN KEY (coupon_id) REFERENCES coupons(coupon_id) ON DELETE
     SET
-        NULL
+        NULL ON UPDATE NO ACTION
 );
 
 -- Bảng order_items
@@ -270,8 +290,8 @@ CREATE TABLE order_items (
     sku_id INT NOT NULL,
     quantity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
-    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE ON UPDATE NO ACTION,
+    FOREIGN KEY (sku_id) REFERENCES skus(sku_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng payments
@@ -288,7 +308,7 @@ CREATE TABLE payments (
     amount DECIMAL(10, 2) NOT NULL,
     payment_date DATETIME,
     status ENUM('pending', 'success', 'failed') DEFAULT 'pending',
-    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );
 
 -- Bảng shipping
@@ -301,5 +321,5 @@ CREATE TABLE shipping (
     status ENUM('waiting', 'in_transit', 'delivered', 'returned') DEFAULT 'waiting',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
+    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE ON UPDATE NO ACTION
 );

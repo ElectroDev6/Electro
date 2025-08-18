@@ -1,11 +1,31 @@
 <?php
 namespace App\Controllers\Admin;
+use App\Controllers\Admin\Orders\CreateOrderController;
+use App\Controllers\Admin\Orders\UpdateOrderController;
+use App\Controllers\Admin\Orders\DeleteOrderController;
+use App\Controllers\Admin\Orders\ReadOrderController;
 
-use Core\View;
-    class OrdersController
+class OrdersController
+{
+    public function index()
     {
-        public function index()
-        {
-            View::render('orders');
-        }
+        $controller = new ReadOrderController();
+        $controller->list();
     }
+    
+    
+    public function detail()
+    {
+        $controller = new ReadOrderController();
+        $controller->detail();
+    }
+
+    public function status()
+    {
+        $controller = new UpdateOrderController();
+        $controller->handleUpdateStatus();
+    }
+    
+}
+
+?>

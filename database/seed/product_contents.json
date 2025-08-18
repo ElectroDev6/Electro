@@ -1,0 +1,22 @@
+[
+  {
+    "product_id": 1,
+    "description": "iPhone 13 sở hữu hệ thống camera kép xuất sắc nhất từ trước đến nay bộ vi xử lý Apple A15 nhanh nhất thế giới smartphone cùng thời lượng pin cực khủng",
+    "image_url": "iphone-13-0.jpg"
+  },
+  {
+    "product_id": 1,
+    "description": "iPhone 13 là chiếc điện thoại toát lên sự đẳng cấp ngay từ cái nhìn đầu tiên nhờ thiết kế sang trọng với ngôn ngữ thiết kế phẳng và chất lượng hoàn thiện tuyệt vời. Khung nhôm cao cấp kết hợp cùng kính bảo vệ Ceramic Shield siêu cứng tạo nên chiếc điện thoại vừa thời trang, lại vô cùng bền bỉ. Khả năng chống nước chuẩn IP68 của iPhone 13 giúp bạn hoàn toàn yên tâm trước mọi nguy cơ từ nước trong quá trình sử dụng thường ngày.",
+    "image_url": "iphone-13-1.jpg"
+  },
+  {
+    "product_id": 1,
+    "description": "Sang trọng hơn và độc đáo hơn, phiên bản màu xanh lá hoàn toàn mới đã góp mặt trên iPhone 13 tiêu chuẩn. Sự trầm lặng, nét cao cấp và vẻ ngoài bóng bẩy của chiếc điện thoại như được tôn vinh và mang tới cảm nhận hoàn toàn khác biệt về cấu trúc thẩm mỹ.",
+    "image_url": "iphone-13-2.jpg"
+  },
+  {
+    "product_id": 1,
+    "description": "Phiên bản iPhone 13 màu xanh lá (Alpine Green) mới mà Apple vừa giới thiệu được biến tấu nghiêng về sắc xanh rêu hơn là màu xanh lá thông thường. Đây là điều hợp lý bởi việc sử dụng tone trầm sẽ tạo cảm giác sang trọng hơn khi nhìn ngắm, giúp sản phẩm dễ tiếp cận được nhiều đối tượng và phân biệt với màu Xanh vốn có trên iPhone 13 hiện tại.",
+    "image_url": "null"
+  }
+]

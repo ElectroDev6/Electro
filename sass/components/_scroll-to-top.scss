@@ -1,0 +1,27 @@
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fed700;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 12px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999;
+
+  &:hover {
+    background-color: #555;
+    transform: scale(1.1);
+  }
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+}

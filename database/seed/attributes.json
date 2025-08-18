@@ -1,26 +1,21 @@
 [
   {
-    "attribute_id": 1,
     "name": "Color",
     "display_type": "color"
   },
   {
-    "attribute_id": 2,
     "name": "Capacity",
     "display_type": "text"
   },
   {
-    "attribute_id": 3,
     "name": "RAM",
     "display_type": "text"
   },
   {
-    "attribute_id": 4,
     "name": "CPU",
     "display_type": "text"
   },
   {
-    "attribute_id": 5,
     "name": "Screen Size",
     "display_type": "text"
   }

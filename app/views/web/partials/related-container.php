@@ -10,8 +10,8 @@ use Core\View;
         </div>
         <?php View::component('components.arrow-buttons') ?>
         <div class="category-product__list scroll-horizontal">
-            <?php foreach ($audioProducts as $audioProduct): ?>
-                <?php View::partial('components.product-card', ['regularProduct' => $audioProduct]); ?>
+            <?php foreach ($relatedProducts as $relatedProduct): ?>
+                <?php View::partial('components.product-card', ['regularProduct' => $relatedProduct]); ?>
             <?php endforeach; ?>
         </div>
     </section>

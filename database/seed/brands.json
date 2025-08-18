@@ -1,162 +1,207 @@
 [
   {
-    "brand_id": 1,
-    "name": "Apple"
+    "name": "Apple",
+    "description": "Apple Inc. là một công ty công nghệ đa quốc gia của Mỹ có trụ sở tại Cupertino, California. Công ty thiết kế, phát triển và bán các sản phẩm điện tử tiêu dùng, phần mềm máy tính và dịch vụ trực tuyến.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 2,
-    "name": "Samsung"
+    "name": "Samsung",
+    "description": "Samsung, một tập đoàn đa quốc gia của Hàn Quốc, là công ty hàng đầu thế giới trong lĩnh vực điện tử, nổi tiếng với nhiều loại sản phẩm bao gồm điện thoại thông minh, TV, thiết bị gia dụng và chất bán dẫn.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 3,
-    "name": "Xiaomi"
+    "name": "Xiaomi",
+    "description": "Xiaomi Corporation là một công ty điện tử đa quốc gia của Trung Quốc được thành lập vào tháng 4 năm 2010. Xiaomi sản xuất và đầu tư vào điện thoại thông minh, ứng dụng di động, máy tính xách tay và nhiều sản phẩm điện tử tiêu dùng khác.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 4,
-    "name": "Oppo"
+    "name": "Oppo",
+    "description": "Oppo là một công ty điện tử tiêu dùng và truyền thông di động của Trung Quốc. Đây là một thương hiệu điện thoại thông minh lớn, nổi tiếng với công nghệ camera và thiết kế sáng tạo.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 5,
-    "name": "Vivo"
+    "name": "Vivo",
+    "description": "Vivo là một công ty công nghệ của Trung Quốc chuyên thiết kế và phát triển điện thoại thông minh, phụ kiện điện thoại thông minh, phần mềm và dịch vụ trực tuyến. Đây là một công ty lớn trên thị trường điện thoại thông minh toàn cầu.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 6,
-    "name": "Asus"
+    "name": "Asus",
+    "description": "ASUS là một công ty phần cứng máy tính và điện tử đa quốc gia của Đài Loan. Đây là nhà sản xuất bo mạch chủ, card đồ họa, máy tính xách tay và các linh kiện PC khác hàng đầu.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 7,
-    "name": "HP"
+    "name": "HP",
+    "description": "HP Inc. là một công ty công nghệ thông tin đa quốc gia của Mỹ nổi tiếng với nhiều loại sản phẩm bao gồm máy tính cá nhân, máy in và các dịch vụ liên quan khác.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 8,
-    "name": "Dell"
+    "name": "Dell",
+    "description": "Dell là một công ty công nghệ máy tính đa quốc gia của Mỹ. Đây là một trong những tập đoàn công nghệ lớn nhất thế giới, chuyên bán, sửa chữa và hỗ trợ máy tính cũng như các sản phẩm và dịch vụ liên quan.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 9,
-    "name": "Lenovo"
+    "name": "Lenovo",
+    "description": "Lenovo là một công ty công nghệ đa quốc gia của Trung Quốc. Đây là nhà sản xuất máy tính cá nhân, điện thoại thông minh, máy chủ và các thiết bị điện tử khác hàng đầu.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 10,
-    "name": "MSI"
+    "name": "MSI",
+    "description": "Micro-Star International Co., Ltd (MSI) là một tập đoàn công nghệ thông tin đa quốc gia của Đài Loan. Công ty nổi tiếng với các máy tính xách tay chơi game hiệu suất cao, bo mạch chủ, card đồ họa và các phần cứng máy tính khác.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 11,
-    "name": "Acer"
+    "name": "Acer",
+    "description": "Acer Inc. là một tập đoàn phần cứng và điện tử đa quốc gia của Đài Loan. Công ty chuyên về công nghệ điện tử tiên tiến và là nhà sản xuất PC, máy tính xách tay và màn hình lớn.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 12,
-    "name": "Gigabyte"
+    "name": "Gigabyte",
+    "description": "Gigabyte Technology là nhà sản xuất và phân phối phần cứng máy tính của Đài Loan. Công ty nổi tiếng với việc sản xuất bo mạch chủ, card đồ họa và các linh kiện PC chất lượng cao.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 13,
-    "name": "Intel"
+    "name": "Intel",
+    "description": "Intel Corporation là một tập đoàn đa quốc gia và công ty công nghệ của Mỹ. Đây là một trong những nhà sản xuất chip bán dẫn lớn nhất thế giới, cung cấp bộ xử lý cho các hệ thống máy tính.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 14,
-    "name": "AMD"
+    "name": "AMD",
+    "description": "Advanced Micro Devices, Inc. (AMD) là một công ty bán dẫn đa quốc gia của Mỹ có trụ sở tại Santa Clara, California, chuyên phát triển bộ xử lý máy tính và các công nghệ liên quan.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 15,
-    "name": "LG"
+    "name": "LG",
+    "description": "LG Corporation là một tập đoàn đa quốc gia của Hàn Quốc. Công ty nổi tiếng với nhiều loại sản phẩm bao gồm TV, thiết bị gia dụng, điện thoại thông minh và đồ điện tử.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 16,
-    "name": "Sony"
+    "name": "Sony",
+    "description": "Sony Corporation là một tập đoàn đa quốc gia của Nhật Bản. Đây là một nhà sản xuất lớn trong lĩnh vực điện tử, trò chơi, giải trí và dịch vụ tài chính.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 17,
-    "name": "Panasonic"
+    "name": "Panasonic",
+    "description": "Panasonic Corporation là một công ty điện tử đa quốc gia của Nhật Bản. Công ty sản xuất nhiều loại sản phẩm bao gồm đồ điện tử, thiết bị gia dụng và giải pháp công nghiệp.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 18,
-    "name": "Toshiba"
+    "name": "Toshiba",
+    "description": "Toshiba Corporation là một tập đoàn đa quốc gia của Nhật Bản. Công ty sản xuất nhiều loại sản phẩm đa dạng, bao gồm đồ điện tử, thiết bị gia dụng và hệ thống cơ sở hạ tầng.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 19,
-    "name": "Philips"
+    "name": "Philips",
+    "description": "Royal Philips là một tập đoàn đa quốc gia của Hà Lan. Công ty nổi tiếng với các sản phẩm công nghệ y tế, điện tử tiêu dùng và chiếu sáng.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 20,
-    "name": "JBL"
+    "name": "JBL",
+    "description": "JBL là một công ty của Mỹ chuyên sản xuất thiết bị âm thanh, bao gồm loa và tai nghe. Đây là công ty con của Harman International Industries.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 21,
-    "name": "Logitech"
+    "name": "Logitech",
+    "description": "Logitech là nhà sản xuất thiết bị ngoại vi và phần mềm máy tính đa quốc gia của Thụy Sĩ-Mỹ. Công ty nổi tiếng với các sản phẩm như chuột, bàn phím và webcam.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 22,
-    "name": "Razer"
+    "name": "Razer",
+    "description": "Razer Inc. là một công ty sản xuất phần cứng chơi game toàn cầu. Công ty nổi tiếng với các máy tính xách tay chơi game, thiết bị ngoại vi và phụ kiện hiệu suất cao.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 23,
-    "name": "Corsair"
+    "name": "Corsair",
+    "description": "Corsair Gaming, Inc. là một công ty phần cứng và thiết bị ngoại vi máy tính của Mỹ. Công ty nổi tiếng với các sản phẩm dành cho game thủ, bao gồm bộ nhớ, bộ nguồn và vỏ máy.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 24,
-    "name": "TP-Link"
+    "name": "TP-Link",
+    "description": "TP-Link là một nhà sản xuất các sản phẩm mạng máy tính của Trung Quốc. Công ty nổi tiếng với các bộ định tuyến, bộ chuyển mạch và các phần cứng mạng khác.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 25,
-    "name": "Anker"
+    "name": "Anker",
+    "description": "Anker Innovations là một công ty điện tử của Trung Quốc nổi tiếng với các sản phẩm sạc di động, bao gồm sạc dự phòng, củ sạc và cáp.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 26,
-    "name": "Baseus"
+    "name": "Baseus",
+    "description": "Baseus là một công ty điện tử tiêu dùng của Trung Quốc tập trung vào sản xuất phụ kiện điện thoại di động chất lượng cao, bao gồm củ sạc, cáp và sạc dự phòng.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 27,
-    "name": "Bose"
+    "name": "Bose",
+    "description": "Bose Corporation là một công ty sản xuất của Mỹ chủ yếu bán thiết bị âm thanh. Công ty nổi tiếng với các loa, tai nghe và hệ thống âm thanh gia đình chất lượng cao.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 28,
-    "name": "Huawei"
+    "name": "Huawei",
+    "description": "Huawei Technologies Co., Ltd. là một tập đoàn công nghệ đa quốc gia của Trung Quốc. Công ty cung cấp thiết bị viễn thông, điện tử tiêu dùng và điện thoại thông minh.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 29,
-    "name": "Realme"
+    "name": "Realme",
+    "description": "Realme là một nhà sản xuất điện thoại thông minh của Trung Quốc. Đây là công ty con của Oppo và nổi tiếng với các điện thoại thông minh giá cả phải chăng, tập trung vào thiết kế và hiệu suất.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 30,
-    "name": "Canon"
+    "name": "Canon",
+    "description": "Canon Inc. là một tập đoàn đa quốc gia của Nhật Bản chuyên về các sản phẩm quang học, hình ảnh và công nghiệp, chẳng hạn như máy ảnh, máy in và thiết bị y tế.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 31,
-    "name": "Nikon"
+    "name": "Nikon",
+    "description": "Nikon Corporation là một công ty đa quốc gia của Nhật Bản nổi tiếng với các sản phẩm quang học và hình ảnh, bao gồm máy ảnh, ống kính và ống nhòm.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 32,
-    "name": "Sharp"
+    "name": "Sharp",
+    "description": "Sharp Corporation là một tập đoàn đa quốc gia của Nhật Bản. Công ty nổi tiếng với các sản phẩm điện tử tiêu dùng, bao gồm TV, thiết bị gia dụng và màn hình.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 33,
-    "name": "Electrolux"
+    "name": "Electrolux",
+    "description": "Electrolux là nhà sản xuất thiết bị gia dụng đa quốc gia của Thụy Điển. Đây là công ty hàng đầu thế giới về thiết bị gia dụng và các sản phẩm chuyên nghiệp.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 34,
-    "name": "Midea"
+    "name": "Midea",
+    "description": "Midea Group là nhà sản xuất thiết bị điện của Trung Quốc. Công ty sản xuất nhiều loại sản phẩm bao gồm máy điều hòa không khí, máy giặt và tủ lạnh.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 35,
-    "name": "Sunhouse"
+    "name": "Sunhouse",
+    "description": "Sunhouse là một thương hiệu thiết bị gia dụng của Việt Nam. Công ty nổi tiếng với nhiều loại sản phẩm, bao gồm thiết bị nhà bếp và đồ điện tử gia dụng.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 36,
-    "name": "Bluestone"
+    "name": "Bluestone",
+    "description": "Bluestone là một thương hiệu thiết bị gia dụng tập trung vào các thiết kế hiện đại và thanh lịch. Công ty cung cấp nhiều loại sản phẩm cho nhà bếp và gia đình.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 37,
-    "name": "Sanaky"
+    "name": "Sanaky",
+    "description": "Sanaky là một thương hiệu thiết bị gia dụng của Việt Nam chuyên về các sản phẩm điện lạnh, chẳng hạn như tủ đông và tủ lạnh.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 38,
-    "name": "Lock&Lock"
+    "name": "Lock&Lock",
+    "description": "Lock&Lock là một công ty của Hàn Quốc nổi tiếng với các hộp đựng thực phẩm kín hơi và các dụng cụ nhà bếp khác.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 39,
-    "name": "Hafele"
+    "name": "Hafele",
+    "description": "Häfele là một công ty của Đức chuyên cung cấp công nghệ phần cứng và hệ thống khóa điện tử cho đồ nội thất và tòa nhà.",
+    "logo_url": "/img/products/default/iphone-13.webp"
   },
   {
-    "brand_id": 40,
-    "name": "Hitachi"
+    "name": "Hitachi",
+    "description": "Hitachi, Ltd. là một tập đoàn đa quốc gia của Nhật Bản. Công ty cung cấp nhiều loại sản phẩm và dịch vụ, bao gồm điện tử, hệ thống điện và thiết bị công nghiệp.",
+    "logo_url": "/img/products/default/iphone-13.webp"
+  },
+  {
+    "name": "Daikiosan",
+    "description": "Daikiosan là",
+    "logo_url": "/img/products/default/iphone-13.webp"
   }
 ]

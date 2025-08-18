@@ -85,50 +85,80 @@
             </div>
 
             <form class="header__search" id="searchForm">
-                <input type="text" class="header__input" id="header__input" placeholder="Tìm kiếm sản phẩm" />
+                <input type="text" autocomplete="off" class="header__input" id="header__input" placeholder="Tìm kiếm sản phẩm" />
                 <select class="header__select" id="header__select">
-                    <option value="">Tất cả các danh mục</option>
-                    <option value="1">Danh mục 1</option>
-                    <option value="2">Danh mục 2</option>
-                    <option value="3">Danh mục 3</option>
-                    <option value="4">Danh mục 4</option>
+                    <option value="">Chọn danh mục</option>
+                    <option value="phone">Điện thoại</option>
+                    <option value="tablet">Máy tính bảng</option>
+                    <option value="laptop">Laptop</option>
+                    <option value="accessories">Phụ kiện</option>
+                    <option value="tv">Tivi</option>
+                    <option value="refrigerator">Tủ lạnh</option>
+                    <option value="home-appliances">Điện gia dụng</option>
+                    <option value="sim">SIM</option>
+                    <option value="air-cooler">Quạt điều hòa</option>
+                    <option value="monitor">Màn hình</option>
+                    <option value="camera">Camera</option>
+                    <option value="kitchen-appliances">Thiết bị nhà bếp</option>
+                    <option value="living-appliances">Thiết bị sinh hoạt</option>
+                    <option value="gaming">Gaming</option>
+                    <option value="personal-care">Chăm sóc cá nhân</option>
+                    <option value="graphics-card">Card đồ họa</option>
+                    <option value="pc-components">PC & Linh kiện</option>
                 </select>
                 <button type="submit" class="header__search-btn">
-                    <span class="header__search-icon">
-                        <svg width="16" height="16" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#333e48">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <g id="layer1">
-                                    <!-- SVG content here (giả sử bạn đã có) -->
-                                </g>
-                            </g>
-                        </svg>
-                    </span>
+                    <img style="width: 22px;" src="/icons/search-svgrepo-com.svg" alt="">
                 </button>
             </form>
 
             <script>
-                document.getElementById('searchForm').addEventListener('submit', function(event) {
-                    event.preventDefault(); // Ngăn chặn form submit mặc định
-                    const keyword = document.getElementById('header__input').value.trim().toLowerCase();
-                    const category = document.getElementById('header__select').value;
+                document.addEventListener("DOMContentLoaded", () => {
+                    const form = document.getElementById("searchForm");
+                    const input = document.getElementById("header__input");
+                    const select = document.getElementById("header__select");
 
-                    if (keyword) {
-                        let url = '/products/' + encodeURIComponent(keyword);
+                    // Xử lý khi submit form
+                    form.addEventListener("submit", (e) => {
+                        e.preventDefault();
+                        redirectToProducts();
+                    });
+
+                    // Xử lý khi đổi select
+                    select.addEventListener("change", () => {
+                        redirectToProducts();
+                    });
+
+                    function redirectToProducts() {
+                        const keyword = input.value.trim();
+                        const category = select.value;
+
+                        let url = "/products";
+
                         if (category) {
-                            url += '?category=' + encodeURIComponent(category);
+                            url += `/${category}`;
+                            if (keyword) {
+                                url += `/${encodeURIComponent(keyword)}`;
+                            }
+                        } else if (keyword) {
+                            url += `/${encodeURIComponent(keyword)}`;
                         }
+
                         window.location.href = url;
-                    } else {
-                        alert('Vui lòng nhập từ khóa tìm kiếm!');
+                    }
+
+                    // Giữ lại giá trị đã chọn khi load lại trang
+                    const pathParts = window.location.pathname.split("/");
+                    if (pathParts[1] === "products" && pathParts[2]) {
+                        select.value = pathParts[2]; // ví dụ /products/phone thì sẽ giữ phone
                     }
                 });
             </script>
 
+
+            <!-- Mobile -->
             <div class="header__search-dropdown">
                 <form class="header__search-dropdown-form">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+                    <input id="header__input" type="text" placeholder="Tìm kiếm sản phẩm..." />
                     <button type="submit" class="header__search-btn">
                         <span class="header__search-icon">
                             <svg width="16" height="16" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#333e48">
@@ -146,19 +176,6 @@
             </div>
 
             <div class="header__actions">
-                <!-- compare -->
-                <!-- <div class="header__icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <g id="Arrow / Arrow_Reload_02">
-                                <path id="Vector" d="M14 16H19V21M10 8H5V3M19.4176 9.0034C18.8569 7.61566 17.9181 6.41304 16.708 5.53223C15.4979 4.65141 14.0652 4.12752 12.5723 4.02051C11.0794 3.9135 9.58606 4.2274 8.2627 4.92661C6.93933 5.62582 5.83882 6.68254 5.08594 7.97612M4.58203 14.9971C5.14272 16.3848 6.08146 17.5874 7.29157 18.4682C8.50169 19.3491 9.93588 19.8723 11.4288 19.9793C12.9217 20.0863 14.4138 19.7725 15.7371 19.0732C17.0605 18.374 18.1603 17.3175 18.9131 16.0239" stroke="#333e48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </g>
-                        </g>
-                    </svg>
-                    <span class="header__count">0</span>
-                </div> -->
                 <!-- search -->
                 <div class="header__search-mobile-toggle">
                     <span class="header__search-icon">
@@ -182,7 +199,7 @@
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#333e48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </g>
                     </svg>
-                    <span class="header__count">0</span>
+                    <span class="header__count-wishlist">0</span>
                 </div>
                 <!-- user -->
                 <div class="header__icon">
@@ -218,7 +235,9 @@
                             </g>
                         </svg>
                     </a>
-                    <span class="header__count">0</span>
+                    <span class="header__count" id="cartCount">
+                        <?= get_cart_count(\Container::get('pdo')) ?>
+                    </span>
                 </div>
             </div>
         </div>

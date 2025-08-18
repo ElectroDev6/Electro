@@ -45,8 +45,7 @@ class View
             $usedMemory,
             $peakMemoryFormatted
         );
-
-        error_log($logMessage, 3, BASE_PATH . '/storage/logs/view.log');
+        // error_log($logMessage, 3, BASE_PATH . '/storage/logs/view.log');
     }
 
 
@@ -59,6 +58,7 @@ class View
             $layoutPath = BASE_PATH . '/app/views/admin/layouts/main.php';
         } else {
             $viewPath = BASE_PATH . '/app/views/web/' . str_replace('.', '/', $view) . '.php';
+            $layoutPath = BASE_PATH . '/app/views/web/layouts/main.php';
         }
 
         return $viewPath;
@@ -98,8 +98,9 @@ class View
         require self::viewFile($viewPath);
     }
 
-    public static function component($viewPath)
+    public static function component($viewPath, $data = [])
     {
+        extract($data);
         require self::viewFile($viewPath);
     }
 

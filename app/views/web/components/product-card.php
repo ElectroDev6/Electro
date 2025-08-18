@@ -7,10 +7,9 @@ use Core\View; ?>
 
 <?php if (!empty($product)): ?>
     <div class="product">
-        <a href="/product/<?= $product['slug'] ?>" class="product__link">
+        <a href="/detail/<?= $product['slug'] ?>" class="product__link">
             <div class="product__image-container">
-                <img src="<?= $product['default_url'] ?? '/img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product__image" />
-
+                <img src="<?= asset('img/products/default/' . ($product['default_image'] ?? 'img/No-Image-Placeholder.png')) ?>" alt="<?= $product['name'] ?>" class="product__image" />
                 <ul class="product__features">
                     <div class="product__feature">
                         <img src="/icons/NFC.svg" alt="">
@@ -33,7 +32,7 @@ use Core\View; ?>
                         <span class="product__current-price"><?= number_format($product['price_discount'] ?? 0, 0, ',', '.') ?> ₫</span>
                         <span class="product__old-price"><?= number_format($product['price_original'] ?? 0, 0, ',', '.') ?> ₫</span>
                         <span class="product__discount-cl">
-                            <?php if (!empty($product['discount_amount'])): ?>
+                            <?php if (!empty($product['discount_amount']) && $product['discount_amount'] > 0): ?>
                                 Giảm <?= number_format($product['discount_amount'], 0, ',', '.') ?>đ
                             <?php endif; ?>
                         </span>
@@ -48,9 +47,8 @@ use Core\View; ?>
             </div>
 
             <p class="product__name"><?= $product['name'] ?? 'Camera giám sát IP 3MP 365 Selection C1' ?></p>
-
-            <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
         </a>
+        <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay', 'productId' => $product['product_id']]); ?>
     </div>
 
 <?php else: ?>

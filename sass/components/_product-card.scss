@@ -18,6 +18,10 @@
     transform: translateY(-10px);
   }
 
+  &__link {
+    min-height: 26.4rem;
+  }
+
   &__badge {
     position: absolute;
     top: 8px;
@@ -68,6 +72,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    line-height: 1.2;
   }
 
   &__status {
@@ -141,7 +146,7 @@
   &__name {
     text-align: left;
     font-size: 14px;
-    width: 100%;
+    max-width: 23rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;

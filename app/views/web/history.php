@@ -6,8 +6,7 @@
     <!-- Sidebar -->
     <div class="container-history__sidebar">
         <div class="container-history__sidebar-avatar">
-            <img class="container-history__sidebar-avatar__img"
-                src="https://i.pinimg.com/1200x/57/bb/f5/57bbf563a06ca4704171f1bbd0bd52b3.jpg" alt="Avatar">
+            <img class="container-history__sidebar-avatar__img" src="" alt="Avatar">
             <h3 class="container-history__sidebar-avatar__name">Trần Văn A</h3>
             <p class="container-history__sidebar-avatar__role">Khách hàng</p>
         </div>

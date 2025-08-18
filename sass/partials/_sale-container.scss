@@ -66,9 +66,18 @@
   }
 
   &__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
     gap: 20px;
-    margin-top: 20px;
+    align-items: center;
+    padding: 2rem 0;
+
+    .product__link {
+      min-height: 30.4rem;
+    }
+    > * {
+      flex: 0 0 auto;
+    }
   }
 }

@@ -1,3 +1,5 @@
-<a href="<?= $href ?? '#' ?>" class="button-buy-now">
-    <?= $text ?? 'Mua ngay' ?>
-</a>
+<button
+    class="button-buy-now"
+    data-product-id="<?= $productId ?>">
+    <?= $text ?>
+</button>

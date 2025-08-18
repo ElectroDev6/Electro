@@ -13,6 +13,9 @@ Trang chủ
 <?php View::endSection(); ?>
 
 <?php View::section('content'); ?>
+
+<?php View::component('components.scroll-to-top'); ?>
+
 <!-- Menu -->
 <div class="container-main">
     <ul class="breadcrumb">
@@ -25,14 +28,6 @@ Trang chủ
                         <li><a href="#">Home v1</a></li>
                         <li><a href="#">Home v2</a></li>
                         <li><a href="#">Home v3</a></li>
-                    </ul>
-                </div>
-                <div class="mega-column">
-                    <h4>Trang mua sắm</h4>
-                    <ul>
-                        <li><a href="#">Sản phẩm dạng lưới</a></li>
-                        <li><a href="#">Dạng danh sách</a></li>
-                        <li><a href="#">Sidebar trái / phải</a></li>
                     </ul>
                 </div>
                 <div class="mega-column">
@@ -72,13 +67,21 @@ Trang chủ
 
 <?php View::partial('partials.category-container', ['categories' => $categories]); ?>
 
-<?php View::partial('partials.sale-container', ['saleProducts' => $saleProducts]); ?>
+<?php View::partial('partials.sale-container', ['saleProducts' => $saleProducts, 'saleStatus' => $saleStatus]); ?>
 <?php View::partial('partials.special-offer-container', [
     'regularProducts' => $regularProducts,
     'featuredProduct' => $featuredProduct,
 ]); ?>
 
-<?php View::partial('partials.product-container', ['iphoneProducts' => $iphoneProducts]); ?>
+<?php View::partial('partials.product-container', [
+    'iphoneProducts' => $iphoneProducts,
+    'pcProducts' => $pcProducts,
+    'watchProducts' => $watchProducts,
+    'airFryerProducts' => $airFryerProducts,
+    'massagerProducts' => $massagerProducts,
+    'airCoolerProducts' => $airCoolerProducts,
+    'vacuumCleanerProducts' => $vacuumCleanerProducts
+]); ?>
 
 <?php View::partial('partials.accessory-container', [
     'accessories' => $accessories,
@@ -92,10 +95,12 @@ Trang chủ
         <div class="tech-news__container">
             <div class="tech-news__main">
                 <div class="news-card news-card--large news-card--microsoft">
-                    <img src="/img/news/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
-                    <div class="news-card__content">
-                        <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
-                    </div>
+                    <a target="_blank" href="https://thanhnien.vn/mang-dial-up-huyen-thoai-cua-aol-dung-hoat-dong-sau-34-nam-18525081109571965.htm">
+                        <img src="/img/news/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                        <div class="news-card__content">
+                            <h3 class="news-card__title">Mạng dial-up huyền thoại của AOL dừng hoạt động sau 34 năm</h3>
+                        </div>
+                    </a>
                 </div>
 
                 <div class="news-card news-card--medium news-card--office">

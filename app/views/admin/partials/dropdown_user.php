@@ -6,7 +6,6 @@ ob_start();
             <div class="dropdown-menu__title">Adminshop</div>
             <div class="dropdown-menu__subtitle">Web development</div>
         </div>
-        
         <ul class="dropdown-menu__list">
             <li class="dropdown-menu__item">
                 <a href="/admin/profile" class="dropdown-menu__link">

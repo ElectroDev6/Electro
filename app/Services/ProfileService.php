@@ -23,11 +23,25 @@ class ProfileService
         $address = $this->profileModel->getDefaultAddress($userId);
         return array_merge($user, [
             'address' => $address ?: [
-                'address_line1' => '',
+                'address' => '',
                 'ward_commune' => '',
                 'district' => '',
                 'province_city' => ''
             ]
         ]);
+    }
+    public function updateUserProfile(int $userId, array $data): bool
+    {
+        return $this->profileModel->updateUserProfile($userId, $data);
+    }
+
+    public function updateUserAddress(int $userId, array $data): bool
+    {
+        return $this->profileModel->updateUserAddress($userId, $data);
+    }
+
+    public function updateUserAvatar(int $userId, array $file): bool
+    {
+        return $this->profileModel->updateUserAvatar($userId, $file);
     }
 }
