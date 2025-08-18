@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   new BtnBuyNow();
+
   new SaleCountdown();
 
   const productEl = document.querySelector(".product-featured");

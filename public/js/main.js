@@ -3,6 +3,7 @@ import SearchSuggestion from "./components/searchSuggestion.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   new ScrollToTop("scrollToTopBtn");
+
   new SearchSuggestion("header__input", "/search/suggestions");
 
   const headerTop = document.querySelector(".header__top");

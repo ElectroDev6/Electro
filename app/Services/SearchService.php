@@ -23,7 +23,6 @@ class SearchService
         $sub = array_map(fn($r) => [
             'type' => 'subcategory',
             'name' => $r['name'],
-            'slug' => $r['slug'],
             'category_slug' => $r['category_slug'],
             'url'  => "/products/{$r['category_slug']}/{$r['slug']}",
         ], $sub);

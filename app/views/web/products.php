@@ -28,7 +28,7 @@ Sản phẩm
     </div>
     <?php if (!empty($subcategories)): ?>
         <div class="use-needs">
-            <h3 class="use-needs__title">Nhu cầu sử dụng</h3>
+            <h3 class="use-needs__title">Sản phẩm liên quan</h3>
             <div class="use-needs__list">
                 <?php foreach ($subcategories as $sub): ?>
                     <a href="/products/<?php echo htmlspecialchars($categorySlug); ?>/<?php echo htmlspecialchars($sub['subcategory_slug']); ?>" class="use-needs__item" style="background: #fff; ?>">

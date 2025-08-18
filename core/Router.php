@@ -2,7 +2,6 @@
 
 namespace Core;
 
-use App\Middlewares\AdminMiddleware;
 
 class Router
 {
@@ -11,11 +10,25 @@ class Router
   public static function get(string $uri, string $controllerAction)
   {
     self::$routes['GET'][$uri] = $controllerAction;
+    // error_log("Router: Registered GET route: $uri => $controllerAction");
   }
+
+  // Output:
+  //   [
+  //   "GET" => [
+  //     "/home" => "HomeController@index"
+  //   ]
+  // ]
+
+  // self::$routes là mảng tĩnh (ban đầu rỗng []).
+  // ['GET'] tạo key "GET" trong mảng.
+  // [$uri] tạo key con bên trong "GET".
+
 
   public static function post(string $uri, string $controllerAction)
   {
     self::$routes['POST'][$uri] = $controllerAction;
+    // error_log("Router: Registered POST route: $uri => $controllerAction");
   }
 
   public static function dispatch(string $uri, string $method)
@@ -26,7 +39,7 @@ class Router
     error_log("Router: Dispatching URI: $uri, Method: $method, Path: $path");
 
     if (!isset(self::$routes[$method])) {
-      error_log("Router: No routes registered for method $method");
+      error_log("Router: No routes registered for method $method ");
       return false;
     }
 
@@ -41,7 +54,18 @@ class Router
         // Xóa match nguyên chuỗi, giữ lại key tên param
         unset($matches[0]);
 
+        // error_log("Router: Matches json : " . json_encode($matches) . " after unset 0 index");
+
+        //   $matches = [
+        //   1 => "phone",
+        //   2 => "android",
+        //   "categorySlug" => "phone",
+        //   "subcategorySlug" => "android"
+        // ];
+
+
         [$controller, $action] = explode('@', $handler);
+
         $namespace = str_starts_with($path, '/admin')
           ? 'App\Controllers\Admin\\'
           : 'App\Controllers\Web\\';
@@ -55,21 +79,21 @@ class Router
 
         if (!class_exists($controllerClass)) {
           error_log("Router: Controller $controllerClass not found");
-          echo "Controller $controllerClass not found";
+          // echo "Controller $controllerClass not found";
           exit;
         }
 
         $pdo = \Container::get('pdo');
         if ($pdo === null) {
           error_log("Router: Database connection not initialized");
-          echo "Database connection not initialized";
+          // echo "Database connection not initialized";
           exit;
         }
 
         $instance = new $controllerClass($pdo);
         if (!method_exists($instance, $action)) {
           error_log("Router: Method $action not found in $controllerClass");
-          echo "Method $action not found in $controllerClass";
+          // echo "Method $action not found in $controllerClass";
           exit;
         }
 
@@ -89,6 +113,7 @@ class Router
         error_log("Router: Params: " . json_encode($params));
 
         call_user_func_array([$instance, $action], [$params]);
+        // $instance->showDetail($params);
         return;
       }
     }

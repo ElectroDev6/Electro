@@ -47,11 +47,11 @@ export default class SearchSuggestion {
       const res = await fetch(`${this.apiUrl}?q=${encodeURIComponent(query)}`);
 
       // Log status và content-type để kiểm tra
-      console.log("Status:", res.status);
-      console.log("Content-Type:", res.headers.get("content-type"));
+      // console.log("Status:", res.status);
+      // console.log("Content-Type:", res.headers.get("content-type"));
 
       const text = await res.text(); // đọc dạng text
-      console.log("Raw response:", text); // log toàn bộ response
+      // console.log("Raw response:", text); // log toàn bộ response
 
       let data;
       try {

@@ -25,6 +25,7 @@ class ProductController
         ];
 
         $category = $this->productService->getCategoryBySlug($categorySlug);
+
         if ($category) {
             $filters['category_id'] = $category['category_id'];
         } else {
@@ -37,10 +38,10 @@ class ProductController
         }
 
         $products = $this->productService->getFilteredProducts($filters);
-        // echo '<pre>';
-        // print_r($products);
-        // echo '</pre>';
-
+        echo '<pre>';
+        print_r($products);
+        echo '</pre>';
+        exit;
         $brands = $this->productService->getBrands($filters);
 
         View::render('products', [

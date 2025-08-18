@@ -85,7 +85,7 @@
             </div>
 
             <form class="header__search" id="searchForm">
-                <input type="text" class="header__input" id="header__input" placeholder="Tìm kiếm sản phẩm" />
+                <input type="text" autocomplete="off" class="header__input" id="header__input" placeholder="Tìm kiếm sản phẩm" />
                 <select class="header__select" id="header__select">
                     <option value="">Chọn danh mục</option>
                     <option value="phone">Điện thoại</option>

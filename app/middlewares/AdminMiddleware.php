@@ -8,7 +8,7 @@ class AdminMiddleware
     {
         // Kiểm tra nếu chưa login hoặc không phải admin
         if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
-            header('Location: /forbidden'); // hoặc /login
+            header('Location: /forbidden');
             exit;
         }
     }

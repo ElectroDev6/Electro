@@ -17,6 +17,7 @@ class SearchController
     {
         $q = $_GET['q'] ?? '';
         header('Content-Type: application/json');
+
         if (mb_strlen(trim($q)) < 2) {
             echo json_encode([]);
             return;

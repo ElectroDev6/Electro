@@ -1,104 +1,56 @@
 [
   {
     "name": "Điện thoại",
-    "image": "/img/category/phone_cate.webp",
-    "description": "Các loại điện thoại di động đến từ nhiều thương hiệu nổi tiếng.",
-    "slug": "phone"
+    "image": "/img/category/dien_thoai_cate.webp",
+    "description": "Các loại điện thoại thông minh và phổ thông từ nhiều thương hiệu.",
+    "slug": "dien-thoai"
   },
   {
     "name": "Máy tính bảng",
     "image": "/img/category/may_tinh_bang_cate.webp",
-    "description": "Máy tính bảng hỗ trợ học tập, làm việc và giải trí.",
-    "slug": "tablet"
+    "description": "Máy tính bảng phục vụ học tập, làm việc và giải trí.",
+    "slug": "may-tinh-bang"
   },
   {
     "name": "Laptop",
     "image": "/img/category/laptop_cate.webp",
-    "description": "Các dòng laptop từ phổ thông đến cao cấp.",
+    "description": "Laptop văn phòng, gaming, đồ họa từ phổ thông đến cao cấp.",
     "slug": "laptop"
+  },
+  {
+    "name": "PC & Linh kiện",
+    "image": "/img/category/pc_linh_kien_cate.webp",
+    "description": "Máy tính để bàn và linh kiện như CPU, RAM, SSD, GPU.",
+    "slug": "pc-linh-kien"
   },
   {
     "name": "Phụ kiện",
     "image": "/img/category/phu_kien_cate.webp",
-    "description": "Các loại phụ kiện điện tử như ốp lưng, tai nghe, sạc.",
-    "slug": "accessories"
+    "description": "Phụ kiện điện tử: ốp lưng, tai nghe, sạc, cáp, balo.",
+    "slug": "phu-kien"
   },
   {
     "name": "Tivi",
     "image": "/img/category/tivi_cate.webp",
-    "description": "Tivi thông minh, LED, OLED từ nhiều hãng lớn.",
-    "slug": "tv"
-  },
-  {
-    "name": "Tủ lạnh",
-    "image": "/img/category/tu_lanh_cate.webp",
-    "description": "Tủ lạnh tiết kiệm điện, đa dạng dung tích và kiểu dáng.",
-    "slug": "refrigerator"
+    "description": "Tivi thông minh LED/OLED/QLED từ nhiều thương hiệu.",
+    "slug": "tivi"
   },
   {
     "name": "Điện gia dụng",
     "image": "/img/category/dien_gia_dung_cate.webp",
-    "description": "Các thiết bị gia dụng như máy giặt, máy hút bụi.",
-    "slug": "home-appliances"
-  },
-  {
-    "name": "SIM",
-    "image": "/img/category/sim_cate.webp",
-    "description": "Thẻ SIM từ các nhà mạng, hỗ trợ 4G/5G.",
-    "slug": "sim"
-  },
-  {
-    "name": "Quạt điều hòa",
-    "image": "/img/category/dieu_hoa_cate.webp",
-    "description": "Quạt điều hòa làm mát hiệu quả, tiết kiệm năng lượng.",
-    "slug": "air-cooler"
-  },
-  {
-    "name": "Màn hình",
-    "image": "/img/category/phone_cate.webp",
-    "description": "Màn hình máy tính chất lượng cao cho công việc và giải trí.",
-    "slug": "monitor"
-  },
-  {
-    "name": "Camera",
-    "image": "/img/category/may_tinh_bang_cate.webp",
-    "description": "Camera giám sát, webcam và thiết bị ghi hình.",
-    "slug": "camera"
-  },
-  {
-    "name": "Thiết bị nhà bếp",
-    "image": "/img/category/laptop_cate.webp",
-    "description": "Đồ điện gia dụng như lò vi sóng, nồi chiên không dầu.",
-    "slug": "kitchen-appliances"
-  },
-  {
-    "name": "Thiết bị sinh hoạt",
-    "image": "/img/category/phu_kien_cate.webp",
-    "description": "Máy lọc không khí, quạt, máy hút bụi và các thiết bị khác.",
-    "slug": "living-appliances"
+    "description": "Thiết bị gia dụng: tủ lạnh, lò vi sóng, máy hút bụi, quạt.",
+    "slug": "dien-gia-dung"
   },
   {
     "name": "Gaming",
-    "image": "/img/category/tivi_cate.webp",
-    "description": "Chuột, bàn phím, tai nghe và thiết bị chuyên cho game thủ.",
+    "image": "/img/category/gaming_cate.webp",
+    "description": "Thiết bị – phụ kiện gaming: bàn phím, chuột, tai nghe, ghế.",
     "slug": "gaming"
   },
   {
     "name": "Chăm sóc cá nhân",
-    "image": "/img/category/tu_lanh_cate.webp",
-    "description": "Máy sấy tóc, máy cạo râu, và các thiết bị cá nhân khác.",
-    "slug": "personal-care"
-  },
-  {
-    "name": "Card đồ họa",
-    "image": "/img/category/dieu_hoa_cate.webp",
-    "description": "Card đồ họa hiệu năng cao cho chơi game và thiết kế.",
-    "slug": "graphics-card"
-  },
-  {
-    "name": "PC & Linh kiện",
-    "image": "/img/category/dieu_hoa_cate.webp",
-    "description": "Máy tính để bàn và các linh kiện như CPU, RAM, SSD.",
-    "slug": "pc-components"
+    "image": "/img/category/cham_soc_ca_nhan_cate.webp",
+    "description": "Thiết bị chăm sóc sức khỏe và làm đẹp gia đình.",
+    "slug": "cham-soc-ca-nhan"
   }
 ]
