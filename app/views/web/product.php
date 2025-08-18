@@ -93,8 +93,7 @@ Sản phẩm
                         <input type="checkbox" name="price[]" value="10-15" <?= in_array('10-15', $priceRange) ? 'checked' : '' ?> class="filter-group__radio"> Từ 10 đến 15
                         triệu
                     </label>
-                    <label class="filter-group__label"> <input type="checkbox" name="price[]" value="duoi10"
-                            class="filter-group__radio"> Dưới 10 triệu </label>
+                    
                 </div>
 
                 <!-- <div class="filter-group">
@@ -309,8 +308,8 @@ Sản phẩm
         <a href="?page=10" class="pagination__link">10</a>
         <a href="?page=2" class="pagination__next">Trang sau</a>
     </div>
-
 </body>
+
 <script>
     const mainForm = document.getElementById('mainFilter');
     const allCheckboxes = mainForm.querySelectorAll('input[type="checkbox"]');
@@ -332,7 +331,5 @@ Sản phẩm
             window.location.search = params.toString();
         });
     });
-
-
 </script>
 <?php View::endSection(); ?>
