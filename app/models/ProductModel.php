@@ -12,6 +12,7 @@ class ProductModel
     {
         $this->pdo = $pdo;
     }
+
     public function getProducts(array $options = []): array
     {
         $limit = $options['limit'] ?? 6;
@@ -99,6 +100,11 @@ class ProductModel
             vi.image_set AS default_image,
             pr.start_date,
             pr.end_date,
+            -- Dung lượng
+            SUBSTRING_INDEX(SUBSTRING_INDEX(s.sku_code, '-', 2), '-', -1) AS storage,
+            -- Thương hiệu
+            b.name AS brand_name,
+
             CASE 
                 WHEN pr.discount_percent IS NOT NULL THEN ROUND(s.price * (100 - pr.discount_percent) / 100, 0)
                 ELSE s.price
@@ -110,6 +116,7 @@ class ProductModel
             END AS discount_amount
         FROM products p
         INNER JOIN skus s ON s.product_id = p.product_id AND s.is_default = 1
+        LEFT JOIN brands b ON b.brand_id = p.brand_id
         LEFT JOIN variant_images vi 
             ON vi.sku_id = s.sku_id 
             AND vi.is_default = 1
