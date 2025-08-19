@@ -43,8 +43,14 @@ Sản phẩm
     <div class="content-layout">
 
         <?php
-        error_log("Products View: Brands before component: " . json_encode($brands));
-        View::component('components.filter-phone', ['brands' => $brands, 'selectedBrands' => $selectedBrands]);
+        View::component('components.filter', [
+            'brands' => $brands,
+            'selectedBrands' => $selectedBrands,
+            'availableAttributes' => $availableAttributes,
+            'selectedAttributes' => $selectedAttributes,
+            'categorySlug' => $categorySlug,
+            'subcategorySlug' => $subcategorySlug
+        ]);
         ?>
 
         <main class="products" id="product-list">
@@ -64,12 +70,35 @@ Sản phẩm
     </div>
 
     <div class="pagination">
-        <a href="?page=1" class="pagination__link">1</a>
-        <a href="?page=2" class="pagination__link">2</a>
-        <a href="?page=3" class="pagination__link">3</a>
-        <span class="pagination__ellipsis">...</span>
-        <a href="?page=10" class="pagination__link">10</a>
-        <a href="?page=2" class="pagination__next">Trang sau</a>
+        <?php if ($currentPage > 1): ?>
+            <a href="?page=<?= $currentPage - 1 ?>" class="pagination__prev">Trang trước</a>
+        <?php endif; ?>
+
+        <?php
+        $start = max(1, $currentPage - 2);
+        $end = min($totalPages, $currentPage + 2);
+
+        if ($start > 1) {
+            echo '<a href="?page=1" class="pagination__link">1</a>';
+            if ($start > 2) echo '<span class="pagination__ellipsis">...</span>';
+        }
+
+        for ($i = $start; $i <= $end; $i++): ?>
+            <?php if ($i == $currentPage): ?>
+                <span class="pagination__link active"><?= $i ?></span>
+            <?php else: ?>
+                <a href="?page=<?= $i ?>" class="pagination__link"><?= $i ?></a>
+            <?php endif; ?>
+        <?php endfor; ?>
+
+        <?php if ($end < $totalPages): ?>
+            <?php if ($end < $totalPages - 1) echo '<span class="pagination__ellipsis">...</span>'; ?>
+            <a href="?page=<?= $totalPages ?>" class="pagination__link"><?= $totalPages ?></a>
+        <?php endif; ?>
+
+        <?php if ($currentPage < $totalPages): ?>
+            <a href="?page=<?= $currentPage + 1 ?>" class="pagination__next">Trang sau</a>
+        <?php endif; ?>
     </div>
 </div>
 

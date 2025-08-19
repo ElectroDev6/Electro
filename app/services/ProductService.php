@@ -118,6 +118,21 @@ class ProductService
         return $this->productModel->getSubcategories($category_id);
     }
 
+    public function getSubcategoryBySlug(string $slug): ?array
+    {
+        return $this->productModel->getSubcategoryBySlug($slug);
+    }
+
+    public function getFilteredProductsCount(array $filters = []): int
+    {
+        return $this->productModel->getProductsCount($filters);
+    }
+
+    public function getAvailableAttributes(array $filters = []): array
+    {
+        return $this->productModel->getAvailableAttributes($filters);
+    }
+
     public function addReview(int $product_id, int $user_id, ?int $parent_review_id, string $comment_text): bool
     {
         return $this->productModel->addReview($product_id, $user_id, $parent_review_id, $comment_text);

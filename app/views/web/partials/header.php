@@ -91,20 +91,12 @@
                     <option value="phone">Điện thoại</option>
                     <option value="tablet">Máy tính bảng</option>
                     <option value="laptop">Laptop</option>
+                    <option value="pc-components">PC & Linh kiện</option>
                     <option value="accessories">Phụ kiện</option>
                     <option value="tv">Tivi</option>
-                    <option value="refrigerator">Tủ lạnh</option>
-                    <option value="home-appliances">Điện gia dụng</option>
-                    <option value="sim">SIM</option>
-                    <option value="air-cooler">Quạt điều hòa</option>
-                    <option value="monitor">Màn hình</option>
-                    <option value="camera">Camera</option>
-                    <option value="kitchen-appliances">Thiết bị nhà bếp</option>
-                    <option value="living-appliances">Thiết bị sinh hoạt</option>
+                    <option value="refrigerator">Điện gia dụng</option>
                     <option value="gaming">Gaming</option>
                     <option value="personal-care">Chăm sóc cá nhân</option>
-                    <option value="graphics-card">Card đồ họa</option>
-                    <option value="pc-components">PC & Linh kiện</option>
                 </select>
                 <button type="submit" class="header__search-btn">
                     <img style="width: 22px;" src="/icons/search-svgrepo-com.svg" alt="">
