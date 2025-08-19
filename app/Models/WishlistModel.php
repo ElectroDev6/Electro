@@ -1,15 +1,19 @@
 <?php
+
 namespace App\Models;
 
-class WishlistModel {
+class WishlistModel
+{
     private \PDO $pdo;
 
-    public function __construct(\PDO $pdo) {
+    public function __construct(\PDO $pdo)
+    {
         $this->pdo = $pdo;
     }
 
     // Lấy wishlist kèm hình ảnh mặc định
-    public function getWishlistByUser(int $userId): array {
+    public function getWishlistByUser(int $userId): array
+    {
         $stmt = $this->pdo->prepare("
             SELECT 
                 w.product_id,
@@ -29,7 +33,8 @@ class WishlistModel {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function removeFromWishlist(int $userId, int $productId): bool {
+    public function removeFromWishlist(int $userId, int $productId): bool
+    {
         $stmt = $this->pdo->prepare("
             DELETE FROM wishlist
             WHERE user_id = :user_id AND product_id = :product_id
@@ -37,7 +42,8 @@ class WishlistModel {
         return $stmt->execute(['user_id' => $userId, 'product_id' => $productId]);
     }
 
-    public function updateUserAvatar(int $userId, array $file): bool {
+    public function updateUserAvatar(int $userId, array $file): bool
+    {
         if (!isset($file['avatar']) || $file['avatar']['error'] !== UPLOAD_ERR_OK) {
             return false;
         }

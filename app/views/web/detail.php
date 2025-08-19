@@ -3,9 +3,9 @@
 $colorMap = [
     'black' => '#000000',
     'white' => '#ffffff',
-    'blue'  => '#007bff',
-    'red'   => '#ff0000',
-    'gray'  => '#666666',
+    'blue' => '#007bff',
+    'red' => '#ff0000',
+    'gray' => '#666666',
 ];
 
 
@@ -38,6 +38,7 @@ Chi tiết sản phẩm
         <div class="product-detail__main">
             <div class="product-detail__images">
                 <!-- Main Image -->
+
                 <div class="product-detail__main-image">
                     <?php
                     $defaultSkuId = $product['variants'][0]['sku_id'] ?? 1;
@@ -135,7 +136,8 @@ Chi tiết sản phẩm
                         <?= number_format($product['variants'][0]['price_original'] ?? 0, 0, ',', '.') ?> ₫
                     </div>
 
-                    <div class="product-detail__discount-badge">-<?= $product['variants'][0]['discount_percent'] ?? 0 ?>%</div>
+                    <div class="product-detail__discount-badge">
+                        -<?= $product['variants'][0]['discount_percent'] ?? 0 ?>%</div>
                 </div>
 
                 <div class="product-detail__options">
@@ -170,7 +172,7 @@ Chi tiết sản phẩm
                                         data-sku-id="<?= $skuId ?>">
                                         <span class="product-detail__color-name"></span>
                                     </button>
-                                <?php $i++;
+                                    <?php $i++;
                                 endforeach; ?>
                             </div>
                         </div>
@@ -201,7 +203,7 @@ Chi tiết sản phẩm
                                         data-sku-id="<?= $skuId ?>">
                                         <?php echo htmlspecialchars(strtoupper($capacity)); ?>
                                     </button>
-                                <?php $j++;
+                                    <?php $j++;
                                 endforeach; ?>
                             </div>
                         </div>

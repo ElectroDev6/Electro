@@ -2,364 +2,246 @@
 
 namespace App\Controllers\Web;
 
-
 use Core\View;
 
 class ProductLaptopController
 {
-    public function productLaptop()
+
+    public function showAllLaptops()
     {
-        $productslaptop = [
+
+        $products = [
             [
-                'name' => 'HP 14s',
-                'price' => 30090000,
-                'old_price' => 34290000,
-                'ram' => '8GB',
-                'brand' => 'HP',
-                'screen' => '13',
-                'battery' => 5000,
-                'os' => 'Window',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce Series',
-                'hard_drive' => 'SSD 512GB',
-                'image' => '/img/DM_laptop.png',
-                'Hz' => '120'
-            ],
-            [
-                'name' => 'Hp_245_g10',
-                'price' => 27000000,
-                'old_price' => 29900000,
-                'rom' => ['128GB', '256GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'HP',
-                'screen' => '14',
-                'battery' => 4000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce Series',
-                'hard_drive' => 'SSD 512GB',
-                'image' => '/img/SP_LT_hp_245_g10_.png',
-                'Hz' => '90'
-            ],
-            [
-                'name' => 'Hp_victus_gaming_16',
-                'price' => 15000000,
-                'old_price' => 18000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '4GB',
-                'brand' => 'HP',
-                'screen' => '15',
-                'battery' => 3500,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce Series',
-                'hard_drive' => 'SSD 1TB',
-                'image' => '/img/SP_LT_hp_victus_gaming_16.png',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'Acer_aspire_lite_14',
-                'price' => 20000000,
-                'old_price' => 22000000,
-                'rom' => ['128GB', '256GB'],
-                'ram' => '8GB',
-                'brand' => 'Acer',
-                'screen' => '16',
-                'battery' => 4500,
-                'os' => 'IOS',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce Series',
-                'hard_drive' => 'SSD 512GB',
-                'image' => '/img/SP_LT_acer_aspire_lite_14.png',
-                'Hz' => '120'
-            ],
-            [
-                'name' => 'Acer_Aspire_Lite_15',
-                'price' => 35000000,
-                'old_price' => 40000000,
-                'rom' => ['128GB', '256GB', '512GB'],
-                'ram' => '32GB',
-                'brand' => 'Acer',
-                'screen' => '13',
-                'battery' => 6000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce MX Series',
-                'hard_drive' => 'SSD 256GB',
-                'image' => '/img/SP_LT_Acer_Aspire_Lite.png',
-                'Hz' => '90'
-            ],
-            [
-                'name' => 'Acer-aspire-7-gaming-a715',
-                'price' => 22000000,
-                'old_price' => 25000000,
-                'rom' => ['128GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Acer',
-                'screen' => '14',
-                'battery' => 4800,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'hard_drive' => 'SSD 1TB',
-                'card' => 'NVIDIA GeForce MX Series',
-                'image' => '/img/SP_LT_acer-aspire-7-gaming-a715.png',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'Asus_vivobook',
-                'price' => 22000000,
-                'old_price' => 25000000,
-                'rom' => ['1TB'],
-                'ram' => '16GB',
-                'brand' => 'Asus',
-                'screen' => '15',
-                'battery' => 4800,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce MX Series',
-                'hard_drive' => 'SSD 256GB',
-                'image' => '/img/SP_LT_Asus_vivobook.jpg',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'Dell_g15_5530_gray',
-                'price' => 30000000,
-                'old_price' => 35000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '8GB',
-                'brand' => 'Dell',
-                'screen' => '16',
-                'battery' => 5000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce RTX Series',
-                'hard_drive' => 'SSD 256GB',
-                'image' => '/img/SP_LT_dell_g15_5530_gray_.png',
-                'Hz' => '120'
-            ],
-            [
-                'name' => 'Dell_inspiron',
-                'price' => 28000000,
-                'old_price' => 32000000,
-                'rom' => ['128GB', '256GB'],
-                'ram' => '64GB',
-                'brand' => 'Dell',
-                'screen' => '13',
-                'battery' => 4500,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce MX Series',
-                'hard_drive' => 'SSD 128GB',
-                'image' => '/img/SP_LT_dell_inspiron.jpg',
-                'Hz' => '90'
-            ],
-            [
-                'name' => 'Dell_inspiron_15_3525',
-                'price' => 40000000,
-                'old_price' => 45000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '64GB',
-                'brand' => 'Dell',
-                'screen' => '14',
-                'battery' => 5000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce RTX Series',
-                'hard_drive' => 'SSD 128GB',
-                'image' => '/img/SP_LT_dell_inspiron.png',
-                'Hz' => '120'
-            ],
-            [
-                'name' => 'Lenovo_Gaming_LOQ',
-                'price' => 50000000,
-                'old_price' => 55000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '64GB',
-                'brand' => 'Lenovo',
-                'screen' => '15',
-                'battery' => 6000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce RTX Series',
-                'image' => '/img/SP_LT_Lenovo_Gaming_LOQ.jpg',
-                'Hz' => '90'
-            ],
-            [
-                'name' => 'Lenovo_ideapad_slim',
-                'price' => 25000000,
-                'old_price' => 28000000,
-                'rom' => ['128GB', '256GB'],
-                'ram' => '8GB',
-                'brand' => 'Lenovo',
-                'screen' => '16',
-                'battery' => 4000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce RTX Series',
-                'hard_drive' => 'SSD 128GB',
-                'image' => '/img/SP_LT_lenovo_ideapad_slim.jpg',
-                'Hz' => '60'
-            ],
-            [
-                'name' => 'Lenovo_ideapad_slim_3',
-                'price' => 32000000,
-                'old_price' => 36000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Lenovo',
-                'screen' => '13',
-                'battery' => 5000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'card' => 'NVIDIA GeForce RTX Series',
-                'hard_drive' => 'SSD 512GB',
-                'image' => '/img/SP_LT_lenovo_ideapad.png',
-                'Hz' => '120'
-            ],
-            [
-                'name' => 'Macbook_air_13_m4_2025',
-                'price' => 32000000,
-                'old_price' => 36000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Apple',
-                'screen' => '14',
-                'battery' => 5000,
-                'os' => 'Android',
+                'name' => 'MacBook Air 13" M1 2020',
+                'brand_name' => 'Apple',
+                'price_original' => 30000000,
+                'price_discount' => 27000000,
+                'image' => '/img/MacBook Air 13 inch M1 2020.png',
+                'operating_system' => 'MacOS',
                 'cpu' => 'Apple M4 series',
-                'card' => 'Apple M4 GPU',
-                'hard_drive' => 'SSD 1TB',
-                'image' => '/img/SP_LT_macbook_air_13_m4_2025.png',
-                'Hz' => '120'
+                'storage' => 'SSD 512GB',
+                'battery' => 10,
+                'ram' => '16GB',
+                'screen' => 14,
+                'Hz' => '60Hz'
             ],
             [
-                'name' => 'Macbook_pro_14_m4_space',
-                'price' => 32000000,
-                'old_price' => 36000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Apple',
-                'screen' => '14',
-                'battery' => 5000,
-                'os' => 'Android',
+                'name' => 'Dell XPS 15',
+                'brand_name' => 'Dell',
+                'price_original' => 20000000,
+                'price_discount' => 18000000,
+                'image' => '/img/MacBook Air 15 inch M2 2023.png',
+                'operating_system' => 'Windows',
+                'cpu' => 'Apple M4 series',
+                'storage' => 'SSD 256GB',
+                'battery' => 8,
+                'ram' => '8GB',
+                'screen' => 15.6,
+                'Hz' => '120Hz'
+            ],
+            [
+                'name' => 'HP Spectre x360',
+                'brand_name' => 'HP',
+                'price_original' => 22000000,
+                'price_discount' => 19800000,
+                'image' => '/img/MacBook Air 15 inch M2 2023.png',
+                'operating_system' => 'Windows',
                 'cpu' => 'Apple M3 series',
-                'card' => 'Apple M4 GPU',
-                'hard_drive' => 'SSD 1TB',
-                'image' => '/img/SP_LT_macbook_pro_14_m4_space.png',
-                'Hz' => '120'
+                'storage' => 'SSD 512GB',
+                'battery' => 9,
+                'ram' => '16GB',
+                'screen' => 14,
+                'Hz' => '144Hz'
             ],
             [
-                'name' => 'Macbook-air-m2-2022',
-                'price' => 32000000,
-                'old_price' => 36000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Apple',
-                'screen' => '14',
-                'battery' => 5000,
-                'os' => 'Android',
+                'name' => 'Asus ROG Zephyrus G15',
+                'brand_name' => 'Asus',
+                'price_original' => 25000000,
+                'price_discount' => 22500000,
+                'image' => '/img/Macbook Air M2 13 inch 2022.png',
+                'operating_system' => 'Windows',
+                'cpu' => 'Apple M3 series',
+                'storage' => 'SSD 1TB',
+                'battery' => 12,
+                'ram' => '32GB',
+                'screen' => 15.6,
+                'Hz' => '165Hz'
+            ],
+            [
+                'name' => 'Lenovo ThinkPad X1 Carbon',
+                'brand_name' => 'Lenovo',
+                'price_original' => 18000000,
+                'price_discount' => 16200000,
+                'image' => '/img/MacBook Pro 14 M4 2024.png',
+                'operating_system' => 'Windows',
                 'cpu' => 'Apple M2 series',
-                'card' => 'Apple M4 GPU',
-                'hard_drive' => 'SSD 1TB',
-                'image' => '/img/SP_LT_macbook_air_13_m4_2025.png',
-                'Hz' => '120'
+                'storage' => 'SSD 512GB',
+                'battery' => 7,
+                'ram' => '8GB',
+                'screen' => 13,
+                'Hz' => '60Hz'
             ],
             [
-                'name' => 'Msi_modern',
-                'price' => 32000000,
-                'old_price' => 36000000,
-                'rom' => ['256GB', '512GB'],
-                'ram' => '16GB',
-                'brand' => 'Msi',
-                'screen' => '15',
-                'battery' => 5000,
-                'os' => 'Android',
-                'cpu' => 'Intel Celeron',
-                'hard_drive' => 'SSD 1TB',
-                'card' => 'NVIDIA GeForce RTX Series',
-                'image' => '/img/SP_LT_msi_modern.png',
-                'Hz' => '120'
+                'name' => 'MSI Raider GE76',
+                'brand_name' => 'MSI',
+                'price_original' => 28000000,
+                'price_discount' => 25200000,
+                'image' => '/img/MacBook Pro 16 M4 Max 2024.png',
+                'operating_system' => 'Windows',
+                'cpu' => 'Apple M2 series',
+                'storage' => 'SSD 1TB',
+                'battery' => 9,
+                'ram' => '32GB',
+                'screen' => 17,
+                'Hz' => '240Hz'
             ],
-
-            // Thêm sản phẩm khác tại đây
+            [
+                'name' => 'Acer Aspire 7',
+                'brand_name' => 'Acer',
+                'price_original' => 16000000,
+                'price_discount' => 14400000,
+                'image' => '/img/MacBook Air 13 inch M1 2020.png',
+                'operating_system' => 'Windows',
+                'cpu' => 'Apple M1 series',
+                'storage' => 'SSD 256GB',
+                'battery' => 8,
+                'ram' => '8GB',
+                'screen' => 15.6,
+                'Hz' => '75Hz'
+            ],
+            [
+                'name' => 'Microsoft Surface Laptop 5',
+                'brand_name' => 'Microsoft Surface',
+                'price_original' => 32000000,
+                'price_discount' => 28800000,
+                'image' => '/img/MacBook Pro 16 M4 Max 2024.png',
+                'operating_system' => 'Windows',
+                'cpu' => 'Apple M1 series',
+                'storage' => 'SSD 512GB',
+                'battery' => 13,
+                'ram' => '16GB',
+                'screen' => 13.5,
+                'Hz' => '120Hz'
+            ]
         ];
+
+
+
+
         // Lấy filter từ query string
+        // Các filter giữ nguyên như bạn đang có:
+        $priceRange = $_GET['price'] ?? [];
         $brand = $_GET['brand'] ?? 'all';
-        $priceRange = $_GET['price'] ?? 'all';
-        $Cpu = $_GET['cpu'] ?? 'all';
-        $Ram = $_GET['ram'] ?? 'all';
-        $Card = $_GET['card'] ?? 'all';
-        $hard_drive = $_GET['hard_drive'] ?? 'all';
+        $operating_system = $_GET['operating_system'] ?? [];
+        $storage = $_GET['storage'] ?? [];
         $battery = $_GET['battery'] ?? 'all';
-        $screen = $_GET['screen'] ?? 'all';
-        $Hz = $_GET['hz'] ?? 'all';
+        $Ram = $_GET['ram'] ?? [];
+        $screen = $_GET['screen'] ?? [];
+        $Hz = $_GET['hz'] ?? [];
+        $cpu = $_GET['cpu'] ?? [];
 
 
-        if ($brand !== 'all') {
-            // Lọc danh sách brand
-            $productslaptop = array_filter($productslaptop, function ($product) use ($brand) {
-                return $product['brand'] === $brand;
+        // Filter logic giữ nguyên (chỉ thay $products là dữ liệu DB thật)
+        if (!is_array($priceRange)) { //Theo Mức giá
+            $priceRange = [$priceRange];
+        }
+        if (!empty($priceRange)) {
+            $products = array_filter($products, function ($p) use ($priceRange) {
+                foreach ($priceRange as $range) {
+                    if ($range === 'all') {
+                        return true;
+                    }
+                    [$min, $max] = explode('-', $range);
+                    $minPrice = (int) $min * 1000000;
+                    $maxPrice = (int) $max * 1000000;
+                    if ($p['price_discount'] >= $minPrice && $p['price_discount'] <= $maxPrice) {
+                        return true;
+                    }
+                }
+                return false;
             });
         }
 
-        if ($priceRange !== 'all') {
-            [$min, $max] = explode('-', $priceRange);
-            $minPrice = (int) $min * 1000000;
-            $maxPrice = (int) $max * 1000000;
-            // Lọc danh sách theo khoảng giá
-            $productslaptop = array_filter($productslaptop, function ($product) use ($minPrice, $maxPrice) {
-                return $product['price'] >= $minPrice && $product['price'] <= $maxPrice;
-            });
-        }
-        if ($Cpu !== 'all') {
-            // Lọc danh sách theo CPU
-            $productslaptop = array_filter($productslaptop, function ($product) use ($Cpu) {
-                return $product['cpu'] === $Cpu;
+        if ($brand !== 'all') { // Thương hiệu
+            $products = array_filter($products, function ($product) use ($brand) {
+                return strtolower($product['brand_name']) === strtolower($brand);
             });
         }
 
-        if ($Ram !== 'all') {
-            // Lọc danh sách theo Ram
-            $productslaptop = array_filter($productslaptop, function ($product) use ($Ram) {
-                return $product['ram'] === $Ram;
+        if (!empty($operating_system)) { // Hệ điều hành
+            $operating_system = array_map('strtolower', $operating_system);
+            $products = array_filter($products, function ($product) use ($operating_system) {
+                return in_array(strtolower($product['operating_system']), $operating_system);
             });
         }
-       if ($Card !== 'all') {
-            // Lọc danh sách theo Card
-            $productslaptop = array_filter($productslaptop, function ($product) use ($Card) {
-                return $product['card'] === $Card;
+        if (!is_array($storage)) { // Lọc theo dung lượng
+            $storage = [$storage];
+        }
+        if (!empty($storage) && $storage[0] !== 'all') {
+            $products = array_filter($products, function ($product) use ($storage) {
+                return in_array($product['storage'], $storage);
             });
         }
-        if ($hard_drive !== 'all') {
-            // Lọc danh sách theo Hard Drive
-            $productslaptop = array_filter($productslaptop, function ($product) use ($hard_drive) {
-                return $product['hard_drive'] === $hard_drive;
-            });
-        }
+
         if ($battery !== 'all' && strpos($battery, '-') !== false) { // Lọc theo Pin
             [$minBattery, $maxBattery] = explode('-', $battery);
             $minBattery = (int) $minBattery;
             $maxBattery = (int) $maxBattery;
-            $productslaptop = array_filter($productslaptop, function ($product) use ($minBattery, $maxBattery) {
+            $products = array_filter($products, function ($product) use ($minBattery, $maxBattery) {
                 return $product['battery'] >= $minBattery && $product['battery'] <= $maxBattery;
             });
         }
-        
-        if ($screen !== 'all' && strpos($screen, '-') !== false) { // Lọc theo màn hình
-            [$minScreen, $maxScreen] = explode('-', $screen);
-            $minScreen = (float) $minScreen;
-            $maxScreen = (float) $maxScreen;
-            $productslaptop = array_filter($productslaptop, function ($product) use ($minScreen, $maxScreen) {
-                return $product['screen'] >= $minScreen && $product['screen'] <= $maxScreen;
+        if (!is_array($Ram)) {//Lọc theo Ram
+            $Ram = [$Ram];
+        }
+        if (!empty($Ram)) {
+            $products = array_filter($products, function ($product) use ($Ram) {
+                return in_array($product['ram'], $Ram);
             });
         }
-        if ($Hz !== 'all') {
-            // Lọc danh sách theo Hz
-            $productslaptop = array_filter($productslaptop, function ($product) use ($Hz) {
-                return $product['Hz'] === $Hz;
+        if (!is_array($screen)) {//Lọc theo màn hình
+            $screen = [$screen];
+        }
+        if (!empty($screen) && $screen[0] !== 'all') {
+            $products = array_filter($products, function ($product) use ($screen) {
+                foreach ($screen as $range) {
+                    [$min, $max] = explode('-', $range);
+                    $min = (float) $min;
+                    $max = (float) $max;
+                    if ($product['screen'] >= $min && $product['screen'] <= $max) {
+                        return true;
+                    }
+                }
+                return false;
             });
         }
-        View::render('productlaptop', ['products' => $productslaptop]);
+
+        if (!is_array($Hz)) {//Lọc theo Hz
+            $Hz = [$Hz];
+        }
+        if (!empty($Hz)) {
+            $products = array_filter($products, function ($product) use ($Hz) {
+                return in_array($product['Hz'], $Hz);
+            });
+        }
+
+        if (!is_array($cpu)) {// Lọc theo Cpu
+            $cpu = [$cpu];
+        }
+        if (!empty($cpu)) {
+            $products = array_filter($products, function ($product) use ($cpu) {
+                return in_array($product['cpu'], $cpu); // so sánh nguyên bản
+            });
+        }
+        View::render('productlaptop', [
+            'products' => $products,
+            'storage' => $storage,
+            'priceRange' => $priceRange,
+            'cpu' => $cpu,
+            'ram' => $Ram,
+            'screen' => $screen,
+            'Hz' => $Hz
+        ]);
+
     }
 }
-

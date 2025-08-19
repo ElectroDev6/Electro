@@ -64,7 +64,8 @@ class ProductModel
         // Dynamic attribute filters
         if (!empty($options['attributes'])) {
             foreach ($options['attributes'] as $attr_id => $values) {
-                if (empty($values)) continue;
+                if (empty($values))
+                    continue;
                 $prefix = "attr" . $attr_id;
                 $joins[] = "INNER JOIN attribute_option_sku aos_$prefix ON s.sku_id = aos_$prefix.sku_id"; // Dùng s thay vì s_attr1
                 $joins[] = "INNER JOIN attribute_options ao_$prefix ON aos_$prefix.attribute_option_id = ao_$prefix.attribute_option_id";
@@ -89,7 +90,8 @@ class ProductModel
         if (!empty($options['price'])) {
             $price_conditions = [];
             foreach ($options['price'] as $range) {
-                if ($range === 'all') continue;
+                if ($range === 'all')
+                    continue;
                 switch ($range) {
                     case '30-40':
                         $min = 30000000;
@@ -242,7 +244,8 @@ class ProductModel
 
         if (!empty($options['attributes'])) {
             foreach ($options['attributes'] as $attr_id => $values) {
-                if (empty($values)) continue;
+                if (empty($values))
+                    continue;
                 $prefix = "attr" . $attr_id;
                 $joins[] = "INNER JOIN attribute_option_sku aos_$prefix ON s.sku_id = aos_$prefix.sku_id"; // Dùng s thay vì s_attr1
                 $joins[] = "INNER JOIN attribute_options ao_$prefix ON aos_$prefix.attribute_option_id = ao_$prefix.attribute_option_id";
@@ -266,7 +269,8 @@ class ProductModel
         if (!empty($options['price'])) {
             $price_conditions = [];
             foreach ($options['price'] as $range) {
-                if ($range === 'all') continue;
+                if ($range === 'all')
+                    continue;
                 switch ($range) {
                     case '30-40':
                         $min = 30000000;
