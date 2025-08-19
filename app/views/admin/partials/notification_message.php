@@ -3,10 +3,10 @@ ob_start();
 ?>
     <div class="notification-panel">
         <div class="notification-panel__header">
-            <h2 class="notification-panel__title">Bạn có 4 tin nhắn mới</h2>
+            <h2 class="notification-panel__title--message">Bạn có 4 tin nhắn mới</h2>
         </div>
         <div class="notification-panel__content">
-            <ul class="notification-list">
+            <ul class="notification-list-message">
                 <li class="notification-item">
                     <div class="notification-item__avatar">
                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Anna Nelson" class="notification-item__avatar-img">
@@ -86,6 +86,7 @@ ob_start();
             <a href="#" class="notification-panel__view-all">Xem tất cả tin nhắn</a>
         </div>
     </div>
+    <script type="module" src="/admin-ui/js/pages/notification.js"></script>
 <?php
 $htmlNotificationMessage = ob_get_clean();
 ?>

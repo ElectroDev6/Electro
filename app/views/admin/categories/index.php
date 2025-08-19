@@ -12,11 +12,6 @@ include dirname(__DIR__) . '/partials/sidebar.php';
     <link rel="stylesheet" href="/css/admin/style-admin.css">
 </head>
 <body>
-<!-- <?php  
-    echo '<pre>';
-    print_r($categories);
-    echo '</pre>';
-    ?> -->
     <?php echo $htmlHeader; ?>
     <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
     <div class="notification notification--success show" id="success-notification">
@@ -41,10 +36,13 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                 <h1 class="categories__title">Quản lý danh mục</h1>
                 <a href="/admin/categories/create" class="product-page__add-btn">+ Add new</a>
             </header>
+            
             <?php
+            // Tính toán stats từ dữ liệu thực tế
             $totalCategories = count($categories);
-            $totalActive = 0;
-            $totalProducts = 0;
+            $totalActive = $totalCategories; // Tất cả categories trong DB đều active
+            $totalProducts = $stats['total_products'] ?? 0; // Lấy từ stats được truyền vào
+            $displayRate = $totalCategories > 0 ? 100 : 0; // 100% nếu có categories
             ?>
 
             <!-- Stats -->
@@ -62,38 +60,78 @@ include dirname(__DIR__) . '/partials/sidebar.php';
                     <p class="categories__stats-label">Sản phẩm</p>
                 </div>
                 <div class="categories__stats-card">
-                    <p class="categories__stats-number">100%</p>
+                    <p class="categories__stats-number"><?php echo $displayRate; ?>%</p>
                     <p class="categories__stats-label">Tỷ lệ hiển thị</p>
                 </div>
             </section>
 
-            <!-- Categories Grid -->
-            <section class="categories__grid">
-                <?php foreach ($categories as $category): ?>
-                    <article class="categories__card">
-                        <img src="<?php echo $category['image']; ?>" 
-                             alt="Ảnh danh mục" class="categories__card-image">
-                        <div class="categories__card-content">
-                            <div class="categories__card-header">
-                                <h3 class="categories__card-title"><?php echo $category['name']; ?></h3>
-                                <span class="categories__card-id">#<?php echo $category['category_id']; ?></span>
-                            </div>
-                            <div class="categories__card-meta">
-                                <div class="categories__card-actions">
-                                    <a href="/admin/categories/detail?id=<?php echo $category['category_id']; ?>" class="categories__action-btn categories__action-btn--view">Xem</a>
-                            <form method="POST" action="/admin/categories/delete" onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không không?');" style="display: inline">
-                                <input type="hidden" name="id" value="<?php echo $category['category_id']; ?>">
-                                <input type="hidden" name="name" value="<?php echo $category['name']; ?>">
-                                <button class="categories__action-btn categories__action-btn--delete"
-                                            onclick="confirmDelete(<?= $category['category_id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>')">
-                                        Xoá
-                                </button>
-                            </form>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
+            <!-- Categories Table -->
+            <section class="categories__table-section">
+                <div class="categories__table-container">
+                    <table class="categories__table">
+                        <thead class="categories__table-head">
+                            <tr class="categories__table-row">
+                                <th class="categories__table-header">ID</th>
+                                <th class="categories__table-header">Hình ảnh</th>
+                                <th class="categories__table-header">Tên danh mục</th>
+                                <th class="categories__table-header">Trạng thái</th>
+                                <th class="categories__table-header">Số sản phẩm</th>
+                                <th class="categories__table-header">Ngày tạo</th>
+                                <th class="categories__table-header">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody class="categories__table-body">
+                            <?php foreach ($categories as $category): ?>
+                                <tr class="categories__table-row">
+                                    <td class="categories__table-cell">
+                                        <span class="categories__table-id">#<?php echo $category['category_id']; ?></span>
+                                    </td>
+                                    <td class="categories__table-cell">
+                                        <img src="<?php echo htmlspecialchars($category['image']); ?>" 
+                                             alt="Ảnh danh mục" class="categories__table-image">
+                                    </td>
+                                    <td class="categories__table-cell">
+                                        <div class="categories__table-name">
+                                            <h4><?php echo htmlspecialchars($category['name']); ?></h4>
+                                        </div>
+                                    </td>
+                                    <td class="categories__table-cell">
+                                        <span class="categories__status categories__status--active">
+                                            Hoạt động
+                                        </span>
+                                    </td>
+                                    <td class="categories__table-cell">
+                                        <span class="categories__product-count">
+                                            <?php echo $category['product_count'] ?? 0; ?>
+                                        </span>
+                                    </td>
+                                    <td class="categories__table-cell">
+                                        <span class="categories__date">
+                                            <?php echo date('d/m/Y', strtotime($category['created_at'] ?? 'now')); ?>
+                                        </span>
+                                    </td>
+                                    <td class="categories__table-cell">
+                                        <div class="categories__table-actions">
+                                            <a href="/admin/categories/detail?id=<?php echo $category['category_id']; ?>" 
+                                               class="categories__action-btn categories__action-btn--view">
+                                                Xem
+                                            </a>
+                                            <form method="POST" action="/admin/categories/delete" 
+                                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này không?');" 
+                                                  style="display: inline">
+                                                <input type="hidden" name="id" value="<?php echo $category['category_id']; ?>">
+                                                <input type="hidden" name="name" value="<?php echo htmlspecialchars($category['name']); ?>">
+                                                <button type="submit" class="categories__action-btn categories__action-btn--delete">
+                                                    Xoá
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </section>
         </div>
     </main>

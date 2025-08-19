@@ -51,11 +51,11 @@ ob_start();
                 </li>
             </ul>
         </div>
-        
         <div class="notification-panel__footer">
             <a href="#" class="notification-panel__view-all">Xem tất cả thông tin</a>
         </div>
     </div>
+    <script type="module" src="/admin-ui/js/pages/notification.js"></script>
 <?php
 $htmlNotification = ob_get_clean();
 ?>

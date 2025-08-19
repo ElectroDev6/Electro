@@ -48,7 +48,7 @@ include dirname(__DIR__) . '/partials/dropdown_user.php';
         </div>
     </div>
 </header>
-
+    <script type="module" src="/admin-ui/js/pages/header.js"></script>
 <?php
 $htmlHeader = ob_get_clean();
 ?>

@@ -71,20 +71,30 @@ class ReadReviewController
             ]);
         }
     }
-        public function detail()
-    {
-        $id = $_GET['id'] ?? null;
-        $userId = $_SESSION['user_id'] ?? null;
-        if (!$id) {
-            header('Location: /admin/reviews');
-            exit;
+       public function detail()
+        {
+            $id = $_GET['id'] ?? null;
+            $userId = $_SESSION['user_id'] ?? null;
+
+            if (!$id) {
+                header('Location: /admin/reviews');
+                exit;
+            }
+            $this->model->updateViewed($id);
+            $user = $this->usersModel->getUserById($userId);
+
+            // Lấy review kèm reply
+            $review = $this->model->getReviewWithReplies($id);
+
+            if (!$review) {
+                header('Location: /admin/reviews');
+                exit;
+            }
+
+            View::render('reviews/detail', [
+                'review' => $review,
+                'user'   => $user
+            ]);
         }
-        $user = $this->usersModel->getUserById($userId);
-        $review = $this->model->getReviewWithReplies($id);
-        if (!$review) {
-            header('Location: /admin/reviews');
-            exit;
-        }
-        View::render('reviews/detail', ['review' => $review, 'user' => $user]);
-    }
+
 }

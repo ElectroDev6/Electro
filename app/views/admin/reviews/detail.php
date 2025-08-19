@@ -69,8 +69,11 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
                                             class="review-detail__star <?php echo $i <= $review['rating'] ? 'review-detail__star--filled' : ''; ?>">★</span>
                                     <?php endfor; ?>
                                 </div>
-                                <span
-                                    class="review-detail__rating-text"><?php echo htmlspecialchars($review['rating']); ?>/5</span>
+                                <?php if (!empty($review['rating'])): ?>
+                                    <span class="review-detail__rating-text">
+                                        <?php echo htmlspecialchars($review['rating']); ?>/5
+                                    </span>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="review-detail__stat-item">

@@ -20,6 +20,9 @@ Router::get('/search/suggestions', 'SearchController@suggestions');
 
 // Comment
 Router::post('/comment/add', 'DetailController@addComment');
+
+// Get review user
+Router::get('/users/getReviewUser', 'ReviewUserController@reviewUser');
 // Search
 Router::get('/search/products', 'SearchProductController@searchProducts');
 Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');

@@ -222,4 +222,22 @@ class UsersModel
         ");
         return $stmt->execute([':user_id' => $userId]);
     }
+
+
+    public function getCurrentUser($id) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT u.*, ua.address, ua.ward_commune, ua.district, ua.province_city
+                FROM users u
+                LEFT JOIN user_address ua ON u.user_id = ua.user_id
+                WHERE u.user_id = :id
+                LIMIT 1
+            ");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (PDOException $e) {
+            throw new Exception('Lỗi truy vấn cơ sở dữ liệu: ' . $e->getMessage());
+        }
+    }
 }

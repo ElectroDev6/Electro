@@ -139,8 +139,8 @@ class ReviewsModel
 
     public function createReplyReview($userId, $productId, $parentId, $commentText)
     {
-        $sql = "INSERT INTO reviews (user_id, product_id, parent_review_id, comment_text, review_date, created_at, updated_at) 
-        VALUES (:user_id, :product_id, :parent_review_id, :comment_text, NOW(), NOW(), NOW())";
+        $sql = "INSERT INTO reviews (user_id, product_id, parent_review_id, comment_text, status, review_date, created_at, updated_at) 
+                VALUES (:user_id, :product_id, :parent_review_id, :comment_text, 'approved', NOW(), NOW(), NOW())";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':parent_review_id', $parentId, is_null($parentId) ? PDO::PARAM_NULL : PDO::PARAM_INT);
         $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
@@ -148,6 +148,7 @@ class ReviewsModel
         $stmt->bindValue(':product_id', $productId, PDO::PARAM_INT);
         $stmt->execute();
     }
+
 
     public function updateReviewStatus(int $reviewId, string $status)
     {
@@ -173,6 +174,12 @@ class ReviewsModel
         $stmt->bindValue(':review_id', $reviewId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateViewed($id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE reviews SET is_viewed = 1 WHERE review_id = ?");
+        return $stmt->execute([$id]);
     }
 
 
