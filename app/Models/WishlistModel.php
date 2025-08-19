@@ -15,6 +15,7 @@ class WishlistModel {
                 w.product_id,
                 p.name AS product_name,
                 s.sku_id,
+                p.slug,
                 vi.image_set AS image_url,
                 w.added_at
             FROM wishlist w

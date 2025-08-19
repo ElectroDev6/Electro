@@ -75,3 +75,4 @@ Router::get('/Introducing_shop', 'Introducing_shopController@introducing_shop');
 // Wishlist
     Router::get('/wishlist', 'WishlistController@showWishlist');
     Router::post('/wishlist/remove', 'WishlistController@removeProduct');
+Router::get('/product/{id}', 'ProductController@detail');
