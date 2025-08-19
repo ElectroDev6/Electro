@@ -64,5 +64,37 @@ class ReadUserController
         }
         View::render('users/detail', ['user' => $user]);
     }
+
+    public function currentUser() {
+        header('Content-Type: application/json');
+        $user_id = $_SESSION['user_id'];
+        try {
+            if (!$this->model) {
+                throw new Exception('Model not initialized');
+            }
+            if (!$user_id) {
+                throw new Exception('Chưa đăng nhập');
+            }
+            $result = $this->model->getCurrentUser($user_id);
+            if ($result) {
+                echo json_encode([
+                    'success' => true,
+                    'user' => $result
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Không tìm thấy người dùng'
+                ]);
+            }
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode([
+                'success' => false,
+                'error' => 'Lỗi server: ' . $e->getMessage()
+            ]);
+        }
+        exit;
+    }
 }
 ?>

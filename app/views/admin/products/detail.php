@@ -13,25 +13,29 @@ include dirname(__DIR__) . '/partials/header.php';
 
 </head>
 <body>
-    <!-- <?php echo '<pre>'; echo print_r($product, true); echo '</pre>'; ?> -->
+    <?php echo '<pre>'; echo print_r($product, true); echo '</pre>'; ?>
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>
-        
         <!-- Notifications -->
         <?php if (isset($_GET['success']) && $_GET['success'] !== ''): ?>
             <div class="notification notification--success" id="success-notification">
                 <p><?= htmlspecialchars($_GET['success']) ?></p>
             </div>
         <?php endif; ?>
-        
         <?php if (isset($_GET['error']) && $_GET['error'] !== ''): ?>
             <div class="notification notification--error" id="error-notification">
                 <p><?= htmlspecialchars($_GET['error']) ?></p>
             </div>
         <?php endif; ?>
-
         <div class="product-detail">
+            <div class="product-detail__header">
+            <h1 class="product-detail__heading">Sản phẩm chi tiết</h1>
+            <a href="/admin/products/update?id=<?= htmlspecialchars($product['product_id'] ?? '') ?>"
+                class="product-detail-btn product-detail-btn--edit">
+                <i class="fas fa-edit"></i> Chỉnh sửa
+            </a>
+            </div>
             <div class="product-detail__container">
                 <div class="product-detail__layout">
                     <!-- Left side - Images -->
@@ -43,7 +47,6 @@ include dirname(__DIR__) . '/partials/header.php';
                             <!-- Thumbnails will be rendered by JavaScript -->
                         </div>
                     </div>
-                    
                     <!-- Right side - Product info -->
                     <div class="product-detail__info">
                         <h1 class="product-detail__title">
@@ -356,22 +359,11 @@ include dirname(__DIR__) . '/partials/header.php';
             thumbnailImg.src = `/img/products/thumbnails/${thumbnailUrl}`;
             thumbnailImg.alt = `${productData.name} - ${selectedColor} ${selectedCapacity || ''} - Ảnh ${index + 1}`;
             
-            // ✅ Add error handling for images
-            thumbnailImg.onerror = function() {
-                console.log('Thumbnail image failed to load:', this.src);
-                this.src = '/img/default.png';
-            };
             
             thumbnailImg.onclick = () => {
                 const galleryImageSrc = `/img/products/gallery/${imageUrl}`;
                 mainImage.src = galleryImageSrc;
                 mainImage.alt = `${productData.name} - ${selectedColor} ${selectedCapacity || ''}`;
-                
-                // ✅ Add error handling for main image
-                mainImage.onerror = function() {
-                    console.log('Main image failed to load:', this.src);
-                    this.src = '/img/default.png';
-                };
                 
                 // Update active thumbnail
                 document.querySelectorAll('.product-detail__thumbnail').forEach(thumb => 
@@ -479,18 +471,7 @@ include dirname(__DIR__) . '/partials/header.php';
             const mainImageSrc = `/img/products/gallery/${variantImages.gallery_urls[0]}`;
             mainImage.src = mainImageSrc;
             mainImage.alt = `${productData.name} - ${selectedColor} ${selectedCapacity || ''}`;
-            
-            // ✅ Add error handling for main image
-            mainImage.onerror = function() {
-                console.log('Main image failed to load:', this.src);
-                this.src = '/img/default.png';
-            };
-        } else {
-            console.log('No images available, using default');
-            mainImage.src = '/img/default.png';
         }
-        
-        // Render thumbnails
         renderThumbnails();
     }
 

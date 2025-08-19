@@ -20,6 +20,9 @@ Router::get('/search/suggestions', 'SearchController@suggestions');
 
 // Comment
 Router::post('/comment/add', 'DetailController@addComment');
+
+// Get review user
+Router::get('/users/getReviewUser', 'ReviewUserController@reviewUser');
 // Search
 Router::get('/search/products', 'SearchProductController@searchProducts');
 Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
@@ -38,7 +41,7 @@ Router::get('/cart/item-count', 'CartController@getCartItemCount');
 Router::post('/cart/delete-selected', 'CartController@deleteAll');
 
 // Router::get('/checkout', 'CheckoutController@showCheckoutForm');
-Router::get('/thank-you', 'ThankyouController@showConfirmation');
+// Router::get('/thank-you', 'ThankyouController@showConfirmation');
 
 // Auth
 Router::get('/login', 'AuthController@showAuthForm');
@@ -67,14 +70,15 @@ Router::get('/unboxing', 'UnboxingController@showUnboxing');
 Router::get('/repair', 'RepairController@showRepair');
 
 
-// Router::post('/checkout/submit', 'CheckoutController@submit');
+Router::post('/checkout/submit', 'CheckoutController@submit');
 Router::get('/checkout', 'CheckoutController@index');
 
 // Checkout
-Router::post('/checkout/pay', 'CheckoutController@pay');
+Router::get('/checkout/pay', 'CheckoutController@pay');
 
-Router::get('/thankyou', 'ThankyouController@index');
-Router::get('/thankyou', 'CheckoutController@thankyou');
+
+Router::get('/thank-you', 'ThankyouController@index');
+// Router::get('/thankyou', 'CheckoutController@thankyou');
 Router::get('/delivery', 'DeliveryController@delivery');
 Router::get('/customer', 'CustomerController@customer');
 Router::get('/frequently_questions', 'frequently_questionsController@frequently_questions');

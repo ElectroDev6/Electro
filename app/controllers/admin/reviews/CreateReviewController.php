@@ -26,9 +26,9 @@ class CreateReviewController
     public function handleRepliesReview()
     {
         $userId = $_SESSION['user_id'] ?? null;
-        // $userId = 2;
         $reviewId = $_POST['review_id'] ?? null;
         $parentId = $_POST['parent_id'] ?? null;
+        $status = 'approved';
         $comment_text = $_POST['comment_text'] ?? '';
         $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : null;
         $review = $this->model->getReviewById($reviewId);
@@ -38,7 +38,6 @@ class CreateReviewController
                 . '&error=' . urlencode('Review phải được chấp thuận trước khi trả lời.'));
             exit;
         }
-
         if(!empty($comment_text) && !empty($userId) && !empty($productId)) {
             $this->model->createReplyReview($userId, $productId, $parentId, $comment_text);
             header('Location: /admin/reviews/detail?id=' . $reviewId);

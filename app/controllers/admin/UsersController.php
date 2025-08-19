@@ -54,7 +54,12 @@ class UsersController
         $controller = new DeleteUserController();
         $controller->handle();
     }
-    
+
+    public function user()
+    {
+        $controller = new ReadUserController();
+        $controller->currentUser();
+    }
 }
 
 ?>

@@ -20,7 +20,7 @@ class HomeController
 
     public function index()
     {
-        $subcategoryIds = [101, 401, 1607, 701, 1403, 803, 801]; // iPhone, PC, watch, air fryer, massager, air cooler, vacuum cleaner
+        $subcategoryIds = [101, 401, 1213, 701, 1101, 803, 801]; // iPhone, PC, watch, air fryer, massager, air cooler, vacuum cleaner
         $limitPerCategory = 15;
         $totalLimit = $limitPerCategory * count($subcategoryIds);
         $allProducts = $this->productService->getHomeProductsByCategoryIds($subcategoryIds, $totalLimit);
@@ -28,9 +28,9 @@ class HomeController
 
         $iphoneProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 101);
         $pcProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 401);
-        $watchProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1607);
+        $watchProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1213);
         $airFryerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 701);
-        $massagerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1403);
+        $massagerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 1101);
         $airCoolerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 803);
         $vacuumCleanerProducts = array_filter($allProducts, fn($product) => $product['subcategory_id'] == 801);
 

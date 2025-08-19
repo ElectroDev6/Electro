@@ -25,11 +25,6 @@ class CheckoutController
     {
         $data = $this->checkoutService->getCheckoutData($this->userId, $this->sessionId);
 
-        // echo '<pre>';
-        // print_r($data);
-        // echo '</pre>';
-        // exit;
-
         if (!empty($data['errors'])) {
             $_SESSION['error_message'] = $data['errors'][0];
             $_SESSION['post_login_redirect'] = '/checkout';
@@ -45,15 +40,11 @@ class CheckoutController
         View::render('checkout', [
             'Items' => $data['items'],
             'user_address' => $data['user_address'],
-            // 'errors' => $_SESSION['error_message'] ? [$_SESSION['error_message']] : []
         ]);
 
         unset($_SESSION['error_message']);
     }
 
-    /**
-     * Xử lý gửi form checkout
-     */
     public function submit()
     {
         if (!$this->userId) {
@@ -68,17 +59,18 @@ class CheckoutController
             exit;
         }
 
+        // Debug dữ liệu POST
+        error_log("Received POST data: " . json_encode($_POST));
+
         $orderId = $this->checkoutService->createOrder($this->userId, $_POST, $this->sessionId);
 
         if ($orderId) {
-            if (($_POST['payment_method'] ?? 'cod') === 'zalopay') {
-                $redirectUrl = $this->checkoutService->createVNPayUrl($this->userId, $orderId);
-                if ($this->isAjax()) {
-                    header('Content-Type: application/json');
-                    echo json_encode(['success' => true, 'message' => 'Đặt hàng thành công.', 'redirect' => $redirectUrl]);
-                    exit;
-                }
-                header("Location: $redirectUrl");
+            if (($_POST['payment_method'] ?? 'cod') === 'vnpay') {
+                $_SESSION['vnpay_payment'] = [
+                    'orderId' => $orderId,
+                    'amount' => $this->checkoutService->getOrderTotal($orderId)
+                ];
+                header('Location: /checkout/pay');
                 exit;
             }
             if ($this->isAjax()) {
@@ -100,6 +92,24 @@ class CheckoutController
         }
     }
 
+    public function pay()
+    {
+        if (!isset($_SESSION['vnpay_payment'])) {
+            header('Location: /checkout?error=Không có thông tin thanh toán');
+            exit;
+        }
+
+        $paymentData = $_SESSION['vnpay_payment'];
+        $orderId = $paymentData['orderId'];
+        $amount = $paymentData['amount'];
+
+        // Truyền dữ liệu vào POST để vnpay_create_payment.php xử lý
+        $_POST['amount'] = $amount;
+        $_POST['orderId'] = $orderId; // Thêm orderId để log hoặc xử lý trong vnpay_create_payment.php
+        require_once BASE_PATH . '/vnpay_php/vnpay_create_payment.php';
+        unset($_SESSION['vnpay_payment']); // Xóa session sau khi dùng
+    }
+
     /**
      * Kiểm tra xem yêu cầu có phải AJAX không
      * @return bool
@@ -107,11 +117,5 @@ class CheckoutController
     private function isAjax(): bool
     {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-    }
-
-    public function pay()
-    {
-        // Lấy config
-        require_once BASE_PATH . '/vnpay_php/vnpay_create_payment.php';
     }
 }

@@ -1,8 +1,11 @@
 <?php
 
 use Core\View; ?>
+
 <?php View::extend('layouts.main'); ?>
 <?php View::section('content'); ?>
+
+<?php print_r($user_address); ?>
 
 <div class="container-main">
   <section class="cart-page">
@@ -14,7 +17,7 @@ use Core\View; ?>
     </div>
 
     <!-- Form thanh toán -->
-    <form class="order-page" action="/checkout/pay" method="POST">
+    <form class="order-page" action="/checkout/submit" method="POST">
       <input type="hidden" name="user_address_id" value="<?= htmlspecialchars($user_address['user_address_id'] ?? '') ?>">
 
       <div class="order-page__main">
@@ -149,34 +152,34 @@ use Core\View; ?>
           <div class="order-payment__method">
             <label>
               <input type="radio" name="payment_method" value="cod" <?= (($_POST['payment_method'] ?? 'cod') === 'cod') ? 'checked' : '' ?> />
-              <span>Thanh toán khi nhận hàng</span>
+              <span>Thanh toán khi nhận hàng (COD)</span>
             </label>
           </div>
 
           <div class="order-payment__method">
             <label>
-              <input type="radio" name="payment_method" value="bank_transfer" <?= (($_POST['payment_method'] ?? '') === 'bank_transfer') ? 'checked' : '' ?> />
+              <input type="radio" name="payment_method" value="vnpay" <?= (($_POST['payment_method'] ?? '') === 'vnpay') ? 'checked' : '' ?> />
               <span>Chuyển khoản ngân hàng</span>
             </label>
           </div>
 
           <div class="order-payment__method">
             <label>
-              <input type="radio" name="payment_method" value="credit_card" <?= (($_POST['payment_method'] ?? '') === 'credit_card') ? 'checked' : '' ?> />
+              <input type="radio" name="payment_method" value="credit_card" disabled <?= (($_POST['payment_method'] ?? '') === 'credit_card') ? 'checked' : '' ?> />
               <span>Thẻ tín dụng</span>
             </label>
           </div>
 
           <div class="order-payment__method">
             <label>
-              <input type="radio" name="payment_method" value="momo" <?= (($_POST['payment_method'] ?? '') === 'momo') ? 'checked' : '' ?> />
+              <input type="radio" name="payment_method" value="momo" disabled <?= (($_POST['payment_method'] ?? '') === 'momo') ? 'checked' : '' ?> />
               <span>Momo</span>
             </label>
           </div>
 
           <div class="order-payment__method">
             <label>
-              <input type="radio" name="payment_method" value="zalopay" <?= (($_POST['payment_method'] ?? '') === 'zalopay') ? 'checked' : '' ?> />
+              <input type="radio" name="payment_method" value="zalopay" disabled <?= (($_POST['payment_method'] ?? '') === 'zalopay') ? 'checked' : '' ?> />
               <span>ZaloPay</span>
             </label>
           </div>

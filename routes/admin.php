@@ -15,6 +15,10 @@ Router::get('/admin/categories/update', 'CategoriesController@update');
 Router::post('/admin/categories/update', 'CategoriesController@handleUpdate'); 
 
 
+// Thêm route mới cho subcategories
+Router::get('/admin/categories/subcategories', 'CategoriesController@getSubcategories');
+
+
 
 Router::get('/admin/users', 'UsersController@index');
 Router::post('/admin/users/toggle-lock', 'UsersController@toggleUserLock');
@@ -24,6 +28,13 @@ Router::post('/admin/users/delete', 'UsersController@delete');
 Router::get('/admin/users/detail', 'UsersController@detail');
 Router::get('/admin/users/update', 'UsersController@update');
 Router::post('/admin/users/update', 'UsersController@handleUpdate');
+
+Router::get('/admin/users/getCurrentUser', 'UsersController@user');
+
+
+Router::get('/admin/notifications', 'NotificationController@index');
+
+
 
 
 

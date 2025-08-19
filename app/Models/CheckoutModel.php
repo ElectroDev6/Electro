@@ -31,10 +31,11 @@ class CheckoutModel
     {
         try {
             $stmt = $this->pdo->prepare("
-            SELECT 
+            SELECT  
                 u.name, 
                 u.email, 
                 u.phone_number, 
+                ua.user_address_id,
                 ua.address, 
                 ua.ward_commune, 
                 ua.district, 
@@ -149,11 +150,6 @@ class CheckoutModel
         }
     }
 
-    /**
-     * Xóa các mục giỏ hàng đã chọn
-     * @param int $cartId
-     * @return bool
-     */
     public function clearSelectedCartItems(int $cartId): bool
     {
         try {
@@ -162,6 +158,41 @@ class CheckoutModel
         } catch (\Exception $e) {
             error_log("CheckoutModel: Error in clearSelectedCartItems - CartID: $cartId, Error: " . $e->getMessage());
             throw $e;
+        }
+    }
+
+    public function updateOrderAfterPayment(int $orderId, string $statusOrder, string $statusPayment, string $transactionNo): bool
+    {
+        try {
+            $this->pdo->beginTransaction();
+
+            // Cập nhật order
+            $stmtOrder = $this->pdo->prepare("UPDATE orders SET status = :status, updated_at = NOW() WHERE order_id = :order_id");
+            $stmtOrder->execute([':status' => $statusOrder, ':order_id' => $orderId]);
+
+            // Cập nhật payment
+            $stmtPayment = $this->pdo->prepare("UPDATE payments SET status = :status, payment_date = NOW(), transaction_no = :transaction_no WHERE order_id = :order_id");
+            $stmtPayment->execute([':status' => $statusPayment, ':transaction_no' => $transactionNo, ':order_id' => $orderId]);
+
+            $this->pdo->commit();
+            return true;
+        } catch (\Exception $e) {
+            $this->pdo->rollBack();
+            error_log("CheckoutModel: Error in updateOrderAfterPayment - OrderID: $orderId, Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getOrderTotal(int $orderId): float
+    {
+        try {
+            $stmt = $this->pdo->prepare("SELECT total_price FROM orders WHERE order_id = :order_id");
+            $stmt->execute([':order_id' => $orderId]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result ? (float)$result['total_price'] : 0.0;
+        } catch (\Exception $e) {
+            error_log("CheckoutModel: Error in getOrderTotal - OrderID: $orderId, Error: " . $e->getMessage());
+            return 0.0;
         }
     }
 }

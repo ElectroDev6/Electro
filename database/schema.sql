@@ -300,7 +300,7 @@ CREATE TABLE payments (
     order_id INT NOT NULL,
     payment_method ENUM(
         'cod',
-        'bank_transfer',
+        'vnpay',
         'credit_card',
         'momo',
         'zalopay'

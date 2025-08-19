@@ -49,4 +49,10 @@ class CategoriesController
     {
         DeleteCategoryController::handle();
     }
+
+    public function getSubcategories()
+    {
+        $controller = new ReadCategoryController();
+        $controller->getSubcategories();
+    }
 }

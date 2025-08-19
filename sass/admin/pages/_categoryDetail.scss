@@ -1,23 +1,6 @@
-// Variables
-$primary-color: #2196f3;
-$secondary-color: #f5f5f5;
-$success-color: #4caf50;
-$warning-color: #4285f4;
-$danger-color: #f44336;
-$text-primary: #333;
-$text-secondary: #666;
-$text-muted: #999;
-$border-color: #e0e0e0;
-$shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-$border-radius: 8px;
-$spacing-xs: 8px;
-$spacing-sm: 12px;
-$spacing-md: 16px;
-$spacing-lg: 24px;
-$spacing-xl: 32px;
 .category-detail {
    min-height: 100vh;
-   padding: $spacing-lg;
+   padding: 24px;
 
    &--error {
       color: red;
@@ -44,8 +27,10 @@ $spacing-xl: 32px;
 
    &__form-label {
       display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 1.6rem;
+      color: #333;
    }
 
    &__form-input,
@@ -69,13 +54,17 @@ $spacing-xl: 32px;
    }
 
    &__btn {
-      padding: 10px 20px;
-      margin-right: 10px;
+      padding: 8px 12px;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
-      font-weight: bold;
-      font-size: 1.4rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
 
       &--save {
          background-color: #4285f4;
@@ -95,12 +84,28 @@ $spacing-xl: 32px;
          }
       }
 
-      &--edit:hover {
-         background-color: #0056b3;
+      &--edit {
+         background-color: #4285f4;
+         color: white;
+
+         &:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+         }
       }
 
-      &--delete:hover {
-         background-color: #c82333;
+      &--delete {
+         background-color: #f44336;
+         color: white;
+
+         &:hover {
+            background-color: #c82333;
+            transform: translateY(-1px);
+         }
+      }
+
+      &-icon {
+         font-size: 16px;
       }
    }
 
@@ -117,13 +122,15 @@ $spacing-xl: 32px;
          border-color: #f5c6cb;
          color: #721c24;
       }
-   }
-   &__form-label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-      font-size: 1.6rem;
-      color: #333;
+
+      &--success {
+         padding: 12px 16px;
+         background-color: #d4edda;
+         color: #155724;
+         border: 1px solid #c3e6cb;
+         border-radius: 4px;
+         margin-bottom: 20px;
+      }
    }
 
    &__heading {
@@ -152,42 +159,32 @@ $spacing-xl: 32px;
       margin-bottom: 10px;
    }
 
-   &__alert--success {
-      padding: 12px 16px;
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-      border-radius: 4px;
-      margin-bottom: 20px;
-   }
-
-   // Header Section
    &__header {
-      margin-bottom: $spacing-xl;
+      margin-bottom: 32px;
    }
 
    &__breadcrumb {
-      margin-bottom: $spacing-md;
+      margin-bottom: 16px;
       font-size: 14px;
-      color: $text-secondary;
+      color: #666;
 
       &-link {
-         color: $primary-color;
+         color: #2196f3;
          text-decoration: none;
          transition: color 0.3s ease;
 
          &:hover {
-            color: darken($primary-color, 10%);
+            color: #1976d2;
             text-decoration: underline;
          }
       }
 
       &-separator {
-         margin: 0 $spacing-xs;
+         margin: 0 8px;
       }
 
       &-current {
-         color: $text-primary;
+         color: #333;
          font-weight: 500;
       }
    }
@@ -195,21 +192,20 @@ $spacing-xl: 32px;
    &__page-title {
       font-size: 28px;
       font-weight: 600;
-      color: $text-primary;
+      color: #333;
       margin: 0;
    }
 
-   // Card Component
    &__card {
       background: white;
-      border-radius: $border-radius;
-      box-shadow: $shadow;
-      margin-bottom: $spacing-xl;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 32px;
       overflow: hidden;
 
       &-header {
-         padding: $spacing-lg;
-         border-bottom: 1px solid $border-color;
+         padding: 24px;
+         border-bottom: 1px solid #e0e0e0;
          display: flex;
          justify-content: space-between;
          align-items: center;
@@ -219,33 +215,31 @@ $spacing-xl: 32px;
       &-title {
          font-size: 20px;
          font-weight: 600;
-         color: $text-primary;
+         color: #333;
          margin: 0;
       }
 
       &-body {
-         padding: $spacing-xl;
+         padding: 32px;
       }
    }
 
-   // Info Grid Layout
    &__info-grid {
       display: grid;
       grid-template-columns: 300px 1fr;
-      gap: $spacing-xl;
+      gap: 32px;
       align-items: start;
 
       @media (max-width: 768px) {
          grid-template-columns: 1fr;
-         gap: $spacing-lg;
+         gap: 24px;
       }
    }
 
-   // Image Section
    &__image-section {
       display: flex;
       flex-direction: column;
-      gap: $spacing-md;
+      gap: 16px;
    }
 
    &__image {
@@ -259,22 +253,21 @@ $spacing-xl: 32px;
       display: block;
    }
 
-   // Details Section
    &__details {
       display: flex;
       flex-direction: column;
-      gap: $spacing-lg;
+      gap: 24px;
    }
 
    &__field {
       display: flex;
       flex-direction: column;
-      gap: $spacing-xs;
+      gap: 8px;
    }
 
    &__label {
       font-weight: 600;
-      color: $text-secondary;
+      color: #666;
       font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -282,17 +275,17 @@ $spacing-xl: 32px;
 
    &__value {
       font-size: 16px;
-      color: $text-primary;
+      color: #333;
       font-weight: 500;
 
       &--id {
-         color: $primary-color;
+         color: #2196f3;
          font-weight: 700;
          font-size: 18px;
       }
 
       &--count {
-         color: $success-color;
+         color: #4caf50;
          font-weight: 600;
       }
    }
@@ -306,48 +299,46 @@ $spacing-xl: 32px;
       letter-spacing: 0.5px;
 
       &--active {
-         background-color: rgba($success-color, 0.1);
-         color: $success-color;
+         background-color: rgba(76, 175, 80, 0.1);
+         color: #4caf50;
       }
 
       &--inactive {
-         background-color: rgba($danger-color, 0.1);
-         color: $danger-color;
+         background-color: rgba(244, 67, 54, 0.1);
+         color: #f44336;
       }
    }
 
-   // Actions Section
    &__actions {
       display: flex;
-      gap: $spacing-sm;
+      gap: 12px;
    }
 
-   // Statistics Section
    &__stats-section {
-      margin-bottom: $spacing-xl;
+      margin-bottom: 32px;
    }
 
    &__section-title {
       font-size: 20px;
       font-weight: 600;
-      color: $text-primary;
-      margin-bottom: $spacing-lg;
+      color: #333;
+      margin-bottom: 24px;
    }
 
    &__stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: $spacing-lg;
+      gap: 24px;
    }
 
    &__stat-card {
       background: white;
-      padding: $spacing-lg;
-      border-radius: $border-radius;
-      box-shadow: $shadow;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       display: flex;
       align-items: center;
-      gap: $spacing-md;
+      gap: 16px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
 
       &:hover {
@@ -363,7 +354,7 @@ $spacing-xl: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba($primary-color, 0.1);
+      background-color: rgba(33, 150, 243, 0.1);
       border-radius: 50%;
    }
 
@@ -374,138 +365,196 @@ $spacing-xl: 32px;
    &__stat-value {
       font-size: 24px;
       font-weight: 700;
-      color: $text-primary;
+      color: #333;
       line-height: 1.2;
    }
 
    &__stat-label {
       font-size: 14px;
-      color: $text-secondary;
+      color: #666;
       margin-top: 4px;
    }
 
-   // Button Components
-   &__btn {
-      padding: 8px 12px;
-      border: none;
-      border-radius: $border-radius;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: $spacing-xs;
-      text-decoration: none;
-
-      &--edit {
-         background-color: #4285f4;
-         color: white;
-
-         &:hover {
-            background-color: darken($warning-color, 10%);
-            transform: translateY(-1px);
-         }
-      }
-
-      &--delete {
-         background-color: $danger-color;
-         color: white;
-
-         &:hover {
-            background-color: darken($danger-color, 10%);
-            transform: translateY(-1px);
-         }
-      }
-
-      &-icon {
-         font-size: 16px;
-      }
-   }
-
-   // Action Buttons Section
    &__action-section {
       display: flex;
-      gap: $spacing-md;
-      margin-bottom: $spacing-xl;
+      gap: 16px;
+      margin-bottom: 32px;
       flex-wrap: wrap;
    }
 
    &__action-btn {
-      padding: $spacing-md $spacing-lg;
+      padding: 16px 24px;
       border: none;
-      border-radius: $border-radius;
+      border-radius: 8px;
       font-size: 16px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
-      gap: $spacing-sm;
+      gap: 12px;
       text-decoration: none;
       min-width: 160px;
       justify-content: center;
 
       &--view {
-         background-color: $primary-color;
+         background-color: #2196f3;
          color: white;
 
          &:hover {
-            background-color: darken($primary-color, 10%);
+            background-color: #1976d2;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
          }
       }
 
       &--edit {
-         background-color: $warning-color;
+         background-color: #4285f4;
          color: white;
 
          &:hover {
-            background-color: darken($warning-color, 10%);
+            background-color: #3367d6;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba($warning-color, 0.3);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
          }
       }
 
       &--delete {
-         background-color: $danger-color;
+         background-color: #f44336;
          color: white;
 
          &:hover {
-            background-color: darken($danger-color, 10%);
+            background-color: #d32f2f;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba($danger-color, 0.3);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
          }
       }
    }
 
-   // Footer Section
    &__footer {
       display: flex;
       justify-content: center;
-      padding-top: $spacing-xl;
-      border-top: 1px solid $border-color;
+      padding-top: 32px;
+      border-top: 1px solid #e0e0e0;
    }
 
    &__back-btn {
-      padding: $spacing-sm $spacing-lg;
-      background-color: $secondary-color;
-      color: $text-primary;
-      border: 1px solid $border-color;
-      border-radius: $border-radius;
+      padding: 12px 24px;
+      background-color: #f5f5f5;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
       display: inline-flex;
       align-items: center;
-      gap: $spacing-xs;
+      gap: 8px;
 
       &:hover {
-         background-color: darken($secondary-color, 5%);
-         border-color: darken($border-color, 10%);
+         background-color: #eeeeee;
+         border-color: #bdbdbd;
          transform: translateY(-1px);
+      }
+   }
+}
+
+.edit-form-container {
+   display: none;
+   margin-top: 20px;
+   padding: 20px;
+   background-color: #f9f9f9;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+
+   &.active {
+      display: block;
+   }
+
+   @media (max-width: 768px) {
+      padding: 15px;
+   }
+}
+
+.edit-form {
+   width: 100%;
+
+   label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+   }
+
+   input,
+   textarea,
+   select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+   }
+
+   input[type="number"] {
+      -moz-appearance: textfield;
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+         -webkit-appearance: none;
+         margin: 0;
+      }
+   }
+
+   button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+   }
+
+   .btn-save {
+      background-color: #28a745;
+      color: white;
+
+      &:hover {
+         background-color: #218838;
+      }
+   }
+
+   .btn-cancel {
+      background-color: #dc3545;
+      color: white;
+
+      &:hover {
+         background-color: #c82333;
+      }
+   }
+}
+
+.category-detail {
+   &__btn {
+      &--edit:hover {
+         background-color: #0056b3;
+      }
+
+      &--delete:hover {
+         background-color: #c82333;
+      }
+   }
+
+   &__alert {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+
+      &--success {
+         background-color: #d4edda;
+         color: #155724;
+         border: 1px solid #c3e6cb;
       }
    }
 }
