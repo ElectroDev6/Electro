@@ -11,10 +11,13 @@ class CheckoutService
     private CartModel $cartModel;
     private CheckoutModel $checkoutModel;
 
+    
+
     public function __construct(PDO $pdo)
     {
         $this->cartModel = new CartModel($pdo);
         $this->checkoutModel = new CheckoutModel($pdo);
+
     }
 
     /**
@@ -107,118 +110,54 @@ class CheckoutService
      * @param string $sessionId
      * @return int|null
      */
-    public function createOrder(int $userId, array $postData, string $sessionId): ?int
+       public function getCartItems($userId)
     {
-        $userAddressId = $postData['user_address_id'] ?? null;
-        $paymentMethod = $postData['payment_method'] ?? 'cod';
-        $couponCode = $postData['coupon_code'] ?? null;
+        return $this->cartModel->getCartItemsByUser($userId);
+    }
 
-        // Validate payment method
-        $validPaymentMethods = ['cod', 'bank_transfer', 'credit_card', 'momo', 'zalopay'];
-        if (!in_array($paymentMethod, $validPaymentMethods)) {
-            error_log("CheckoutService: Invalid payment method - PaymentMethod: $paymentMethod");
-            return null;
+    public function createOrder($userId, $userAddressId, $couponId = null)
+    {
+        $cartItems = $this->cartModel->getCartItemsByUser($userId);
+
+        if (empty($cartItems)) {
+            return false;
         }
 
-        // Validate user_address_id
-        if (!$userAddressId) {
-            error_log("CheckoutService: Missing user_address_id - UserID: $userId");
-            return null;
+        // Tính tổng giá trị giỏ hàng
+        $total = 0;
+        foreach ($cartItems as $item) {
+            $total += $item['price'] * $item['quantity'];
         }
 
-        $cartId = $this->cartModel->getCartIdByUserId($userId) ?? $this->cartModel->getCartIdBySessionId($sessionId);
-        if (!$cartId) {
-            error_log("CheckoutService: No cart found - UserID: $userId, SessionID: $sessionId");
-            return null;
-        }
+        // Lưu orders
+        $orderId = $this->CheckoutModel->createOrder($userId, $userAddressId, $total, $couponId);
 
-        $cartItems = $this->cartModel->fetchCartItems($cartId);
-        $selectedItems = array_filter($cartItems, fn($item) => $item['selected']);
-        if (empty($selectedItems)) {
-            error_log("CheckoutService: No selected items in cart - CartID: $cartId");
-            return null;
-        }
-
-        $total = array_sum(array_map(fn($i) => $i['price'] * $i['quantity'], $selectedItems));
-        $couponId = $this->getCouponId($couponCode); // Giả sử có phương thức này
-
-        $pdo = $this->checkoutModel->getPdo();
-        $pdo->beginTransaction();
-
-        try {
-            $orderId = $this->checkoutModel->createOrder([
-                'user_id' => $userId,
-                'user_address_id' => $userAddressId,
-                'coupon_id' => $couponId,
-                'total_price' => $total
-            ]);
-
-            foreach ($selectedItems as $item) {
-                $this->checkoutModel->addOrderItem([
-                    'order_id' => $orderId,
-                    'sku_id' => $item['sku_id'],
-                    'quantity' => $item['quantity'],
-                    'price' => $item['price'],
-                ]);
+        if ($orderId) {
+            foreach ($cartItems as $item) {
+                $this->CheckoutModel->addOrderItem(
+                    $orderId,
+                    $item['sku_id'],  // chuẩn DB
+                    $item['quantity'],
+                    $item['price']
+                );
             }
 
-            $this->checkoutModel->addPayment([
-                'order_id' => $orderId,
-                'payment_method' => $paymentMethod,
-                'amount' => $total
-            ]);
-
-            $this->checkoutModel->addShipping([
-                'order_id' => $orderId,
-                'carrier' => 'Giao Hang Nhanh' // Có thể lấy từ form hoặc cấu hình
-            ]);
-
-            $this->checkoutModel->clearSelectedCartItems($cartId);
-            $pdo->commit();
-            error_log("CheckoutService: Order created - OrderID: $orderId, UserID: $userId, CartID: $cartId");
+            // Clear cart
+            $this->cartModel->clearCart($userId);
             return $orderId;
-        } catch (\Exception $e) {
-            $pdo->rollBack();
-            error_log("CheckoutService: Error creating order - UserID: $userId, Error: " . $e->getMessage());
-            return null;
         }
-    }
 
-    /**
-     * Lấy coupon_id từ coupon_code (giả lập)
-     * @param string|null $couponCode
-     * @return int|null
-     */
-    private function getCouponId(?string $couponCode): ?int
-    {
-        if (!$couponCode) {
-            return null;
-        }
-        try {
-            $stmt = $this->checkoutModel->getPdo()->prepare("
-                SELECT coupon_id FROM coupons 
-                WHERE coupon_code = :coupon_code 
-                AND start_date <= NOW() 
-                AND end_date >= NOW()
-            ");
-            $stmt->execute([':coupon_code' => $couponCode]);
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result ? (int)$result['coupon_id'] : null;
-        } catch (\Exception $e) {
-            error_log("CheckoutService: Error in getCouponId - CouponCode: $couponCode, Error: " . $e->getMessage());
-            return null;
-        }
-    }
+        return false;
+    }     
 
-    /**
-     * Tạo URL thanh toán VNPay (giả lập)
-     * @param int $userId
-     * @param int $orderId
-     * @return string
-     */
-    public function createVNPayUrl(int $userId, int $orderId): string
-    {
-        $txnId = 'VNP-' . $orderId . '-' . time();
-        return "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_TxnRef=$txnId";
-    }
+
+
+
 }
+
+
+
+
+
+
+

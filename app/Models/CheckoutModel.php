@@ -58,51 +58,42 @@ class CheckoutModel
      * @param array $orderData
      * @return int ID của đơn hàng mới
      */
-    public function createOrder(array $orderData): int
-    {
-        try {
-            $orderCode = 'ORD-' . time() . '-' . rand(1000, 9999);
-            $stmt = $this->pdo->prepare("
-                INSERT INTO orders (user_id, user_address_id, coupon_id, order_code, total_price, status, created_at)
-                VALUES (:user_id, :user_address_id, :coupon_id, :order_code, :total_price, 'pending', NOW())
-            ");
-            $stmt->execute([
-                ':user_id' => $orderData['user_id'],
-                ':user_address_id' => $orderData['user_address_id'],
-                ':coupon_id' => $orderData['coupon_id'] ?? null,
-                ':order_code' => $orderCode,
-                ':total_price' => $orderData['total_price'],
-            ]);
-            return (int)$this->pdo->lastInsertId();
-        } catch (\Exception $e) {
-            error_log("CheckoutModel: Error in createOrder - UserID: {$orderData['user_id']}, Error: " . $e->getMessage());
-            throw $e;
-        }
-    }
+   // Tạo order mới
+    public function createOrder($userId, $userAddressId, $totalPrice, $couponId = null)
+{
+    $orderCode = "OD" . time() . rand(100,999);
+
+    $sql = "INSERT INTO orders 
+            (user_id, user_address_id, coupon_id, order_code, total_price, status, created_at, updated_at) 
+            VALUES (?, ?, ?, ?, ?, 'pending', NOW(), NOW())";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([
+        $userId,
+        $userAddressId,
+        $couponId,
+        $orderCode,
+        $totalPrice
+    ]);
+
+    return $this->pdo->lastInsertId();
+}
+
+   
 
     /**
      * Thêm mục đơn hàng
      * @param array $itemData
      * @return bool
      */
-    public function addOrderItem(array $itemData): bool
+    public function addOrderItem($orderId, $skuId, $quantity, $price)
     {
-        try {
-            $stmt = $this->pdo->prepare("
-                INSERT INTO order_items (order_id, sku_id, quantity, price)
-                VALUES (:order_id, :sku_id, :quantity, :price)
-            ");
-            return $stmt->execute([
-                ':order_id' => $itemData['order_id'],
-                ':sku_id' => $itemData['sku_id'],
-                ':quantity' => $itemData['quantity'],
-                ':price' => $itemData['price'],
-            ]);
-        } catch (\Exception $e) {
-            error_log("CheckoutModel: Error in addOrderItem - OrderID: {$itemData['order_id']}, SKU: {$itemData['sku_id']}, Error: " . $e->getMessage());
-            throw $e;
-        }
+        $sql = "INSERT INTO order_items (order_id, sku_id, quantity, price) 
+                VALUES (?, ?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$orderId, $skuId, $quantity, $price]);
     }
+
 
     /**
      * Thêm thông tin thanh toán

@@ -45,7 +45,8 @@
   max-width: 1200px;
   margin: 0 auto;
   padding-bottom: 40px;
-  align-items: stretch;
+   align-items: stretch;
+  
 
   &__main {
     display: flex;
@@ -66,16 +67,16 @@
 
 // ORDER SECTION
 .order-section {
-  background: white;
+ background: #fff;
   border-radius: 8px;
-  padding: 20px;
+  padding: 16px;
   margin-bottom: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
   &__title {
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: #333;
   }
 
@@ -104,19 +105,29 @@
 
 
 // PRODUCT
+ .order-product-box {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+}
+
 .order-product {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
+  gap: 12px;
+  width: 100%;
 
   &__image {
-    width: 60px;
-    height: 60px;
-    overflow: hidden;
+    width: 48px;
+    height: 48px;
     border-radius: 6px;
+    overflow: hidden;
+    background: #f8f8f8;
     flex-shrink: 0;
-    background: #f0f0f0;
 
     img {
       width: 100%;
@@ -127,42 +138,50 @@
 
   &__info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
-    &-name {
-      font-size: 14px;
-      color: #333;
-      line-height: 1.4;
-      margin-bottom: 4px;
-    }
+  &__name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+  }
 
-    &-color {
-      font-size: 12px;
-      color: #666;
-    }
+  &__color {
+    font-size: 12px;
+    color: #666;
   }
 
   &__price {
-    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 13px;
+    gap: 2px;
 
-    &-quantity {
-      background: #f5f5f5;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 12px;
-      margin-bottom: 4px;
-      display: inline-block;
+    .order-product__quantity {
+      color: #555;
     }
 
-    &-current {
-      color: #000000;
+    .order-product__current-price {
       font-weight: 600;
-      font-size: 14px;
+      color: #d0021b;
     }
+  }
+}
 
-    &-original {
-      color: #aaa;
-      text-decoration: line-through;
-      font-size: 12px;
+// Responsive
+@media (max-width: 480px) {
+  .order-product {
+    flex-wrap: wrap;
+    &__image {
+      width: 40px;
+      height: 40px;
+    }
+    &__name {
+      font-size: 13px;
     }
   }
 }
@@ -415,8 +434,8 @@
   background: white;
   padding: 20px;
   border-radius: 20px;
-  align-self: stretch;
-  height: 100%;
+  align-self: start;
+  height: auto;
 }
 
   }

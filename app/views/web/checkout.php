@@ -185,7 +185,6 @@ use Core\View; ?>
 
       <!-- Sidebar đơn hàng -->
       <div class="order-page__sidebar">
-        <div class="order-summary">
           <div class="order-summary__title">Thông tin đơn hàng</div>
 
           <div class="order-summary__row">
@@ -208,8 +207,9 @@ use Core\View; ?>
             <div><?= number_format($Items['summary']['final_total'] ?? 0, 0, ',', '.') ?> ₫</div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Đặt hàng</button>
-
+        <div class="order-summary__btn-wrapper">
+          <button type="submit" class="order-summary__btn">Đặt hàng</button>
+        </div>
           <div class="order-summary__terms">
             Bằng việc tiến hành đặt mua hàng, bạn đồng ý với
             <a href="#" class="order-summary__link-text">Điều khoản dịch vụ</a> và

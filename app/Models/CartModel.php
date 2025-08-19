@@ -432,6 +432,47 @@ class CartModel
             error_log("CartModel: Error in deleteCartItem - CartID: $cartId, SKU: $skuId, Error: " . $e->getMessage());
         }
     }
+public function getCartItems($userId) {
+    $sql = "
+        SELECT ci.*, s.price, s.sku_code, p.name, v.image_set
+        FROM cart_items ci
+        INNER JOIN cart c ON ci.cart_id = c.cart_id
+        INNER JOIN skus s ON ci.sku_id = s.sku_id
+        INNER JOIN products p ON s.product_id = p.product_id
+        LEFT JOIN variant_images v ON s.sku_id = v.sku_id AND v.is_default = 1
+        WHERE c.user_id = ?
+    ";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$userId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+public function getCartItemsByUser($userId)
+    {
+        $sql = "
+            SELECT ci.cart_item_id, ci.quantity, ci.sku_id, ci.price, 
+                   s.price AS sku_price, p.name AS product_name
+            FROM cart_items ci
+            INNER JOIN cart c ON ci.cart_id = c.cart_id
+            INNER JOIN skus s ON ci.sku_id = s.sku_id
+            INNER JOIN products p ON s.product_id = p.product_id
+            WHERE c.user_id = :user_id
+        ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Xóa cart sau khi đặt hàng
+    public function clearCart($userId)
+    {
+        $sql = "
+            DELETE ci FROM cart_items ci
+            INNER JOIN cart c ON ci.cart_id = c.cart_id
+            WHERE c.user_id = :user_id
+        ";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute(['user_id' => $userId]);
+    }
 
 
     public function applyVoucher($cartId, $voucherCode)
