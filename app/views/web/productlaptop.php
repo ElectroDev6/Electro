@@ -48,7 +48,7 @@ Sản phẩm Laptop
         </div>
     </div>
     <div class="container">
-        <aside class="filter">
+        <!-- <aside class="filter">
             <h3 class="filter__heading">Bộ lọc tìm kiếm</h3>
             <div class="filter-group">
                 <h4 class="filter-group__heading">Hãng sản xuất</h4>
@@ -244,7 +244,7 @@ Sản phẩm Laptop
                     </div>
                 </div>
             </form>
-        </aside>
+        </aside> -->
         <!-- Phần sản phẩm -->
         <main class="products" id="product-list">
             <?php foreach ($products as $product): ?>
