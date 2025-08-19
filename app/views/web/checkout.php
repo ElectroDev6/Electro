@@ -14,7 +14,7 @@ use Core\View; ?>
     </div>
 
     <!-- Form thanh toán -->
-    <form class="order-page" action="/checkout/submit" method="POST">
+    <form class="order-page" action="/checkout/pay" method="POST">
       <input type="hidden" name="user_address_id" value="<?= htmlspecialchars($user_address['user_address_id'] ?? '') ?>">
 
       <div class="order-page__main">
@@ -185,41 +185,44 @@ use Core\View; ?>
 
       <!-- Sidebar đơn hàng -->
       <div class="order-page__sidebar">
-        <div class="order-summary">
-          <div class="order-summary__title">Thông tin đơn hàng</div>
+        <div class="order-summary__title">Thông tin đơn hàng</div>
 
-          <div class="order-summary__row">
-            <span>Tổng tiền</span>
-            <span><?= number_format($Items['summary']['total_price'] ?? 0, 0, ',', '.') ?> ₫</span>
-          </div>
+        <div class="order-summary__row">
+          <span>Tổng tiền</span>
+          <span><?= number_format($Items['summary']['total_price'] ?? 0, 0, ',', '.') ?> ₫</span>
+        </div>
 
-          <div class="order-summary__row">
-            <span>Tổng khuyến mãi</span>
-            <span class="order-summary__discount"><?= number_format($Items['summary']['total_discount'] ?? 0, 0, ',', '.') ?> ₫</span>
-          </div>
+        <div class="order-summary__row">
+          <span>Tổng khuyến mãi</span>
+          <span class="order-summary__discount"><?= number_format($Items['summary']['total_discount'] ?? 0, 0, ',', '.') ?> ₫</span>
+        </div>
 
-          <div class="order-summary__row">
-            <span>Phí vận chuyển</span>
-            <span><?= number_format($Items['summary']['shipping_fee'] ?? 0, 0, ',', '.') ?> ₫</span>
-          </div>
+        <div class="order-summary__row">
+          <span>Phí vận chuyển</span>
+          <span><?= number_format($Items['summary']['shipping_fee'] ?? 0, 0, ',', '.') ?> ₫</span>
+        </div>
 
-          <div class="order-summary__row order-summary__row--total">
-            <span>Cần thanh toán</span>
-            <div><?= number_format($Items['summary']['final_total'] ?? 0, 0, ',', '.') ?> ₫</div>
-          </div>
+        <div class="order-summary__row order-summary__row--total">
+          <span>Cần thanh toán</span>
+          <div><?= number_format($Items['summary']['final_total'] ?? 0, 0, ',', '.') ?> ₫</div>
+        </div>
 
-          <button type="submit" class="btn btn-primary">Đặt hàng</button>
+        <div class="order-summary__btn-wrapper">
+          <input type="hidden" name="amount" value="<?= (int)($Items['summary']['final_total'] ?? 0) ?>">
 
-          <div class="order-summary__terms">
-            Bằng việc tiến hành đặt mua hàng, bạn đồng ý với
-            <a href="#" class="order-summary__link-text">Điều khoản dịch vụ</a> và
-            <a href="#" class="order-summary__link-text">Chính sách xử lý dữ liệu cá nhân</a>
-            của <strong>Electro</strong>
-          </div>
+          <button type="submit" class="order-summary__btn">Đặt hàng</button>
+        </div>
+
+        <div class="order-summary__terms">
+          Bằng việc tiến hành đặt mua hàng, bạn đồng ý với
+          <a href="#" class="order-summary__link-text">Điều khoản dịch vụ</a> và
+          <a href="#" class="order-summary__link-text">Chính sách xử lý dữ liệu cá nhân</a>
+          của <strong>Electro</strong>
         </div>
       </div>
-    </form>
-  </section>
+</div>
+</form>
+</section>
 </div>
 
 <script>
