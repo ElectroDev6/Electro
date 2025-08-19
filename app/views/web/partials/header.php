@@ -193,6 +193,40 @@
                     </svg>
                     <span class="header__count-wishlist">0</span>
                 </div>
+                <div class="header__icon" id="headerNotification">
+                    <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="24" height="24" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    stroke-width="2" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round">
+                        <path d="M9 17H5.6C4.3 17 3.7 17 3.6 16.9C3.4 16.8 3.4 16.7 3.4 16.5C3.4 16.4 3.8 15.7 4.5 14.5C5.3 13.2 6 11.3 6 8.6C6 7.1 6.6 5.7 7.8 4.6C8.9 3.6 10.4 3 12 3C13.6 3 15.1 3.6 16.2 4.6C17.4 5.7 18 7.1 18 8.6C18 11.3 18.7 13.2 19.5 14.5C20.2 15.7 20.6 16.4 20.6 16.5C20.6 16.7 20.6 16.8 20.4 16.9C20.3 17 19.7 17 18.4 17H15M9 17V18C9 19.7 10.3 21 12 21C13.7 21 15 19.7 15 18V17H9Z"></path>
+                    </svg>
+                    <span class="header__count-wishlist" id="headerNotificationCount">0</span>
+                    <div class="notification">
+                        <div class="notification__header">
+                            <h3 class="notification__title">Thông báo</h3>
+                            <a href="#" class="notification__mark-read">Đánh dấu đã đọc</a>
+                        </div>
+                        <div class="notification__list">
+                            <div class="notification__item notification__item--unread">
+                                <div class="notification__icon">
+                                    <img src="/Favicon-icon.png" alt="" class="notification__icon--img">
+                                </div>
+                                <div class="notification__content">
+                                    <p class="notification__text"><strong>Bài học</strong> Tìm hiểu về Getter và Setter mới được thêm vào.</p>
+                                    <span class="notification__time">3 ngày trước</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification__footer">
+                            <a href="#">Xem tất cả thông báo</a>
+                        </div>
+                        </div>
+                </div>
                 <!-- user -->
                 <div class="header__icon">
                     <?php

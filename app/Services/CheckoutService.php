@@ -27,7 +27,6 @@ class CheckoutService
     {
         $errors = [];
 
-        // Kiểm tra đăng nhập
         if (!$userId) {
             return [
                 'items' => ['products' => [], 'summary' => ['total_price' => 0, 'total_discount' => 0, 'shipping_fee' => 0, 'final_total' => 0]],
@@ -36,10 +35,9 @@ class CheckoutService
             ];
         }
 
-        // Lấy thông tin địa chỉ người dùng
         $userAddress = $this->checkoutModel->getUserAddress($userId);
         if (!$userAddress) {
-            // Chuyển hướng sang trang cập nhật địa chỉ
+            error_log("CheckoutService: No user address found - UserID: $userId");
             header("Location: /profile");
             exit;
         }
@@ -113,8 +111,11 @@ class CheckoutService
         $paymentMethod = $postData['payment_method'] ?? 'cod';
         $couponCode = $postData['coupon_code'] ?? null;
 
+        // Debug
+        error_log("CheckoutService: Creating order - UserID: $userId, user_address_id: " . ($userAddressId ?? 'null'));
+
         // Validate payment method
-        $validPaymentMethods = ['cod', 'bank_transfer', 'credit_card', 'momo', 'zalopay'];
+        $validPaymentMethods = ['cod', 'vnpay', 'credit_card', 'momo', 'zalopay'];
         if (!in_array($paymentMethod, $validPaymentMethods)) {
             error_log("CheckoutService: Invalid payment method - PaymentMethod: $paymentMethod");
             return null;
@@ -152,6 +153,9 @@ class CheckoutService
                 'coupon_id' => $couponId,
                 'total_price' => $total
             ]);
+
+            // Dùng luôn order_id này làm TxnRef
+            $vnp_TxnRef = $orderId;
 
             foreach ($selectedItems as $item) {
                 $this->checkoutModel->addOrderItem([
@@ -210,15 +214,22 @@ class CheckoutService
         }
     }
 
-    /**
-     * Tạo URL thanh toán VNPay (giả lập)
-     * @param int $userId
-     * @param int $orderId
-     * @return string
-     */
-    public function createVNPayUrl(int $userId, int $orderId): string
+    public function updateAfterVNPay(int $orderId, array $vnpayData): bool
     {
-        $txnId = 'VNP-' . $orderId . '-' . time();
-        return "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_TxnRef=$txnId";
+        if ($vnpayData['vnp_ResponseCode'] !== '00') {
+            return false;
+        }
+        $transactionNo = $vnpayData['vnp_TransactionNo'] ?? '';
+        return $this->checkoutModel->updateOrderAfterPayment($orderId, 'paid', 'success', $transactionNo);
+    }
+
+    public function updateOrderAfterPayment(int $orderId, string $statusOrder, string $statusPayment, string $transactionNo): bool
+    {
+        return $this->checkoutModel->updateOrderAfterPayment($orderId, $statusOrder, $statusPayment, $transactionNo);
+    }
+
+    public function getOrderTotal(int $orderId): float
+    {
+        return $this->checkoutModel->getOrderTotal($orderId);
     }
 }

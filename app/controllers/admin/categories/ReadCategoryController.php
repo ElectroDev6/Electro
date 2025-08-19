@@ -17,8 +17,11 @@ class ReadCategoryController
     public function list()
     {
         $categories = $this->model->fetchAllCategories();
+        $stats = $this->model->getCategoriesStats();
+        
         View::render('categories/index', [
-            'categories' => $categories
+            'categories' => $categories,
+            'stats' => $stats
         ]);
     }
 
@@ -35,11 +38,32 @@ class ReadCategoryController
             header('Location: /admin/categories');
             exit;
         }
+        
         $success = $_SESSION['success'] ?? null;
         unset($_SESSION['success']);
+        
         View::render('categories/detail', [
             'category' => $category,
             'success' => $success
         ]);
     }
+
+
+    public function getSubcategories()
+    {
+        header('Content-Type: application/json');
+        $category_id = $_GET['category_id'] ?? '';
+        try {
+            if (!$this->model) {
+                throw new Exception('Model not initialized');
+            }
+            $result = $this->model->getSubcategories($category_id);
+            echo json_encode($result ?: []); // Trả về mảng rỗng nếu null
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Lỗi server: ' . $e->getMessage()]);
+        }
+        exit;
+    }
+
 }

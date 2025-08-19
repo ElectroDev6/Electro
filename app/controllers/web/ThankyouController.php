@@ -8,7 +8,7 @@ use Core\View;
 
 class ThankyouController
 {
-    public function showConfirmation()
+    public function index()
     {
         View::render('thankyou');
     }

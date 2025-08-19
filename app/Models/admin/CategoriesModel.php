@@ -7,22 +7,29 @@ use PDOException;
 class CategoriesModel
 {
     private $pdo;
+    
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
+    
     public function fetchAllCategories()
     {
         $sql = "
             SELECT 
-                category_id,
-                name,
-                image,
-                description,
-                slug,
-                created_at,
-                updated_at
-            FROM categories
+                c.category_id,
+                c.name,
+                c.image,
+                c.description,
+                c.slug,
+                c.created_at,
+                c.updated_at,
+                COUNT(p.product_id) as product_count
+            FROM categories c
+            LEFT JOIN subcategories s ON c.category_id = s.category_id
+            LEFT JOIN products p ON s.subcategory_id = p.subcategory_id
+            GROUP BY c.category_id, c.name, c.image, c.description, c.slug, c.created_at, c.updated_at
+            ORDER BY c.category_id ASC
         ";
 
         try {
@@ -34,6 +41,39 @@ class CategoriesModel
         }
     }
 
+    public function getCategoriesStats()
+    {
+        try {
+            // Lấy tổng số sản phẩm từ tất cả categories thông qua subcategories
+            $sql = "
+                SELECT 
+                    COUNT(DISTINCT c.category_id) as total_categories,
+                    COUNT(DISTINCT p.product_id) as total_products,
+                    COUNT(DISTINCT c.category_id) as active_categories
+                FROM categories c
+                LEFT JOIN subcategories s ON c.category_id = s.category_id
+                LEFT JOIN products p ON s.subcategory_id = p.subcategory_id
+            ";
+            
+            $stmt = $this->pdo->query($sql);
+            $stats = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return [
+                'total_categories' => (int)$stats['total_categories'],
+                'total_products' => (int)$stats['total_products'],
+                'active_categories' => (int)$stats['active_categories'],
+                'display_rate' => $stats['total_categories'] > 0 ? 100 : 0
+            ];
+        } catch (PDOException $e) {
+            error_log('Error fetching category stats: ' . $e->getMessage());
+            return [
+                'total_categories' => 0,
+                'total_products' => 0,
+                'active_categories' => 0,
+                'display_rate' => 0
+            ];
+        }
+    }
 
     public function getCategoryById($id)
     {
@@ -79,7 +119,6 @@ class CategoriesModel
         }
     }
 
-
     public function createCategory(array $data)
     {
         $sql = "INSERT INTO categories (name, description, slug, image, created_at, updated_at)
@@ -115,7 +154,7 @@ class CategoriesModel
         $sql = "SELECT COUNT(*) FROM categories WHERE LOWER(name) = LOWER(:name)";
         $params = ['name' => $name];
         if ($excludeId !== null) {
-            $sql .= " AND id != :id";
+            $sql .= " AND category_id != :id";
             $params['id'] = $excludeId;
         }
 
@@ -124,5 +163,15 @@ class CategoriesModel
         return $stmt->fetchColumn() > 0;
     }
 
+
+    public function getSubcategories($categoryId) {
+        try {
+            $stmt = $this->pdo->prepare("SELECT subcategory_id, name FROM subcategories WHERE category_id = ?");
+            $stmt->execute([$categoryId]);
+            $subcategories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $subcategories;
+        } catch (PDOException $e) {
+            return ['error' => 'Lỗi truy vấn: ' . $e->getMessage()];
+        }
+    }
 }
-?>

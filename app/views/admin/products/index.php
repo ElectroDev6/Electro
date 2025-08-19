@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <?php
 include dirname(__DIR__) . '/partials/header.php';
 include dirname(__DIR__) . '/partials/sidebar.php';

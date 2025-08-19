@@ -7,357 +7,906 @@ include dirname(__DIR__) . '/partials/header.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cập nhật sản phẩm</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Cập nhật sản phẩm - <?php echo htmlspecialchars($product['name'] ?? 'Sản phẩm'); ?></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/admin/style-admin.css">
-    <style>
-        .product-detail__admin-panel { padding: 20px; }
-        .product-detail__admin-section { margin-bottom: 20px; }
-        .product-detail__admin-section-title { font-size: 1.5em; margin-bottom: 10px; }
-        .product-detail__form-group { margin-bottom: 15px; }
-        .product-detail__label { display: block; margin-bottom: 5px; }
-        .product-detail__input, .product-detail__textarea, .product-detail__select { width: 100%; padding: 8px; }
-        .product-detail__textarea { height: 100px; }
-        .product-detail__form-row { display: flex; gap: 20px; }
-        .product-detail__variant-item, .product-detail__color-item { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; }
-        .product-detail__btn { padding: 10px 15px; margin: 5px; }
-        .product-detail__btn--primary { background: #28a745; color: white; }
-        .product-detail__btn--outline { border: 1px solid #ddd; }
-        .current-image { max-width: 100px; max-height: 100px; margin: 10px 0; }
-        .image-preview { display: flex; align-items: center; gap: 10px; }
-    </style>
+
 </head>
 <body>
+        <?php
+        echo '<pre>';
+        print_r($product);
+        echo '</pre>';
+        ?>
     <?php echo $htmlHeader; ?>
-    <main class="wrapper">
-        <?php echo $contentSidebar; ?>
-        <div class="product-detail__admin-panel">
+     <main class="wrapper">
+         <?php echo $contentSidebar; ?>
+        <div class="product-update">
+            <div class="product-update__header">
+                <div>
+                    <h1 class="product-update__title">
+                        <i class="fas fa-edit"></i>
+                        Cập nhật sản phẩm
+                    </h1>
+                    <div class="product-update__breadcrumb">
+                        <a href="/admin/products">Quản lý sản phẩm</a> / Cập nhật sản phẩm
+                    </div>
+                </div>
+            </div>
+
             <?php if (isset($error)): ?>
-                <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
+                <div class="product-update__alert product-update__alert--error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <?php echo htmlspecialchars($error); ?>
+                </div>
             <?php endif; ?>
-            <form class="product-detail__admin-form" action="/admin/products/update/handle" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['product_id']); ?>">
-                
-                <section class="product-detail__admin-section">
-                    <h2 class="product-detail__admin-section-title"><i class="fas fa-info-circle"></i> Thông tin cơ bản</h2>
-                    <div class="product-detail__form-group">
-                        <label class="product-detail__label" for="productName">Tên sản phẩm</label>
-                        <input class="product-detail__input" type="text" id="productName" name="product_name" value="<?php echo htmlspecialchars($product['product_name']); ?>" required>
-                    </div>
-                    <div class="product-detail__form-group">
-                        <label class="product-detail__label" for="productDescription">Mô tả</label>
-                        <textarea class="product-detail__textarea" id="productDescription" name="description_html"><?php echo htmlspecialchars($product['description_html']); ?></textarea>
-                    </div>
-                    <div class="product-detail__form-group">
-                        <label class="product-detail__label" for="category">Danh mục</label>
-                        <select class="product-detail__select" id="category" name="category_id" required>
-                            <?php foreach ($categories as $category): ?>
-                                <option value="<?php echo htmlspecialchars($category['id']); ?>" <?php echo $category['id'] == $product['category_id'] ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($category['name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="product-detail__form-group">
-                        <label class="product-detail__label" for="mainImage">Ảnh chính</label>
-                        <?php if (!empty($product['media_url'])): ?>
-                            <div class="image-preview">
-                                <img src="<?php echo htmlspecialchars($product['media_url']); ?>" alt="Current main image" class="current-image">
-                                <span>Ảnh hiện tại</span>
-                            </div>
-                        <?php endif; ?>
-                        <input type="file" id="mainImage" name="main_image" accept="image/*">
-                        <small>Để trống nếu không muốn thay đổi ảnh chính</small>
-                        <input type="text" class="product-detail__input" name="media_alt" placeholder="Mô tả ảnh chính" value="<?php echo htmlspecialchars($product['media_alt'] ?? ''); ?>" required>
-                    </div>
-                </section>
 
-                <section class="product-detail__admin-section">
-                    <h2 class="product-detail__admin-section-title"><i class="fas fa-layer-group"></i> Biến thể</h2>
-                    <div class="product-detail__variants-manager">
-                        <?php foreach ($product['variants'] as $v_idx => $variant): ?>
-                            <div class="product-detail__variant-item">
-                                <h3 class="product-detail__variant-title">Biến thể <?php echo $v_idx + 1; ?></h3>
-                                
-                                <!-- Hidden field để lưu variant ID -->
-                                <input type="hidden" name="variants[<?php echo $v_idx; ?>][variant_id]" value="<?php echo htmlspecialchars($variant['variant_id'] ?? ''); ?>">
-                                
-                                <div class="product-detail__form-group">
-                                    <label class="product-detail__label">Dung lượng</label>
-                                    <input class="product-detail__input" name="variants[<?php echo $v_idx; ?>][capacity_group]" value="<?php echo htmlspecialchars($variant['capacity_group'] ?? ''); ?>" required>
-                                </div>
-                                <div class="product-detail__form-row">
-                                    <div class="product-detail__form-group">
-                                        <label class="product-detail__label">Giá bán (VNĐ)</label>
-                                        <input class="product-detail__input" type="number" step="0.01" name="variants[<?php echo $v_idx; ?>][price]" value="<?php echo htmlspecialchars($variant['price'] ?? '0'); ?>" required>
-                                    </div>
-                                    <div class="product-detail__form-group">
-                                        <label class="product-detail__label">Giá gốc (VNĐ)</label>
-                                        <input class="product-detail__input" type="number" step="0.01" name="variants[<?php echo $v_idx; ?>][original_price]" value="<?php echo htmlspecialchars($variant['original_price'] ?? '0'); ?>" required>
-                                    </div>
-                                </div>
-                                <div class="product-detail__form-group">
-                                    <label class="product-detail__label">Số lượng tồn kho</label>
-                                    <input class="product-detail__input" type="number" name="variants[<?php echo $v_idx; ?>][stock_quantity]" value="<?php echo htmlspecialchars($variant['stock_quantity'] ?? '0'); ?>" required>
-                                </div>
-                                
-                                <div class="product-detail__colors-manager">
-                                    <?php foreach ($variant['colors'] as $c_idx => $color): ?>
-                                        <div class="product-detail__color-item">
-                                            <!-- Hidden field để lưu variant_color ID -->
-                                            <input type="hidden" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][variant_color_id]" value="<?php echo htmlspecialchars($color['variant_color_id'] ?? ''); ?>">
-                                            
-                                            <div class="product-detail__form-row">
-                                                <div class="product-detail__form-group">
-                                                    <label class="product-detail__label">Màu sắc</label>
-                                                    <select class="product-detail__select" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][color_id]" required>
-                                                        <option value="">Chọn màu</option>
-                                                        <?php foreach ($colors as $c): ?>
-                                                            <option value="<?php echo htmlspecialchars($c['id']); ?>" <?php echo $c['id'] == $color['color_id'] ? 'selected' : ''; ?>>
-                                                                <?php echo htmlspecialchars($c['name']) . ' (' . $c['hex_code'] . ')'; ?>
-                                                            </option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
-                                                <div class="product-detail__form-group">
-                                                    <label class="product-detail__label">Số lượng</label>
-                                                    <input class="product-detail__input" type="number" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][stock_quantity]" value="<?php echo htmlspecialchars($color['stock'] ?? '0'); ?>" required>
-                                                </div>
-                                            </div>
-                                            <div class="product-detail__form-group">
-                                                <input type="checkbox" id="isActive_<?php echo $v_idx; ?>_<?php echo $c_idx; ?>" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][is_active]" value="1" <?php echo $color['is_active'] ? 'checked' : ''; ?>>
-                                                <label for="isActive_<?php echo $v_idx; ?>_<?php echo $c_idx; ?>">Kích hoạt</label>
-                                            </div>
-                                            
-                                            <div class="product-detail__color-gallery">
-                                                <?php foreach ($color['images'] as $i_idx => $image): ?>
-                                                    <div class="product-detail__form-group">
-                                                        <label class="product-detail__label">Ảnh màu <?php echo $i_idx + 1; ?></label>
-                                                        
-                                                        <!-- Hidden fields để lưu thông tin ảnh hiện tại -->
-                                                        <input type="hidden" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][images][<?php echo $i_idx; ?>][image_id]" value="<?php echo htmlspecialchars($image['image_id'] ?? ''); ?>">
-                                                        <input type="hidden" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][images][<?php echo $i_idx; ?>][current_url]" value="<?php echo htmlspecialchars($image['url'] ?? ''); ?>">
-                                                        
-                                                        <?php if (!empty($image['url'])): ?>
-                                                            <div class="image-preview">
-                                                                <img src="<?php echo htmlspecialchars($image['url']); ?>" alt="Current image" class="current-image">
-                                                                <span>Ảnh hiện tại</span>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                        
-                                                        <input type="file" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][images][<?php echo $i_idx; ?>][file]" accept="image/*">
-                                                        <small>Để trống nếu không muốn thay đổi ảnh</small>
-                                                        
-                                                        <input type="text" class="product-detail__input" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][images][<?php echo $i_idx; ?>][gallery_image_alt]" placeholder="Mô tả ảnh" value="<?php echo htmlspecialchars($image['gallery_image_alt'] ?? ''); ?>">
-                                                        <input type="hidden" name="variants[<?php echo $v_idx; ?>][colors][<?php echo $c_idx; ?>][images][<?php echo $i_idx; ?>][sort_order]" value="<?php echo $i_idx; ?>">
-                                                    </div>
-                                                <?php endforeach; ?>
-                                            </div>
-                                            <button type="button" class="product-detail__btn product-detail__btn--outline add-image" data-variant="<?php echo $v_idx; ?>" data-color="<?php echo $c_idx; ?>">
-                                                <i class="fas fa-plus"></i> Thêm ảnh
-                                            </button>
-                                        </div>
-                                    <?php endforeach; ?>
-                                    <button type="button" class="product-detail__btn product-detail__btn--outline add-color" data-variant="<?php echo $v_idx; ?>">
-                                        <i class="fas fa-plus"></i> Thêm màu
-                                    </button>
-                                </div>
+            <?php if (isset($success)): ?>
+                <div class="product-update__alert product-update__alert--success">
+                    <i class="fas fa-check-circle"></i>
+                    <?php echo htmlspecialchars($success); ?>
+                </div>
+            <?php endif; ?>
+            <form method="POST" action="/admin/products/update/handle" enctype="multipart/form-data" class="product-update__form-container">
+                <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['product_id'] ?? ''); ?>">
+                <input type="hidden" name="is_featured" value="<?php echo htmlspecialchars($product['is_featured'] ?? ''); ?>">
+                
+                <!-- Basic Product Information -->
+                <div class="product-update__section">
+                    <h2 class="product-update__section-title">
+                        <i class="fas fa-info-circle"></i>
+                        Thông tin cơ bản
+                    </h2>
+                    <div class="product-update__form-row">
+                        <div class="product-update__form-group">
+                            <label class="product-update__label product-update__label--required" for="product_name">
+                                Tên sản phẩm
+                            </label>
+                            <input type="text" 
+                                id="product_name" 
+                                name="product_name" 
+                                class="product-update__input" 
+                                value="<?php echo htmlspecialchars($product['name'] ?? ''); ?>" 
+                                required>
+                        </div>
+                        <div class="product-update__form-group">
+                            <label class="product-update__label" for="slug">
+                                Slug (URL thân thiện)
+                            </label>
+                            <input type="text" 
+                                id="slug" 
+                                name="slug" 
+                                class="product-update__input" 
+                                value="<?php echo htmlspecialchars($product['slug'] ?? ''); ?>">
+                        </div>
+                    </div>
+
+                    <div class="product-update__form-row--three">
+                        <div class="product-update__form-group">
+                            <label class="product-update__label product-update__label--required" for="brand_id">
+                                Thương hiệu
+                            </label>
+                            <select id="brand_id" name="brand_id" class="product-update__select" required>
+                                <option value="">-- Chọn thương hiệu --</option>
+                                <?php foreach ($brands ?? [] as $brand): ?>
+                                    <option value="<?php echo $brand['brand_id']; ?>" 
+                                            <?php echo ($product['brand_id'] ?? '') == $brand['brand_id'] ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($brand['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                       <div class="product-update__form-group">
+                            <label class="product-update__label product-update__label--required" for="category_id">
+                                Danh mục
+                            </label>
+                            <select id="category_id" name="category_id" class="product-update__select" required onchange="updateSubcategories()">
+                                <option value="">-- Chọn danh mục --</option>
+                                <?php foreach ($categories ?? [] as $category): ?>
+                                    <option value="<?php echo $category['category_id']; ?>" 
+                                            <?php echo ($product['category_id'] ?? '') == $category['category_id'] ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($category['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="product-update__form-group">
+                            <label class="product-update__label" for="subcategory_id">
+                                Danh mục con
+                            </label>
+                            <select id="subcategory_id" name="subcategory_id" class="product-update__select">
+                                <option value="">-- Chọn danh mục con --</option>
+                                <?php foreach ($subcategories ?? [] as $subcategory): ?>
+                                    <option value="<?php echo $subcategory['subcategory_id']; ?>" 
+                                            <?php echo ($product['subcategory_id'] ?? '') == $subcategory['subcategory_id'] ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($subcategory['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Descriptions -->
+                <div class="product-update__section">
+                    <h2 class="product-update__section-title">
+                        <i class="fas fa-align-left"></i>
+                        Mô tả sản phẩm
+                    </h2>
+                    <div class="product-update__descriptions" id="descriptions-container">
+                        <?php 
+                        $descriptions = $product['descriptions'] ?? [];
+                        foreach ($descriptions as $index => $desc): 
+                        ?>
+                        <div class="product-update__description-item">
+                            <div class="product-update__description-header">
+                                <span class="product-update__description-title">Mô tả <?php echo $index + 1; ?></span>
+                                <?php if (count($descriptions) > 1): ?>
+                                <button type="button" class="product-update__btn product-update__btn--danger btn-sm" onclick="removeDescription(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <?php endif; ?>
                             </div>
+                            <input type="hidden" name="descriptions[<?php echo $index; ?>][content_id]" value="<?php echo htmlspecialchars($desc['content_id'] ?? ''); ?>">
+                            <div class="product-update__form-group">
+                                <label class="product-update__label">Nội dung mô tả</label>
+                                <textarea name="descriptions[<?php echo $index; ?>][description]" 
+                                        class="product-update__textarea" 
+                                        rows="4"><?php echo htmlspecialchars($desc['description'] ?? ''); ?></textarea>
+                            </div>
+                            
+                            <div class="product-update__form-group">
+                                <label class="product-update__label">Hình ảnh mô tả</label>
+                                <?php if (!empty($desc['image_url'])): ?>
+                                    <div style="margin-bottom: 10px;">
+                                        <img src="<?php echo htmlspecialchars($desc['image_url']); ?>" 
+                                            class="product-update__current-image" 
+                                            style="height: 80px; width: auto;">
+                                        <input type="hidden" name="descriptions[<?php echo $index; ?>][current_image]" value="<?php echo htmlspecialchars($desc['image_url']); ?>">
+                                    </div>
+                                <?php endif; ?>
+                                <input type="file" 
+                                    name="descriptions[<?php echo $index; ?>][new_image]" 
+                                    class="product-update__image-upload" 
+                                    accept="image/*">
+                            </div>
+                        </div>
                         <?php endforeach; ?>
-                        <button type="button" class="product-detail__btn product-detail__btn--outline add-variant">
-                            <i class="fas fa-plus"></i> Thêm biến thể
-                        </button>
                     </div>
-                </section>
-                
-                <button type="submit" class="product-detail__btn product-detail__btn--primary">
-                    <i class="fas fa-save"></i> Cập nhật sản phẩm
-                </button>
-            </form>
-        </div>
-    </main>
+                    
+                    <button type="button" class="product-update__btn product-update__btn--success" onclick="addDescription()">
+                        <i class="fas fa-plus"></i>
+                        Thêm mô tả
+                    </button>
+                </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('.product-detail__admin-form');
-            let addVariantBtn = document.querySelector('.add-variant');
-            let addColorBtns = document.querySelectorAll('.add-color');
-            let addImageBtns = document.querySelectorAll('.add-image');
-
-            // Function to update dynamic button event listeners
-            function updateDynamicButtons() {
-                addColorBtns.forEach(btn => btn.removeEventListener('click', handleAddColor));
-                addImageBtns.forEach(btn => btn.removeEventListener('click', handleAddImage));
-                addColorBtns = document.querySelectorAll('.add-color');
-                addImageBtns = document.querySelectorAll('.add-image');
-                addColorBtns.forEach(btn => btn.addEventListener('click', handleAddColor));
-                addImageBtns.forEach(btn => btn.addEventListener('click', handleAddImage));
-            }
-
-            // Add new variant (similar to create page)
-            addVariantBtn.addEventListener('click', function() {
-                const variantItems = document.querySelectorAll('.product-detail__variant-item');
-                const variantIdx = variantItems.length;
-                const newVariant = `
-                    <div class="product-detail__variant-item">
-                        <h3 class="product-detail__variant-title">Biến thể ${variantIdx + 1}</h3>
-                        <input type="hidden" name="variants[${variantIdx}][variant_id]" value="">
-                        <div class="product-detail__form-group">
-                            <label class="product-detail__label">Dung lượng</label>
-                            <input type="text" class="product-detail__input" name="variants[${variantIdx}][capacity_group]" placeholder="Nhập dung lượng" required>
-                        </div>
-                        <div class="product-detail__form-row">
-                            <div class="product-detail__form-group">
-                                <label class="product-detail__label">Giá bán (VNĐ)</label>
-                                <input type="number" step="0.01" class="product-detail__input" name="variants[${variantIdx}][price]" placeholder="Nhập giá bán" required>
+                <!-- Product Specifications -->
+                <div class="product-update__section">
+                    <h2 class="product-update__section-title">
+                        <i class="fas fa-cogs"></i>
+                        Thông số kỹ thuật
+                    </h2>
+                    
+                    <div class="product-update__specs-container" id="specs-container">
+                        <?php 
+                        $specs = $product['specs'] ?? [];
+                        if (empty($specs)) {
+                            $specs = [['spec_id' => null, 'spec_name' => '', 'spec_value' => '', 'display_order' => 1]];
+                        }
+                        foreach ($specs as $index => $spec): 
+                        ?>
+                        <div class="product-update__spec-item">
+                            <input type="hidden" name="specs[<?php echo $index; ?>][spec_id]" value="<?php echo htmlspecialchars($spec['spec_id'] ?? ''); ?>">
+                            
+                            <div class="product-update__form-group">
+                                <label class="product-update__label">Tên thông số</label>
+                                <input type="text" 
+                                    name="specs[<?php echo $index; ?>][spec_name]" 
+                                    class="product-update__input" 
+                                    value="<?php echo htmlspecialchars($spec['spec_name'] ?? ''); ?>" >
                             </div>
-                            <div class="product-detail__form-group">
-                                <label class="product-detail__label">Giá gốc (VNĐ)</label>
-                                <input type="number" step="0.01" class="product-detail__input" name="variants[${variantIdx}][original_price]" placeholder="Nhập giá gốc" required>
+                            <div class="product-update__form-group">
+                                <label class="product-update__label">Giá trị</label>
+                                <input type="text" 
+                                    name="specs[<?php echo $index; ?>][spec_value]" 
+                                    class="product-update__input" 
+                                    value="<?php echo htmlspecialchars($spec['spec_value'] ?? ''); ?>" >
+                            </div>
+                            
+                            <div class="product-update__form-group">
+                                <label class="product-update__label">Thứ tự</label>
+                                <input type="number" 
+                                    name="specs[<?php echo $index; ?>][display_order]" 
+                                    class="product-update__input" 
+                                    value="<?php echo htmlspecialchars($spec['display_order'] ?? ''); ?>" 
+                                    min="1">
+                            </div>
+                            
+                            <div>
+                                <button type="button" class="product-update__btn product-update__btn--danger btn-sm" onclick="removeSpec(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </div>
                         </div>
-                        <div class="product-detail__form-group">
-                            <label class="product-detail__label">Số lượng tồn kho</label>
-                            <input type="number" class="product-detail__input" name="variants[${variantIdx}][stock_quantity]" placeholder="Nhập số lượng tồn kho" required>
-                        </div>
-                        <div class="product-detail__colors-manager">
-                            <div class="product-detail__color-item">
-                                <input type="hidden" name="variants[${variantIdx}][colors][0][variant_color_id]" value="">
-                                <div class="product-detail__form-row">
-                                    <div class="product-detail__form-group">
-                                        <label class="product-detail__label">Màu sắc</label>
-                                        <select class="product-detail__select" name="variants[${variantIdx}][colors][0][color_id]" required>
-                                            <option value="">Chọn màu</option>
-                                            <?php foreach ($colors as $c): ?>
-                                                <option value="<?php echo htmlspecialchars($c['id']); ?>">
-                                                    <?php echo htmlspecialchars($c['name']) . ' (' . $c['hex_code'] . ')'; ?>
+                        <?php endforeach; ?>
+                    </div>
+                    
+                    <button type="button" class="product-update__add-spec-btn" onclick="addSpec()">
+                        <i class="fas fa-plus"></i>
+                        Thêm thông số
+                    </button>
+                </div>
+
+                <!-- Product Variants -->
+                <div class="product-update__section">
+                    <h2 class="product-update__section-title">
+                        <i class="fas fa-boxes"></i>
+                        Biến thể sản phẩm
+                    </h2>
+                    
+                    <div class="product-update__variants" id="variants-container">
+                        <?php 
+                        $variants = $product['variants'] ?? [];
+                        if (empty($variants)) {
+                            // Tạo một biến thể mặc định nếu chưa có
+                            $variants = [['sku_id' => '', 'sku_code' => '', 'price_original' => '', 'stock_quantity' => '', 'is_default' => 1, 'attributes' => [], 'images' => []]];
+                        }
+                        foreach ($variants as $variantIndex => $variant): 
+                        ?>
+                        <div class="product-update__variant" data-variant-index="<?php echo $variantIndex; ?>">
+                            <div class="product-update__variant-header">
+                                <h3 class="product-update__variant-title">
+                                    Biến thể <?php echo $variantIndex + 1; ?>: 
+                                    <?php 
+                                    $variantLabel = '';
+                                    if (!empty($variant['attributes'])) {
+                                        $attributes = array_map(function($attr) {
+                                            return $attr['option_value'];
+                                        }, $variant['attributes']);
+                                        $variantLabel = implode(', ', $attributes);
+                                    }
+                                    echo htmlspecialchars($variantLabel ?: $variant['sku_code']);
+                                    ?>
+                                </h3>
+                                <?php if (count($variants) > 1): ?>
+                                <button type="button" class="product-update__btn product-update__btn--danger btn-sm" onclick="removeVariant(this)">
+                                    <i class="fas fa-trash"></i>
+                                    Xóa biến thể
+                                </button>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <div class="product-update__variant-content">
+                                <input type="hidden" name="variants[<?php echo $variantIndex; ?>][sku_id]" value="<?php echo htmlspecialchars($variant['sku_id'] ?? ''); ?>">
+                                
+                                <!-- Basic Variant Info -->
+                                <div class="product-update__variant-basic">
+                                    <div class="product-update__form-group">
+                                        <label class="product-update__label product-update__label--required">Mã SKU</label>
+                                        <input type="text" 
+                                            name="variants[<?php echo $variantIndex; ?>][sku_code]" 
+                                            class="product-update__input" 
+                                            value="<?php echo htmlspecialchars($variant['sku_code'] ?? ''); ?>" 
+                                            required>
+                                    </div>
+                                    
+                                    <div class="product-update__form-group">
+                                        <label class="product-update__label product-update__label--required">Giá (VNĐ)</label>
+                                        <input type="number" 
+                                            name="variants[<?php echo $variantIndex; ?>][price]" 
+                                            class="product-update__input" 
+                                            value="<?php echo htmlspecialchars($variant['price_original'] ?? ''); ?>" 
+                                            step="0.01" 
+                                            min="0" 
+                                            required>
+                                    </div>
+                                    
+                                    <div class="product-update__form-group">
+                                        <label class="product-update__label product-update__label--required">Số lượng</label>
+                                        <input type="number" 
+                                            name="variants[<?php echo $variantIndex; ?>][stock_quantity]" 
+                                            class="product-update__input" 
+                                            value="<?php echo htmlspecialchars($variant['stock_quantity'] ?? ''); ?>" 
+                                            min="0" 
+                                            required>
+                                    </div>
+                                    
+                                    <div class="product-update__form-group">
+                                        <label class="product-update__label">
+                                            <input type="checkbox" 
+                                                name="variants[<?php echo $variantIndex; ?>][is_default]" 
+                                                value="1" 
+                                                class="variant-default-checkbox"
+                                                <?php echo !empty($variant['is_default']) ? 'checked' : ''; ?>>
+                                            Biến thể mặc định
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <!-- Variant Attributes -->
+                                <div class="product-update__subsection-title">Thuộc tính biến thể</div>
+                                <div class="product-update__attributes-grid">
+                                    <!-- Color Attribute -->
+                                    <div class="product-update__attribute-group">
+                                        <label class="product-update__label">Màu sắc</label>
+                                        <select name="variants[<?php echo $variantIndex; ?>][attributes][color]" class="product-update__select">
+                                            <option value="">-- Chọn màu --</option>
+                                            <?php 
+                                            $currentColor = '';
+                                            if (!empty($variant['attributes'])) {
+                                                foreach ($variant['attributes'] as $attr) {
+                                                    if ($attr['option_name'] === 'Color') {
+                                                        $currentColor = $attr['option_value'];
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            foreach ($colors ?? [] as $color): 
+                                            ?>
+                                                <option value="<?php echo htmlspecialchars($color['name']); ?>" 
+                                                        <?php echo $currentColor === $color['name'] ? 'selected' : ''; ?>>
+                                                    <?php echo htmlspecialchars($color['name']); ?>
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    <div class="product-detail__form-group">
-                                        <label class="product-detail__label">Số lượng</label>
-                                        <input type="number" class="product-detail__input" name="variants[${variantIdx}][colors][0][stock_quantity]" placeholder="Số lượng" required>
+                                    
+                                    <!-- Capacity Attribute -->
+                                    <div class="product-update__attribute-group">
+                                        <label class="product-update__label">Dung lượng</label>
+                                        <select name="variants[<?php echo $variantIndex; ?>][attributes][capacity]" class="product-update__select">
+                                            <option value="">-- Chọn dung lượng --</option>
+                                            <?php 
+                                            $currentCapacity = '';
+                                            if (!empty($variant['attributes'])) {
+                                                foreach ($variant['attributes'] as $attr) {
+                                                    if ($attr['option_name'] === 'Capacity') {
+                                                        $currentCapacity = $attr['option_value'];
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            foreach ($capacities ?? [] as $capacity): 
+                                            ?>
+                                                <option value="<?php echo htmlspecialchars($capacity['name']); ?>" 
+                                                        <?php echo $currentCapacity === $capacity['name'] ? 'selected' : ''; ?>>
+                                                    <?php echo htmlspecialchars($capacity['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    
+                                    <!-- RAM Attribute -->
+                                    <div class="product-update__attribute-group">
+                                        <label class="product-update__label">RAM</label>
+                                        <input type="text" 
+                                            name="variants[<?php echo $variantIndex; ?>][attributes][ram]" 
+                                            class="product-update__input" 
+                                            value="<?php 
+                                            $currentRAM = '';
+                                            if (!empty($variant['attributes'])) {
+                                                foreach ($variant['attributes'] as $attr) {
+                                                    if ($attr['option_name'] === 'RAM') {
+                                                        $currentRAM = $attr['option_value'];
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            echo htmlspecialchars($currentRAM);
+                                            ?>" 
+                                            placeholder="VD: 8GB">
+                                    </div>
+                                    
+                                    <!-- CPU Attribute -->
+                                    <div class="product-update__attribute-group">
+                                        <label class="product-update__label">CPU</label>
+                                        <input type="text" 
+                                            name="variants[<?php echo $variantIndex; ?>][attributes][cpu]" 
+                                            class="product-update__input" 
+                                            value="<?php 
+                                            $currentCPU = '';
+                                            if (!empty($variant['attributes'])) {
+                                                foreach ($variant['attributes'] as $attr) {
+                                                    if ($attr['option_name'] === 'CPU') {
+                                                        $currentCPU = $attr['option_value'];
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            echo htmlspecialchars($currentCPU);
+                                            ?>" 
+                                            placeholder="VD: A15 Bionic">
+                                    </div>
+                                    
+                                    <!-- Screen Size Attribute -->
+                                    <div class="product-update__attribute-group">
+                                        <label class="product-update__label">Kích thước màn hình</label>
+                                        <input type="text" 
+                                            name="variants[<?php echo $variantIndex; ?>][attributes][screen_size]" 
+                                            class="product-update__input" 
+                                            value="<?php 
+                                            $currentScreenSize = '';
+                                            if (!empty($variant['attributes'])) {
+                                                foreach ($variant['attributes'] as $attr) {
+                                                    if ($attr['option_name'] === 'Screen Size') {
+                                                        $currentScreenSize = $attr['option_value'];
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            echo htmlspecialchars($currentScreenSize);
+                                            ?>" 
+                                            placeholder="VD: 6.1 inch">
                                     </div>
                                 </div>
-                                <div class="product-detail__form-group">
-                                    <input type="checkbox" id="isActive_${variantIdx}_0" name="variants[${variantIdx}][colors][0][is_active]" value="1" checked>
-                                    <label for="isActive_${variantIdx}_0">Kích hoạt</label>
-                                </div>
-                                <div class="product-detail__color-gallery">
-                                    <div class="product-detail__form-group">
-                                        <label class="product-detail__label">Ảnh màu</label>
-                                        <input type="hidden" name="variants[${variantIdx}][colors][0][images][0][image_id]" value="">
-                                        <input type="hidden" name="variants[${variantIdx}][colors][0][images][0][current_url]" value="">
-                                        <input type="file" name="variants[${variantIdx}][colors][0][images][0][file]" accept="image/*" class="product-detail__input" required>
-                                        <input type="text" class="product-detail__input" name="variants[${variantIdx}][colors][0][images][0][gallery_image_alt]" placeholder="Mô tả ảnh">
-                                        <input type="hidden" name="variants[${variantIdx}][colors][0][images][0][sort_order]" value="0">
+                                
+                                <!-- Variant Images -->
+                                <div class="product-update__image-section">
+                                    <div class="product-update__subsection-title">Hình ảnh biến thể</div>
+                                    <div class="product-update__image-grid">
+                                        <?php 
+                                        $images = $variant['images'] ?? [];
+                                        // Ensure we have at least 4 image slots
+                                        for ($i = 0; $i < max(4, count($images)); $i++): 
+                                        ?>
+                                        <div class="product-update__image-item <?php echo isset($images[$i]) ? 'product-update__image-item--has-image' : ''; ?>">
+                                            <?php if (isset($images[$i])): ?>
+                                                <img src="/img/products/gallery/<?php echo htmlspecialchars($images[$i]); ?>" 
+                                                    class="product-update__current-image">
+                                                <input type="hidden" 
+                                                    name="variants[<?php echo $variantIndex; ?>][current_images][]" 
+                                                    value="<?php echo htmlspecialchars($images[$i]); ?>">
+                                                <button type="button" 
+                                                        class="product-update__image-remove" 
+                                                        onclick="removeImage(this)">×</button>
+                                            <?php endif; ?>
+                                            <input type="file" 
+                                                name="variants[<?php echo $variantIndex; ?>][new_images][]" 
+                                                class="product-update__image-upload" 
+                                                accept="image/*">
+                                        </div>
+                                        <?php endfor; ?>
                                     </div>
                                 </div>
-                                <button type="button" class="product-detail__btn product-detail__btn--outline add-image" data-variant="${variantIdx}" data-color="0">
-                                    <i class="fas fa-plus"></i> Thêm ảnh
-                                </button>
                             </div>
-                            <button type="button" class="product-detail__btn product-detail__btn--outline add-color" data-variant="${variantIdx}">
-                                <i class="fas fa-plus"></i> Thêm màu
-                            </button>
                         </div>
+                        <?php endforeach; ?>
                     </div>
-                `;
-                form.querySelector('.product-detail__variants-manager').insertAdjacentHTML('beforeend', newVariant);
-                updateDynamicButtons();
-            });
+                    
+                    <!-- Add Variant Button -->
+                    <button type="button" class="product-update__btn product-update__btn--success" onclick="addVariant()">
+                        <i class="fas fa-plus"></i>
+                        Thêm biến thể
+                    </button>
+                </div>
 
-            // Add new color
-            function handleAddColor(e) {
-                const variantIdx = e.target.dataset.variant;
-                const colorItems = e.target.closest('.product-detail__variant-item').querySelectorAll('.product-detail__color-item');
-                const colorIdx = colorItems.length;
-                const newColor = `
-                    <div class="product-detail__color-item">
-                        <input type="hidden" name="variants[${variantIdx}][colors][${colorIdx}][variant_color_id]" value="">
-                        <div class="product-detail__form-row">
-                            <div class="product-detail__form-group">
-                                <label class="product-detail__label">Màu sắc</label>
-                                <select class="product-detail__select" name="variants[${variantIdx}][colors][${colorIdx}][color_id]" required>
-                                    <option value="">Chọn màu</option>
-                                    <?php foreach ($colors as $c): ?>
-                                        <option value="<?php echo htmlspecialchars($c['id']); ?>">
-                                            <?php echo htmlspecialchars($c['name']) . ' (' . $c['hex_code'] . ')'; ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="product-detail__form-group">
-                                <label class="product-detail__label">Số lượng</label>
-                                <input type="number" class="product-detail__input" name="variants[${variantIdx}][colors][${colorIdx}][stock_quantity]" placeholder="Số lượng" required>
-                            </div>
-                        </div>
-                        <div class="product-detail__form-group">
-                            <input type="checkbox" id="isActive_${variantIdx}_${colorIdx}" name="variants[${variantIdx}][colors][${colorIdx}][is_active]" value="1" checked>
-                            <label for="isActive_${variantIdx}_${colorIdx}">Kích hoạt</label>
-                        </div>
-                        <div class="product-detail__color-gallery">
-                            <div class="product-detail__form-group">
-                                <label class="product-detail__label">Ảnh màu</label>
-                                <input type="hidden" name="variants[${variantIdx}][colors][${colorIdx}][images][0][image_id]" value="">
-                                <input type="hidden" name="variants[${variantIdx}][colors][${colorIdx}][images][0][current_url]" value="">
-                                <input type="file" name="variants[${variantIdx}][colors][${colorIdx}][images][0][file]" accept="image/*" class="product-detail__input" required>
-                                <input type="text" class="product-detail__input" name="variants[${variantIdx}][colors][${colorIdx}][images][0][gallery_image_alt]" placeholder="Mô tả ảnh">
-                                <input type="hidden" name="variants[${variantIdx}][colors][${colorIdx}][images][0][sort_order]" value="0">
-                            </div>
-                        </div>
-                        <button type="button" class="product-detail__btn product-detail__btn--outline add-image" data-variant="${variantIdx}" data-color="${colorIdx}">
-                            <i class="fas fa-plus"></i> Thêm ảnh
-                        </button>
-                    </div>
-                `;
-                e.target.insertAdjacentHTML('beforebegin', newColor);
-                updateDynamicButtons();
-            }
-
-            // Add new image
-            function handleAddImage(e) {
-                const variantIdx = e.target.dataset.variant;
-                const colorIdx = e.target.dataset.color;
-                const gallery = e.target.closest('.product-detail__color-item').querySelector('.product-detail__color-gallery');
-                const imageIdx = gallery.querySelectorAll('.product-detail__form-group').length;
-                const newImage = `
-                    <div class="product-detail__form-group">
-                        <label class="product-detail__label">Ảnh màu ${imageIdx + 1}</label>
-                        <input type="hidden" name="variants[${variantIdx}][colors][${colorIdx}][images][${imageIdx}][image_id]" value="">
-                        <input type="hidden" name="variants[${variantIdx}][colors][${colorIdx}][images][${imageIdx}][current_url]" value="">
-                        <input type="file" name="variants[${variantIdx}][colors][${colorIdx}][images][${imageIdx}][file]" accept="image/*" class="product-detail__input" required>
-                        <input type="text" class="product-detail__input" name="variants[${variantIdx}][colors][${colorIdx}][images][${imageIdx}][gallery_image_alt]" placeholder="Mô tả ảnh">
-                        <input type="hidden" name="variants[${variantIdx}][colors][${colorIdx}][images][${imageIdx}][sort_order]" value="${imageIdx}">
-                    </div>
-                `;
-                e.target.insertAdjacentHTML('beforebegin', newImage);
-            }
-
-            // Attach event listeners
-            addColorBtns.forEach(btn => btn.addEventListener('click', handleAddColor));
-            addImageBtns.forEach(btn => btn.addEventListener('click', handleAddImage));
-
-            // Form validation
-            form.addEventListener('submit', function(e) {
-                const requiredFields = form.querySelectorAll('input[required], select[required]');
-                let isValid = true;
+                <!-- Form Actions -->
+                <div class="product-update__form-actions">
+                    <a href="/admin/products" class="product-update__btn product-update__btn--outline">
+                        <i class="fas fa-arrow-left"></i>
+                        Hủy
+                    </a>
+                    <button type="submit" class="product-update__btn product-update__btn--primary">
+                        <i class="fas fa-save"></i>
+                        Cập nhật sản phẩm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script>
+        // Dynamic Description Management
+        let descriptionIndex = <?php echo count($product['descriptions'] ?? []) - 1; ?>;
+        
+        function addDescription() {
+            descriptionIndex++;
+            const container = document.getElementById('descriptions-container');
+            const newDescription = document.createElement('div');
+            newDescription.className = 'product-update__description-item';
+            newDescription.innerHTML = `
+                <div class="product-update__description-header">
+                    <span class="product-update__description-title">Mô tả ${descriptionIndex + 1}</span>
+                    <button type="button" class="product-update__btn product-update__btn--danger btn-sm" onclick="removeDescription(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
                 
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        isValid = false;
-                        field.style.borderColor = 'red';
-                    } else {
-                        field.style.borderColor = '';
-                    }
-                });
-
-                if (!isValid) {
-                    e.preventDefault();
-                    alert('Vui lòng điền đầy đủ thông tin bắt buộc.');
+                <input type="hidden" name="descriptions[${descriptionIndex}][content_id]" value="">
+                
+                <div class="product-update__form-group">
+                    <label class="product-update__label">Nội dung mô tả</label>
+                    <textarea name="descriptions[${descriptionIndex}][description]" 
+                            class="product-update__textarea" 
+                            rows="4"></textarea>
+                </div>
+                
+                <div class="product-update__form-group">
+                    <label class="product-update__label">Hình ảnh mô tả</label>
+                    <input type="file" 
+                           name="descriptions[${descriptionIndex}][new_image]" 
+                           class="product-update__image-upload" 
+                           accept="image/*">
+                </div>
+            `;
+            container.appendChild(newDescription);
+        }
+        
+        function removeDescription(button) {
+            if (document.querySelectorAll('.product-update__description-item').length > 1) {
+                button.closest('.product-update__description-item').remove();
+                updateDescriptionLabels();
+            }
+        }
+        
+        function updateDescriptionLabels() {
+            const descriptions = document.querySelectorAll('.product-update__description-item');
+            descriptions.forEach((desc, index) => {
+                const title = desc.querySelector('.product-update__description-title');
+                if (title) {
+                    title.textContent = `Mô tả ${index + 1}`;
                 }
             });
+        }
+        
+        // Dynamic Specifications Management
+        let specIndex = <?php echo count($product['specs'] ?? []) - 1; ?>;
+        
+        function addSpec() {
+            specIndex++;
+            const container = document.getElementById('specs-container');
+            const newSpec = document.createElement('div');
+            newSpec.className = 'product-update__spec-item';
+            newSpec.innerHTML = `
+                <input type="hidden" name="specs[${specIndex}][spec_id]" value="">
+                
+                <div class="product-update__form-group">
+                    <label class="product-update__label">Tên thông số</label>
+                    <input type="text" 
+                           name="specs[${specIndex}][spec_name]" 
+                           class="product-update__input" 
+                           placeholder="VD: Màn hình">
+                </div>
+                
+                <div class="product-update__form-group">
+                    <label class="product-update__label">Giá trị</label>
+                    <input type="text" 
+                           name="specs[${specIndex}][spec_value]" 
+                           class="product-update__input" 
+                           placeholder="VD: 6.1 inch">
+                </div>
+                
+                <div class="product-update__form-group">
+                    <label class="product-update__label">Thứ tự</label>
+                    <input type="number" 
+                           name="specs[${specIndex}][display_order]" 
+                           class="product-update__input" 
+                           value="${specIndex + 1}" 
+                           min="1">
+                </div>
+                
+                <div>
+                    <button type="button" class="product-update__btn product-update__btn--danger btn-sm" onclick="removeSpec(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            container.appendChild(newSpec);
+        }
+        
+        function removeSpec(button) {
+            if (document.querySelectorAll('.product-update__spec-item').length > 1) {
+                button.closest('.product-update__spec-item').remove();
+            }
+        }
+        
+        // Dynamic Variant Management
+        let variantIndex = <?php echo count($product['variants'] ?? []) - 1; ?>;
+        
+        function addVariant() {
+            variantIndex++;
+            const container = document.getElementById('variants-container');
+            const newVariant = document.createElement('div');
+            newVariant.className = 'product-update__variant';
+            newVariant.setAttribute('data-variant-index', variantIndex);
+            
+            newVariant.innerHTML = `
+                <div class="product-update__variant-header">
+                    <h3 class="product-update__variant-title">Biến thể ${variantIndex + 1}</h3>
+                    <button type="button" class="product-update__btn product-update__btn--danger btn-sm" onclick="removeVariant(this)">
+                        <i class="fas fa-trash"></i>
+                        Xóa biến thể
+                    </button>
+                </div>
+                
+                <div class="product-update__variant-content">
+                    <input type="hidden" name="variants[${variantIndex}][sku_id]" value="">
+                    
+                    <!-- Basic Variant Info -->
+                    <div class="product-update__variant-basic">
+                        <div class="product-update__form-group">
+                            <label class="product-update__label product-update__label--required">Mã SKU</label>
+                            <input type="text" 
+                                name="variants[${variantIndex}][sku_code]" 
+                                class="product-update__input" 
+                                placeholder="VD: SKU-001"
+                                required>
+                        </div>
+                        
+                        <div class="product-update__form-group">
+                            <label class="product-update__label product-update__label--required">Giá (VNĐ)</label>
+                            <input type="number" 
+                                name="variants[${variantIndex}][price]" 
+                                class="product-update__input" 
+                                step="0.01" 
+                                min="0" 
+                                placeholder="0"
+                                required>
+                        </div>
+                        
+                        <div class="product-update__form-group">
+                            <label class="product-update__label product-update__label--required">Số lượng</label>
+                            <input type="number" 
+                                name="variants[${variantIndex}][stock_quantity]" 
+                                class="product-update__input" 
+                                min="0" 
+                                placeholder="0"
+                                required>
+                        </div>
+                        
+                        <div class="product-update__form-group">
+                            <label class="product-update__label">
+                                <input type="checkbox" 
+                                    name="variants[${variantIndex}][is_default]" 
+                                    value="1" 
+                                    class="variant-default-checkbox">
+                                Biến thể mặc định
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Variant Attributes -->
+                    <div class="product-update__subsection-title">Thuộc tính biến thể</div>
+                    <div class="product-update__attributes-grid">
+                        <!-- Color Attribute -->
+                        <div class="product-update__attribute-group">
+                            <label class="product-update__label">Màu sắc</label>
+                            <select name="variants[${variantIndex}][attributes][color]" class="product-update__select">
+                                <option value="">-- Chọn màu --</option>
+                                <?php foreach ($colors ?? [] as $color): ?>
+                                    <option value="<?php echo htmlspecialchars($color['name']); ?>">
+                                        <?php echo htmlspecialchars($color['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <!-- Capacity Attribute -->
+                        <div class="product-update__attribute-group">
+                            <label class="product-update__label">Dung lượng</label>
+                            <select name="variants[${variantIndex}][attributes][capacity]" class="product-update__select">
+                                <option value="">-- Chọn dung lượng --</option>
+                                <?php foreach ($capacities ?? [] as $capacity): ?>
+                                    <option value="<?php echo htmlspecialchars($capacity['name']); ?>">
+                                        <?php echo htmlspecialchars($capacity['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <!-- RAM Attribute -->
+                        <div class="product-update__attribute-group">
+                            <label class="product-update__label">RAM</label>
+                            <input type="text" 
+                                name="variants[${variantIndex}][attributes][ram]" 
+                                class="product-update__input" 
+                                placeholder="VD: 8GB">
+                        </div>
+                        
+                        <!-- CPU Attribute -->
+                        <div class="product-update__attribute-group">
+                            <label class="product-update__label">CPU</label>
+                            <input type="text" 
+                                name="variants[${variantIndex}][attributes][cpu]" 
+                                class="product-update__input" 
+                                placeholder="VD: A15 Bionic">
+                        </div>
+                        
+                        <!-- Screen Size Attribute -->
+                        <div class="product-update__attribute-group">
+                            <label class="product-update__label">Kích thước màn hình</label>
+                            <input type="text" 
+                                name="variants[${variantIndex}][attributes][screen_size]" 
+                                class="product-update__input" 
+                                placeholder="VD: 6.1 inch">
+                        </div>
+                    </div>
+                    
+                    <!-- Variant Images -->
+                    <div class="product-update__image-section">
+                        <div class="product-update__subsection-title">Hình ảnh biến thể</div>
+                        <div class="product-update__image-grid">
+                            <div class="product-update__image-item">
+                                <input type="file" 
+                                    name="variants[${variantIndex}][new_images][]" 
+                                    class="product-update__image-upload" 
+                                    accept="image/*">
+                            </div>
+                            <div class="product-update__image-item">
+                                <input type="file" 
+                                    name="variants[${variantIndex}][new_images][]" 
+                                    class="product-update__image-upload" 
+                                    accept="image/*">
+                            </div>
+                            <div class="product-update__image-item">
+                                <input type="file" 
+                                    name="variants[${variantIndex}][new_images][]" 
+                                    class="product-update__image-upload" 
+                                    accept="image/*">
+                            </div>
+                            <div class="product-update__image-item">
+                                <input type="file" 
+                                    name="variants[${variantIndex}][new_images][]" 
+                                    class="product-update__image-upload" 
+                                    accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            
+            container.appendChild(newVariant);
+            updateVariantLabels();
+        }
+        
+        function removeVariant(button) {
+            const variants = document.querySelectorAll('.product-update__variant');
+            if (variants.length > 1) {
+                button.closest('.product-update__variant').remove();
+                updateVariantLabels();
+                updateDefaultCheckboxes();
+            } else {
+                alert('Phải có ít nhất một biến thể cho sản phẩm');
+            }
+        }
+        
+        function updateVariantLabels() {
+            const variants = document.querySelectorAll('.product-update__variant');
+            variants.forEach((variant, index) => {
+                const title = variant.querySelector('.product-update__variant-title');
+                if (title) {
+                    const currentText = title.textContent;
+                    const colonIndex = currentText.indexOf(':');
+                    const suffix = colonIndex > -1 ? currentText.substring(colonIndex) : '';
+                    title.textContent = `Biến thể ${index + 1}${suffix}`;
+                }
+                
+                // Update variant index attribute
+                variant.setAttribute('data-variant-index', index);
+            });
+        }
+        
+        function updateDefaultCheckboxes() {
+            const checkboxes = document.querySelectorAll('.variant-default-checkbox');
+            
+            // Ensure only one default variant is selected
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        checkboxes.forEach((otherCheckbox, otherIndex) => {
+                            if (otherIndex !== index) {
+                                otherCheckbox.checked = false;
+                            }
+                        });
+                    }
+                });
+            });
+        }
+        
+        // Image Management
+        function removeImage(button) {
+            const imageItem = button.closest('.product-update__image-item');
+            const img = imageItem.querySelector('.product-update__current-image');
+            const hiddenInput = imageItem.querySelector('input[type="hidden"]');
+            
+            if (img) img.remove();
+            if (hiddenInput) hiddenInput.remove();
+            if (button) button.remove();
+            
+            imageItem.classList.remove('product-update__image-item--has-image');
+        }
+        
+        // Category-Subcategory Dynamic Loading
+        function updateSubcategories() {
+            const categoryId = document.getElementById('category_id').value;
+            
+            const subcategorySelect = document.getElementById('subcategory_id');
+            subcategorySelect.innerHTML = '<option value="">-- Chọn danh mục con --</option>';
+            if (categoryId) {
+                // Sử dụng route mới /admin/categories/subcategories
+                fetch(`/admin/categories/subcategories?category_id=${categoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Lỗi:', data.error);
+                            return;
+                        }
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.subcategory_id;
+                            option.text = item.name;
+                            subcategorySelect.appendChild(option);
+                        });
+                        const currentSubcategoryId = '<?php echo $product['subcategory_id'] ?? ''; ?>';
+                        if (currentSubcategoryId) {
+                            subcategorySelect.value = currentSubcategoryId;
+                        }
+                    })
+                    .catch(error => console.error('Error fetching subcategories:', error));
+            }
+        }
+        
+        // Form Validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const productName = document.getElementById('product_name').value.trim();
+            const brandId = document.getElementById('brand_id').value;
+            const categoryId = document.getElementById('category_id').value;
+            
+            if (!productName) {
+                alert('Vui lòng nhập tên sản phẩm');
+                e.preventDefault();
+                return;
+            }
+            
+            if (!brandId) {
+                alert('Vui lòng chọn thương hiệu');
+                e.preventDefault();
+                return;
+            }
+            
+            if (!categoryId) {
+                alert('Vui lòng chọn danh mục');
+                e.preventDefault();
+                return;
+            }
+            
+            // Validate variants
+            const variants = document.querySelectorAll('.product-update__variant');
+            let hasValidVariant = false;
+            let hasDefaultVariant = false;
+            
+            variants.forEach(function(variant) {
+                const skuCode = variant.querySelector('input[name*="[sku_code]"]').value.trim();
+                const price = variant.querySelector('input[name*="[price]"]').value;
+                const stockQuantity = variant.querySelector('input[name*="[stock_quantity]"]').value;
+                const isDefault = variant.querySelector('input[name*="[is_default]"]').checked;
+                
+                if (skuCode && price && stockQuantity) {
+                    hasValidVariant = true;
+                }
+                
+                if (isDefault) {
+                    hasDefaultVariant = true;
+                }
+            });
+            
+            if (!hasValidVariant) {
+                alert('Vui lòng nhập thông tin cho ít nhất một biến thể sản phẩm');
+                e.preventDefault();
+                return;
+            }
+            
+            if (!hasDefaultVariant) {
+                alert('Vui lòng chọn một biến thể làm mặc định');
+                e.preventDefault();
+                return;
+            }
+        });
+        
+        // Initialize default checkbox behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDefaultCheckboxes();
         });
     </script>
 </body>

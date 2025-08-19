@@ -61,4 +61,5 @@ ob_start();
             </li>
         </ul>
     </div>
+<script type="module" src="/admin-ui/js/pages/dropdownUser.js"></script>
 <?php $htmlDropdownUser = ob_get_clean(); ?>
