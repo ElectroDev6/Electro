@@ -67,8 +67,11 @@ Router::get('/unboxing', 'UnboxingController@showUnboxing');
 Router::get('/repair', 'RepairController@showRepair');
 
 
-Router::post('/checkout/submit', 'CheckoutController@submit');
+// Router::post('/checkout/submit', 'CheckoutController@submit');
 Router::get('/checkout', 'CheckoutController@index');
+
+// Checkout
+Router::post('/checkout/pay', 'CheckoutController@pay');
 
 Router::get('/thankyou', 'ThankyouController@index');
 Router::get('/thankyou', 'CheckoutController@thankyou');

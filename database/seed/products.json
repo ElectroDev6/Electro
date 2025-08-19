@@ -56,13 +56,6 @@
     "is_featured": 0
   },
   {
-    "name": "iPhone 16 Pro",
-    "brand_id": 1,
-    "subcategory_id": 101,
-    "slug": "iphone-16-pro",
-    "is_featured": 0
-  },
-  {
     "name": "iPhone 16 Pro Max",
     "brand_id": 1,
     "subcategory_id": 101,
@@ -74,6 +67,13 @@
     "brand_id": 1,
     "subcategory_id": 101,
     "slug": "iphone-16-plus",
+    "is_featured": 0
+  },
+  {
+    "name": "iPhone 16 E",
+    "brand_id": 1,
+    "subcategory_id": 101,
+    "slug": "iphone-16-e",
     "is_featured": 0
   },
   {

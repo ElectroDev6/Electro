@@ -3,13 +3,13 @@
     "name": "Điện thoại",
     "image": "/img/category/dien_thoai_cate.webp",
     "description": "Các loại điện thoại thông minh và phổ thông từ nhiều thương hiệu.",
-    "slug": "dien-thoai"
+    "slug": "phone"
   },
   {
     "name": "Máy tính bảng",
     "image": "/img/category/may_tinh_bang_cate.webp",
     "description": "Máy tính bảng phục vụ học tập, làm việc và giải trí.",
-    "slug": "may-tinh-bang"
+    "slug": "tablet"
   },
   {
     "name": "Laptop",
@@ -21,25 +21,25 @@
     "name": "PC & Linh kiện",
     "image": "/img/category/pc_linh_kien_cate.webp",
     "description": "Máy tính để bàn và linh kiện như CPU, RAM, SSD, GPU.",
-    "slug": "pc-linh-kien"
+    "slug": "pc-components"
   },
   {
     "name": "Phụ kiện",
     "image": "/img/category/phu_kien_cate.webp",
     "description": "Phụ kiện điện tử: ốp lưng, tai nghe, sạc, cáp, balo.",
-    "slug": "phu-kien"
+    "slug": "accessories"
   },
   {
     "name": "Tivi",
     "image": "/img/category/tivi_cate.webp",
     "description": "Tivi thông minh LED/OLED/QLED từ nhiều thương hiệu.",
-    "slug": "tivi"
+    "slug": "tv"
   },
   {
     "name": "Điện gia dụng",
     "image": "/img/category/dien_gia_dung_cate.webp",
     "description": "Thiết bị gia dụng: tủ lạnh, lò vi sóng, máy hút bụi, quạt.",
-    "slug": "dien-gia-dung"
+    "slug": "refrigerator"
   },
   {
     "name": "Gaming",
@@ -51,6 +51,6 @@
     "name": "Chăm sóc cá nhân",
     "image": "/img/category/cham_soc_ca_nhan_cate.webp",
     "description": "Thiết bị chăm sóc sức khỏe và làm đẹp gia đình.",
-    "slug": "cham-soc-ca-nhan"
+    "slug": "personal-care"
   }
 ]

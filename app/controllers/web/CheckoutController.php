@@ -108,4 +108,10 @@ class CheckoutController
     {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
+
+    public function pay()
+    {
+        // Lấy config
+        require_once BASE_PATH . '/vnpay_php/vnpay_create_payment.php';
+    }
 }
