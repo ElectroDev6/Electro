@@ -1,17 +1,21 @@
 <?php
+
 namespace App\Controllers\Web;
 
 use Core\View;
 use App\Services\WishlistService;
 
-class WishlistController {
+class WishlistController
+{
     private WishlistService $wishlistService;
 
-    public function __construct(\PDO $pdo) {
+    public function __construct(\PDO $pdo)
+    {
         $this->wishlistService = new WishlistService($pdo);
     }
 
-    public function showWishlist() {
+    public function showWishlist()
+    {
         $userId = $_SESSION['user_id'] ?? 1; // giả lập user login
         $wishlist = $this->wishlistService->getUserWishlist($userId);
 
@@ -21,7 +25,8 @@ class WishlistController {
         ]);
     }
 
-    public function removeProduct() {
+    public function removeProduct()
+    {
         $userId = $_SESSION['user_id'] ?? 1;
         $productId = $_POST['product_id'] ?? null;
 
@@ -33,7 +38,8 @@ class WishlistController {
         exit;
     }
 
-    public function uploadAvatar() {
+    public function uploadAvatar()
+    {
         $userId = $_SESSION['user_id'] ?? 1;
 
         if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
