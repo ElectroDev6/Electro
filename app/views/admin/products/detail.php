@@ -13,7 +13,7 @@ include dirname(__DIR__) . '/partials/header.php';
 
 </head>
 <body>
-    <?php echo '<pre>'; echo print_r($product, true); echo '</pre>'; ?>
+    <!-- <?php echo '<pre>'; echo print_r($product, true); echo '</pre>'; ?> -->
     <?php echo $htmlHeader; ?>
     <main class="wrapper">
         <?php echo $contentSidebar; ?>

@@ -13,11 +13,6 @@ include dirname(__DIR__) . '/partials/header.php';
 
 </head>
 <body>
-        <?php
-        echo '<pre>';
-        print_r($product);
-        echo '</pre>';
-        ?>
     <?php echo $htmlHeader; ?>
      <main class="wrapper">
          <?php echo $contentSidebar; ?>

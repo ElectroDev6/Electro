@@ -200,6 +200,14 @@ class ProductsModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+        public function getSubcategories()
+    {
+        $sql = "SELECT subcategory_id, name, category_id, subcategory_slug FROM subcategories ORDER BY name";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getSubcategoryById($subcategoryId)
     {
         $sql = "SELECT subcategory_id, name, category_id FROM subcategories WHERE subcategory_id = :id LIMIT 1";
@@ -703,5 +711,151 @@ class ProductsModel
         }
 
         return $this->updateCompleteProduct($newData);
+    }
+
+    public function createProduct($productData, $variantData, $specData)
+{
+    try {
+        $this->pdo->beginTransaction();
+
+        // Insert main product
+        $sql = "INSERT INTO products (name, slug, brand_id, subcategory_id, is_featured, created_at, updated_at) 
+                VALUES (:name, :slug, :brand_id, :subcategory_id, :is_featured, NOW(), NOW())";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ':name' => $productData['name'],
+            ':slug' => $productData['slug'],
+            ':brand_id' => $productData['brand_id'],
+            ':subcategory_id' => $productData['subcategory_id'],
+            ':is_featured' => $productData['is_featured'],
+        ]);
+        $productId = $this->pdo->lastInsertId();
+
+        // Insert product description
+        if (!empty($productData['description'])) {
+            $sql = "INSERT INTO product_contents (product_id, description, created_at, updated_at) 
+                    VALUES (:product_id, :description, NOW(), NOW())";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':product_id' => $productId,
+                ':description' => $productData['description'],
+            ]);
+        }
+
+        // Insert specifications
+        foreach ($specData as $index => $spec) {
+            $sql = "INSERT INTO product_specs (product_id, spec_name, spec_value, display_order, created_at, updated_at) 
+                    VALUES (:product_id, :spec_name, :spec_value, :display_order, NOW(), NOW())";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':product_id' => $productId,
+                ':spec_name' => $spec['name'],
+                ':spec_value' => $spec['value'],
+                ':display_order' => $index,
+            ]);
+        }
+
+        // Insert variants
+        $firstSkuId = null;
+        foreach ($variantData as $index => $variant) {
+            $sql = "INSERT INTO skus (product_id, sku_code, price, stock_quantity, is_default, is_active, created_at, updated_at) 
+                    VALUES (:product_id, :sku_code, :price, :stock_quantity, :is_default, :is_active, NOW(), NOW())";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':product_id' => $productId,
+                ':sku_code' => $variant['sku'] ?: $this->generateSku($productData['name'], $variant['color_id'], $variant['capacity_id']),
+                ':price' => $variant['price'],
+                ':stock_quantity' => $variant['stock_quantity'],
+                ':is_default' => ($index === 0) ? 1 : 0,
+                ':is_active' => 1,
+            ]);
+            $skuId = $this->pdo->lastInsertId();
+            if ($index === 0) {
+                $firstSkuId = $skuId;
+            }
+
+            // Insert main image for first SKU
+            if ($index === 0 && $productData['main_image']) {
+                $mainImageUrl = $this->handleImageUpload($productData['main_image'], 'products');
+                if ($mainImageUrl) {
+                    $sql = "INSERT INTO variant_images (sku_id, image_set, is_default, sort_order, created_at, updated_at) 
+                            VALUES (:sku_id, :image_set, 1, 0, NOW(), NOW())";
+                    $stmt = $this->pdo->prepare($sql);
+                    $stmt->execute([
+                        ':sku_id' => $skuId,
+                        ':image_set' => $mainImageUrl,
+                    ]);
+                }
+            }
+
+            // Insert variant attributes
+            $attributes = [
+                ['attribute_id' => 1, 'option_id' => $variant['color_id']],
+                ['attribute_id' => 2, 'option_id' => $variant['capacity_id']],
+            ];
+            foreach ($attributes as $attr) {
+                $sql = "INSERT INTO attribute_option_sku (sku_id, attribute_option_id) VALUES (:sku_id, :attribute_option_id)";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([
+                    ':sku_id' => $skuId,
+                    ':attribute_option_id' => $attr['option_id'],
+                ]);
+            }
+
+            // Insert variant images
+            foreach ($variant['images'] as $i_idx => $image) {
+                if ($image['file'] && $image['file']['error'] === UPLOAD_ERR_OK) {
+                    $imageUrl = $this->handleImageUpload($image['file'], 'variants');
+                    if ($imageUrl) {
+                        $sql = "INSERT INTO variant_images (sku_id, image_set, sort_order, created_at, updated_at) 
+                                VALUES (:sku_id, :image_set, :sort_order, NOW(), NOW())";
+                        $stmt = $this->pdo->prepare($sql);
+                        $stmt->execute([
+                            ':sku_id' => $skuId,
+                            ':image_set' => $imageUrl,
+                            ':sort_order' => $i_idx,
+                        ]);
+                    }
+                }
+            }
+        }
+
+        $this->pdo->commit();
+        return true;
+    } catch (\Exception $e) {
+        $this->pdo->rollBack();
+        error_log("Lỗi khi tạo sản phẩm: " . $e->getMessage());
+        throw $e;
+    }
+}
+
+    private function handleImageUpload($file, $subdirectory = 'default')
+    {
+        if (!$file || $file['error'] !== UPLOAD_ERR_OK) {
+            return null;
+        }
+
+        $uploadDir = __DIR__ . '/../../img/products/' . $subdirectory . '/';
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $filename = uniqid() . '.' . $ext;
+        $destination = $uploadDir . $filename;
+
+        if (move_uploaded_file($file['tmp_name'], $destination)) {
+            return '/img/products/' . $subdirectory . '/' . $filename;
+        }
+
+        return null;
+    }
+
+    private function generateSku($productName, $colorId, $capacityId)
+    {
+        $color = $this->getAllColors()[$colorId - 1]['name'] ?? 'COLOR';
+        $capacity = $this->getAllCapacities()[$capacityId - 1]['name'] ?? 'CAPACITY';
+        $productPrefix = strtoupper(substr(preg_replace('/[^a-zA-Z0-9]/', '', $productName), 0, 5));
+        return $productPrefix . '-' . strtoupper(substr($color, 0, 3)) . '-' . $capacity;
     }
 }
