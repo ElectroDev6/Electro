@@ -37,7 +37,7 @@ include dirname(__DIR__) . '/partials/dropdown_user.php';
             </div>
             <div class="header__user">
                 <div class="header__user-avatar">
-                    <img class="header__user-image" src="/img/avatar/avatar.png" alt="User avatar" />
+                    <img class="header__user-image" src="/img/avatar/avatar.jpg" alt="User avatar" />
                     <?php echo $htmlDropdownUser; ?>
                 </div>
                 <span class="header__user-name">Adminshop</span>
@@ -48,7 +48,7 @@ include dirname(__DIR__) . '/partials/dropdown_user.php';
         </div>
     </div>
 </header>
-    <script type="module" src="/admin-ui/js/pages/header.js"></script>
+<script type="module" src="/admin-ui/js/pages/header.js"></script>
 <?php
 $htmlHeader = ob_get_clean();
 ?>

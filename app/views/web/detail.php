@@ -321,7 +321,7 @@ Chi tiết sản phẩm
                                 <?php foreach ($reviews as $review): ?>
                                     <div class="product-detail__review-item">
                                         <div class="product-detail__reviewer-info">
-                                            <img src="<?= htmlspecialchars($review['avatar_url'] ?? '/img/avatars/avatar.png') ?>" alt="User avatar" class="product-detail__reviewer-avatar" />
+                                            <img src="<?= htmlspecialchars($review['avatar_url'] ?? '/img/avatars/avatar.jpg') ?>" alt="User avatar" class="product-detail__reviewer-avatar" />
                                             <div class="product-detail__reviewer-details">
                                                 <h4 class="product-detail__reviewer-name">
                                                     <?= htmlspecialchars($review['name']) ?>
@@ -340,7 +340,7 @@ Chi tiết sản phẩm
                                                 <?php foreach ($review['replies'] as $reply): ?>
                                                     <div class="product-detail__review-item product-detail__reply">
                                                         <div class="product-detail__reviewer-info">
-                                                            <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+                                                            <img src="/img/avatars/avatar.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
                                                             <div class="product-detail__reviewer-details">
                                                                 <h4 class="product-detail__reviewer-name">
                                                                     <?= htmlspecialchars($reply['name']) ?>
@@ -413,7 +413,7 @@ Chi tiết sản phẩm
             </div>
             <div class="product-detail__review-item">
                 <div class="product-detail__reviewer-info">
-                    <img src="/img/avatars/avatar.png" alt="User avatar" class="product-detail__reviewer-avatar" />
+                    <img src="/img/avatars/avatar.jpg" alt="User avatar" class="product-detail__reviewer-avatar" />
                     <div class="product-detail__reviewer-details">
                         <h4 class="product-detail__reviewer-name">Phạm Thị D</h4>
                         <div class="product-detail__review-rating">★★★★☆</div>

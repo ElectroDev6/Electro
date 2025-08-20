@@ -1,7 +1,7 @@
  <!-- SIDEBAR -->
  <div class="profile__sidebar">
      <div class="profile__avatar">
-         <img id="avatar-img" src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/avatars/avatar.png') ?>"
+         <img id="avatar-img" src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/avatars/avatar.jpg') ?>"
              alt="Avatar người dùng" />
      </div>
      <h3 class="profile__name"><?= htmlspecialchars($user['name'] ?? 'Người dùng') ?></h3>
@@ -11,8 +11,10 @@
 
      <form id="avatar-form" class="profile__avatar-form" action="/profile/avatar" method="post"
          enctype="multipart/form-data" style="display:none;">
-         <input type="file" name="avatar" accept="image/*" id="avatar-input" required />
-         <button type="submit">Cập nhật</button>
+         <div class="profile__avatar-form-group">
+             <input type="file" name="avatar" accept="image/*" id="avatar-input" required />
+             <button type="submit">Cập nhật</button>
+         </div>
      </form>
 
      <ul class="profile__menu">

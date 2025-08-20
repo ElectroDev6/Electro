@@ -15,11 +15,11 @@ class SaleCountdown {
 
       if (endDate) {
         this.startCountdown(element, new Date(endDate).getTime(), "Đã kết thúc", (days, hours, minutes, seconds) => {
-          element.textContent = `${days} Ngày ${hours} Giờ ${minutes} Phút ${seconds} Giây`;
+          element.innerHTML = this.renderBoxes(days, hours, minutes, seconds);
         });
       } else if (startDate) {
         this.startCountdown(element, new Date(startDate).getTime(), "Đã bắt đầu", (days, hours, minutes, seconds) => {
-          element.textContent = `${days} Ngày ${hours} Giờ ${minutes} Phút ${seconds} Giây`;
+          element.innerHTML = this.renderBoxes(days, hours, minutes, seconds);
         });
       }
     });
@@ -30,7 +30,7 @@ class SaleCountdown {
       const now = new Date().getTime();
       const distance = targetTime - now;
       if (distance < 0) {
-        element.textContent = endMessage;
+        element.innerHTML = `<span class="ended">${endMessage}</span>`;
         clearInterval(interval);
         return;
       }
@@ -40,6 +40,15 @@ class SaleCountdown {
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
       updateCallback(days, hours, minutes, seconds);
     }, 1000);
+  }
+
+  renderBoxes(days, hours, minutes, seconds) {
+    return `
+      <span class="time-box"><span class="number">${days}</span><span class="label">Ngày</span></span>
+      <span class="time-box"><span class="number">${hours}</span><span class="label">Giờ</span></span>
+      <span class="time-box"><span class="number">${minutes}</span><span class="label">Phút</span></span>
+      <span class="time-box"><span class="number">${seconds}</span><span class="label">Giây</span></span>
+    `;
   }
 }
 

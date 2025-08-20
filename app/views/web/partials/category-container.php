@@ -6,7 +6,8 @@ use Core\View;
 
 <div class="container-main">
     <section class="category-list category-product" style="background-color: #f3f4f6;">
-        <div class="category-list__container scroll-horizontal">
+        <!-- scroll-horizontal xóa tạm -->
+        <div class="category-list__container">
             <div class="category-list__wrapper">
                 <div class="category-list__items">
                     <?php for ($i = 0; $i < 4 && isset($categories[$i]); $i++): ?>

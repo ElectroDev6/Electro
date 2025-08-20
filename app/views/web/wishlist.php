@@ -8,7 +8,7 @@ use Core\View; ?>
         <div class="wishlist__sidebar">
             <div class="wishlist__avatar">
                 <div class="wishlist__avatar-wrapper">
-                    <img id="avatar-img" src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/avatars/avatar.png') ?>"
+                    <img id="avatar-img" src="<?= htmlspecialchars($user['avatar_url'] ?? '/img/avatars/avatar.jpg') ?>"
                         alt="Avatar người dùng" />
                 </div>
                 <h3 class="wishlist__name"><?= htmlspecialchars($user['name'] ?? 'Người dùng') ?></h3>

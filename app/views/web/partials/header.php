@@ -103,50 +103,6 @@
                 </button>
             </form>
 
-            <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                    const form = document.getElementById("searchForm");
-                    const input = document.getElementById("header__input");
-                    const select = document.getElementById("header__select");
-
-                    // Xử lý khi submit form
-                    form.addEventListener("submit", (e) => {
-                        e.preventDefault();
-                        redirectToProducts();
-                    });
-
-                    // Xử lý khi đổi select
-                    select.addEventListener("change", () => {
-                        redirectToProducts();
-                    });
-
-                    function redirectToProducts() {
-                        const keyword = input.value.trim();
-                        const category = select.value;
-
-                        let url = "/products";
-
-                        if (category) {
-                            url += `/${category}`;
-                            if (keyword) {
-                                url += `/${encodeURIComponent(keyword)}`;
-                            }
-                        } else if (keyword) {
-                            url += `/${encodeURIComponent(keyword)}`;
-                        }
-
-                        window.location.href = url;
-                    }
-
-                    // Giữ lại giá trị đã chọn khi load lại trang
-                    const pathParts = window.location.pathname.split("/");
-                    if (pathParts[1] === "products" && pathParts[2]) {
-                        select.value = pathParts[2]; // ví dụ /products/phone thì sẽ giữ phone
-                    }
-                });
-            </script>
-
-
             <!-- Mobile -->
             <div class="header__search-dropdown">
                 <form class="header__search-dropdown-form">
@@ -184,25 +140,27 @@
                 </div>
                 <!-- wishlist -->
                 <div class="header__icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#333e48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </g>
-                    </svg>
-                    <span class="header__count-wishlist">0</span>
+                    <a href="/wishlist">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#333e48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </g>
+                        </svg>
+                        <span class="header__count-wishlist">0</span>
+                    </a>
                 </div>
                 <div class="header__icon" id="headerNotification">
-                    <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="24" height="24" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    stroke-width="2" 
-                    stroke-linecap="round" 
-                    stroke-linejoin="round">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path d="M9 17H5.6C4.3 17 3.7 17 3.6 16.9C3.4 16.8 3.4 16.7 3.4 16.5C3.4 16.4 3.8 15.7 4.5 14.5C5.3 13.2 6 11.3 6 8.6C6 7.1 6.6 5.7 7.8 4.6C8.9 3.6 10.4 3 12 3C13.6 3 15.1 3.6 16.2 4.6C17.4 5.7 18 7.1 18 8.6C18 11.3 18.7 13.2 19.5 14.5C20.2 15.7 20.6 16.4 20.6 16.5C20.6 16.7 20.6 16.8 20.4 16.9C20.3 17 19.7 17 18.4 17H15M9 17V18C9 19.7 10.3 21 12 21C13.7 21 15 19.7 15 18V17H9Z"></path>
                     </svg>
                     <span class="header__count-wishlist" id="headerNotificationCount">0</span>
@@ -225,7 +183,7 @@
                         <div class="notification__footer">
                             <a href="#">Xem tất cả thông báo</a>
                         </div>
-                        </div>
+                    </div>
                 </div>
                 <!-- user -->
                 <div class="header__icon">
@@ -269,3 +227,46 @@
         </div>
     </div>
 </header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("searchForm");
+        const input = document.getElementById("header__input");
+        const select = document.getElementById("header__select");
+
+        // Xử lý khi submit form
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            redirectToProducts();
+        });
+
+        // Xử lý khi đổi select
+        select.addEventListener("change", () => {
+            redirectToProducts();
+        });
+
+        function redirectToProducts() {
+            const keyword = input.value.trim();
+            const category = select.value;
+
+            let url = "/products";
+
+            if (category) {
+                url += `/${category}`;
+                if (keyword) {
+                    url += `/${encodeURIComponent(keyword)}`;
+                }
+            } else if (keyword) {
+                url += `/${encodeURIComponent(keyword)}`;
+            }
+
+            window.location.href = url;
+        }
+
+        // Giữ lại giá trị đã chọn khi load lại trang
+        const pathParts = window.location.pathname.split("/");
+        if (pathParts[1] === "products" && pathParts[2]) {
+            select.value = pathParts[2]; // ví dụ /products/phone thì sẽ giữ phone
+        }
+    });
+</script>
