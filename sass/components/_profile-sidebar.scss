@@ -1,0 +1,86 @@
+.profile {
+  // SIDEBAR
+  &__sidebar {
+    width: 250px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    text-align: center;
+    font-family: sans-serif;
+  }
+
+  &__avatar {
+    margin-bottom: 1rem;
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 1rem;
+      border: 2px solid #f6ab00; // viền vàng nhạt
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 0.25rem;
+  }
+
+  &__phone {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+
+  &__edit-avatar-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: none;
+    background-color: #f6ab00;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #e59900;
+    }
+  }
+
+  &__menu {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    text-align: left;
+
+    li {
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      cursor: pointer;
+      color: #333;
+      transition: all 0.3s;
+
+      &:hover {
+        background: #fef3e0;
+        color: #f6ab00;
+      }
+
+      &.active {
+        background: #f6ab00;
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+  }
+}

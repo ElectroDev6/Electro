@@ -106,7 +106,12 @@
 }
 
 .slider__image {
-  max-width: 28%;
+  width: 37rem;
+  // max-width: 28%;
+  user-drag: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  touch-action: none;
   opacity: 0;
   transform: translateX(50px);
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -123,7 +128,7 @@
 
 .slider__dots {
   position: absolute;
-  bottom: 20px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

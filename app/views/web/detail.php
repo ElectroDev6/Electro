@@ -38,8 +38,13 @@ Chi tiết sản phẩm
         <div class="product-detail__main">
             <div class="product-detail__images">
                 <!-- Main Image -->
-
                 <div class="product-detail__main-image">
+                    <img style="position: absolute; width: 4rem; right: 45px;"
+                        class="product-detail__main-image-heart"
+                        src="<?= $is_in_wishlist ? '/icons/heart-svgrepo-com-red.svg' : '/icons/heart-svgrepo-com.svg' ?>"
+                        alt="heart"
+                        data-product-id="<?= htmlspecialchars($product['product_id']) ?>"
+                        data-is-in-wishlist="<?= $is_in_wishlist ? 'true' : 'false' ?>">
                     <?php
                     $defaultSkuId = $product['variants'][0]['sku_id'] ?? 1;
                     $mainImage = $product['images'][$defaultSkuId]['thumbnail_url'][0] ?? '/img/placeholder.jpg';
@@ -172,7 +177,7 @@ Chi tiết sản phẩm
                                         data-sku-id="<?= $skuId ?>">
                                         <span class="product-detail__color-name"></span>
                                     </button>
-                                    <?php $i++;
+                                <?php $i++;
                                 endforeach; ?>
                             </div>
                         </div>
@@ -203,7 +208,7 @@ Chi tiết sản phẩm
                                         data-sku-id="<?= $skuId ?>">
                                         <?php echo htmlspecialchars(strtoupper($capacity)); ?>
                                     </button>
-                                    <?php $j++;
+                                <?php $j++;
                                 endforeach; ?>
                             </div>
                         </div>
@@ -222,7 +227,14 @@ Chi tiết sản phẩm
                 <div class="product-detail__action-buttons">
                     <button class="product-detail__btn-add-cart">Thêm vào giỏ hàng</button>
                     <!-- <button class="product-detail__btn-buy-now">Mua ngay</button> -->
-                    <?php View::partial('components.button-buy-now', ['href' => '#', 'text' => 'Mua ngay']); ?>
+                    <?php
+                    View::partial('components.button-buy-now', [
+                        'href' => '#',
+                        'text' => 'Mua ngay',
+                        'productId' => $product['product_id']
+                    ]);
+                    ?>
+
                 </div>
 
                 <div class="product-detail__shipping-info">
@@ -504,5 +516,56 @@ Chi tiết sản phẩm
                                 }, $product['variants'])
                             ) ?>
             };
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const heartIcons = document.querySelectorAll('.product-detail__main-image-heart');
+
+                heartIcons.forEach(heart => {
+                    heart.addEventListener('click', function() {
+                        const productId = heart.dataset.productId;
+                        const isInWishlist = heart.dataset.isInWishlist === 'true';
+
+                        // Debug: Kiểm tra productId
+                        console.log('Product ID:', productId);
+
+                        if (!productId || isNaN(productId)) {
+                            alert('Sản phẩm không hợp lệ.');
+                            return;
+                        }
+
+                        // Tạo FormData để gửi POST request
+                        const formData = new FormData();
+                        formData.append('product_id', productId);
+
+                        // Gửi AJAX request
+                        fetch('/wishlist/toggle', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                if (data.success) {
+                                    // Toggle trạng thái heart
+                                    heart.dataset.isInWishlist = !isInWishlist;
+                                    heart.src = isInWishlist ? '/icons/heart-svgrepo-com.svg' : '/icons/heart-svgrepo-com-red.svg';
+                                    alert(data.message); // Hoặc dùng toast
+                                } else {
+                                    alert(data.message || 'Đã có lỗi xảy ra.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Fetch Error:', error);
+                                alert('Không thể kết nối đến server.');
+                            });
+                    });
+                });
+            });
         </script>
         <?php View::endSection(); ?>

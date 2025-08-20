@@ -4,17 +4,20 @@ namespace App\Controllers\Web;
 
 use App\Services\ProductService;
 use App\Services\CartService;
+use App\Services\WishlistService;
 use Core\View;
 
 class DetailController
 {
     private $productService;
     private $cartService;
+    private $wishlistService;
 
     public function __construct(\PDO $pdo)
     {
         $this->cartService = new CartService($pdo);
         $this->productService = new ProductService($pdo, $this->cartService);
+        $this->wishlistService = new WishlistService($pdo);
     }
 
     public function showDetail($params)
@@ -35,14 +38,40 @@ class DetailController
 
         $reviews = $this->productService->getReviews($product['product_id']);
         // echo "<pre>";
-        // print_r($reviews);
+        // print_r($product);
         // echo "</pre>";
         // exit();
         View::render('detail', [
             'product' => $product,
             'relatedProducts' => $relatedProducts,
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'is_in_wishlist' =>  $this->wishlistService->isProductInWishlist($_SESSION['user_id'], $product['product_id'])
         ]);
+    }
+
+    public function toggleWishlist()
+    {
+        // Kiểm tra người dùng đã đăng nhập
+        if (!isset($_SESSION['user_id'])) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập để thêm vào wishlist.']);
+            exit;
+        }
+
+        // Lấy product_id từ POST
+        $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+        if ($productId <= 0) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => 'Sản phẩm không hợp lệ.']);
+            exit;
+        }
+
+        // Toggle wishlist
+        $result = $this->wishlistService->toggleWishlist($_SESSION['user_id'], $productId);
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
     }
 
     public function addToCart($input = [], $matches = [])

@@ -1,5 +1,6 @@
 <?php
 $product = $regularProduct ?? [];
+
 ?>
 <?php
 
@@ -9,7 +10,7 @@ use Core\View; ?>
     <div class="product">
         <a href="/detail/<?= $product['slug'] ?>" class="product__link">
             <div class="product__image-container">
-                <img src="<?= asset('img/products/default/' . ($product['default_image'] ?? 'img/No-Image-Placeholder.png')) ?>" alt="<?= $product['name'] ?>" class="product__image" />
+                <img data-src="<?= asset('img/products/default/' . ($product['default_image'] ?? 'img/No-Image-Placeholder.png')) ?>" alt="<?= $product['name'] ?>" class="product__image lazy" />
                 <ul class="product__features">
                     <div class="product__feature">
                         <img src="/icons/NFC.svg" alt="">

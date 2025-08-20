@@ -1,7 +1,7 @@
 import ScrollToTop from "./components/scrollBtn.js";
 import SearchSuggestion from "./components/searchSuggestion.js";
 import ReviewFetcher from "./components/ReviewFetcher.js";
-
+import LazyLoader from "./components/lazyLoad.js";
 document.addEventListener("DOMContentLoaded", () => {
   new ScrollToTop("scrollToTopBtn");
   new SearchSuggestion("header__input", "/search/suggestions");
@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     "/users/getReviewUser"
   );
+  new LazyLoader();
   const headerTop = document.querySelector(".header__top");
   window.addEventListener("scroll", () => {
     if (window.scrollY > 50) {

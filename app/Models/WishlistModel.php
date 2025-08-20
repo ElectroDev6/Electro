@@ -66,4 +66,40 @@ class WishlistModel
             ':user_id' => $userId
         ]);
     }
+
+    public function isProductInWishlist(int $userId, int $productId): bool
+    {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT 1
+                FROM wishlist
+                WHERE user_id = :user_id AND product_id = :product_id
+            ");
+            $stmt->execute([
+                ':user_id' => $userId,
+                ':product_id' => $productId
+            ]);
+            return $stmt->fetch() !== false;
+        } catch (\Exception $e) {
+            error_log("WishlistModel: Error in isProductInWishlist - UserID: $userId, ProductID: $productId, Error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function addToWishlist(int $userId, int $productId): bool
+    {
+        try {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO wishlist (user_id, product_id, added_at)
+                VALUES (:user_id, :product_id, NOW())
+            ");
+            return $stmt->execute([
+                ':user_id' => $userId,
+                ':product_id' => $productId
+            ]);
+        } catch (\Exception $e) {
+            error_log("WishlistModel: Error in addToWishlist - UserID: $userId, ProductID: $productId, Error: " . $e->getMessage());
+            return false;
+        }
+    }
 }

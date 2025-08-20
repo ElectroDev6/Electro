@@ -268,6 +268,7 @@ CREATE TABLE orders (
     order_code VARCHAR(50) UNIQUE NOT NULL,
     status ENUM(
         'pending',
+        'processing',
         'paid',
         'shipped',
         'completed',

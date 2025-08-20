@@ -5,7 +5,7 @@ $product = $featuredProduct ?? [];
 <div class="product-featured"
     data-end-date="<?= $product['end_date'] ?? '' ?>">
 
-    <img src="/img/products/default/<?= $product['default_image'] ?? '/img/No-Image-Placeholder.png' ?>"
+    <img class="lazy" data-src="/img/products/default/<?= $product['default_image'] ?? '/img/No-Image-Placeholder.png' ?>"
         alt="<?= $product['name'] ?>"
         class="product-featured__image" />
 

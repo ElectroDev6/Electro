@@ -73,10 +73,23 @@ class CheckoutService
                     'price' => $item['price'],
                     'name' => $item['name']
                 ];
-                $totalPrice += $item['price'] * $item['quantity'];
+
+                // Tính tổng giá gốc
+                $itemTotal = $item['price'] * $item['quantity'];
+                $totalPrice += $itemTotal;
+
+                // Áp dụng giảm giá nếu có voucher_code
                 if ($item['voucher_code']) {
-                    // Giả sử có logic lấy discount từ coupon
-                    $totalDiscount += 0; // Cần thêm logic thực tế
+                    $coupon = $this->checkoutModel->getCouponByCode($item['voucher_code']);
+                    if ($coupon) {
+                        $discountPercent = $coupon['discount_percent'];
+                        $itemDiscount = $itemTotal * ($discountPercent / 100);
+                        $totalDiscount += $itemDiscount;
+                    } else {
+                        // Nếu coupon không hợp lệ, có thể thêm lỗi hoặc bỏ qua
+                        error_log("CheckoutService: Invalid coupon - Code: {$item['voucher_code']}, ItemID: {$item['cart_item_id']}");
+                        // Optional: $errors[] = "Mã giảm giá {$item['voucher_code']} không hợp lệ cho sản phẩm {$item['name']}.";
+                    }
                 }
             }
         }
@@ -94,7 +107,7 @@ class CheckoutService
                 ]
             ],
             'user_address' => $userAddress,
-            'errors' => []
+            'errors' => $errors
         ];
     }
 

@@ -13,6 +13,7 @@ Router::get('/products/:categorySlug/:subcategorySlug', 'ProductController@showA
 // Product Detail
 Router::get('/detail/:slug', 'DetailController@showDetail');
 Router::post('/detail/add-to-cart', 'DetailController@addToCart');
+Router::post('/wishlist/toggle', 'DetailController@toggleWishlist');
 
 // Search
 Router::get('/search/suggestions', 'SearchController@suggestions');

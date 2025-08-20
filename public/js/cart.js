@@ -1,3 +1,3 @@
-import CartHandler from "./pages/cart.js";
+// import CartHandler from "./pages/cart.js";
 
-document.addEventListener("DOMContentLoaded", () => new CartHandler());
+// document.addEventListener("DOMContentLoaded", () => new CartHandler());

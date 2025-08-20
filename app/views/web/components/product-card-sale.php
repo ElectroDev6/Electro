@@ -11,7 +11,7 @@ $product = $saleProduct ?? [];
             <img style="width: 25px;" src="/icons/sale-tag-for-online-shops.svg" alt="">
         </div>
         <div class="product__image-container">
-            <img src="/img/products/default/<?= $product['default_image'] ?? 'img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product__image" />
+            <img data-src="/img/products/default/<?= $product['default_image'] ?? 'img/No-Image-Placeholder.png' ?>" alt="<?= $product['name'] ?>" class="product__image lazy" />
 
             <ul class="product__features">
                 <div class="product__feature">

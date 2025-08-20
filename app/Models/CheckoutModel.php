@@ -53,6 +53,24 @@ class CheckoutModel
         }
     }
 
+    public function getCouponByCode(string $code): ?array
+    {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT discount_percent
+                FROM coupons
+                WHERE code = :code
+                AND is_active = 1
+                AND start_date <= NOW()
+                AND (expires_at IS NULL OR expires_at > NOW())
+            ");
+            $stmt->execute([':code' => $code]);
+            return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        } catch (\Exception $e) {
+            error_log("CheckoutModel: Error in getCouponByCode - Code: $code, Error: " . $e->getMessage());
+            return null;
+        }
+    }
 
     /**
      * Tạo đơn hàng mới

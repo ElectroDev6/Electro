@@ -5,7 +5,6 @@ use Core\View; ?>
 <?php View::extend('layouts.main'); ?>
 <?php View::section('content'); ?>
 
-<?php print_r($user_address); ?>
 
 <div class="container-main">
   <section class="cart-page">
@@ -17,7 +16,7 @@ use Core\View; ?>
     </div>
 
     <!-- Form thanh toán -->
-    <form class="order-page" action="/checkout/submit" method="POST">
+    <form id="orderForm" class="order-page" action="/checkout/submit" method="POST">
       <input type="hidden" name="user_address_id" value="<?= htmlspecialchars($user_address['user_address_id'] ?? '') ?>">
 
       <div class="order-page__main">
@@ -215,6 +214,18 @@ use Core\View; ?>
 
           <button type="submit" class="order-summary__btn">Đặt hàng</button>
         </div>
+
+        <script>
+          const orderForm = document.getElementById('orderForm');
+
+          orderForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Ngăn form gửi ngay lập tức
+            const confirmOrder = confirm("Bạn có chắc chắn muốn đặt hàng không?");
+            if (confirmOrder) {
+              orderForm.submit(); // Submit thủ công nếu người dùng đồng ý
+            }
+          });
+        </script>
 
         <div class="order-summary__terms">
           Bằng việc tiến hành đặt mua hàng, bạn đồng ý với

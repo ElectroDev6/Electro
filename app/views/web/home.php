@@ -96,7 +96,7 @@ Trang chủ
             <div class="tech-news__main">
                 <div class="news-card news-card--large news-card--microsoft">
                     <a target="_blank" href="https://thanhnien.vn/mang-dial-up-huyen-thoai-cua-aol-dung-hoat-dong-sau-34-nam-18525081109571965.htm">
-                        <img src="/img/news/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image">
+                        <img data-src="/img/news/bao-hiem-allianz-life-hack.webp" alt="News image" class="news-card__image lazy">
                         <div class="news-card__content">
                             <h3 class="news-card__title">Mạng dial-up huyền thoại của AOL dừng hoạt động sau 34 năm</h3>
                         </div>
@@ -104,42 +104,42 @@ Trang chủ
                 </div>
 
                 <div class="news-card news-card--medium news-card--office">
-                    <img src="/img/news/apple.webp" alt="News image" class="news-card__image">
+                    <img data-src="/img/news/apple.webp" alt="News image" class="news-card__image lazy">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--windows">
-                    <img src="/img/news/camera.webp" alt="News image" class="news-card__image">
+                    <img data-src="/img/news/camera.webp" alt="News image" class="news-card__image lazy">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--samsung">
-                    <img src="/img/news/camera360.webp" alt="News image" class="news-card__image">
+                    <img data-src="/img/news/camera360.webp" alt="News image" class="news-card__image lazy">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Samsung Galaxy Z Fold7 và Z Flip7 có thể đây là tên thị, đồng thời cải tiến nhờ vào các tính năng Galaxy AI</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--phone">
-                    <img src="/img/news/dienthoai.webp" alt="News image" class="news-card__image">
+                    <img data-src="/img/news/dienthoai.webp" alt="News image" class="news-card__image lazy">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--laptop">
-                    <img src="/img/news/espon.webp" alt="News image" class="news-card__image">
+                    <img data-src="/img/news/espon.webp" alt="News image" class="news-card__image lazy">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
                 </div>
 
                 <div class="news-card news-card--medium news-card--chip">
-                    <img src="/img/news/galaxy.webp" alt="News image" class="news-card__image">
+                    <img data-src="/img/news/galaxy.webp" alt="News image" class="news-card__image lazy">
                     <div class="news-card__content">
                         <h3 class="news-card__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h3>
                     </div>
@@ -148,63 +148,63 @@ Trang chủ
 
             <div class="tech-news__sidebar">
                 <div class="sidebar-item">
-                    <img src="/img/news/gool.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/gool.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/intel.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/intel.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/iphone17.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/iphone17.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/mediah2.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/mediah2.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/newphone.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/newphone.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/tainghe.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/tainghe.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/tv.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/tv.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/win11.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/win11.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>
                 </div>
 
                 <div class="sidebar-item">
-                    <img src="/img/news/3tiiphone.webp" alt="News image" class="sidebar-item__image-s">
+                    <img data-src="/img/news/3tiiphone.webp" alt="News image" class="sidebar-item__image-s lazy">
                     <div class="sidebar-item__content">
                         <h4 class="sidebar-item__title">Microsoft đưa ra thêm lý do nên nâng cấp lên Windows 11 24H2</h4>
                     </div>

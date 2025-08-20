@@ -66,10 +66,6 @@ class ProductController
         $availableAttributes = $this->productService->getAvailableAttributes($filters);
         $subcategories = $this->productService->getSubcategories($category['category_id']);
 
-        // echo '<pre>';
-        // print_r($totalPages);
-        // echo '</pre>';
-        // exit();
         View::render('products', [
             'products' => $products,
             'brands' => $brands,
