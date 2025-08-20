@@ -16,16 +16,16 @@ Trang chủ
                 <div class="sidebar-item active"><a href="frequently_questions">Câu hỏi thường gặp</a></div>
                 <div class="sidebar-item"><a href="introducing_shop">Giới thiệu về Shop</a></div>
                 <div class="sidebar-item">Đại lý ủy quyền và TTBH ủy quyền của Apple</div>
-                <div class="sidebar-item"><a href="policy">Chính sách mạng di động</a></div>
+                <div class="sidebar-item"><a href="policy-mobile">Chính sách mạng di động</a></div>
                 <div class="sidebar-item">Chính sách gói cước di động</div>
                 <div class="sidebar-item">Danh sách điểm cung cấp dịch vụ viễn thông</div>
                 <div class="sidebar-item"><a href="customer">Chính sách giao hàng & lắp đặt</a></div>
                 <div class="sidebar-item">Chính sách giao hàng & lắp đặt Điện máy</div>
                 <div class="sidebar-item">Chính sách giao hàng & lắp đặt Điện máy chỉ bán</div>
-                <div class="sidebar-item"><a href="client">Chính sách khách hàng thân thiết tại Shop</a></div>
-                <div class="sidebar-item">Giới thiệu máy đổi trả</div>
-                <div class="sidebar-item"><a href="refund">Chính sách đổi trả và bảo hành tiêu chuẩn</a></div>
-                <div class="sidebar-item"><a href="repair">Chính sách khui hộp sản phẩm</a></div>
+                <div class="sidebar-item"><a href="policy-client">Chính sách khách hàng thân thiết tại Shop</a></div>
+                <div class="sidebar-item">Giới thiệu máy đổi trảm</div>
+                <div class="sidebar-item"><a href="policy-refund">Chính sách đổi trả và bảo hành tiêu chuẩn</a></div>
+                <div class="sidebar-item"><a href="policy-repair">Chính sách khui hộp sản phẩm</a></div>
                 <div class="sidebar-item"><a href="information">Chính sách bảo mật</a></div>
                 <div class="sidebar-item">Chính sách bảo hành</div>
                 <div class="sidebar-item"><a href="delivery">Chính sách bảo mật dữ liệu cá nhân khách hàng</a></div>
