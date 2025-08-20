@@ -27,6 +27,7 @@ Router::get('/users/getReviewUser', 'ReviewUserController@reviewUser');
 // Search
 Router::get('/search/products', 'SearchProductController@searchProducts');
 Router::get('/search/laptops', 'SearchLaptopController@searchLaptops');
+Router::get('/laptops', 'ProductLaptopController@showAllLaptops');
 
 // Cart & Order
 Router::get('/cart', 'CartController@showCart');

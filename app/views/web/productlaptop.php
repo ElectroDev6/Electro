@@ -10,19 +10,10 @@ Sản phẩm Laptop
 <?php View::section('content'); ?>
 
 <body>
-    <?php echo '<pre>';
-    print_r($products);
-    echo '</pre>';
-    ?>
-    Phần dung lươợng
-    <?php echo '<pre>';
-    print_r($storage);
-    echo '</pre>';
-    ?>
     <div class="banner">
-        <img src="/img/Slide1Laptop.webp" alt="Banner">
+        <img src="/img/sliders/slider-1.jpg" alt="Banner">
     </div>
-    <div class="use-needs">
+    <!-- <div class="use-needs">
         <h3 class="use-needs__title">Nhu cầu sử dụng</h3>
         <div class="use-needs__list">
             <a href="/laptop-ai" class="use-needs__item" style="background-color: #ffe5e5;">
@@ -46,11 +37,11 @@ Sản phẩm Laptop
                 <p>Doanh nhân</p>
             </a>
         </div>
-    </div>
+    </div> -->
     <div class="container">
-        <!-- <aside class="filter">
+        <aside class="filter">
             <h3 class="filter__heading">Bộ lọc tìm kiếm</h3>
-            <div class="filter-group">
+            <!-- <div class="filter-group">
                 <h4 class="filter-group__heading">Hãng sản xuất</h4>
                 <div class="brand-logos" id="brand-logos">
                     <a href="/products/laptops?brand=Asus" class="brand-logos__link">
@@ -84,7 +75,7 @@ Sản phẩm Laptop
                         </div>
                     </a>
                 </div>
-            </div>
+            </div> -->
             <form method="GET" action="/productlaptop" id="mainFilter">
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Mức giá</h4>
@@ -139,7 +130,7 @@ Sản phẩm Laptop
                 <div class="filter-group filter-group--ram">
                     <h4 class="filter-group__heading">RAM</h4>
                     <div class="ram-options">
-                        <a href="/products/laptops?ram=4GB"  class="ram-options__link">
+                        <a href="/products/laptops?ram=4GB" class="ram-options__link">
                             <div class="ram-option-card">
                                 <p class="ram-option-card__text">4GB</p>
                             </div>
@@ -177,7 +168,7 @@ Sản phẩm Laptop
                     </div>
                 </div>
 
-                <!-- <div class="filter-group">
+                <div class="filter-group">
                     <h4 class="filter-group__heading">Card đồ họa</h4>
                     <label class="filter-group__label"><input type="checkbox" value="NVIDIA GeForce Series" name="card"
                             class="filter-group__checkbox"> NVIDIA GeForce Series</label>
@@ -187,7 +178,7 @@ Sản phẩm Laptop
                             name="card" class="filter-group__checkbox"> NVIDIA GeForce RTX Series</label>
                     <label class="filter-group__label"><input type="checkbox" value="Apple M4 GPU" name="card"
                             class="filter-group__checkbox"> Apple M4 GPU</label>
-                </div> -->
+                </div>
 
                 <div class="filter-group">
                     <h4 class="filter-group__heading">Ổ cứng</h4>
@@ -244,7 +235,7 @@ Sản phẩm Laptop
                     </div>
                 </div>
             </form>
-        </aside> -->
+        </aside>
         <!-- Phần sản phẩm -->
         <main class="products" id="product-list">
             <?php foreach ($products as $product): ?>
@@ -311,8 +302,6 @@ Sản phẩm Laptop
             window.location.search = params.toString();
         });
     });
-
-
 </script>
 
 <?php View::endSection(); ?>
