@@ -64,20 +64,21 @@ class DashboardModel
         // Top sản phẩm bán chạy (dựa trên tất cả orders)
         $stmt =  $this->pdo->query("
             SELECT 
-                p.name AS product_name, 
-                c.name AS category_name, 
-                COALESCE(SUM(oi.quantity), 0) AS sold, 
-                COALESCE(SUM(oi.quantity * oi.price), 0) AS revenue,
-                p.product_id
-            FROM products p
-            LEFT JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id
-            LEFT JOIN categories c ON sc.category_id = c.category_id
-            LEFT JOIN skus s ON p.product_id = s.product_id
-            LEFT JOIN order_items oi ON s.sku_id = oi.sku_id
-            LEFT JOIN orders o ON oi.order_id = o.order_id
-            GROUP BY p.product_id, p.name, c.name
-            ORDER BY sold DESC, p.product_id DESC
-            LIMIT 10
+                    p.name AS product_name, 
+                    c.name AS category_name, 
+                    COALESCE(SUM(oi.quantity), 0) AS sold, 
+                    COALESCE(SUM(oi.quantity * oi.price), 0) AS revenue,
+                    p.product_id
+                FROM products p
+                LEFT JOIN subcategories sc ON p.subcategory_id = sc.subcategory_id
+                LEFT JOIN categories c ON sc.category_id = c.category_id
+                LEFT JOIN skus s ON p.product_id = s.product_id
+                LEFT JOIN order_items oi ON s.sku_id = oi.sku_id
+                LEFT JOIN orders o ON oi.order_id = o.order_id
+                GROUP BY p.product_id, p.name, c.name
+                HAVING sold > 0
+                ORDER BY sold DESC, p.product_id DESC
+                LIMIT 10
         ");
         $data['topProducts'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

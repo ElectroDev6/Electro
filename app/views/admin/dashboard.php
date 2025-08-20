@@ -59,17 +59,6 @@ include dirname(__DIR__) . '/admin/partials/header.php';
             </div>
 
             <h1 class="dashboard__heading">Phân tích hệ thống</h1>
-            <div class="analytics-controls">
-                <label for="monthSelect">Chọn tháng: </label>
-                <select id="monthSelect" class="month-select">
-                    <option value="">Tất cả</option>
-                    <?php foreach ($data['months'] as $month): ?>
-                        <option value="<?php echo htmlspecialchars($month); ?>" <?php echo $month === date('Y-m') ? 'selected' : ''; ?>>
-                            <?php echo date('F Y', strtotime($month . '-01')); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
             <div class="analytics-grid">
                 <div class="card">
                     <div class="card-header">
@@ -324,7 +313,6 @@ include dirname(__DIR__) . '/admin/partials/header.php';
 
         // Phương thức thanh toán
         const paymentMethodData = () => {
-            console.log('Raw payment data:', initialPaymentMethods);
             if (!initialPaymentMethods || initialPaymentMethods.length === 0) {
                 return {
                     labels: ['Không có dữ liệu'],
@@ -337,7 +325,6 @@ include dirname(__DIR__) . '/admin/partials/header.php';
 
             const paymentCounts = {};
             initialPaymentMethods.forEach(item => {
-                console.log('Processing item:', item);
                 if (item.payment_method && item.count) {
                     const method = item.payment_method.trim();
                     const methodMap = {
@@ -351,12 +338,8 @@ include dirname(__DIR__) . '/admin/partials/header.php';
                     };
                     const displayName = methodMap[method.toLowerCase()] || method;
                     paymentCounts[displayName] = parseInt(item.count);
-                    console.log(`Added: ${displayName} = ${item.count}`);
                 }
             });
-            
-            console.log('Final payment counts:', paymentCounts);
-            
             return {
                 labels: Object.keys(paymentCounts),
                 datasets: [{
@@ -440,25 +423,6 @@ include dirname(__DIR__) . '/admin/partials/header.php';
                 plugins: {
                     legend: { display: false }
                 }
-            }
-        });
-
-        // Lọc theo tháng - Đơn giản hóa
-        document.getElementById('monthSelect').addEventListener('change', (e) => {
-            const selectedMonth = e.target.value;
-
-            // Lọc dữ liệu doanh thu theo danh mục
-            const filteredRevenue = selectedMonth 
-                ? initialCategoryRevenue.filter(item => item.created_at && item.created_at.startsWith(selectedMonth))
-                : initialCategoryRevenue;
-            
-            categoryChart.data = categoryRevenueData(filteredRevenue);
-            categoryChart.update();
-
-            // Các chart khác giữ nguyên vì đã lấy dữ liệu trong khoảng thời gian ngắn
-            // Có thể thêm thông báo cho người dùng
-            if (selectedMonth) {
-                console.log('Đã lọc theo tháng:', selectedMonth);
             }
         });
     </script>
