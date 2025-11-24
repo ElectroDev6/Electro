@@ -37,17 +37,22 @@ class DetailController
         );
 
         $reviews = $this->productService->getReviews($product['product_id']);
-        // echo "<pre>";
-        // print_r($product);
-        // echo "</pre>";
-        // exit();
+
+        // Kiểm tra xem user đã đăng nhập chưa
+        $userId = $_SESSION['user_id'] ?? null;
+        $isInWishlist = $userId ? $this->wishlistService->isProductInWishlist($userId, $product['product_id']) : false;
+
+        echo "<pre>";
+        print_r($product);
+        echo "<pre>";
         View::render('detail', [
             'product' => $product,
             'relatedProducts' => $relatedProducts,
             'reviews' => $reviews,
-            'is_in_wishlist' =>  $this->wishlistService->isProductInWishlist($_SESSION['user_id'], $product['product_id'])
+            'is_in_wishlist' => $isInWishlist
         ]);
     }
+
 
     public function toggleWishlist()
     {
